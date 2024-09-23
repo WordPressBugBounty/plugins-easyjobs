@@ -1,0 +1,9 @@
+export const typoPrefix_text_job_list_title = "job_list_title";
+export const typoPrefix_text_submit_btn = "submit_btn";
+export const typoPrefix_text_reset_btn = "reset_btn";
+export const typoPrefix_text_job_list_job_title = "job_title";
+export const typoPrefix_text_job_list_company_name = "company_name";
+export const typoPrefix_text_job_list_job_location = "job_location";
+export const typoPrefix_text_job_list_no_of_jobs = "no_of_jobs";
+export const typoPrefix_text_job_list_deadline = "job_deadline";
+export const typoPrefix_text_job_list_job_apply_btn = "apply_btn";
