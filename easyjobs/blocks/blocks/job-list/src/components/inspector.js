@@ -41,16 +41,17 @@ import {
     JOB_LIST_TITLE_ICON_HEIGHT_FIXED,
     JOB_LIST_TITLE_ICON_FIXED_SIZE
 } from "./constants";
+
 import { 
-    typoPrefix_text_job_list_title,
-    typoPrefix_text_submit_btn,
-    typoPrefix_text_reset_btn,
-    typoPrefix_text_job_list_job_title,
-    typoPrefix_text_job_list_company_name,
-    typoPrefix_text_job_list_job_location,
-    typoPrefix_text_job_list_no_of_jobs,
-    typoPrefix_text_job_list_deadline,
-    typoPrefix_text_job_list_job_apply_btn,
+    TypoprefixTextJobListTitle,
+    TypoprefixTextSubmitBtn,
+    TypoprefixTextResetBtn,
+    TypoprefixTextJobListJobTitle,
+    TypoprefixTextJobListCompanyName,
+    TypoprefixTextJobListJobLocation,
+    TypoprefixTextJobListNoOfJobs,
+    TypoprefixTextJobListDeadline,
+    TypoprefixTextJobListJobApplyBtn,
 } from "./typographyContants";
 
 import objAttributes from "./attributes";
@@ -536,7 +537,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_job_list_title
+                                                    TypoprefixTextJobListTitle
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps
@@ -737,7 +738,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_submit_btn
+                                                    TypoprefixTextSubmitBtn
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps
@@ -846,7 +847,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_reset_btn
+                                                    TypoprefixTextResetBtn
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps
@@ -1026,7 +1027,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_job_list_job_title
+                                                    TypoprefixTextJobListJobTitle
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps
@@ -1069,7 +1070,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_job_list_company_name
+                                                    TypoprefixTextJobListCompanyName
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps
@@ -1102,7 +1103,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_job_list_job_location
+                                                    TypoprefixTextJobListJobLocation
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps
@@ -1135,7 +1136,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_job_list_deadline
+                                                    TypoprefixTextJobListDeadline
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps
@@ -1168,7 +1169,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_job_list_no_of_jobs
+                                                    TypoprefixTextJobListNoOfJobs
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps
@@ -1189,7 +1190,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                                                     "easyjobs"
                                                 )}
                                                 typographyPrefixConstant={
-                                                    typoPrefix_text_job_list_job_apply_btn
+                                                    TypoprefixTextJobListJobApplyBtn
                                                 }
                                                 resRequiredProps={
                                                     resRequiredProps

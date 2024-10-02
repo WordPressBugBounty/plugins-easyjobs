@@ -25,12 +25,12 @@ const Elegant = ({props, jobsData}) => {
     return (
         <>
 			<div className='ej-job-body easyjobs-blocks easyjobs-blocks-job-list'>
-				<div class="easyjobs-shortcode-wrapper ej-template-elegant" id="easyjobs-list">
-					<div class="ej-section">
-						<div class="section__header section__header--flex ej-job-filter-wrap">
+				<div className="easyjobs-shortcode-wrapper ej-template-elegant" id="easyjobs-list">
+					<div className="ej-section">
+						<div className="section__header section__header--flex ej-job-filter-wrap">
 							{!hideTitle &&
-								<div class="ej-section-title">
-									<span class="ej-section-title-text">
+								<div className="ej-section-title">
+									<span className="ej-section-title-text">
 									<DynamicInputValueHandler
 										placeholder={__("Add title..", "essential-blocks")}
 										className="eb-button-text"
@@ -48,52 +48,52 @@ const Elegant = ({props, jobsData}) => {
 							{(filterByTitle || filterByCategory || filterByLocation) && 
 								<JobFilter 
 									props={props}
-									categories={jobsData.categories} 
-									locations={jobsData.locations}
+									categories={jobsData?.categories} 
+									locations={jobsData?.locations}
 								/>
 							}
 						</div>
 					</div>
-					<div class="ej-job-list ej-job-list-elegant">
-						<div class="ej-row">
-							{jobsData.jobs.data && jobsData.jobs.data.map((job, i) => {
+					<div className="ej-job-list ej-job-list-elegant">
+						<div className="ej-row">
+							{jobsData?.jobs?.data && jobsData?.jobs?.data?.map((job, i) => {
 								return (
-									<div class="ej-col-lg-6 ej-job-list-item-cat">
-										<div class="job__card <?php if(isset($job->is_pinned) && $job->is_pinned) echo 'ej-has-badge'?>">
-											<h3 class="ej-job-title">
+									<div className="ej-col-lg-6 ej-job-list-item-cat">
+										<div className="job__card <?php if(isset($job->is_pinned) && $job->is_pinned) echo 'ej-has-badge'?>">
+											<h3 className="ej-job-title">
 												<a onClick={(e)=>e.preventDefault()} href="#"
 											>
-													{job.title}
+													{job?.title}
 												</a>
 											</h3>
-											<p class="meta">
+											<p className="meta">
 												{showCompanyName && (
 													<>
-														<i class="easyjobs-icon easyjobs-briefcase"> </i>
-														<a onClick={(e)=>e.preventDefault()} href="#" class="office__name">
-															{job.company_name}
+														<i className="easyjobs-icon easyjobs-briefcase"> </i>
+														<a onClick={(e)=>e.preventDefault()} href="#" className="office__name">
+															{job?.company_name}
 														</a>
 													</>
 												)}
-												{showLocation && (job.is_remote || job.job_address.city || job.job_address.country) &&
-													<span class="office__location">
-														<i class="easyjobs-icon easyjobs-map-maker"></i>
-														{job.is_remote ? (
+												{showLocation && (job?.is_remote || job?.job_address?.city || job?.job_address?.country) &&
+													<span className="office__location">
+														<i className="easyjobs-icon easyjobs-map-maker"></i>
+														{job?.is_remote ? (
 																<span>{__( ' Anywhere', 'easyjobs' )}</span>
 															) : (
-																<span> {job.job_address?.city && job.job_address?.city?.name}
-																{(job.job_address?.country && job.job_address?.city) && ", "}
-																{job.job_address?.country &&
-																	job.job_address?.country.name
+																<span> {job?.job_address?.city && job?.job_address?.city?.name}
+																{(job?.job_address?.country && job?.job_address?.city) && ", "}
+																{job?.job_address?.country &&
+																	job?.job_address?.country?.name
 																}</span>
 															)
 														}
 													</span>
 												}
 											</p>
-											<div class="job__bottom">
-												<div class="job__apply">
-													<a onClick={(e)=>e.preventDefault()} href={`${job.apply_url ? job.apply_url : '#'}`} class="button button__primary radius-15" target="_blank">
+											<div className="job__bottom">
+												<div className="job__apply">
+													<a onClick={(e)=>e.preventDefault()} href={`${job?.apply_url ? job?.apply_url : '#'}`} className="button button__primary radius-15" target="_blank">
 														<DynamicInputValueHandler
 															placeholder={__("Add text..", "essential-blocks")}
 															className="eb-button-text"
@@ -107,17 +107,17 @@ const Elegant = ({props, jobsData}) => {
 														/>
 													</a>
 												</div>
-												{showNoOfJob && job.vacancies &&
-													<div class="job__vacancy">
+												{showNoOfJob && job?.vacancies &&
+													<div className="job__vacancy">
 														<h4>{job.vacancies}</h4>
 														<p>{__( 'No of vacancies', 'easyjobs' )}</p>
 													</div>
 												}
 											</div>
 											{showDateLine && (
-												<span class="deadline">
-													<i class="ej-icon ej-calender"></i>
-													{job.expire_at}
+												<span className="deadline">
+													<i className="ej-icon ej-calender"></i>
+													{job?.expire_at}
 												</span>
 											)}
 										</div>
@@ -125,8 +125,8 @@ const Elegant = ({props, jobsData}) => {
 								)
 							})}
 						</div>
-						{jobsData.jobs && jobsData.jobs.last_page > 1 &&
-							<Pagination jobs={jobsData.jobs} />
+						{jobsData?.jobs && jobsData?.jobs?.last_page > 1 &&
+							<Pagination jobs={jobsData?.jobs} />
 						}
 					</div>
 				</div>

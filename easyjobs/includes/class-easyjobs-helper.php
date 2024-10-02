@@ -862,7 +862,7 @@ class Easyjobs_Helper {
 	 * @param 
 	 * @return false|string
 	 */
-	public static function job_pagination($jobs_data, $get_data, $permalink, $prev_page, $next_page) {
+	public static function job_pagination($jobs_data, $get_data, $permalink, $prev_page, $next_page, $paginate_data) {
 		ob_start();
 		?>
 			<div class="custom-job-pagination">
@@ -874,10 +874,14 @@ class Easyjobs_Helper {
 							</a>
 						</li>
 						<?php 
-						for ( $ej_p = 1; $ej_p <= $jobs_data->last_page; $ej_p++ ) {
-							$job_page_url = $permalink . "?" . self::get_pagination_url($get_data, $ej_p);
+						for ( $ej_p = 0; $ej_p < count($paginate_data['items']); $ej_p++ ) {
+							$dot_class = '';
+							if ( "..." == $paginate_data['items'][$ej_p] ) {
+								$dot_class = 'dot_li_dashboard';
+							}
+							$job_page_url = $permalink . "?" . self::get_pagination_url($get_data, $paginate_data['items'][$ej_p]);
 						?>
-							<li class="page-item <?php echo $jobs_data->current_page == $ej_p ? 'active' : ''; ?>" aria-current="page"><a href="<?php echo esc_url($job_page_url)?>" class="page-link"><?php echo $ej_p; ?></a></li>
+							<li class="page-item <?php echo $dot_class; echo $jobs_data->current_page == $paginate_data['items'][$ej_p] ? 'active' : ''; ?>" aria-current="page"><a href="<?php echo esc_url($job_page_url)?>" class="page-link"><?php echo $paginate_data['items'][$ej_p]; ?></a></li>
 						<?php }?>
 						<li class="page-item <?php echo $jobs_data->current_page == $jobs_data->last_page ? 'disabled' : ''; ?>">
 							<a class="page-link" href="<?php echo esc_url( $next_page ); ?>" rel="next" aria-label="Next »"><span class="pagination-text">Next</span>

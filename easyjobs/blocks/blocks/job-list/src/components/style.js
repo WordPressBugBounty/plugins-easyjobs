@@ -19,15 +19,15 @@ import {
 } from "./constants";
 
 import {
-    typoPrefix_text_job_list_title,
-    typoPrefix_text_submit_btn,
-    typoPrefix_text_reset_btn,
-    typoPrefix_text_job_list_job_title,
-    typoPrefix_text_job_list_company_name,
-    typoPrefix_text_job_list_job_location,
-    typoPrefix_text_job_list_no_of_jobs,
-    typoPrefix_text_job_list_deadline,
-    typoPrefix_text_job_list_job_apply_btn,
+    TypoprefixTextJobListTitle,
+    TypoprefixTextSubmitBtn,
+    TypoprefixTextResetBtn,
+    TypoprefixTextJobListJobTitle,
+    TypoprefixTextJobListCompanyName,
+    TypoprefixTextJobListJobLocation,
+    TypoprefixTextJobListNoOfJobs,
+    TypoprefixTextJobListDeadline,
+    TypoprefixTextJobListJobApplyBtn,
 } from "./typographyContants";
 
 const {
@@ -259,7 +259,7 @@ export default function Style(props) {
         typoStylesMobile: textTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_job_list_title,
+        prefixConstant: TypoprefixTextJobListTitle,
     });
 
     // typography submit btn
@@ -269,7 +269,7 @@ export default function Style(props) {
         typoStylesMobile: submitBtnTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_submit_btn,
+        prefixConstant: TypoprefixTextSubmitBtn,
     });
 
     // typography reset btn
@@ -279,7 +279,7 @@ export default function Style(props) {
         typoStylesMobile: resetBtnTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_reset_btn,
+        prefixConstant: TypoprefixTextResetBtn,
     });
     // typography job title
     const {
@@ -288,7 +288,7 @@ export default function Style(props) {
         typoStylesMobile: jobTitleTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_job_list_job_title,
+        prefixConstant: TypoprefixTextJobListJobTitle,
     });
     // typography company name
     const {
@@ -297,7 +297,7 @@ export default function Style(props) {
         typoStylesMobile: companyNameTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_job_list_company_name,
+        prefixConstant: TypoprefixTextJobListCompanyName,
     });
     // typography company name
     const {
@@ -306,7 +306,7 @@ export default function Style(props) {
         typoStylesMobile: jobLocationTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_job_list_job_location,
+        prefixConstant: TypoprefixTextJobListJobLocation,
     });
     // typography company name
     const {
@@ -315,7 +315,7 @@ export default function Style(props) {
         typoStylesMobile: jobDesdlineTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_job_list_deadline,
+        prefixConstant: TypoprefixTextJobListDeadline,
     });
     // typography company name
     const {
@@ -324,7 +324,7 @@ export default function Style(props) {
         typoStylesMobile: noOfJobsTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_job_list_no_of_jobs,
+        prefixConstant: TypoprefixTextJobListNoOfJobs,
     });
     // typography company name
     const {
@@ -333,7 +333,7 @@ export default function Style(props) {
         typoStylesMobile: applyBtnTypoStylesMobile,
     } = generateTypographyStyles({
         attributes,
-        prefixConstant: typoPrefix_text_job_list_job_apply_btn,
+        prefixConstant: TypoprefixTextJobListJobApplyBtn,
     });
 
     // wrapper margin

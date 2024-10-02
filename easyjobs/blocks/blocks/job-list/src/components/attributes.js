@@ -21,7 +21,7 @@ import {
     APPLY_BTN_BORDER,
     APPLY_BTN_PADDING,
 } from "./constants";
-import * as typoPrefixs from "./typographyContants";
+import * as typoPrefixes from "./typographyContants";
 
 const {
     generateResponsiveRangeAttributes,
@@ -45,6 +45,10 @@ const attributes = {
     // blockMeta is for keeping all the styles ⬇
     blockMeta: {
         type: "object",
+    },
+    blockRoot: {
+        type: "string",
+        default: "easyjobs_list_block",
     },
 	hideTitle: {
         type: "boolean",
@@ -293,8 +297,12 @@ const attributes = {
         type: "string",
         default: 'default',
     },
+    cover: {
+        type: "string",
+        default: "",
+    },
     // typography attributes ⬇
-    ...generateTypographyAttributes(Object.values(typoPrefixs)),
+    ...generateTypographyAttributes(Object.values(typoPrefixes)),
     // responsive range control
     ...generateResponsiveRangeAttributes(BLOCK_WIDTH, {
         defaultRange: 100,

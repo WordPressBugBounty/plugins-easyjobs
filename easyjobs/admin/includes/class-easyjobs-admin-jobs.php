@@ -136,6 +136,15 @@ class Easyjobs_Admin_Jobs {
             );
             wp_die();
         }
+        if( ! $this->get_token() ) {
+            echo wp_json_encode(
+                array(
+					'status' => 'api-error',
+					'data'   => [],
+                )
+            );
+            wp_die();
+        }
         $data = Easyjobs_Helper::get_company_info(true);
         if ( ! empty( $data ) ) {
             echo wp_json_encode(

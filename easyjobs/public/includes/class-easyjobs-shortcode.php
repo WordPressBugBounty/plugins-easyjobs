@@ -94,6 +94,7 @@ class Easyjobs_Shortcode {
 		$jobs_data								= $ej_all_datas->jobs;
 		$ej_categories						= (array) $ej_all_datas->categories;
 		$ej_locations							= (array) $ej_all_datas->locations;
+		$paginate_data 						= [];
 		if (isset($jobs_data) && !empty($jobs_data)) {
 			if (isset($jobs_data->last_page) && $jobs_data->last_page > 1) {
 				$permalink 						= get_the_permalink();
@@ -101,6 +102,7 @@ class Easyjobs_Shortcode {
 				$next_page_num 				= ( $jobs_data->current_page ) == $jobs_data->last_page ? $jobs_data->last_page : ( $job_page + 1 );
 				$prev_page_url				= $permalink . "?" . Easyjobs_Helper::get_pagination_url($sanitized_get_data, $prev_page_num);
 				$next_page_url				= $permalink . "?" . Easyjobs_Helper::get_pagination_url($sanitized_get_data, $next_page_num);
+				$paginate_data = Easyjobs_Helper::paginate(["current" => $jobs_data->current_page, "max" => $jobs_data->last_page]);
 			}
 
 			$jobs 							= isset($jobs_data->last_page) ? $jobs_data->data : $ej_all_datas->jobs;

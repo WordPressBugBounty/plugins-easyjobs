@@ -25,9 +25,9 @@ const Classic = ({props, jobsData}) => {
 	return (
 		<>
 			<div className='ej-job-body easyjobs-blocks easyjobs-blocks-job-list'>
-				<div class="easyjobs-shortcode-wrapper ej-template-classic" id="easyjobs-list">
-					<div class="ej-section">
-						<div class="section__header section__header--flex ej-job-filter-wrap" id="open_job_position">
+				<div className="easyjobs-shortcode-wrapper ej-template-classic" id="easyjobs-list">
+					<div className="ej-section">
+						<div className="section__header section__header--flex ej-job-filter-wrap" id="open_job_position">
 							{!hideTitle && 
 								<div className="ej-section-title">
 									<span className="ej-section-title-text">
@@ -48,43 +48,43 @@ const Classic = ({props, jobsData}) => {
 							{(filterByTitle || filterByCategory || filterByLocation) && 
 								<JobFilter 
 									props={props} 
-									categories={jobsData.categories} 
-									locations={jobsData.locations}
+									categories={jobsData?.categories} 
+									locations={jobsData?.locations}
 								/>
 							}
 						</div>
 					</div>
-					<div class="ej-job-list ej-job-list-classic">
-						{jobsData.jobs.data && jobsData.jobs.data.map((job, i) => {
+					<div className="ej-job-list ej-job-list-classic">
+						{jobsData?.jobs?.data && jobsData?.jobs?.data?.map((job, i) => {
 							return (
-								<div class="ej-job-list-item job__card ej-job-list-item-cat <?php if(isset($job->is_pinned) && $job->is_pinned) echo 'ej-has-badge'?>">
-									<div class="job__info ej-job-list-item-col">
-										<h3 class="ej-job-title">
+								<div className="ej-job-list-item job__card ej-job-list-item-cat <?php if(isset($job->is_pinned) && $job->is_pinned) echo 'ej-has-badge'?>">
+									<div className="job__info ej-job-list-item-col">
+										<h3 className="ej-job-title">
 											<a onClick={(e)=>e.preventDefault()} href="#">
-												{job.title}
+												{job?.title}
 											</a>
 										</h3>
-										<p class="meta ej-job-list-info">
+										<p className="meta ej-job-list-info">
 											{showCompanyName && (
 												<>
-													<i class="easyjobs-icon easyjobs-briefcase-2"> </i>
-													<a onClick={(e)=>e.preventDefault()} href="#" target="_blank" class="office__name ej-job-list-info-block">
-														{job.company_name}
+													<i className="easyjobs-icon easyjobs-briefcase-2"> </i>
+													<a onClick={(e)=>e.preventDefault()} href="#" target="_blank" className="office__name ej-job-list-info-block">
+														{job?.company_name}
 													</a>
 												</>
 											)}
 											{showLocation && (
 												<span className='office__location ej-job-list-info-block'>
-													{(job.is_remote || job.job_address?.city || job.job_address?.country) &&
+													{(job?.is_remote || job?.job_address?.city || job?.job_address?.country) &&
 														<i className="easyjobs-icon easyjobs-map-maker"></i>
 													}
 													{job.is_remote ? (
 															<span> Anywhere</span>
 														) : (
-															<span> {job.job_address?.city && job.job_address?.city?.name}
-															{(job.job_address?.country && job.job_address?.city) && ", "}
-															{job.job_address?.country &&
-																job.job_address?.country.name
+															<span> {job?.job_address?.city && job?.job_address?.city?.name}
+															{(job?.job_address?.country && job?.job_address?.city) && ", "}
+															{job?.job_address?.country &&
+																job?.job_address?.country?.name
 															}</span>
 														)
 													}
@@ -92,14 +92,14 @@ const Classic = ({props, jobsData}) => {
 											)}
 										</p>
 									</div>
-									{showNoOfJob && job.vacancies &&
-										<div class="job__vacancy ej-job-list-item-col">
+									{showNoOfJob && job?.vacancies &&
+										<div className="job__vacancy ej-job-list-item-col">
 											<h4>{job.vacancies}</h4>
 											<p>{__( 'No of vacancies ', 'easyjobs' )}</p>
 										</div>
 									}
-									<div class="job__apply ej-job-list-item-col">
-										<a onClick={(e)=>e.preventDefault()} href={`${job.apply_url ? job.apply_url : '#'}`} class="button button__success button__radius" target="_blank">
+									<div className="job__apply ej-job-list-item-col">
+										<a onClick={(e)=>e.preventDefault()} href={`${job?.apply_url ? job?.apply_url : '#'}`} className="button button__success button__radius" target="_blank">
 											<DynamicInputValueHandler
 												placeholder={__("Add text..", "essential-blocks")}
 												className="eb-button-text"
@@ -113,16 +113,16 @@ const Classic = ({props, jobsData}) => {
 											/>
 										</a>
 										{showDateLine && (
-											<span class="deadline ej-deadline">
-												{!job.is_expired ? (
+											<span className="deadline ej-deadline">
+												{!job?.is_expired ? (
 													<>
-														<i class="easyjobs-icon easyjobs-calender"></i>
+														<i className="easyjobs-icon easyjobs-calender"></i>
 														<span> 
-															{__(' Deadline:', 'easyjobs')} {job.expire_at}
+															{__(' Deadline:', 'easyjobs')} {job?.expire_at}
 														</span>
 													</>
 												) : (
-													<span class="ej-expired">{__( 'Expired', 'easyjobs' )}</span>
+													<span className="ej-expired">{__( 'Expired', 'easyjobs' )}</span>
 												)}
 											</span>
 										)}
@@ -131,8 +131,8 @@ const Classic = ({props, jobsData}) => {
 							)}
 						)}
 					</div>
-					{jobsData.jobs && jobsData.jobs.last_page > 1 &&
-						<Pagination jobs={jobsData.jobs} />
+					{jobsData?.jobs && jobsData?.jobs?.last_page > 1 &&
+						<Pagination jobs={jobsData?.jobs} />
 					}
 				</div>
 			</div>

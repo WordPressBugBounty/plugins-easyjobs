@@ -56,19 +56,19 @@ const Default = ({props, jobsData}) => {
 								</div>
 							}
 							{( companyInfo?.show_job_filter && ( filterByTitle || filterByCategory || filterByLocation ) ) && 
-								<JobFilter props={props} categories={jobsData.categories} locations={jobsData.locations} />
+								<JobFilter props={props} categories={jobsData?.categories} locations={jobsData?.locations} />
 							}
 						</div>
 
 						<div className="ej-section-content">
 							<div className="ej-job-list">
-								{jobsData.jobs.data && jobsData.jobs.data.map((job, i) => {
+								{jobsData?.jobs?.data && jobsData?.jobs?.data?.map((job, i) => {
 									return (
 										<div className="ej-job-list-item ej-job-list-item-cat">
 											<div className="ej-job-list-item-inner">
-												<div className={`ej-job-list-item-col ${job.is_pinned ? 'ej-has-badge' : ''}`}>
+												<div className={`ej-job-list-item-col ${job?.is_pinned ? 'ej-has-badge' : ''}`}>
 													<h2 className="ej-job-title">
-														<a href="#" onClick={(e)=>e.preventDefault()}>{job.title}</a>
+														<a href="#" onClick={(e)=>e.preventDefault()}>{job?.title}</a>
 													</h2>
 													{(showCompanyName || showLocation) &&
 														<div className="ej-job-list-info">
@@ -76,23 +76,23 @@ const Default = ({props, jobsData}) => {
 																<div className="ej-job-list-info-block ej-job-list-company-name">
 																	<i className="easyjobs-icon easyjobs-briefcase-2"></i>
 																	<a onClick={(e)=>e.preventDefault()} href="#" target="_blank">
-																		{job.company_name}
+																		{job?.company_name}
 																	</a>
 																</div>
 															}
 															{showLocation &&
 																<div className="ej-job-list-info-block ej-job-list-location">
-																	{(job.is_remote || job.job_address.city || job.job_address.country) &&
+																	{(job?.is_remote || job?.job_address?.city || job?.job_address?.country) &&
 																		<i className="easyjobs-icon easyjobs-map-maker"></i>
 																	}
-																	{job.is_remote ? (
+																	{job?.is_remote ? (
 																		<span>Anywhere</span>
 																	) : (
 																		<span>
-																			{job.job_address.city && job.job_address.city.name}
-																			{(job.job_address.country && job.job_address.city) && ", "}
-																			{job.job_address.country &&
-																				job.job_address.country.name
+																			{job.job_address?.city && job?.job_address?.city?.name}
+																			{(job.job_address?.country && job.job_address?.city) && ", "}
+																			{job?.job_address?.country &&
+																				job?.job_address?.country?.name
 																			}
 																		</span>
 																	)}
@@ -103,14 +103,14 @@ const Default = ({props, jobsData}) => {
 												</div>
 												{(showDateLine || showNoOfJob) && 
 													<div className="ej-job-list-item-col ej-job-time-col">
-														{!job.is_expired ? (
+														{!job?.is_expired ? (
 															<>
 																{showDateLine && 
-																	<p className="ej-deadline">{job.expire_at}</p>
+																	<p className="ej-deadline">{job?.expire_at}</p>
 																}
-																{job.vacancies && showNoOfJob &&
+																{job?.vacancies && showNoOfJob &&
 																	<p className="ej-list-sub">
-																		No of vacancies: {job.vacancies}
+																		No of vacancies: {job?.vacancies}
 																	</p>
 																}
 															</>
@@ -122,7 +122,7 @@ const Default = ({props, jobsData}) => {
 													</div>
 												}
 												<div className="ej-job-list-item-col ej-job-apply-btn">
-													<a href={`${job.apply_url ? job.apply_url : '#'}`} className="ej-btn ej-info-btn-light" target="_blank" onClick={e=>e.preventDefault()}>
+													<a href={`${job?.apply_url ? job?.apply_url : '#'}`} className="ej-btn ej-info-btn-light" target="_blank" onClick={e=>e.preventDefault()}>
 														<DynamicInputValueHandler
 															placeholder={__("Add text..", "essential-blocks")}
 															className="eb-button-text"
@@ -141,8 +141,8 @@ const Default = ({props, jobsData}) => {
 									);
 								})}
 							</div>
-							{jobsData.jobs && jobsData.jobs.last_page > 1 &&
-								<Pagination jobs={jobsData.jobs} />
+							{jobsData?.jobs && jobsData?.jobs?.last_page > 1 &&
+								<Pagination jobs={jobsData?.jobs} />
 							}
 						</div>
 					</div>

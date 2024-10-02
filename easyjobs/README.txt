@@ -4,7 +4,7 @@ Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.6
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -137,6 +137,13 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.5.1 - 02/10/2024 =
+* Added : Job Header & Job Footer Block for Gutenberg editor.
+* Fixed: Plugin conflict with Essential Blocks.
+* Fixed: Image upload issue.
+* Improved: Pagination for Job List and Landing Page.
+* Few minor bug fixes & improvements.
 
 = 2.5.0 - 19/09/2024 =
 * Added : Job List Block for Gutenberg editor.

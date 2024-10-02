@@ -70,13 +70,16 @@ class EasyjobsBlocksScripts {
             $editor_type = 'edit-widgets';
         }
 
-		wp_enqueue_script( 'easyjobs-owl', EASYJOBS_PUBLIC_URL . 'assets/vendor/owl.carousel.min.js', array( 'jquery' ), ( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION, true );
-        wp_enqueue_script( 'easyjobs-js', EASYJOBS_PUBLIC_URL . 'assets/dist/js/easyjobs-public.min.js', array( 'jquery', 'easyjobs-owl' ), ( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION, true );
+		wp_enqueue_style( 'easyjobs-owl-blocks', EASYJOBS_PUBLIC_URL . 'assets/vendor/owl.carousel.min.css', array(), ( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION, 'all' );
+
+		wp_enqueue_script( 'easyjobs-owl-blocks', EASYJOBS_PUBLIC_URL . 'assets/vendor/owl.carousel.min.js', array( 'jquery' ), ( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION, true );
+        wp_enqueue_script( 'easyjobs-js', EASYJOBS_PUBLIC_URL . 'assets/dist/js/easyjobs-public.min.js', array( 'jquery', 'easyjobs-owl-blocks' ), ( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION, true );
 
 
 		$localize_array = [
             'rest_rootURL'               => get_rest_url(),
             'ajax_url'                   => admin_url( 'admin-ajax.php' ),
+			'image_url'					 => EASYJOBS_URL . 'public/assets/img',
             'responsiveBreakpoints'      => [
 				'tablet' => 1024,
 				'mobile' => 767
@@ -136,8 +139,14 @@ class EasyjobsBlocksScripts {
 	}
 
 	public function render_footer_frontend($atts, $con) {
+		if ( ! $this->get_token() ) {
+			ob_start();
+			return Easyjobs_Helper::err_view();
+			return ob_get_clean();
+		}
+
 		$default_atts = [
-			
+			'lifeAtTitle' => 'Life At'
 		];
 
 		$atts = wp_parse_args( $atts, $default_atts );
@@ -161,6 +170,12 @@ class EasyjobsBlocksScripts {
 	}
 
 	public function render_info_frontend($atts, $con) {
+		if ( ! $this->get_token() ) {
+			ob_start();
+			return Easyjobs_Helper::err_view();
+			return ob_get_clean();
+		}
+		
 		$default_atts = [
 			
 		];
@@ -240,12 +255,14 @@ class EasyjobsBlocksScripts {
 		$permalink 						= get_the_permalink();
 		$prev_page_url					= '';
 		$next_page_url					= '';
+		$paginate_data					= [];
 		if (isset($jobs_data) && !empty($jobs_data)) {
 			if (isset($jobs_data->last_page) && $jobs_data->last_page > 1) {
 				$prev_page_num 				= ( $jobs_data->current_page ) == 1 ? 1 : ( $job_page - 1 );
 				$next_page_num 				= ( $jobs_data->current_page ) == $jobs_data->last_page ? $jobs_data->last_page : ( $job_page + 1 );
 				$prev_page_url				= $permalink . "?" . Easyjobs_Helper::get_pagination_url($sanitized_get_data, $prev_page_num);
 				$next_page_url				= $permalink . "?" . Easyjobs_Helper::get_pagination_url($sanitized_get_data, $next_page_num);
+				$paginate_data = Easyjobs_Helper::paginate(["current" => $jobs_data->current_page, "max" => $jobs_data->last_page]);
 			}
 
             $jobs 							= isset($jobs_data->last_page) ? $jobs_data->data : $ej_all_datas->jobs;
@@ -273,6 +290,7 @@ class EasyjobsBlocksScripts {
 				'job_with_page_id' 		=> $job_with_page_id,
 				'jobs_data' 			=> $jobs_data,
 				'sanitized_get_data' 	=> $sanitized_get_data,
+				'paginate_data'			=> $paginate_data,
 			] 
 		);
 		return ob_get_clean();

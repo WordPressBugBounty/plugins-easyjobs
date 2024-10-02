@@ -1,8 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
@@ -16,13 +16,18 @@ import Elegant from './themes/elegant';
 import Inspector from "./inspector";
 import { useEffect, useState } from 'react';
 import Style from "./style";
-import apiFetch from '@wordpress/api-fetch';
 
 const Edit = (props) => {
 	const [jobsData, setJobsData] = useState({jobs: {}, categories: {}, locations: {}});
 	const [apiError, setApiError] = useState(false);
 	const {attributes, companyInfo, isSelected} = props;
-  	const { orderBy, sortBy, activeOnly, noOfJob } = attributes;
+  	const { orderBy, sortBy, activeOnly, noOfJob, cover } = attributes;
+	  
+	useEffect(() => {
+		if((companyInfo?.length === 1)  && (companyInfo[0] === 'api-error')) {
+			setApiError(true);
+		}	
+	}, [companyInfo]);
 
 	const getInitialData = () => {
 		const getUrl = () => {
@@ -45,8 +50,6 @@ const Edit = (props) => {
 					categories: response.data.categories,
 					locations: response.data.locations
 				})
-			} else if( response.status === 'api-error' ) {
-				setApiError(true);
 			} else{
 				console.error('Fetch error:', response.message);
 			}
@@ -62,7 +65,11 @@ const Edit = (props) => {
         ...props,
         style: <Style {...props} />
     };
-  	return (
+  	return cover.length ? (
+        <div>
+            <img src={cover} alt="job list" style={{ maxWidth: "100%" }} />
+        </div>
+    ) : (
 		<>
             {isSelected && !apiError && <Inspector {...props} />}
 			<BlockProps.Edit { ...enhancedProps }>
