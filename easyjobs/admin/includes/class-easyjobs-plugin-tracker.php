@@ -63,6 +63,16 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
             }
             return static::$_instance;
         }
+
+        public $disabled_wp_cron     = false;
+        public $enable_self_cron     = false;
+        public $require_optin        = true;
+        public $include_goodbye_form = true;
+        public $marketing            = true;
+        public $options              = [];
+        public $notice_options       = [];
+        public $item_id              = false;
+        
         /**
          * Automatically Invoked when initialized.
          *
@@ -415,6 +425,13 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
             if ( $theme->Version ) {
                 $body['theme_version'] = sanitize_text_field( $theme->Version );
             }
+
+            // send block count array
+            $block_usage = BlockUsage::get_used_blocks_count();
+
+            if(is_array($block_usage) && !empty($block_usage)) {
+                $body['optional_data'] = $block_usage;
+            }
             return $body;
         }
 
@@ -629,20 +646,18 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
 
             ?>
 
-            <div class="notice notice-info updated put-dismiss-notice">
-                <p><?php echo wp_kses_post( $notice_text ); ?></p>
-                <div class="wpinsights-data" style="display: none;">
-                    <p><?php echo wp_kses_post( $extra_notice_text ); ?></p>
-                </div>
-                <p>
-                    <a href="<?php echo esc_url( $url_yes ); ?>" class="button-primary">
-                        <?php echo esc_html( $this->notice_options['yes'] ); ?>
-                    </a>&nbsp;
-                    <a href="<?php echo esc_url( $url_no ); ?>" class="button-secondary">
-                        <?php echo esc_html( $this->notice_options['no'] ); ?>
-                    </a>
-                </p>
+            <p><?php echo wp_kses_post( $notice_text ); ?></p>
+            <div class="wpinsights-data" style="display: none;">
+                <p><?php echo wp_kses_post( $extra_notice_text ); ?></p>
             </div>
+            <p>
+                <a href="<?php echo esc_url( $url_yes ); ?>" class="button-primary">
+                    <?php echo esc_html( $this->notice_options['yes'] ); ?>
+                </a>&nbsp;
+                <a href="<?php echo esc_url( $url_no ); ?>" class="button-secondary">
+                    <?php echo esc_html( $this->notice_options['no'] ); ?>
+                </a>
+            </p>
 
             <?php
         }

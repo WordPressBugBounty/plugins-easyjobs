@@ -95,6 +95,8 @@ class Easyjobs_Admin {
 
     public $cache_bank;
 
+	private $easyjobs_insights = null;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -111,7 +113,8 @@ class Easyjobs_Admin {
 		$this->candidates  = new Easyjobs_Admin_Candidates();
 		$this->settings    = (object) EasyJobs_DB::get_settings();
         $this->dashboard   = new Easyjobs_Admin_Dashboard();
-        // $this->admin_notice();
+		$this->easyjobs_start_plugin_tracking();
+        $this->admin_notice();
 
         $this->update_company_data();
 		if($this->isEasyJobsPage()){
@@ -160,7 +163,7 @@ class Easyjobs_Admin {
 				'lifetime'       => 3,
 				'priority'       => 10,
 				'stylesheet_url' => '',
-                'dev_mode'       => true
+                'dev_mode'       => false
 			]
 		);
 
@@ -170,27 +173,105 @@ class Easyjobs_Admin {
 
         $company_info = Easyjobs_Helper::get_company_info();
 
-		$notice_body = '<p class="ej-black-friday-notice" style="margin-top: 0; margin-bottom: 10px;">Black Friday Sale: Enjoy up to 80% discounts & <strong>streamline your hiring process</strong> with premium features 💼</p>
-        <a class="button button-primary" href="https://wpdeveloper.com/upgrade/easyjobs-bfcm" target="_blank">Upgrade to pro</a>
-        <button data-dismiss="true" class="dismiss-btn button button-link">I Don\'t Want To Save Money</button>';
+		/**
+		 * Review Notice
+		 *
+		 * @var mixed $message
+		 */
 
-		//Black Friday Notice Add
+		$message = __(
+			'We hope you\'re enjoying EasyJobs! Could you please do us a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?',
+			'easyjobs'
+		);
+
+		$_review_notice = [
+			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-icon-blue.svg',
+			'html'      => '<p>' . $message . '</p>',
+			'links'     => [
+				'later'            => [
+					'link'       => 'https://wpdeveloper.net/review-easyjobs',
+					'label'      => __( 'Sure, you deserve it!', 'easyjobs' ),
+					'icon_class' => 'dashicons dashicons-external',
+					'attributes' => [
+						'target'       => '_blank',
+						'class'        => 'btn',
+						'data-dismiss' => false
+					]
+				],
+				'allready'         => [
+					'label'      => __( 'I already did', 'easyjobs' ),
+					'icon_class' => 'dashicons dashicons-smiley',
+					'attributes' => [
+						'data-dismiss' => true
+					]
+				],
+				'maybe_later'      => [
+					'label'      => __( 'Maybe Later', 'easyjobs' ),
+					'icon_class' => 'dashicons dashicons-calendar-alt',
+					'attributes' => [
+						'data-later' => true,
+						'class'      => 'dismiss-btn'
+					]
+				],
+				'support'          => [
+					'link'       => 'https://wpdeveloper.com/support',
+					'attributes' => [
+						'target' => '_blank'
+					],
+					'label'      => __( 'I need help', 'easyjobs' ),
+					'icon_class' => 'dashicons dashicons-sos'
+				],
+				'never_show_again' => [
+					'label'      => __( 'Never show again', 'easyjobs' ),
+					'icon_class' => 'dashicons dashicons-dismiss',
+					'attributes' => [
+						'data-dismiss' => true
+					]
+				]
+			]
+		];
 
 		$notices->add(
-			'easyjobs_black_friday_notice',
+			'review',
+			$_review_notice,
 			[
-				'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/logo-blue.svg',
-				'html'      => $notice_body
-			],
-			[
-				'start'       => $notices->time(),
-				'classes'     => 'updated put-dismiss-notice',
+				'start'       => $notices->strtotime( '+10 days' ),
+				'recurrence'  => 15,
 				'dismissible' => true,
 				'refresh'     => EASYJOBS_VERSION,
-				'do_action'   => 'easyjobs_black_friday_notice',
-				'display_if'  => !empty($company_info) ? ! $company_info->is_pro : true
+				'screens'     => [
+					'dashboard',
+					'plugins',
+					'themes',
+					'edit-page',
+					'edit-post',
+					'users',
+					'tools',
+					'options-general',
+					'nav-menus'
+				]
 			]
 		);
+
+		/**
+		 * Opt-In Notice
+		 */
+		if ( $this->easyjobs_insights != null ) {
+			$notices->add(
+				'opt_in',
+				[ $this->easyjobs_insights, 'notice' ],
+				[
+					'classes'     => 'updated put-dismiss-notice',
+					'start'       => $notices->strtotime( '+2 days' ),
+					// 'start'       => $notices->time(),
+					'dismissible' => true,
+					'refresh'     => EASYJOBS_VERSION,
+					'do_action'   => 'wpdeveloper_notice_clicked_for_easyjobs',
+					'display_if'  => !empty($company_info) ? ! $company_info->is_pro : true
+				]
+			);
+		}
+
 		$this->cache_bank->create_account( $notices );
 		$this->cache_bank->calculate_deposits( $notices );
 	}
@@ -1455,6 +1536,7 @@ class Easyjobs_Admin {
 				'item_id'      => '3afabc1d2d2310978396',
 			)
         );
+		$this->easyjobs_insights = $tracker;
         $tracker->set_notice_options(
             array(
 				'notice'       => __( 'Want to help make <strong>EasyJobs</strong> even more awesome?', 'easyjobs' ),

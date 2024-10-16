@@ -37,6 +37,7 @@ import {
 } from "./typographyContants";
 
 import objAttributes from "./attributes";
+import DocLink from "../../../helpers/DocLink";
 
 const {
     ColorControl,
@@ -86,17 +87,17 @@ const Inspector = ({ attributes, setAttributes }) => {
                     tabs={[
                         {
                             name: "content",
-                            title: __("Content", "essential-blocks"),
+                            title: __("Content", "easyjobs"),
                             className: "eb-tab general",
                         },
                         {
                             name: "styles",
-                            title: __("Style", "essential-blocks"),
+                            title: __("Style", "easyjobs"),
                             className: "eb-tab styles",
                         },
                         {
                             name: "advance",
-                            title: __("Advanced", "essential-blocks"),
+                            title: __("Advanced", "easyjobs"),
                             className: "eb-tab advance",
                         },
                     ]}
@@ -108,13 +109,13 @@ const Inspector = ({ attributes, setAttributes }) => {
                                     <PanelBody
                                         title={__(
                                             "EasyJobs",
-                                            "essential-blocks"
+                                            "easyjobs"
                                         )}
                                     >
                                         <ToggleControl
                                             label={__(
                                                 "Change Cover Image",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             checked={changeCoverImage}
                                             onChange={() =>
@@ -139,7 +140,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                                     return (
                                                         <Button
                                                             className="eb-background-control-inspector-panel-img-btn components-button"
-                                                            label={__("Upload Image", "essential-blocks")}
+                                                            label={__("Upload Image", "easyjobs")}
                                                             icon="format-image"
                                                             onClick={open}
                                                         />
@@ -160,7 +161,7 @@ const Inspector = ({ attributes, setAttributes }) => {
 										<ToggleControl
                                             label={__(
                                                 "Change Logo",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             checked={changeLogoImage}
                                             onChange={() =>
@@ -185,7 +186,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                                     return (
                                                         <Button
                                                             className="eb-background-control-inspector-panel-img-btn components-button"
-                                                            label={__("Upload Image", "essential-blocks")}
+                                                            label={__("Upload Image", "easyjobs")}
                                                             icon="format-image"
                                                             onClick={open}
                                                         />
@@ -207,7 +208,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                     <PanelBody
                                         title={__(
                                             "Text change",
-                                            "essential-blocks"
+                                            "easyjobs"
                                         )}
                                         initialOpen={false}
                                     >
@@ -231,14 +232,14 @@ const Inspector = ({ attributes, setAttributes }) => {
                             {tab.name === "styles" && (
                                 <>
                                     <PanelBody
-                                        title={__("General", "essential-blocks")}
+                                        title={__("General", "easyjobs")}
                                         initialOpen={false}
                                     >
                                         <BaseControl>
                                             <h3 className="eb-control-title">
                                                 {__(
                                                     "Background",
-                                                    "essential-blocks"
+                                                    "easyjobs"
                                                 )}
                                             </h3>
                                         </BaseControl>
@@ -254,7 +255,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <BaseControl
                                             label={__(
                                                 "Alignment",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                         >
                                             <ButtonGroup id="eb-button-group-alignment">
@@ -287,7 +288,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <ResponsiveRangeController
                                             baseLabel={__(
                                                 "Width",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             controlName={INFO_WIDTH}
                                             resRequiredProps={
@@ -304,7 +305,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                             controlName={INFO_MARGIN}
                                             baseLabel={__(
                                                 "Margin",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                         />
                                         <ResponsiveDimensionsControl
@@ -314,7 +315,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                             controlName={INFO_PADDING}
                                             baseLabel={__(
                                                 "Padding",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                         />
                                         <Divider />
@@ -327,21 +328,21 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         />
                                     </PanelBody>
                                     <PanelBody
-                                        title={__("Company Info", "essential-blocks")}
+                                        title={__("Company Info", "easyjobs")}
                                         initialOpen={false}
                                     >
                                         <BaseControl>
                                             <h3 className="eb-control-title">
                                                 {__(
                                                     "Company Name",
-                                                    "essential-blocks"
+                                                    "easyjobs"
                                                 )}
                                             </h3>
                                         </BaseControl>
                                         <ColorControl
                                             label={__(
                                                 "Color",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             color={companyNameColor}
                                             onChange={(newTextColor) =>
@@ -353,7 +354,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <TypographyDropdown
                                             baseLabel={__(
                                                 "Typography",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             typographyPrefixConstant={
                                                 TypoprefixCompanyName
@@ -367,14 +368,14 @@ const Inspector = ({ attributes, setAttributes }) => {
                                             <h3 className="eb-control-title">
                                                 {__(
                                                     "Location",
-                                                    "essential-blocks"
+                                                    "easyjobs"
                                                 )}
                                             </h3>
                                         </BaseControl>
                                         <ColorControl
                                             label={__(
                                                 "Color",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             color={locationNameColor}
                                             onChange={(newTextColor) =>
@@ -386,7 +387,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <TypographyDropdown
                                             baseLabel={__(
                                                 "Typography",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             typographyPrefixConstant={
                                                 TypoprefixLocationName
@@ -400,14 +401,14 @@ const Inspector = ({ attributes, setAttributes }) => {
                                             <h3 className="eb-control-title">
                                                 {__(
                                                     "Website Link Button",
-                                                    "essential-blocks"
+                                                    "easyjobs"
                                                 )}
                                             </h3>
                                         </BaseControl>
                                         <ColorControl
                                             label={__(
                                                 "Color",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             color={websiteLinkBtnColor}
                                             onChange={(newTextColor) =>
@@ -419,7 +420,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <ColorControl
                                             label={__(
                                                 "Hover Color",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             color={websiteLinkBtnColorHvr}
                                             onChange={(newTextColor) =>
@@ -431,7 +432,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <TypographyDropdown
                                             baseLabel={__(
                                                 "Typography",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             typographyPrefixConstant={
                                                 TypoprefixWebsiteLink
@@ -463,7 +464,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                             controlName={WEBSITE_LINK_BTN_PADDING}
                                             baseLabel={__(
                                                 "Padding",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                         />
                                         <Divider />
@@ -471,14 +472,14 @@ const Inspector = ({ attributes, setAttributes }) => {
                                             <h3 className="eb-control-title">
                                                 {__(
                                                     "Description",
-                                                    "essential-blocks"
+                                                    "easyjobs"
                                                 )}
                                             </h3>
                                         </BaseControl>
                                         <BaseControl
                                             label={__(
                                                 "Alignment",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                         >
                                             <ButtonGroup id="eb-button-group-alignment">
@@ -510,7 +511,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <ColorControl
                                             label={__(
                                                 "Color",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             color={descriptionColor}
                                             onChange={(newTextColor) =>
@@ -522,7 +523,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <TypographyDropdown
                                             baseLabel={__(
                                                 "Typography",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             typographyPrefixConstant={
                                                 TypoprefixDescription
@@ -547,6 +548,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                     )}
                 </TabPanel>
             </div>
+            <DocLink link={'https://easy.jobs/docs/design-company-profile-in-gutenberg-with-easy-jobs/'} />
         </InspectorControls>
     );
 };

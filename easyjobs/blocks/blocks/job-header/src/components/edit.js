@@ -61,7 +61,7 @@ const Edit = (props) => {
 								<p>Loading header block...</p>
 							)
 						) : (
-							<h3 className='elej-error-msg-editor'>Please Connect your EasyJobs Account</h3>
+							<p className='elej-error-msg-editor'>Please Connect your EasyJobs Account</p>
 						)
 					}
 				</>

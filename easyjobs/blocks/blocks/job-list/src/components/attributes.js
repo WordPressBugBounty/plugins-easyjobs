@@ -46,10 +46,10 @@ const attributes = {
     blockMeta: {
         type: "object",
     },
-    blockRoot: {
-        type: "string",
-        default: "easyjobs_list_block",
-    },
+    // blockRoot: {
+    //     type: "string",
+    //     default: "easyjobs_list_block",
+    // },
 	hideTitle: {
         type: "boolean",
         default: false,

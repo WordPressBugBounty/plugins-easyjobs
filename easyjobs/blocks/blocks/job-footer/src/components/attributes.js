@@ -16,10 +16,10 @@ const attributes = {
     blockId: {
         type: "string",
     },
-    blockRoot: {
-        type: "string",
-        default: "easyjobs_block_footer",
-    },
+    // blockRoot: {
+    //     type: "string",
+    //     default: "easyjobs_block_footer",
+    // },
     // blockMeta is for keeping all the styles ⬇
     blockMeta: {
         type: "object",

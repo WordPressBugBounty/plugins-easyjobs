@@ -7,6 +7,9 @@ import {
     PanelBody,
     TabPanel,
     BaseControl,
+    Card,
+    CardBody,
+    ExternalLink,
 } from "@wordpress/components";
 
 /**
@@ -17,6 +20,7 @@ import {
  } from "./typographyConstants";
 
 import objAttributes from "./attributes";
+import DocLink from "../../../helpers/DocLink";
 
 const {
     ColorControl,
@@ -24,7 +28,7 @@ const {
     TypographyDropdown,
 } = window.EJControls;
 
-const Inspector = ({ attributes, setAttributes }) => {
+const Inspector = ({ attributes, setAttributes, companyDetails }) => {
     const {
         resOption,
         lifeAtTitle,
@@ -47,17 +51,17 @@ const Inspector = ({ attributes, setAttributes }) => {
                     tabs={[
                         {
                             name: "content",
-                            title: __("Content", "essential-blocks"),
+                            title: __("Content", "easyjobs"),
                             className: "eb-tab general",
                         },
                         {
                             name: "styles",
-                            title: __("Style", "essential-blocks"),
+                            title: __("Style", "easyjobs"),
                             className: "eb-tab styles",
                         },
                         {
                             name: "advance",
-                            title: __("Advanced", "essential-blocks"),
+                            title: __("Advanced", "easyjobs"),
                             className: "eb-tab advance",
                         },
                     ]}
@@ -66,41 +70,64 @@ const Inspector = ({ attributes, setAttributes }) => {
                         <div className={"eb-tab-controls " + tab.name}>
                             {tab.name === "content" && (
                                 <>
-                                    <PanelBody
-                                        title={__(
-                                            "Text change",
-                                            "essential-blocks"
-                                        )}
-                                        initialOpen={true}
-                                    >
-                                        <DynamicInputControl
-                                            label="Gallery Section Title"
-                                            attrName="lifeAtTitle"
-                                            inputValue={lifeAtTitle}
-                                            setAttributes={setAttributes}
-                                            onChange={(text) => setAttributes({ lifeAtTitle: text })}
-                                        />
-                                    </PanelBody>
+                                    {( !companyDetails?.show_life ) ? (
+                                        <PanelBody
+                                            title={__(
+                                                "Company Gallery",
+                                                "easyjobs"
+                                            )}
+                                            initialOpen={true}
+                                        >
+                                            <Card>
+                                                <CardBody>
+                                                    <p>
+                                                        Please make sure to enable the "Show on Company Page" from
+                                                        <ExternalLink
+                                                            href={`${EasyJobsLocalize.ej_admin_url}admin.php?page=easyjobs-settings`}
+                                                        >
+                                                            {__(" here.")}
+                                                        </ExternalLink>
+                                                    </p>
+                                                </CardBody>
+                                            </Card>
+                                        </PanelBody>
+                                    ) : (
+                                        <PanelBody
+                                            title={__(
+                                                "Text change",
+                                                "easyjobs"
+                                            )}
+                                            initialOpen={true}
+                                        >
+                                            <DynamicInputControl
+                                                label="Gallery Section Title"
+                                                attrName="lifeAtTitle"
+                                                inputValue={lifeAtTitle}
+                                                setAttributes={setAttributes}
+                                                onChange={(text) => setAttributes({ lifeAtTitle: text })}
+                                            />
+                                        </PanelBody>
+                                    )}
                                 </>
                             )}
                             {tab.name === "styles" && (
                                 <>
                                     <PanelBody
-                                        title={__("Gallery", "essential-blocks")}
+                                        title={__("Gallery", "easyjobs")}
                                         initialOpen={true}
                                     >
                                         <BaseControl>
                                             <h3 className="eb-control-title">
                                                 {__(
                                                     "Gallery Title",
-                                                    "essential-blocks"
+                                                    "easyjobs"
                                                 )}
                                             </h3>
                                         </BaseControl>
                                         <ColorControl
                                             label={__(
                                                 "Color",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             color={galleryTitleColor}
                                             onChange={(newTextColor) =>
@@ -112,7 +139,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                                         <TypographyDropdown
                                             baseLabel={__(
                                                 "Typography",
-                                                "essential-blocks"
+                                                "easyjobs"
                                             )}
                                             typographyPrefixConstant={
                                                 TypoprefixGalleryTitle
@@ -136,6 +163,7 @@ const Inspector = ({ attributes, setAttributes }) => {
                     )}
                 </TabPanel>
             </div>
+            <DocLink link={'https://easy.jobs/docs/showcase-company-gallery-using-gutenberg/'} />
         </InspectorControls>
     );
 };

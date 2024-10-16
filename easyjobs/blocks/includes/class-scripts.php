@@ -80,6 +80,7 @@ class EasyjobsBlocksScripts {
             'rest_rootURL'               => get_rest_url(),
             'ajax_url'                   => admin_url( 'admin-ajax.php' ),
 			'image_url'					 => EASYJOBS_URL . 'public/assets/img',
+			'ej_admin_url'				 => get_admin_url(),
             'responsiveBreakpoints'      => [
 				'tablet' => 1024,
 				'mobile' => 767

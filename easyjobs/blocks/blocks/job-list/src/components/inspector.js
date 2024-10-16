@@ -55,6 +55,7 @@ import {
 } from "./typographyContants";
 
 import objAttributes from "./attributes";
+import DocLink from "../../../helpers/DocLink";
 
 const {
     ColorControl,
@@ -1387,6 +1388,7 @@ const Inspector = ({ attributes, setAttributes, makeAjaxCall, setJobsData }) => 
                     )}
                 </TabPanel>
             </div>
+            <DocLink link={'https://easy.jobs/docs/display-job-listings-on-your-career-page/'} />
         </InspectorControls>
     );
 };

@@ -163,6 +163,7 @@ class Easyjobs {
 
         require_once EASYJOBS_ADMIN_DIR_PATH . 'includes/class-easyjobs-admin-dashboard.php';
         require_once EASYJOBS_ROOT_DIR_PATH . 'blocks/includes/class-scripts.php';
+        require_once EASYJOBS_ROOT_DIR_PATH . 'admin/includes/class-easyjobs-block-usage.php';
 
         /******** Public dependencies */
 		/**
