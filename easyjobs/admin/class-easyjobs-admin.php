@@ -105,6 +105,7 @@ class Easyjobs_Admin {
 	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
+	
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
@@ -114,7 +115,9 @@ class Easyjobs_Admin {
 		$this->settings    = (object) EasyJobs_DB::get_settings();
         $this->dashboard   = new Easyjobs_Admin_Dashboard();
 		$this->easyjobs_start_plugin_tracking();
-        $this->admin_notice();
+		if(is_admin()){
+			$this->admin_notice();
+		}
 
         $this->update_company_data();
 		if($this->isEasyJobsPage()){
@@ -171,7 +174,7 @@ class Easyjobs_Admin {
 		 * Black Friday Campaign Notice
 		 */
 
-        $company_info = Easyjobs_Helper::get_company_info();
+        // $company_info = Easyjobs_Helper::get_company_info( true );
 
 		/**
 		 * Review Notice
@@ -267,7 +270,6 @@ class Easyjobs_Admin {
 					'dismissible' => true,
 					'refresh'     => EASYJOBS_VERSION,
 					'do_action'   => 'wpdeveloper_notice_clicked_for_easyjobs',
-					'display_if'  => !empty($company_info) ? ! $company_info->is_pro : true
 				]
 			);
 		}

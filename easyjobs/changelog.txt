@@ -1,3 +1,7 @@
+= 2.5.3 - 17/10/2024 =
+* Hotfix: Resolved the issue with repeated API calls.
+* Few minor bug fixes & improvements.
+
 = 2.5.2 - 16/10/2024 =
 * Added : Career Page Block for Gutenberg editor.
 * Improved : Added documentation link for all blocks.

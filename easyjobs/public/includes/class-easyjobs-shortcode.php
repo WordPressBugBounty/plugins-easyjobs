@@ -91,9 +91,11 @@ class Easyjobs_Shortcode {
 		}
 
 		$ej_all_datas             = $this->get_published_jobs($job_page, $ej_is_search, $sanitized_get_data);
-		$jobs_data								= $ej_all_datas->jobs;
-		$ej_categories						= (array) $ej_all_datas->categories;
-		$ej_locations							= (array) $ej_all_datas->locations;
+		if(!empty($ej_all_datas)) {
+			$jobs_data								= $ej_all_datas->jobs;
+			$ej_categories						= (array) $ej_all_datas->categories;
+			$ej_locations							= (array) $ej_all_datas->locations;
+		}
 		$paginate_data 						= [];
 		if (isset($jobs_data) && !empty($jobs_data)) {
 			if (isset($jobs_data->last_page) && $jobs_data->last_page > 1) {
