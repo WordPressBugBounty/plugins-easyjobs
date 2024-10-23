@@ -2,8 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from "@wordpress/i18n";
-import { InspectorControls, MediaUpload } from "@wordpress/block-editor";
-import { select } from '@wordpress/data';
+import { InspectorControls} from "@wordpress/block-editor";
 import {
     PanelBody,
     ToggleControl,
@@ -15,44 +14,14 @@ import {
 /**
  * Internal depencencies
  */
-
-// import { 
-//     typoPrefix_gallery_title
-// } from "./typographyConstants";
-
-import objAttributes from "./attributes";
 import DocLink from "../../../helpers/DocLink";
-
-const {
-    ColorControl,
-    AdvancedControls,
-    DynamicInputControl,
-    ImageAvatar,
-    BackgroundControl,
-    ResponsiveRangeController,
-    ResponsiveDimensionsControl,
-    TypographyDropdown,
-    BorderShadowControl,
-} = window.EJControls;
 
 const Inspector = ({ attributes, setAttributes, clientId }) => {
     const {
-        // resOption,
-        // lifeAtTitle,
-        // galleryTitleColor,
         hideJobHeader,
         hideJobList,
         hideJobFooter
     } = attributes;
-
-    // const {innerBlocks} = select('core/block-editor').getBlock(clientId);
-    // console.log([...innerBlocks]);
-    // const resRequiredProps = {
-    //     setAttributes,
-    //     resOption,
-    //     attributes,
-    //     objAttributes,
-    // };
 
     const handleHideJobHeader = () => {
         setAttributes({

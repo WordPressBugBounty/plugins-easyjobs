@@ -39,6 +39,25 @@ class Easyjobs_Admin_Jobs {
     }
 
     public function company_details() {
+        if ( ! Easyjobs_Helper::verified_request_blocks($_GET) || ! Easyjobs_Helper::can_update_options()) {
+            echo json_encode(
+                array(
+					'status'  => 'error',
+					'message' => 'Invaild request',
+                )
+            );
+            wp_die();
+        }
+        if( ! $this->get_token() ) {
+            echo wp_json_encode(
+                array(
+					'status' => 'api-error',
+					'data'   => [],
+                )
+            );
+            wp_die();
+        }
+        
         $company_details = Easyjobs_Helper::get_company_details( true );
 		
         if ( ! empty( $company_details ) ) {
@@ -103,7 +122,6 @@ class Easyjobs_Admin_Jobs {
 						'orderby' => $_GET['orderby'], 'order' => $_GET['order'], 'rows' => $_GET['row'], 'status' => $_GET['status'] == 'true' ? 'active' : '', 'paginate' => true,
 					], Easyjobs_Helper::get_allowed_params_from_request($_POST)), $job_page
 				);
-                // dd($jobs);
 				$job_with_page_id       = Easyjobs_Helper::sync_job_pages( $jobs->jobs->data );
 				/*$new_job_with_page_id   = Easyjobs_Helper::create_pages_if_required( $jobs->data, $job_with_page_id );
 				$published_job_page_ids = $job_with_page_id + $new_job_with_page_id;*/
@@ -425,7 +443,7 @@ class Easyjobs_Admin_Jobs {
 		}
 		$job_type = isset($_POST['job_type']) ? sanitize_text_field($_POST['job_type']) : 'published';
 		$job_page = isset($_POST['page']) ? abs($_POST['page']) : 1;
-
+        
 		switch ($job_type){
 			case 'archived':
 				$jobs = $this->get_archived_jobs($job_page, $_POST['rows']);

@@ -4,7 +4,7 @@ import Classic from './themes/classic';
 import Elegant from './themes/elegant';
 import Style from './style';
 import Inspector from './inspector';
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from '@wordpress/element';
 const {
   	BlockProps
 } = window.EJControls;

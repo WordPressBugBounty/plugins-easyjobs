@@ -4,15 +4,10 @@
 import { InnerBlocks } from "@wordpress/block-editor";
 const { BlockProps } = window.EJControls;
 const Save = (props) => {
-    const {attributes} = props;
-    const {
-        
-    } = attributes;
-
     return (
         <>
             <BlockProps.Save {...props}>
-                <div className="eb-accordion-inner">
+                <div className="ej-career-page">
                     <InnerBlocks.Content />
                 </div>
             </BlockProps.Save>

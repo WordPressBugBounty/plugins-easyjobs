@@ -125,7 +125,7 @@ class EasyjobsBlocksScripts {
 		return ! empty( $settings['easyjobs_api_key'] ) ? $settings['easyjobs_api_key'] : false;
 	}
 
-	function render_frontend_for_job_blocks() {
+	public function render_frontend_for_job_blocks() {
 		register_block_type( EASYJOBS_ROOT_DIR_PATH . 'blocks/blocks/job-list/block.json', [
 			'render_callback' => [$this, 'render_list_frontend' ]
 		] );
@@ -139,10 +139,15 @@ class EasyjobsBlocksScripts {
 		] );
 	}
 
+	private $api_notice_shown = false;
+
 	public function render_footer_frontend($atts, $con) {
 		if ( ! $this->get_token() ) {
 			ob_start();
-			return Easyjobs_Helper::err_view();
+			if(!$this->api_notice_shown){
+				$this->api_notice_shown = true;
+				return Easyjobs_Helper::err_view();
+			}
 			return ob_get_clean();
 		}
 
@@ -173,7 +178,10 @@ class EasyjobsBlocksScripts {
 	public function render_info_frontend($atts, $con) {
 		if ( ! $this->get_token() ) {
 			ob_start();
-			return Easyjobs_Helper::err_view();
+			if(!$this->api_notice_shown){
+				$this->api_notice_shown = true;
+				return Easyjobs_Helper::err_view();
+			}
 			return ob_get_clean();
 		}
 		
@@ -205,7 +213,10 @@ class EasyjobsBlocksScripts {
 	public function render_list_frontend($atts, $con) {
 		if ( ! $this->get_token() ) {
 			ob_start();
-			return Easyjobs_Helper::err_view();
+			if(!$this->api_notice_shown){
+				$this->api_notice_shown = true;
+				return Easyjobs_Helper::err_view();
+			}
 			return ob_get_clean();
 		}
 		$default_atts = [
@@ -363,7 +374,7 @@ class EasyjobsBlocksScripts {
 		);
 	}
 
-	function easyjobs_reg_block_cat( $block_categories, $editor_context ) {
+	public function easyjobs_reg_block_cat( $block_categories, $editor_context ) {
 		if ( ! empty( $editor_context->post ) ) {
 			array_push(
 				$block_categories,

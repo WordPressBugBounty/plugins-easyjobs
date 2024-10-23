@@ -171,12 +171,6 @@ class Easyjobs_Admin {
 		);
 
 		/**
-		 * Black Friday Campaign Notice
-		 */
-
-        // $company_info = Easyjobs_Helper::get_company_info( true );
-
-		/**
 		 * Review Notice
 		 *
 		 * @var mixed $message
@@ -274,6 +268,32 @@ class Easyjobs_Admin {
 			);
 		}
 
+		/**
+		 * Halloween Notice
+		 */	
+		$company_info = Easyjobs_Helper::get_company_info( true );	
+		$crown_icon = EASYJOBS_ADMIN_URL . 'assets/img/crown.svg';
+		$halloween_notice_message = "<p>🎃 This Halloween manage your candidate pool more smartly with easy.jobs PRO & save <strong>up to 70%</strong>.</p><a style='display: inline-flex;column-gap:5px;' class='button button-primary' href='https://easy.jobs/halloween-2024' target='_blank'><img style='width:15px;' src='{$crown_icon}'/>Upgrade to pro</a>";
+
+		$_halloween_notice = [
+			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
+			'html'      => $halloween_notice_message,
+		];
+		$notices->add(
+			'halloween_notice',
+			$_halloween_notice,
+			[
+				'classes'     => 'updated put-dismiss-notice',
+				'start'       => $notices->time(),
+				// 'start'       => $notices->strtotime( '+2 days' ),
+				"expire"      => strtotime( '11:59:59pm 3nd November, 2024' ),
+				'dismissible' => true,
+				'refresh'     => EASYJOBS_VERSION,
+				'screens'     => [ 'dashboard' ],
+				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
+			]
+		);
+
 		$this->cache_bank->create_account( $notices );
 		$this->cache_bank->calculate_deposits( $notices );
 	}
@@ -286,7 +306,7 @@ class Easyjobs_Admin {
                 max-width: 22px;
             }
             .easyjobs-notice .wpnotice-content-wrapper{
-                padding: 20px 10px;
+                padding: 10px 10px;
             }
             .easyjobs-notice .wpnotice-content-wrapper a{
                 margin-right: 15px;
@@ -297,6 +317,34 @@ class Easyjobs_Admin {
             .easyjobs-notice .wpnotice-thumbnail-wrapper img{
                 min-width: 120px;
             }
+
+			/*
+			* Halloween Notice css
+			*/
+			#wpnotice-easyjobs-notice-halloween_notice {
+				border-left-color: #593dbd;
+			}
+			.notice-easyjobs-notice-halloween_notice .wpnotice-content-wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+			}
+			div.updated.easyjobs-notice .wpnotice-content-wrapper p,
+			div.updated.easyjobs-notice .wpnotice-content-wrapper a {
+				font-size: 15px;
+			}
+			.easyjobs-notice .wpnotice-content-wrapper > a.button-primary,
+			.easyjobs-notice .wpnotice-content-wrapper > a.button-primary:focus,
+			.easyjobs-notice .wpnotice-content-wrapper > a.button-primary:hover {
+				background-color: #593dbd;
+				border-color: #593dbd;
+			}
+			@media only screen and (max-width: 767px) {
+				#wpnotice-easyjobs-notice-halloween_notice {
+					display: none !important;
+				}
+			}
 
 		</style>
 		<?php

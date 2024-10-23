@@ -14,7 +14,7 @@ import Default from './themes/default';
 import Classic from './themes/classic';
 import Elegant from './themes/elegant';
 import Inspector from "./inspector";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from '@wordpress/element';
 import Style from "./style";
 
 const Edit = (props) => {
@@ -51,7 +51,7 @@ const Edit = (props) => {
 					locations: response.data.locations
 				})
 			} else{
-				console.error('Fetch error:', response.message);
+				console.error('Fetch error:', response?.message || response?.status);
 			}
 			
 		}).catch(error => console.error(error))

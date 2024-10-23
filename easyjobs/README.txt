@@ -4,7 +4,7 @@ Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.6
-Stable tag: 2.5.3
+Stable tag: 2.5.4
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -137,6 +137,11 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.5.4 - 23/10/2024 =
+* Fixed: Frontend job filter not working after permalink change.
+* Fixed: Multiple API connection messages in the Career Page Block.
+* Few minor bug fixes & improvements.
 
 = 2.5.3 - 17/10/2024 =
 * Hotfix: Resolved the issue with repeated API calls.

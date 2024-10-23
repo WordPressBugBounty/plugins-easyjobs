@@ -3,20 +3,26 @@ import { InnerBlocks } from '@wordpress/block-editor';
 import { withSelect, dispatch, useSelect } from '@wordpress/data';
 import { createBlock } from "@wordpress/blocks";
 import Inspector from './inspector.js';
-import { useEffect } from 'react';
+import { useEffect, useState } from '@wordpress/element';
 const {
   	BlockProps
 } = window.EJControls;
 
 const Edit = ( props ) => {
-    
-    const { isSelected, attributes, clientId } = props;
+    const { isSelected, attributes, companyInfo, clientId } = props;
+    const [apiError, setApiError] = useState(false);
     const {
         hideJobHeader,
         hideJobList,
         hideJobFooter,
         cover,
     } = attributes;
+
+    useEffect(() => {
+		if((companyInfo?.length === 1)  && (companyInfo[0] === 'api-error')) {
+			setApiError(true);
+		}	
+	}, [companyInfo]);
 
     let ALLOWED_TEMPLATES = [
         [ 'easyjobs/job-header', {} ], 
@@ -113,17 +119,21 @@ const Edit = ( props ) => {
         </div>
     ) : (
         <>
-			{ isSelected && <Inspector {...props} /> }
+			{isSelected && !apiError && <Inspector {...props} />}
             <BlockProps.Edit { ...props }>
-                <InnerBlocks
-                    template={ ALLOWED_TEMPLATES }
-                    templateLock={ false }
-                    allowedBlocks={ [ 
-                        'easyjobs/job-header', 
-                        'easyjobs/job-list', 
-                        'easyjobs/job-footer' 
-                    ] }
-                />
+                {! apiError ? (
+                    <InnerBlocks
+                        template={ ALLOWED_TEMPLATES }
+                        templateLock={ false }
+                        allowedBlocks={ [ 
+                            'easyjobs/job-header', 
+                            'easyjobs/job-list', 
+                            'easyjobs/job-footer' 
+                        ] }
+                    />
+                ) : (
+                    <p className='elej-error-msg-editor'>Please Connect your EasyJobs Account</p>
+                )}
             </BlockProps.Edit>
         </>
     );
@@ -131,9 +141,7 @@ const Edit = ( props ) => {
 
 export default withSelect( ( select, props ) => {
 	const companyInfo = select( 'easyjobs' ).getCompanyInfo();
-	const companyDetails = select( 'easyjobs' ).getCompanyDetails();
 	return {
 		companyInfo,
-		companyDetails
 	}
 } )( Edit )

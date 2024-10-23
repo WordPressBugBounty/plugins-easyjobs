@@ -905,6 +905,9 @@ class Easyjobs_Helper {
 		?>
 		<form id="ejJobFilterForm" class="ej-job-filter-form job-filter d-flex" action="" method="get">
 			<?php if(count($settings)) { ?>
+				<?php if( isset($_GET['page_id']) ) { ?>
+					<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr($_GET['page_id']); ?>"/>
+				<?php } ?>
 				<?php if ( (isset($settings['easyjobs_job_filter_by_title_control']) && $settings['easyjobs_job_filter_by_title_control'] === 'yes' )): ?>
 					<div class="search-bar">
 						<input type="text" id="job_title" name="job_title" value="<?php echo esc_html(self::get_value('job_title')); ?>" class="form-control" placeholder="Job Title">
@@ -947,6 +950,9 @@ class Easyjobs_Helper {
 					</div>
 				<?php endif; ?>
 			<?php } else { ?>
+				<?php if( isset($_GET['page_id']) ) { ?>
+					<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr($_GET['page_id']); ?>"/>
+				<?php } ?>
 				<?php if ( get_theme_mod('easyjobs_landing_hide_job_search_by_title', true) == '1'): ?>
 					<div class="search-bar">
 						<input id="job_title" type="text" name="job_title" value="<?php echo esc_html(self::get_value('job_title')); ?>" class="form-control" placeholder="Job Title">
@@ -1021,6 +1027,9 @@ class Easyjobs_Helper {
 		?>
 		<?php if ( $settings['filterByTitle'] || $settings['filterByCategory'] || $settings['filterByLocation'] ): ?>
 			<form id="ejJobFilterForm" class="ej-job-filter-form job-filter d-flex" action="" method="get">
+				<?php if( isset($_GET['page_id']) ) { ?>
+				<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr($_GET['page_id']); ?>"/>
+				<?php } ?>
 				<?php if ( $settings['filterByTitle'] ): ?>
 					<div class="search-bar">
 						<input type="text" id="job_title" name="job_title" value="<?php echo esc_html(self::get_value('job_title')); ?>" class="form-control" placeholder="Job Title">
