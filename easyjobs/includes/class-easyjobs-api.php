@@ -518,13 +518,14 @@ class Easyjobs_Api {
                 array(
 					'headers' => array(
 						'Authorization' => 'Bearer ' . $token,
-						'x-plugin-version' => EASYJOBS_VERSION
+						'x-plugin-version' => EASYJOBS_VERSION,
                     ),
                     'timeout' => 30
                 ),
                 $options
             )
         );
+
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
             return (object) array(
@@ -572,6 +573,7 @@ class Easyjobs_Api {
         }
         $request['timeout'] = 30;
         $response = wp_remote_post( $url, $request );
+
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
             return array(

@@ -273,20 +273,45 @@ class Easyjobs_Admin {
 		 */	
 		$company_info = Easyjobs_Helper::get_company_info( true );	
 		$crown_icon = EASYJOBS_ADMIN_URL . 'assets/img/crown.svg';
-		$halloween_notice_message = "<p>🎃 This Halloween manage your candidate pool more smartly with easy.jobs PRO & save <strong>up to 70%</strong>.</p><a style='display: inline-flex;column-gap:5px;' class='button button-primary' href='https://easy.jobs/halloween-2024' target='_blank'><img style='width:15px;' src='{$crown_icon}'/>Upgrade to pro</a>";
+		// $halloween_notice_message = "<p>🎃 This Halloween manage your candidate pool more smartly with easy.jobs PRO & save <strong>up to 70%</strong>.</p><a style='display: inline-flex;column-gap:5px;' class='button button-primary' href='https://easy.jobs/halloween-2024' target='_blank'><img style='width:15px;' src='{$crown_icon}'/>Upgrade to PRO</a>";
 
-		$_halloween_notice = [
+		// $_halloween_notice = [
+		// 	'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
+		// 	'html'      => $halloween_notice_message,
+		// ];
+		// $notices->add(
+		// 	'halloween_notice',
+		// 	$_halloween_notice,
+		// 	[
+		// 		'classes'     => 'updated put-dismiss-notice',
+		// 		'start'       => $notices->time(),
+		// 		// 'start'       => $notices->strtotime( '+2 days' ),
+		// 		"expire"      => strtotime( '11:59:59pm 3nd November, 2024' ),
+		// 		'dismissible' => true,
+		// 		'refresh'     => EASYJOBS_VERSION,
+		// 		'screens'     => [ 'dashboard' ],
+		// 		'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
+		// 	]
+		// );
+
+		/**
+		 * Black Friday Notice
+		 */		
+		$upgrade_cta_link = 'https://easy.jobs/bfcm24-pricing';
+		$black_friday_notice_message = "<p>🔔 This Black Friday manage your candidate pool more smartly with easy.jobs PRO & <strong>Save Up to 80%</strong>.</p><a style='display: inline-flex;column-gap:5px;' class='button button-primary' href='{$upgrade_cta_link}' target='_blank'><img style='width:15px;' src='{$crown_icon}'/>Upgrade to PRO</a>";
+
+		$_black_friday_notice = [
 			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-			'html'      => $halloween_notice_message,
+			'html'      => $black_friday_notice_message,
 		];
 		$notices->add(
-			'halloween_notice',
-			$_halloween_notice,
+			'black_friday_notice',
+			$_black_friday_notice,
 			[
 				'classes'     => 'updated put-dismiss-notice',
 				'start'       => $notices->time(),
 				// 'start'       => $notices->strtotime( '+2 days' ),
-				"expire"      => strtotime( '11:59:59pm 3nd November, 2024' ),
+				"expire"      => strtotime( '11:59:59pm 5th December, 2024' ),
 				'dismissible' => true,
 				'refresh'     => EASYJOBS_VERSION,
 				'screens'     => [ 'dashboard' ],
@@ -319,12 +344,14 @@ class Easyjobs_Admin {
             }
 
 			/*
-			* Halloween Notice css
+			* Halloween, black friday notice css
 			*/
-			#wpnotice-easyjobs-notice-halloween_notice {
+			#wpnotice-easyjobs-notice-halloween_notice,
+			#wpnotice-easyjobs-notice-black_friday_notice {
 				border-left-color: #593dbd;
 			}
-			.notice-easyjobs-notice-halloween_notice .wpnotice-content-wrapper {
+			.notice-easyjobs-notice-halloween_notice .wpnotice-content-wrapper,
+			.notice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
@@ -341,7 +368,8 @@ class Easyjobs_Admin {
 				border-color: #593dbd;
 			}
 			@media only screen and (max-width: 767px) {
-				#wpnotice-easyjobs-notice-halloween_notice {
+				#wpnotice-easyjobs-notice-halloween_notice,
+				#wpnotice-easyjobs-notice-black_friday_notice {
 					display: none !important;
 				}
 			}

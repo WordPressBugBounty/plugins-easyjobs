@@ -322,7 +322,7 @@ class Easyjobs_Helper {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * @param $type
 	 * @return string

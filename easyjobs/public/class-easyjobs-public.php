@@ -61,7 +61,7 @@ class Easyjobs_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-		add_action( 'wp_head', [ $this, 'translation_function' ] );
+		add_action( 'wp_head', [ $this, 'easyjobs_generated_frontend_script' ] );
 		add_action( 'elementor/editor/after_save', [$this, 'easyjobs_saved_elementor_data'], 10, 2 );
 		add_action( 'save_post', [$this, 'easyjobs_saved_editor_data'], 10, 3 );
 	}
@@ -148,7 +148,7 @@ class Easyjobs_Public {
 	
 	}
 
-	public function translation_function() {
+	public function easyjobs_generated_frontend_script() {
 		$easyjobs_widgets_or_shortcode = get_option('easyjobs_widgets_or_shortcode', 0);
 		
 		if( is_page_template( 'easyjobs-template.php' ) || $easyjobs_widgets_or_shortcode ):
@@ -173,7 +173,121 @@ class Easyjobs_Public {
 
 		<?php
 			endif;
+			$this->easyjobs_brand_color_css( $company_info );
 		endif;
+	}
+
+	private function colour_brightness($hex, $percent) {
+		// Work out if hash given
+		$hash = '';
+		if (stristr($hex, '#')) {
+			$hex  = str_replace('#', '', $hex);
+			$hash = '#';
+		}
+		/// HEX TO RGB
+		$rgb = [hexdec(substr($hex, 0, 2)), hexdec(substr($hex, 2, 2)), hexdec(substr($hex, 4, 2))];
+		//// CALCULATE
+		for ($i = 0; $i < 3; $i++) {
+			// See if brighter or darker
+			if ($percent > 0) {
+				// Lighter
+				$rgb[$i] = round($rgb[$i] * $percent) + round(255 * (1 - $percent));
+			} else {
+				// Darker
+				$positivePercent = $percent - ($percent * 2);
+				$rgb[$i]         = round($rgb[$i] * (1 - $positivePercent)); // round($rgb[$i] * (1-$positivePercent));
+			}
+			// In case rounding up causes us to go to 256
+			if ($rgb[$i] > 255) {
+				$rgb[$i] = 255;
+			}
+		}
+		//// RBG to Hex
+		$hex = '';
+		for ($i = 0; $i < 3; $i++) {
+			// Convert the decimal digit to hex
+			$hexDigit = dechex($rgb[$i]);
+			// Add a leading zero if necessary
+			if (strlen($hexDigit) == 1) {
+				$hexDigit = "0" . $hexDigit;
+			}
+			// Append to the hex string
+			$hex .= $hexDigit;
+		}
+		return $hash . $hex;
+	}
+
+	private function easyjobs_brand_color_css( $company_info ) {
+		$light_brand_color = '';
+		if( $company_info->selected_template === 'classic' ) {
+			$light_brand_color = $this->colour_brightness( $company_info->brand_color, .1 );
+		}
+		?>
+		<style type="text/css">
+			.ej-header .ej-btn, 
+			.ej-template-classic .carrier__company .button, 
+			.ej-template-elegant .ej-company-info .ej-btn,
+			.easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner .ej-job-list-item-col .ej-info-btn-light,
+			.ej-template-classic .button__success:not(.hover__highlight),
+			.ej-template-elegant .button__primary:not(.hover__highlight),
+			.ej-btn.ej-info-btn,
+			.ej-template-elegant .button,
+			.easyjobs-shortcode-wrapper.ej-template-classic .button__success:not(.hover__highlight) {
+				color: #ffffff;
+				background-color: <?php echo $company_info->brand_color; ?>;
+			}
+
+			.ej-template-classic .label__primary,
+			.ej-template-elegant .label.label__primary,
+			.ej-template-classic .label__primary,
+			.easyjobs-shortcode-wrapper.ej-template-classic .label__primary {
+				background-color: <?php echo $light_brand_color; ?> !important;
+				color: <?php echo $company_info->brand_color; ?> !important;
+			}
+
+
+			.ej-template-classic .button__success:not(.hover__highlight),
+			.ej-template-elegant .button__primary:not(.hover__highlight) {
+				border-color: <?php echo $company_info->brand_color; ?>;
+			}
+
+
+			.ej-header .ej-btn:hover, 
+			.ej-template-classic .carrier__company .button:hover, 
+			.ej-template-elegant .ej-company-info .ej-btn:hover,
+			.easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner .ej-job-list-item-col .ej-info-btn-light:hover,
+			.ej-template-elegant .button__primary:not(.hover__highlight):hover,
+			.ej-btn.ej-info-btn:hover,
+			.ej-template-elegant .button:hover,
+			.easyjobs-shortcode-wrapper.ej-template-classic .button__success:not(.hover__highlight):hover {
+				color: #fff;
+				background-color: <?php echo $company_info->brand_color; ?>;
+			}
+
+
+			.ej-section .ej-section-title .ej-section-title-icon,
+			.easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner .ej-job-list-info .ej-job-list-info-block a,
+			.easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner .ej-job-list-info .ej-job-list-info-block span,
+			.ej-template-classic .job__card .job__vacancy h4,
+			.ej-template-elegant .job__card .job__bottom .job__vacancy h4,
+			.ej-template-elegant .section__header .job-filter .select-option:after,
+			.ej-template-classic .section__header .job-filter .select-option:after,
+			.ej-template-classic .job__card .job__info h3 a:hover,
+			.ej-template-classic .job__card .job__info .meta a:hover,
+			.ej-template-elegant .job__card h3 a:hover,
+			.ej-template-elegant .job__card .meta a:hover,
+			.easyjobs-details .ej-content-block h1:before,
+			.ej-section .ej-section-title .ej-section-title-icon,
+			.easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner .ej-job-list-item-col .ej-job-list-info .ej-job-list-info-block a {
+				color: <?php echo $company_info->brand_color; ?>;
+			}
+			.ej-template-elegant .company__description ul li::before, 
+			.ej-template-elegant .job__details .job__details__block__list li::before,
+			.easyjobs-shortcode-wrapper.ej-template-classic .company__description ul li:before {
+				background-color: <?php echo $company_info->brand_color; ?> !important;
+			}
+		</style>
+		<?php
 	}
 
     /**

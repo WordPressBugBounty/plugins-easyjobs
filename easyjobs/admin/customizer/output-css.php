@@ -70,6 +70,19 @@ function easyjobs_customizer_styles() { ?>
 }
 add_action( 'customize_controls_print_styles', 'easyjobs_customizer_styles', 999 );
 
+if(!function_exists('print_css_property')){
+
+    function print_css_property($property, $name, $output, $suffix=''){
+        if(!empty($output[$name])){
+            if((strpos($property, 'color') !== -1) && trim($output[$name]) == 'rgba(0,0,0,0)'){
+                return '';
+            }
+            return $property . ':' . $output[$name] . $suffix . ';';
+        }
+        return '';
+    }
+}
+
 function easyjobs_customize_css() {
 	$output = easyjobs_generate_output();
     ?>
@@ -77,7 +90,7 @@ function easyjobs_customize_css() {
 
         /*********** Easyjobs dynamic css started *************/
         .easyjobs-frontend-wrapper.easyjobs-landing-page{
-            background-color: <?php echo $output['easyjobs_landing_page_bg_color'] ?>;
+            <?php echo print_css_property( 'background-color', 'easyjobs_landing_page_bg_color', $output ); ?>
             width: <?php echo $output['easyjobs_landing_container_width'] ?>%;
             max-width: <?php echo $output['easyjobs_landing_custom_max_width'] ? $output['easyjobs_landing_container_max_width'] . 'px': '100%' ?>;
             padding-top: <?php echo $output['easyjobs_landing_container_padding_top'] ?>px;
@@ -102,17 +115,17 @@ function easyjobs_customize_css() {
         }
 
         .easyjobs-landing-page .ej-header .ej-header-tools .ej-btn, .easyjobs-shortcode-wrapper.ej-template-classic .carrier__company .button, .easyjobs-shortcode-wrapper.ej-template-elegant .ej-company-info .ej-btn {
-            font-size: <?php echo $output['easyjobs_landing_company_website_btn_font_size'];?>px;
-            color: <?php echo $output['easyjobs_landing_company_website_btn_font_color'];?>;
-            background-color: <?php echo $output['easyjobs_landing_company_website_btn_bg_color'];?>;
+            <?php echo print_css_property('font-size','easyjobs_landing_company_website_btn_font_size', $output, 'px');?>
+            <?php echo print_css_property('color','easyjobs_landing_company_website_btn_font_color', $output);?>
+            <?php echo print_css_property('background-color','easyjobs_landing_company_website_btn_bg_color', $output);?>
         }
         .easyjobs-landing-page .ej-header .ej-header-tools .ej-btn:hover, .easyjobs-shortcode-wrapper.ej-template-classic .carrier__company .button:hover, .easyjobs-shortcode-wrapper.ej-template-elegant .ej-company-info .ej-btn:hover{
-            color: <?php echo $output['easyjobs_landing_company_website_btn_hover_font_color'];?>;
-            background-color: <?php echo $output['easyjobs_landing_company_website_btn_hover_bg_color'];?>;
+            <?php echo print_css_property('color','easyjobs_landing_company_website_btn_hover_font_color', $output);?>
+            <?php echo print_css_property('background-color','easyjobs_landing_company_website_btn_hover_bg_color', $output);?>
         }
         .easyjobs-landing-page .ej-company-description, .easyjobs-landing-page .ej-company-description p, .easyjobs-landing-page .ej-company-description p span, .easyjobs-landing-page .ej-company-description ul li, .easyjobs-landing-page .ej-company-description a{
             font-size: <?php echo $output['easyjobs_landing_company_description_font_size'];?>px;
-            color: <?php echo $output['easyjobs_landing_company_description_color'];?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_company_description_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col{
@@ -120,7 +133,7 @@ function easyjobs_customize_css() {
             padding-right: <?php echo $output['easyjobs_landing_job_list_column_padding_right'] ?>px;
             padding-bottom: <?php echo $output['easyjobs_landing_job_list_column_padding_bottom'] ?>px;
             padding-left: <?php echo $output['easyjobs_landing_job_list_column_padding_left'] ?>px;
-            border-color: <?php echo $output['easyjobs_landing_job_column_separator_color'] ?>;
+            <?php echo print_css_property( 'border-color', 'easyjobs_landing_job_column_separator_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-job-title{
@@ -128,11 +141,11 @@ function easyjobs_customize_css() {
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-job-title a{
-            color: <?php echo $output['easyjobs_landing_job_title_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_job_title_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-job-title a:hover{
-            color: <?php echo $output['easyjobs_landing_job_title_hover_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_job_title_hover_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-job-list-info .ej-job-list-info-block{
@@ -140,66 +153,66 @@ function easyjobs_customize_css() {
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-job-list-info .ej-job-list-info-block a{
-            color: <?php echo $output['easyjobs_landing_job_meta_company_link_color']?>
+            <?php echo print_css_property( 'color', 'easyjobs_landing_job_meta_company_link_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
-        .ej-job-list-item-col .ej-job-list-info .ej-job-list-info-block{
-            color: <?php echo $output['easyjobs_landing_job_meta_location_color']?>
+        .ej-job-list-item-col .ej-job-list-info .ej-job-list-info-block span{
+            <?php echo print_css_property( 'color', 'easyjobs_landing_job_meta_location_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-deadline{
             font-size: <?php echo $output['easyjobs_landing_job_deadline_font_size']?>px;
-            color: <?php echo $output['easyjobs_landing_job_deadline_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_job_deadline_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-list-sub{
             font-size: <?php echo $output['easyjobs_landing_job_vacancy_font_size']?>px;
-            color: <?php echo $output['easyjobs_landing_job_vacancy_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_job_vacancy_color', $output ); ?>
         }
 
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-btn.ej-info-btn-light{
             font-size: <?php echo $output['easyjobs_landing_apply_btn_font_size']?>px;
-            color: <?php echo $output['easyjobs_landing_apply_btn_color']?>;
-            background-color: <?php echo $output['easyjobs_landing_apply_btn_bg_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_apply_btn_color', $output ); ?>
+            <?php echo print_css_property( 'background-color', 'easyjobs_landing_apply_btn_bg_color', $output ); ?>
         }
 
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner
         .ej-job-list-item-col .ej-btn.ej-info-btn-light:hover{
-            color: <?php echo $output['easyjobs_landing_apply_btn_hover_color']?>;
-            background-color: <?php echo $output['easyjobs_landing_apply_btn_hover_bg_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_apply_btn_hover_color', $output ); ?>
+            <?php echo print_css_property( 'background-color', 'easyjobs_landing_apply_btn_hover_bg_color', $output ); ?>
         }
 
         .easyjobs-landing-page .ej-section .ej-section-title .ej-section-title-text{
-            color: <?php echo $output['easyjobs_landing_section_heading_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_section_heading_color', $output ); ?>
             font-size: <?php echo $output['easyjobs_landing_section_heading_font_size']?>px;
         }
         .easyjobs-landing-page .ej-section .ej-section-title .ej-section-title-icon{
-            color: <?php echo $output['easyjobs_landing_section_heading_icon_color']?>;
-            background-color: <?php echo $output['easyjobs_landing_section_heading_icon_bg_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_section_heading_icon_color', $output ); ?>
+            <?php echo print_css_property( 'background-color', 'easyjobs_landing_section_heading_icon_bg_color', $output ); ?>
         }
         /* Details page */
         
         .easyjobs-frontend-wrapper.easyjobs-single-page{
-            background-color: <?php echo $output['easyjobs_single_page_bg_color'] ?>;
             width: <?php echo $output['easyjobs_single_container_width'] ?>%;
+            <?php echo print_css_property( 'background-color', 'easyjobs_single_page_bg_color', $output); ?>
             max-width: <?php echo $output['easyjobs_single_container_max_width'] ?>px;
             padding-top: <?php echo $output['easyjobs_single_container_padding_top'] ?>px;
             padding-right: <?php echo $output['easyjobs_single_container_padding_right'] ?>px;
             padding-bottom: <?php echo $output['easyjobs_single_container_padding_bottom'] ?>px;
             padding-left: <?php echo $output['easyjobs_single_container_padding_left'] ?>px;
         }
-
+        
         .easyjobs-single-page .easyjobs-details .ej-job-header .ej-job-header-left .ej-job-overview, .easyjobs-shortcode-wrapper.ej-template-classic .job__more__details {
-			<?php if(!empty(get_theme_mod('easyjobs_single_job_overview_bg_color'))) { ?>
-			background-color: <?php echo get_theme_mod('easyjobs_single_job_overview_bg_color') ?>;
-			<?php } elseif ($output['easyjobs_single_job_overview_bg_color']) { ?>
-			background-color: <?php echo $output['easyjobs_single_job_overview_bg_color'] ?>;
-			<?php } ?>
             padding-top: <?php echo $output['easyjobs_single_job_overview_padding_top'] ?>px;
             padding-right: <?php echo $output['easyjobs_single_job_overview_padding_right'] ?>px;
             padding-bottom: <?php echo $output['easyjobs_single_job_overview_padding_bottom'] ?>px;
             padding-left: <?php echo $output['easyjobs_single_job_overview_padding_left'] ?>px;
+			<?php if(!empty(get_theme_mod('easyjobs_single_job_overview_bg_color'))) { ?>
+			background-color: <?php echo get_theme_mod('easyjobs_single_job_overview_bg_color') ?>;
+			<?php } else { ?>
+                <?php echo print_css_property( 'background-color', 'easyjobs_single_job_overview_bg_color', $output ); ?>
+			<?php } ?>
 		}
         .easyjobs-single-page .ej-company-info .info .name{
             font-size: <?php echo $output['easyjobs_single_company_name_font_size'];?>px;
@@ -213,19 +226,19 @@ function easyjobs_customize_css() {
             font-size: <?php echo $output['easyjobs_single_job_info_list_font_size'];?>px;
         }
         .easyjobs-single-page .easyjobs-details .ej-job-header .ej-job-header-left .ej-job-overview .ej-job-highlights .ej-job-highlights-item .ej-job-highlights-item-label, .easyjobs-shortcode-wrapper.ej-template-classic .job__more__details .infos .info p, .easyjobs-shortcode-wrapper.ej-template-classic .ej-container div.job__more__details > p i, .easyjobs-shortcode-wrapper.ej-template-classic .ej-container div.job__more__details > p span{
-            color: <?php echo $output['easyjobs_single_job_info_list_label_color'];?>;
+            <?php echo print_css_property( 'color', 'easyjobs_single_job_info_list_label_color', $output); ?>
         }
         .easyjobs-single-page.easyjobs-details .ej-job-header .ej-job-header-left .ej-job-overview .ej-job-highlights .ej-job-highlights-item .ej-job-highlights-item-value, .easyjobs-shortcode-wrapper.ej-template-classic .job__more__details .infos .info span, .easyjobs-shortcode-wrapper.ej-template-classic .ej-container div.job__more__details > p{
-            color: <?php echo $output['easyjobs_single_job_info_list_value_color'];?>;
+            <?php echo print_css_property( 'color', 'easyjobs_single_job_info_list_value_color', $output); ?>
         }
         .easyjobs-single-page .ej-apply-link .ej-btn.ej-info-btn, .easyjobs-shortcode-wrapper.ej-template-classic .job__more__details > a.button, .ej-template-elegant .ej-hero .job__infos__block .meta .button{
             font-size: <?php echo $output['easyjobs_single_apply_btn_font_size'];?>px;
-            background-color: <?php echo $output['easyjobs_single_apply_btn_bg_color'];?>;
-            color: <?php echo $output['easyjobs_single_apply_btn_text_color'];?>;
+            <?php echo print_css_property( 'background-color', 'easyjobs_single_apply_btn_bg_color', $output ); ?>
+            <?php echo print_css_property( 'color', 'easyjobs_single_apply_btn_text_color', $output ); ?>
         }
         .easyjobs-single-page .ej-apply-link .ej-btn.ej-info-btn:hover, .easyjobs-shortcode-wrapper.ej-template-classic .job__more__details > a.button:hover, .ej-template-elegant .ej-hero .job__infos__block .meta .button:hover{
-            background-color: <?php echo $output['easyjobs_single_apply_btn_hover_bg_color'];?>;
-            color: <?php echo $output['easyjobs_single_apply_btn_hover_text_color'];?>;
+            <?php echo print_css_property( 'background-color', 'easyjobs_single_apply_btn_hover_bg_color', $output ); ?>
+            <?php echo print_css_property( 'color', 'easyjobs_single_apply_btn_hover_text_color', $output ); ?>
         }
         .easyjobs-single-page .easyjobs-details .ej-job-header .ej-job-header-left .ej-job-overview-footer .ej-social-share ul li a, .easyjobs-frontend-wrapper .easyjobs-shortcode-wrapper .job__more__details .share__options ul li a{
             width: <?php echo $output['easyjobs_single_social_sharing_icon_bg_size'];?>px;
@@ -277,25 +290,22 @@ function easyjobs_customize_css() {
         /*Job filter css*/
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-filter-wrap .ej-job-filter-form .ej-info-btn-light {
             font-size: <?php echo $output['easyjobs_landing_submit_btn_font_size']?>px;
-            color: <?php echo $output['easyjobs_landing_submit_btn_color']?>;
-            background-color: <?php echo $output['easyjobs_landing_submit_btn_bg_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_submit_btn_color', $output ); ?>
+            <?php echo print_css_property( 'background-color', 'easyjobs_landing_submit_btn_bg_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-filter-wrap .ej-job-filter-form .ej-info-btn-light:hover {
-            color: <?php echo $output['easyjobs_landing_submit_btn_hover_color']?>;
-            background-color: <?php echo $output['easyjobs_landing_submit_btn_hover_bg_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_submit_btn_hover_color', $output ); ?>
+            <?php echo print_css_property( 'background-color', 'easyjobs_landing_submit_btn_hover_bg_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-filter-wrap .ej-job-filter-form .ej-danger-btn {
             font-size: <?php echo $output['easyjobs_landing_reset_btn_font_size']?>px;
-            color: <?php echo $output['easyjobs_landing_reset_btn_color']?>;
-            background-color: <?php echo $output['easyjobs_landing_reset_btn_bg_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_reset_btn_color', $output ); ?>
+            <?php echo print_css_property( 'background-color', 'easyjobs_landing_reset_btn_bg_color', $output ); ?>
         }
         .easyjobs-landing-page .easyjobs-shortcode-wrapper .ej-job-filter-wrap .ej-job-filter-form .ej-danger-btn:hover {
-            color: <?php echo $output['easyjobs_landing_reset_btn_hover_color']?>;
-            background-color: <?php echo $output['easyjobs_landing_reset_btn_hover_bg_color']?>;
+            <?php echo print_css_property( 'color', 'easyjobs_landing_reset_btn_hover_color', $output ); ?>
+            <?php echo print_css_property( 'background-color', 'easyjobs_landing_reset_btn_hover_bg_color', $output ); ?>
         }
-        
-        
-
         /****** end easy jobs dynamic css *******/
 	</style>
     <?php
