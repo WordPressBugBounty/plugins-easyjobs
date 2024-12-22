@@ -1,10 +1,10 @@
 === easy.jobs- Best Recruitment Plugin for Job Board Listing, Manager, Career Page for Elementor & Gutenberg ===
-Contributors: wpdevteam, re_enter_rupok, asif2bd, rahat89, priyomukul, robinwpdeveloper, fuadragib
+Contributors: wpdevteam, re_enter_rupok, asif2bd, rahat89, priyomukul, nhrrob, fuadragib
 Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.7
-Stable tag: 2.5.5
+Stable tag: 2.5.6
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -138,6 +138,11 @@ No, credit card is not required to sign up.
 
 == Changelog ==
 
+= 2.5.6 - 22/12/2024 =
+* Improved: Company size UI in Create Company Form & Settings.
+* Updated: Data list for Industries in Create Company Form.
+* Few minor bug fixes & improvements.
+
 = 2.5.5 - 14/11/2024 =
 * Added: WordPress 6.7 compatibility.
 * Added: Brand color support in Landing page and Job Details pages.
@@ -155,7 +160,7 @@ No, credit card is not required to sign up.
 
 = 2.5.2 - 16/10/2024 =
 * Added : Career Page Block for Gutenberg editor.
-* Improved : Added documentation link for all blocks.
+* Added : Documentation link for all blocks.
 * Few minor bug fixes & improvements.
 
 = 2.5.1 - 02/10/2024 =
