@@ -4,7 +4,7 @@ Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.7
-Stable tag: 2.5.7
+Stable tag: 2.5.8
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -137,6 +137,11 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.5.8 - 14/01/2025 =
+* Fixed: Plugin conflict with Essential Blocks.
+* Fixed: UI issue inside subscription.
+* Few minor bug fixes & improvements.
 
 = 2.5.7 - 29/12/2024 =
 * Hotfix: Brand color confirmation notice error. 
