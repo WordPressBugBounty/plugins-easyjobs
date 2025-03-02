@@ -5,6 +5,9 @@
  * @since 1.0.0
  */
 echo Easyjobs_Helper::generate_block_style($atts);
+if ( ! isset( $jobs ) && empty( $jobs ) ) {
+    $jobs = [];
+}
 ?>
 <div <?php echo wp_kses_data( $wrapper_attributes); ?>>
     <div class="ej-job-body easyjobs-blocks easyjobs-blocks-job-list">

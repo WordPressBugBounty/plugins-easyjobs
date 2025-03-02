@@ -1,3 +1,11 @@
+= 2.5.9 - 02/03/2025 =
+* Added: Show on job board option.
+* Added: Allow no job experience option.
+* Added: All Jobs in Job filtering list.
+* Fixed: Domain or sub-domain validation issue.
+* Fixed: AI Setup enable/disable issue in settings.
+* Few minor bug fixes & improvements.
+
 = 2.5.8 - 14/01/2025 =
 * Fixed: Plugin conflict with Essential Blocks.
 * Fixed: UI issue inside subscription.

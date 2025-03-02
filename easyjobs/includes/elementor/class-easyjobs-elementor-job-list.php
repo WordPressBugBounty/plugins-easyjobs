@@ -23,6 +23,10 @@ class Easyjobs_Elementor_Job_List extends Widget_Base {
 		parent::__construct( $data, $args );
 		$this->is_editor = Plugin::$instance->editor->is_edit_mode();
 	}
+	
+	public function has_widget_inner_wrapper(): bool {
+		return ! Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 
 	public function get_name() {
 		return 'easyjobs-job-list';

@@ -4,7 +4,9 @@
  *
  * @since 1.0.0
  */
-
+if ( ! isset( $jobs ) && empty( $jobs ) ) {
+    $jobs = [];
+}
 ?>
 
 <?php if ( $ej_is_search || ( ! empty( $jobs ) && ! empty( $job_with_page_id ) ) ) : ?>

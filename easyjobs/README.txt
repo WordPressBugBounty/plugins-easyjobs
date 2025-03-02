@@ -4,7 +4,7 @@ Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.7
-Stable tag: 2.5.8
+Stable tag: 2.5.9
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -137,6 +137,14 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.5.9 - 02/03/2025 =
+* Added: Show on job board option.
+* Added: Allow no job experience option.
+* Added: All Jobs in Job filtering list.
+* Fixed: Domain or sub-domain validation issue.
+* Fixed: AI Setup enable/disable issue in settings.
+* Few minor bug fixes & improvements.
 
 = 2.5.8 - 14/01/2025 =
 * Fixed: Plugin conflict with Essential Blocks.

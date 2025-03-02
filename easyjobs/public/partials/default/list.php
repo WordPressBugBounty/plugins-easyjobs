@@ -4,9 +4,11 @@
  *
  * @since 1.0.0
  */
+if ( ! isset( $jobs ) && empty( $jobs ) ) {
+    $jobs = [];
+}
 ?>
-
-<?php if ( $ej_is_search || ( ! empty( $jobs ) && ! empty( $job_with_page_id ) ) ) : ?>
+<?php if ( $ej_is_search || ( isset($jobs) && ! empty( $jobs ) && ! empty( $job_with_page_id ) ) ) : ?>
 	<div class="easyjobs-shortcode-wrapper translate" id="easyjobs-list">
         <div class="ej-section">
 		    <?php if ( ! empty( $company->ejel_enabled ) && ! empty( $company->ejel_job_list_enabled ) ) : ?>

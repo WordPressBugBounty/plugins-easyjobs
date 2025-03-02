@@ -451,6 +451,9 @@ class Easyjobs_Admin_Jobs {
 			case 'draft':
 				$jobs = $this->get_draft_jobs($job_page);
 				break;
+            case 'all':
+                $jobs = $this->get_all_jobs($job_page);
+                break;
 			default:
 				$jobs = $this->get_published_jobs(
 					array_merge([
@@ -494,6 +497,21 @@ class Easyjobs_Admin_Jobs {
      */
     public function get_draft_jobs($page=1) {
         $jobs = Easyjobs_Api::get( 'draft_jobs', array('page' => $page) );
+        if ( $jobs && $jobs->status == 'success' ) {
+            return $jobs->data;
+        }
+        return false;
+    }
+
+    /**
+     * Get all jobs
+     *
+     * @since 1.0.0
+     * @return object|bool
+     */
+    public function get_all_jobs($page=1) {
+        $jobs = Easyjobs_Api::get( 'all_jobs', array('page' => $page) );
+        // echo "<pre>";var_dump($jobs);die;
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
         }
@@ -554,6 +572,9 @@ class Easyjobs_Admin_Jobs {
 			foreach ( $result->data as $r ) {
 				$r->view_url = get_permalink( $job_with_page_id[ $r->id ] );
 			}
+		}
+        if ( $type == 'all' ) {
+			$result = $this->search_results( 'all_jobs', Easyjobs_Helper::get_allowed_params_from_request($_POST) );
 		}
 		if ( $type == 'draft' ) {
 			$result = $this->search_results( 'draft_jobs', Easyjobs_Helper::get_allowed_params_from_request($_POST) );
@@ -685,6 +706,7 @@ class Easyjobs_Admin_Jobs {
             'skills',
             'benefits',
             'has_benefits',
+            'show_on_career_page',
             'coverPhoto',
             'hideCoverPhoto',
         );
@@ -1213,6 +1235,7 @@ class Easyjobs_Admin_Jobs {
         $data          = array();
         $editor_fields = array( 'details', 'responsibilities' );
         $checkboxes = array( 'is_remote', 'hideCoverPhoto', 'required' );
+        $bool_values = ['show_on_career_page'];
         foreach ( $post_data as $key => $value ) {
             if ( in_array( $key, $fields ) ) {
                 if ( Easyjobs_Helper::is_iterable( $value ) ) {
@@ -1230,7 +1253,13 @@ class Easyjobs_Admin_Jobs {
 						} else {
 							if(in_array($key, $checkboxes)){
 								$data[ sanitize_text_field( $key ) ] = $value == 1 ? 1 : 0;
-							}else{
+							} elseif (in_array($key, $bool_values)) {
+                                if ($value === 'true') {
+                                    $data[ sanitize_text_field( $key ) ] = rest_sanitize_boolean( $value );
+                                } else {
+                                    $data[ sanitize_text_field( $key ) ] = 0;
+                                }
+                            } else{
 								$data[ sanitize_text_field( $key ) ] = sanitize_text_field( $value );
 							}
 
