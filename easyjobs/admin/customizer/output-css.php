@@ -84,6 +84,9 @@ if(!function_exists('print_css_property')){
 }
 
 function easyjobs_customize_css() {
+    // if(!is_page_template( 'easyjobs-template.php' )) {
+	// 	return;
+	// }
 	$output = easyjobs_generate_output();
     ?>
 	<style type="text/css">

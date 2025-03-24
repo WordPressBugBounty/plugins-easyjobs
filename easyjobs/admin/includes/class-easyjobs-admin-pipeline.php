@@ -257,10 +257,10 @@ class Easyjobs_Admin_Pipeline {
 				$args[$param] = sanitize_text_field($_POST[$param]);
 			}
 		}
-        $questions = Easyjobs_Api::get( $eval_type, $args );
-        if ( Easyjobs_Helper::is_success_response( $questions->status ) ) {
-            if (isset($questions->data)) {
-                $questions = $questions->data;
+        $response = Easyjobs_Api::get( $eval_type, $args );
+        if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
+            if (isset($response->data)) {
+                $questions = $response->data;
             }
         }
         if ( empty( $questions ) ) {
@@ -447,10 +447,12 @@ class Easyjobs_Admin_Pipeline {
             wp_die();
 		}
         $id = absint(sanitize_text_field($_POST['id']));
-        $question = Easyjobs_Api::get_by_id( 'question_set', $id, 'edit' );
+        $response = Easyjobs_Api::get_by_id( 'question_set', $id, 'edit' );
         
-        if ( Easyjobs_Helper::is_success_response( $question->status ) ) {
-            $question = $question->data;
+        if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
+            if ( isset( $response->data ) ) {
+                $question = $response->data;
+            }
         }
         if ( empty( $question ) ) {
             echo wp_json_encode(

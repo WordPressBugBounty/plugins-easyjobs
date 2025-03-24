@@ -271,8 +271,8 @@ class Easyjobs_Admin {
 		/**
 		 * Halloween Notice
 		 */	
-		$company_info = Easyjobs_Helper::get_company_info( true );	
-		$crown_icon = EASYJOBS_ADMIN_URL . 'assets/img/crown.svg';
+		// $company_info = Easyjobs_Helper::get_company_info( true );	
+		// $crown_icon = EASYJOBS_ADMIN_URL . 'assets/img/crown.svg';
 		// $halloween_notice_message = "<p>🎃 This Halloween manage your candidate pool more smartly with easy.jobs PRO & save <strong>up to 70%</strong>.</p><a style='display: inline-flex;column-gap:5px;' class='button button-primary' href='https://easy.jobs/halloween-2024' target='_blank'><img style='width:15px;' src='{$crown_icon}'/>Upgrade to PRO</a>";
 
 		// $_halloween_notice = [
@@ -322,26 +322,26 @@ class Easyjobs_Admin {
 		/**
 		 * Holiday Notice
 		 */		
-		$upgrade_cta_link_h = 'https://easy.jobs/holiday24-admin-notice';
-		$holiday_notice_message = "<p>🎁 <strong>SAVE up to 70% now</strong> & recruit smarter in 2025 with AI-powered hiring SaaS.</p><a class='button button-primary' href='{$upgrade_cta_link_h}' target='_blank'><img style='width:15px;' src='{$crown_icon}'/> Upgrade to PRO</a><a class='holiday-notice dismiss-btn' data-dismiss='true' href='{$upgrade_cta_link_h}' target='_blank'>No, I'll Pay Full Price Later</a>";
+		// $upgrade_cta_link_h = 'https://easy.jobs/holiday24-admin-notice';
+		// $holiday_notice_message = "<p>🎁 <strong>SAVE up to 70% now</strong> & recruit smarter in 2025 with AI-powered hiring SaaS.</p><a class='button button-primary' href='{$upgrade_cta_link_h}' target='_blank'><img style='width:15px;' src='{$crown_icon}'/> Upgrade to PRO</a><a class='holiday-notice dismiss-btn' data-dismiss='true' href='{$upgrade_cta_link_h}' target='_blank'>No, I'll Pay Full Price Later</a>";
 
-		$_holiday_notice = [
-			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-			'html'      => $holiday_notice_message,
-		];
-		$notices->add(
-			'holiday_notice',
-			$_holiday_notice,
-			[
-				'classes'     => 'updated put-dismiss-notice',
-				'start'       => $notices->time(),
-				"expire"      => strtotime( '11:59:59pm 10th January, 2025' ),
-				'dismissible' => true,
-				'refresh'     => EASYJOBS_VERSION,
-				'screens'     => [ 'dashboard' ],
-				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
-			]
-		);
+		// $_holiday_notice = [
+		// 	'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
+		// 	'html'      => $holiday_notice_message,
+		// ];
+		// $notices->add(
+		// 	'holiday_notice',
+		// 	$_holiday_notice,
+		// 	[
+		// 		'classes'     => 'updated put-dismiss-notice',
+		// 		'start'       => $notices->time(),
+		// 		"expire"      => strtotime( '11:59:59pm 10th January, 2025' ),
+		// 		'dismissible' => true,
+		// 		'refresh'     => EASYJOBS_VERSION,
+		// 		'screens'     => [ 'dashboard' ],
+		// 		'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
+		// 	]
+		// );
 
 		$this->cache_bank->create_account( $notices );
 		$this->cache_bank->calculate_deposits( $notices );

@@ -4,7 +4,7 @@ Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.7
-Stable tag: 2.5.9
+Stable tag: 2.5.10
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -138,6 +138,12 @@ No, credit card is not required to sign up.
 
 == Changelog ==
 
+= 2.5.10 - 24/03/2025 =
+* Added: An option for users to easily communicate for support.
+* Fixed: Showing expired label in Draft and Archived jobs.
+* Improved: API response and UI for Question Set and Assessments.
+* Few minor bug fixes & improvements.
+
 = 2.5.9 - 02/03/2025 =
 * Added: Show on job board option.
 * Added: Allow no job experience option.
@@ -190,98 +196,6 @@ No, credit card is not required to sign up.
 = 2.5.0 - 19/09/2024 =
 * Added : Job List Block for Gutenberg editor.
 * Few minor bug fixes & improvements.
-
-= 2.4.16 - 03/09/2024 =
-* Enhanced: Security improvements.
-* Fixed: Some API responses.
-* Few minor bug fixes & improvements.
-
-= 2.4.15 - 20/08/2024 =
-* Enhanced: Security improvements reported by Patchstack.
-* Few minor bug fixes & improvements.
-
-= 2.4.14 - 31/07/2024 =
-* Fixed: Compatibility issue with Divi builder.
-* Few minor bug fixes & improvements.
-
-= 2.4.13 - 24/06/2024 =
-* Added: Translation feature.
-* Few minor bug fixes & improvements.
-
-= 2.4.12 - 06/06/2024 =
-* Improvement: Fixed responsive issues for all themes.
-* Few minor bug fixes & improvements.
-
-= 2.4.11 - 04/04/2024 =
-* Improvement: Added note, attachment icon on candidate list page.
-* Improvement: Candidates list page filter with rated option.
-* Few minor bug fixes & improvements.
-
-= 2.4.10 - 10/03/2024 =
-* Added: FSE Support for template pages.
-* Few minor bug fixes & improvements.
-
-= 2.4.9 - 29/01/2024 =
-* Fixed: Landing page customizer control issues.
-* Few minor bug fixes & improvements.
-
-= 2.4.8 - 27/12/2023 =
-* Added: Verification Badge in Job Details page.
-* Added: Enterprise & Agency info in Subscription Settings.
-* Fixed: Social Icon color issue.
-* Fixed: List Style Type issue in frontend.
-* Fixed: State and City data structure.
-* Improved: UI in different dashboard pages.
-* Improved: API connection message.
-* Few minor bug fixes & improvements.
-
-= 2.4.7 - 17/12/2023 =
-* Fixed: Security issue reported by WPScan.
-* Fixed: Minor bugfix and improvement.
-
-= 2.4.6 - 07/12/2023 =
-* Fixed: Company api calling multiple times
-* Fixed: Minor bugfix and improvement.
-
-= 2.4.5 - 30/11/2023 =
-* Added: Invite Candidates, Share Jobs, Read Blog, and See All candidates block with recent applicants in dashboard.
-* Added: Filter by location control in settings, elementor & customizer.
-* Added: Number of jobs field in settings.
-* Added: Pagination in frontend for Jobs.
-* Improved: UI and Jobs filtering through API.
-* Fixed: Minor bugfix and improvements.
-
-= 2.4.4 - 21/11/2023 =
-* Fixed: Some minor warnings.
-
-= 2.4.3 - 20/11/2023 =
-* Fixed: Minor bugfix and improvements.
-
-= 2.4.2 - 22/10/2023 =
-* Fixed: Duplicate page creation issue.
-* Fixed: Minor bugfix and improvements.
-
-= 2.4.1 - 05/10/2023 =
-* Added: State and City create option.
-* Added: Filter by location.
-* Added: Location filter control in elementor and customizer.
-
-= 2.4.0 - 21/09/2023 =
-* Improved: Login options UI in Candidate Apply Settings.
-* Improved: Custom Apply Fields UI in Candidate Apply Settings.
-* Added: Attach Resume With Email in Candidate Apply Settings.
-* Improved: Custom Job Apply Field UI in Jobs customize fields.
-* Added: Remove option in logo, favicon, cover photo & showcase photos.
-* Added: Show/Hide option for company cover photo.
-* Added: Pin/Unpin option in Jobs.
-* Added: Pin/Unpin icon in default, classic & elegant themes.
-* Added: Job cover photo show/hide option in Jobs.
-* Added: Job type label in frontend for classic & elegant themes.
-* Added: Analytics data with Recent Jobs in dashboard.
-* Added: Pipeline label with Recent Applicants in dashboard.
-* Added: Hide share option for expired jobs in Dashboard.
-* Added: Pipeline label in Candidates.
-* Fixed: Minor bugfix and improvements.
 
 = Earlier versions =
 Please refer to the separate changelog.txt file.

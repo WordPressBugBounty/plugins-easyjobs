@@ -1,3 +1,9 @@
+= 2.5.10 - 24/03/2025 =
+* Added: An option for users to easily communicate for support.
+* Fixed: Showing expired label in Draft and Archived jobs.
+* Improved: API response and UI for Question Set and Assessments.
+* Few minor bug fixes & improvements.
+
 = 2.5.9 - 02/03/2025 =
 * Added: Show on job board option.
 * Added: Allow no job experience option.

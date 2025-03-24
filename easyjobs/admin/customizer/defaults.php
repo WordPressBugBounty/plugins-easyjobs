@@ -13,7 +13,9 @@ if ( ! function_exists( 'easyjobs_get_option_defaults' ) ) :
  * Set default options
  */
 function easyjobs_get_option_defaults() {
-    
+    // if(!is_page_template( 'easyjobs-template.php' )) {
+	// 	return;
+	// }
     $company_info = Easyjobs_Helper::get_company_info(true);
     $company_name = !empty($company_info->name) ? $company_info->name : '';
 
@@ -214,6 +216,9 @@ endif;
 if( ! function_exists( 'easyjobs_generate_output' ) ) :
 
 	function easyjobs_generate_output(){
+		// if(!is_page_template( 'easyjobs-template.php' )) {
+		// 	return;
+		// }
 
 		$default_options = easyjobs_get_option_defaults();
 
