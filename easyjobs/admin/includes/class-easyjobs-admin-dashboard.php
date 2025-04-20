@@ -182,6 +182,7 @@ class Easyjobs_Admin_Dashboard {
      */
     public function get_company_stats() {
 		$response = Easyjobs_Api::get( 'company_stats' );
+		Easyjobs_Helper::check_reload_required( $response );
         if ( ! empty( $response ) && $response->status == 'success' ) {
             return $response->data;
         }
@@ -195,7 +196,8 @@ class Easyjobs_Admin_Dashboard {
      * @return object|bool
      */
     public function get_recent_applicants() {
-         $response = Easyjobs_Api::get( 'company_recent_applicants' );
+        $response = Easyjobs_Api::get( 'company_recent_applicants' );
+		Easyjobs_Helper::check_reload_required( $response );
 		if ( ! empty( $response ) && $response->status == 'success' ) {
 			return $response->data;
 		}
@@ -211,9 +213,10 @@ class Easyjobs_Admin_Dashboard {
      */
     public function get_active_jobs() {
 		$response = Easyjobs_Api::get( 'company_active_jobs' );
-	   if ( ! empty( $response ) && $response->status == 'success' ) {
-		   return $response->data;
-	   }
+		Easyjobs_Helper::check_reload_required( $response );
+		if ( ! empty( $response ) && $response->status == 'success' ) {
+			return $response->data;
+		}
 
 	   return false;
    	}
@@ -227,6 +230,7 @@ class Easyjobs_Admin_Dashboard {
 	 */
     public function get_recent_jobs( $page ) {
         $response = Easyjobs_Api::get( 'company_recent_jobs', array_merge( ['page' => $page], ['rows' => 1] ) );
+		Easyjobs_Helper::check_reload_required( $response );
         if ( ! empty( $response ) && $response->status == 'success' ) {
             return $response->data;
         }
@@ -264,6 +268,7 @@ class Easyjobs_Admin_Dashboard {
 			}
 		}
 		$analytics = Easyjobs_Api::get( 'analytics_info', $args );
+		Easyjobs_Helper::check_reload_required( $analytics );
 		if ( Easyjobs_Helper::is_success_response( $analytics->status ) ) {
 			echo wp_json_encode(
 				array(

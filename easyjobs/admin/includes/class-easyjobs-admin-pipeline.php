@@ -46,7 +46,7 @@ class Easyjobs_Admin_Pipeline {
      */
     public function get_pipelines( $job_id ) {
         $pipelines = Easyjobs_Api::get_by_id( 'job', $job_id, 'pipeline' );
-
+        Easyjobs_Helper::check_reload_required( $pipelines );
         if ( $pipelines && $pipelines->status == 'success' ) {
             return $pipelines->data;
         }
@@ -181,6 +181,7 @@ class Easyjobs_Admin_Pipeline {
             wp_die();
 		}
         $templates = Easyjobs_Api::get( 'settings_pipeline' );
+        Easyjobs_Helper::check_reload_required( $templates );
         if ( Easyjobs_Helper::is_success_response( $templates->status ) ) {
             return $templates->data;
         }
@@ -258,6 +259,9 @@ class Easyjobs_Admin_Pipeline {
 			}
 		}
         $response = Easyjobs_Api::get( $eval_type, $args );
+        
+        Easyjobs_Helper::check_reload_required( $response );
+
         if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
             if (isset($response->data)) {
                 $questions = $response->data;
@@ -448,7 +452,7 @@ class Easyjobs_Admin_Pipeline {
 		}
         $id = absint(sanitize_text_field($_POST['id']));
         $response = Easyjobs_Api::get_by_id( 'question_set', $id, 'edit' );
-        
+        Easyjobs_Helper::check_reload_required( $response );
         if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
             if ( isset( $response->data ) ) {
                 $question = $response->data;
@@ -499,6 +503,7 @@ class Easyjobs_Admin_Pipeline {
             absint(sanitize_text_field($_POST['id'])),
             'duplicate'
         );
+        Easyjobs_Helper::check_reload_required( $response );
         if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
             echo wp_json_encode(
                 array(
@@ -610,7 +615,7 @@ class Easyjobs_Admin_Pipeline {
 		}
         $id = absint(sanitize_text_field($_POST['id']));
         $response = Easyjobs_Api::get_by_id( 'single_assessment', $id );
-        
+        Easyjobs_Helper::check_reload_required( $response );
         if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
             $assessment = $response->data;
         }

@@ -4,9 +4,6 @@
  *
  * @since 1.0.0
  */
-// var_dump($company->remove_cover_photo);die;
-// global $post;
-// dd($atts);
 echo Easyjobs_Helper::generate_block_style($atts);
 ?>
 <?php if( empty( $company->ejel_hide_company_gallery ) ) : ?>

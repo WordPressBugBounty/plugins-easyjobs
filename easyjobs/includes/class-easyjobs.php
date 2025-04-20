@@ -213,6 +213,11 @@ class Easyjobs {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'menu_page' );
 		// Settings
 		EasyJobs_Settings::init();
+		// Easyjobs_Page_Template::get_instance();
+		add_action('init', array($this, 'easyjobs_page_template_init'), 10);
+	}
+
+	public function easyjobs_page_template_init() {
 		Easyjobs_Page_Template::get_instance();
 	}
 

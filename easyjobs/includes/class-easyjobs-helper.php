@@ -322,7 +322,52 @@ class Easyjobs_Helper {
 		}
 		return false;
 	}
-	
+	// state version start
+	public static function get_state_version() {
+		$state_version = get_transient( 'easyjobs_state_version' );
+
+		if( !$state_version ) {
+			$company_info = unserialize( get_option( 'easyjobs_company_info' ) );
+			$state_version = ( !empty( $company_info ) && isset( $company_info->state_version ) ) ? $company_info->state_version : 0;
+
+			set_transient( 'easyjobs_state_version', $state_version );
+		}
+
+		return $state_version;
+	}
+
+	public static function is_state_version_error( $response ) {
+		// 5 step for checking state version
+        // 1. Check if state version error
+        // 2. If error then refetch company data
+        // 3. Update company data in db and update state version
+        // 4. Remove transaint
+        // 5. Recall the same api
+		// var_dump($response->status_code);
+		if( isset( $response->status_code ) && $response->status_code == 412 ) {
+			return true;
+		}
+		return false;
+	}
+
+	public static function update_cache(){
+		delete_transient( 'easyjobs_state_version' );
+		EasyJobs_Settings::update_company_cache();
+	}
+
+	public static function check_reload_required( $response ) {
+		if ( isset( $response->reload_required ) && $response->reload_required == true ) {
+            echo wp_json_encode(
+                array(
+                    'reload_required' => 'reload',
+                )
+            );
+            wp_die();
+        }
+	}
+	// state version end
+
+
 	/**
 	 * @param $type
 	 * @return string

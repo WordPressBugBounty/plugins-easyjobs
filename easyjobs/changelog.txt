@@ -1,3 +1,8 @@
+= 2.6.0 - 20/04/2025 =
+* Added: WordPress 6.8 compatibility.
+* Improved: API Responses for Synchronizing the Application and Plugin.
+* Few minor bug fixes & improvements.
+
 = 2.5.10 - 24/03/2025 =
 * Added: An option for users to easily communicate for support.
 * Fixed: Showing expired label in Draft and Archived jobs.

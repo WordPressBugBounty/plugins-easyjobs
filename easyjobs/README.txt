@@ -3,8 +3,8 @@ Contributors: wpdevteam, re_enter_rupok, asif2bd, rahat89, priyomukul, nhrrob, f
 Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 6.7
-Stable tag: 2.5.10
+Tested up to: 6.8
+Stable tag: 2.6.0
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -138,6 +138,11 @@ No, credit card is not required to sign up.
 
 == Changelog ==
 
+= 2.6.0 - 20/04/2025 =
+* Added: WordPress 6.8 compatibility.
+* Improved: API Responses for Synchronizing the Application and Plugin.
+* Few minor bug fixes & improvements.
+
 = 2.5.10 - 24/03/2025 =
 * Added: An option for users to easily communicate for support.
 * Fixed: Showing expired label in Draft and Archived jobs.
@@ -158,7 +163,7 @@ No, credit card is not required to sign up.
 * Few minor bug fixes & improvements.
 
 = 2.5.7 - 29/12/2024 =
-* Hotfix: Brand color confirmation notice error. 
+* Hotfix: Brand color confirmation notice error.
 * Few minor bug fixes & improvements.
 
 = 2.5.6 - 22/12/2024 =

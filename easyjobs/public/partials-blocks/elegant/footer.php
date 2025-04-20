@@ -3,8 +3,6 @@
  * Render landing page for elegant template
  * @since 1.0.0
  */
-// global $post;
-// dd($atts);
 echo Easyjobs_Helper::generate_block_style($atts);
 ?>
 <?php if( empty( $company->ejel_hide_company_gallery ) ) : ?>

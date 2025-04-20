@@ -114,10 +114,10 @@ class Easyjobs_Admin {
 		$this->candidates  = new Easyjobs_Admin_Candidates();
 		$this->settings    = (object) EasyJobs_DB::get_settings();
         $this->dashboard   = new Easyjobs_Admin_Dashboard();
-		$this->easyjobs_start_plugin_tracking();
-		if(is_admin()){
-			$this->admin_notice();
-		}
+		// $this->easyjobs_start_plugin_tracking();
+		// if(is_admin()){
+		// 	$this->admin_notice();
+		// }
 
         $this->update_company_data();
 		if($this->isEasyJobsPage()){
@@ -142,6 +142,14 @@ class Easyjobs_Admin {
         add_action( 'admin_head', array( $this, 'admin_menu_style' ) );
         add_action( 'delete_post', array($this, 'after_delete_post'), 10, 1);
         add_action( 'trashed_post', array($this, 'after_delete_post'), 10, 1);
+		add_action('init', array($this, 'easyjobs_start_plugin_tracking_init'));
+	}
+
+	public function easyjobs_start_plugin_tracking_init() {
+		$this->easyjobs_start_plugin_tracking();
+		if(is_admin()){
+			$this->admin_notice();
+		}
 	}
 
 	public function admin_notice() {
@@ -1270,7 +1278,11 @@ class Easyjobs_Admin {
 		if ( ! empty( $_POST['params'] ) ) {
 			$params = (array) json_decode( stripslashes( $_POST['params'] ) );
 		}
-        echo wp_json_encode( Easyjobs_Helper::get_generic_response( Easyjobs_Api::get( sanitize_text_field( $_POST['type'] ), $params ) ) );
+		$response = Easyjobs_Api::get( sanitize_text_field( $_POST['type'] ), $params );
+		
+		Easyjobs_Helper::check_reload_required( $response );
+		
+        echo wp_json_encode( Easyjobs_Helper::get_generic_response( $response ) );
         wp_die();
     }
 

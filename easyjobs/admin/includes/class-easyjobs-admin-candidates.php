@@ -46,6 +46,7 @@ class Easyjobs_Admin_Candidates {
     }
     public function get_job_candidates_data( $job_id ) {
         $candidates = Easyjobs_Api::get_by_id( 'job', $job_id, 'candidates' );
+		Easyjobs_Helper::check_reload_required( $candidates );
         if ( $candidates && $candidates->status == 'success' ) {
             return $candidates->data;
         }
@@ -297,12 +298,14 @@ class Easyjobs_Admin_Candidates {
             echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Job id not provided' ) );
 			wp_die();
 		}
+		$response = Easyjobs_Api::get_by_id(
+			'job',
+			abs( sanitize_text_field( $_POST['job_id'] ) ),
+			'invitations'
+		);
+		Easyjobs_Helper::check_reload_required( $response );
         echo wp_json_encode( Easyjobs_Helper::get_generic_response(
-                Easyjobs_Api::get_by_id(
-                    'job',
-                    abs( sanitize_text_field( $_POST['job_id'] ) ),
-                    'invitations'
-                )
+                $response
             )
         );
         wp_die();
@@ -468,12 +471,14 @@ class Easyjobs_Admin_Candidates {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Job id not provided' ) );
 			wp_die();
 		}
+		$response = Easyjobs_Api::get_by_id(
+			'job',
+			abs( sanitize_text_field( $_POST['job_id'] ) ),
+			'candidate/pending'
+		);
+		Easyjobs_Helper::check_reload_required( $response );
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(
-			Easyjobs_Api::get_by_id(
-				'job',
-				abs( sanitize_text_field( $_POST['job_id'] ) ),
-				'candidate/pending'
-			)
+			$response
 		)
 		);
 		wp_die();
@@ -582,6 +587,7 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
         }
 		$results = Easyjobs_Api::get( 'company_jobs' );
+		Easyjobs_Helper::check_reload_required( $results );
 		if ( $results && $results->status == 'success' ) {
 			echo wp_json_encode(Easyjobs_Helper::get_success_response('success', $results->data));
 		}else{
@@ -597,6 +603,7 @@ class Easyjobs_Admin_Candidates {
      */
     private function get_details( $id ) {
         $candidate_details = Easyjobs_Api::get_by_id( 'candidate', $id );
+		Easyjobs_Helper::check_reload_required( $candidate_details );
         if ( $candidate_details == null ) {
             return false;
         }
@@ -616,6 +623,7 @@ class Easyjobs_Admin_Candidates {
      */
     private function get_results( $job_id, $keywords ) {
         $results = Easyjobs_Api::search_within_job( $job_id, 'job_candidates', $keywords );
+		Easyjobs_Helper::check_reload_required( $results );
         if ( $results && $results->status == 'success' ) {
             return (object) array(
                 'status'     => 'success',
@@ -635,6 +643,7 @@ class Easyjobs_Admin_Candidates {
 
     private function get_company_candidates( array $parameters ) {
         $results = Easyjobs_Api::get( 'company_candidates', $parameters );
+		Easyjobs_Helper::check_reload_required( $results );
         if ( $results && $results->status == 'success' ) {
 
             return $results->data;
@@ -705,11 +714,13 @@ class Easyjobs_Admin_Candidates {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Job id not provided' ) );
 			wp_die();
 		}
+		$response = Easyjobs_Api::get_by_id(
+			'candidate_ids',
+			absint( sanitize_text_field( $_POST['id'] ) )
+		);
+		Easyjobs_Helper::check_reload_required( $response );
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(
-			Easyjobs_Api::get_by_id(
-				'candidate_ids',
-				absint( sanitize_text_field( $_POST['id'] ) )
-			)
+			$response
 		)
 		);
 		wp_die();

@@ -440,6 +440,10 @@ class EasyJobs_Settings {
             if ( Easyjobs_Helper::is_success_response( $company_info->status ) ) {
                 update_option( 'easyjobs_company_info', serialize( $company_info->data ) );
             }
+
+            $state_version = ( !empty( $company_info->data ) && isset( $company_info->data->state_version ) ) ? $company_info->data->state_version : 0;
+			set_transient( 'easyjobs_state_version', $state_version );
+
             $company_details = Easyjobs_Api::get( 'company' );
             if ( Easyjobs_Helper::is_success_response( $company_details->status ) ) {
                 update_option( 'easyjobs_company_details', serialize( $company_details->data ) );
@@ -622,6 +626,7 @@ class EasyJobs_Settings {
             wp_die();
 		}
         $jobs = Easyjobs_Api::get( 'published_jobs', ['rows' => 1000]);
+        Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs->status != 'success' ) {
             echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Unable to get jobs from api' ) );
         }

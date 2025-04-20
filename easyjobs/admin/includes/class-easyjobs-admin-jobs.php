@@ -483,6 +483,7 @@ class Easyjobs_Admin_Jobs {
      */
     public function get_published_jobs($args = [], $page=1) {
 		$jobs = Easyjobs_Api::get( 'published_jobs', array_merge( $args, ['page'=>$page] ) );
+        Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
         }
@@ -497,6 +498,7 @@ class Easyjobs_Admin_Jobs {
      */
     public function get_draft_jobs($page=1) {
         $jobs = Easyjobs_Api::get( 'draft_jobs', array('page' => $page) );
+        Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
         }
@@ -511,7 +513,7 @@ class Easyjobs_Admin_Jobs {
      */
     public function get_all_jobs($page=1) {
         $jobs = Easyjobs_Api::get( 'all_jobs', array('page' => $page) );
-        // echo "<pre>";var_dump($jobs);die;
+        Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
         }
@@ -525,7 +527,8 @@ class Easyjobs_Admin_Jobs {
      * @return object|bool
      */
     public function get_archived_jobs($page=1, $rows=10) {
-         $jobs = Easyjobs_Api::get( 'archived_jobs', array('page' => $page, 'rows' => $rows) );
+        $jobs = Easyjobs_Api::get( 'archived_jobs', array('page' => $page, 'rows' => $rows) );
+        Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
         }
@@ -648,6 +651,7 @@ class Easyjobs_Admin_Jobs {
 			wp_die();
         }
         $metas = Easyjobs_Api::get( 'job_metas' );
+        Easyjobs_Helper::check_reload_required( $metas );
         $data   = array();
         if ( Easyjobs_Helper::is_success_response( $metas->status ) ) {
             $data['meta'] = $metas->data;
@@ -764,6 +768,7 @@ class Easyjobs_Admin_Jobs {
             wp_die();
         }
         $meta = Easyjobs_Api::get( 'screening_question_meta' );
+        Easyjobs_Helper::check_reload_required( $meta );
         if ( Easyjobs_Helper::is_success_response( $meta->status ) ) {
             echo wp_json_encode(
                 array(
@@ -862,6 +867,7 @@ class Easyjobs_Admin_Jobs {
 			wp_die();
         }
         $meta = Easyjobs_Api::get( 'quiz_meta' );
+        Easyjobs_Helper::check_reload_required( $meta );
         if ( $meta->status === 'success' ) {
             echo wp_json_encode(
                 array(
@@ -1059,13 +1065,14 @@ class Easyjobs_Admin_Jobs {
 			echo wp_json_encode(Easyjobs_Helper::get_error_response( 'No type provided' ));
 			wp_die();
 		}
-
+        $response = Easyjobs_Api::get_by_id(
+            'job',
+            absint( $_POST['job_id'] ),
+            sanitize_text_field( $_POST['type'] )
+        );
+        Easyjobs_Helper::check_reload_required( $response );
         echo wp_json_encode(Easyjobs_Helper::get_generic_response(
-			Easyjobs_Api::get_by_id(
-				'job',
-				absint( $_POST['job_id'] ),
-				sanitize_text_field( $_POST['type'] )
-			)
+			$response
 		));
 
         wp_die();
@@ -1187,6 +1194,7 @@ class Easyjobs_Admin_Jobs {
 				'page'        => absint( sanitize_text_field($_POST['page']) ),
 			)
         );
+        Easyjobs_Helper::check_reload_required( $initial_templates );
         if ( Easyjobs_Helper::is_success_response( $initial_templates->status ) ) {
             $response_data['templates'] = $initial_templates->data;
             echo wp_json_encode(Easyjobs_Helper::get_success_response( 'Successfully get templates', $response_data ));
