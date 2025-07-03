@@ -1,3 +1,9 @@
+= 2.6.1 - 03/07/2025 =
+* Added: Internal job filtering in Jobs.
+* Added: Visibility control for Company explore button in settings.
+* Added: Time Zone control in settings.
+* Few minor bug fixes & improvements.
+
 = 2.6.0 - 20/04/2025 =
 * Added: WordPress 6.8 compatibility.
 * Improved: API Responses for Synchronizing the Application and Plugin.

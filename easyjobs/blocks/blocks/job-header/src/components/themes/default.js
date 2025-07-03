@@ -63,6 +63,7 @@ const Default = ({props}) => {
                                     </div>
                                 {/* <?php endif; ?>
                                 <?php if ( ! get_theme_mod( 'easyjobs_landing_hide_company_website_button' ) ) : ?> */}
+                                {companyDetails?.show_explore_company && (
                                     <div className="ej-header-tools">
                                         <a href={companyDetails?.website ? companyDetails?.website : '#'} className="ej-btn ej-info-btn" target="_blank">
                                             { 
@@ -70,6 +71,7 @@ const Default = ({props}) => {
                                             }
                                         </a>
                                     </div>
+                                )}
                                 {/* <?php endif; ?> */}
                             </div>
                             {/* <?php if ( ! empty( $company->description ) ) : ?>

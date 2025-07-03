@@ -59,7 +59,7 @@
 							</div>
 						</div>
 					<?php endif; ?>
-					<?php if ( ! get_theme_mod( 'easyjobs_landing_hide_company_website_button' ) ) : ?>
+					<?php if ( isset( $company->show_explore_company ) && $company->show_explore_company && ! get_theme_mod( 'easyjobs_landing_hide_company_website_button' ) ) : ?>
 						<div class="ej-header-tools">
 							<a href="<?php echo !empty($company->website) ? esc_url( $company->website ) : '#'; ?>" class="ej-btn ej-info-btn">
 								<?php empty ( $company->ejel_website_link_text ) ? esc_html_e( 'Explore company website', 'easyjobs' ) : esc_html_e( $company->ejel_website_link_text, 'easyjobs' ); ?>

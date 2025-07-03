@@ -137,7 +137,7 @@ echo Easyjobs_Helper::generate_block_style($atts);
                                                 </div>
                                             <?php endif; ?>
                                         <?php endif; ?>
-                                        <?php if ( ! get_theme_mod( 'easyjobs_landing_hide_company_website_button' ) ) : ?>
+                                        <?php if ( isset( $details->show_explore_company ) && $details->show_explore_company && ! get_theme_mod( 'easyjobs_landing_hide_company_website_button' ) ) : ?>
                                         <a href="<?php echo !empty($details->website) ? esc_url( $details->website ) : '#'; ?>" target="_blank" class="button button__success button__radius">
                                             <?php empty ( $details->ejel_website_link_text ) ? esc_html_e( 'Explore company website', 'easyjobs' ) : esc_html_e( $details->ejel_website_link_text, 'easyjobs' ); ?>
                                         </a>

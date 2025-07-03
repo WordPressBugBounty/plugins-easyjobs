@@ -4,7 +4,7 @@ Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.8
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -137,6 +137,12 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.6.1 - 03/07/2025 =
+* Added: Internal job filtering in Jobs.
+* Added: Visibility control for Company explore button in settings.
+* Added: Time Zone control in settings.
+* Few minor bug fixes & improvements.
 
 = 2.6.0 - 20/04/2025 =
 * Added: WordPress 6.8 compatibility.

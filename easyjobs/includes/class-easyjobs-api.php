@@ -23,6 +23,7 @@ class Easyjobs_Api {
         'published_jobs'            => EASYJOBS_API_URL . 'job/published',
         'draft_jobs'                => EASYJOBS_API_URL . 'job/draft',
         'all_jobs'                  => EASYJOBS_API_URL . 'job/all',
+        'internal_jobs'             => EASYJOBS_API_URL . 'job/internal',
         'archived_jobs'             => EASYJOBS_API_URL . 'job/archive',
         'job_pipeline'              => EASYJOBS_API_URL . 'job/',
         'job_candidates'            => EASYJOBS_API_URL . 'job/',

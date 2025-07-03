@@ -1011,7 +1011,7 @@ class Easyjobs_Elementor_Landingpage extends Widget_Base {
 			array(
 				'label'     => __( 'Background Color', 'easyjobs' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#1fb6d7',
+				'default'   => '',
 				'selectors' => array(
 					'{{WRAPPER}} .ej-header-tools .ej-info-btn' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .ej-template-classic .carrier__company > a.button__success' => 'background-color: {{VALUE}} !important;',
@@ -1046,7 +1046,7 @@ class Easyjobs_Elementor_Landingpage extends Widget_Base {
 			array(
 				'label'     => __( 'Background Color', 'easyjobs' ),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#1fb6d7',
+				'default'   => '',
 				'selectors' => array(
 					'{{WRAPPER}} .ej-header-tools .ej-info-btn:hover' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .ej-template-classic .carrier__company > a.button__success:hover' => 'background-color: {{VALUE}} !important;',

@@ -280,7 +280,7 @@ class Easyjobs_Helper {
 			return null;
 		}
 		foreach ( $jobs as $key => $job ) {
-			if( is_object($job) ) {
+			if( is_object($job) && $job->status == 2 ) {
 				array_push( $published_jobs_ids, $job->id );
 			}
 		}
@@ -1313,4 +1313,14 @@ class Easyjobs_Helper {
 		include $path;
 		return ob_get_clean();
     }
+
+	public static function add_view_url( $jobs ) {
+		$job_with_page_id     = Easyjobs_Helper::get_job_with_page( $jobs );
+		foreach ( $jobs as $r ) {
+			if( $r->status != 2 ){
+				continue;
+			}
+			$r->view_url = get_permalink( $job_with_page_id[ $r->id ] );
+		}
+	}
 }

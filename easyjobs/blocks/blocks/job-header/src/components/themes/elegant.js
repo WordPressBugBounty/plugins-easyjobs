@@ -52,11 +52,13 @@ const Elegant = ({props}) => {
 										)}
 									</div>
 									{/* <?php if ( ! get_theme_mod( 'easyjobs_landing_hide_company_website_button' ) ) : ?> */}
+									{companyDetails?.show_explore_company && (
 										<div className="ej-header-tools">
 											<a href={companyDetails?.website ? companyDetails?.website : '#'} className="ej-btn ej-info-btn">
 											{ websiteLinkText === '' ? 'Explore company website' : websiteLinkText}
 											</a>
 										</div>
+									)}
 									{/* <?php endif; ?> */}
 								</div>
 								{/* <?php endif;?>

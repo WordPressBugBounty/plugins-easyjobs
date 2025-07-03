@@ -58,9 +58,11 @@ const Classic = ({props}) => {
                                         <div className="ej-company-description" dangerouslySetInnerHTML={{__html: companyDetails.description}}></div>
                                     )}
                                     {/* <?php if ( ! get_theme_mod( 'easyjobs_landing_hide_company_website_button' ) ) : ?> */}
-                                    <a href={companyDetails?.website ? companyDetails?.website : '#'} target="_blank" className="button button__success button__radius">
-                                        { websiteLinkText === '' ? 'Explore company website' : websiteLinkText}
-                                    </a>
+                                    {companyDetails?.show_explore_company && (
+                                        <a href={companyDetails?.website ? companyDetails?.website : '#'} target="_blank" className="button button__success button__radius">
+                                            { websiteLinkText === '' ? 'Explore company website' : websiteLinkText}
+                                        </a>
+                                    )}
                                     {/* <?php endif; ?> */}
                                 </div>
                             </div>

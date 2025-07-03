@@ -453,6 +453,11 @@ class Easyjobs_Admin_Jobs {
 				break;
             case 'all':
                 $jobs = $this->get_all_jobs($job_page);
+                Easyjobs_Helper::add_view_url( $jobs->data );
+                break;
+            case 'internal':
+                $jobs = $this->get_internal_jobs($job_page);
+                Easyjobs_Helper::add_view_url( $jobs->data );
                 break;
 			default:
 				$jobs = $this->get_published_jobs(
@@ -460,12 +465,8 @@ class Easyjobs_Admin_Jobs {
 						'orderby' => 'expire_at', 'order' => 'desc'
 					], Easyjobs_Helper::get_allowed_params_from_request($_POST)), $job_page
 				);
-				$job_with_page_id       = Easyjobs_Helper::sync_job_pages( $jobs->data );
-				/*$new_job_with_page_id   = Easyjobs_Helper::create_pages_if_required( $jobs->data, $job_with_page_id );
-				$published_job_page_ids = $job_with_page_id + $new_job_with_page_id;*/
-				foreach ($jobs->data as $job){
-					$job->view_url = esc_url(get_the_permalink($job_with_page_id[$job->id]));
-				}
+				Easyjobs_Helper::add_view_url( $jobs->data );
+				break;
 		}
 		if(!empty($jobs)){
 			echo wp_json_encode(Easyjobs_Helper::get_success_response('', $jobs));
@@ -521,6 +522,21 @@ class Easyjobs_Admin_Jobs {
     }
 
     /**
+     * Get internal jobs
+     *
+     * @since 1.0.0
+     * @return object|bool
+     */
+    public function get_internal_jobs($page=1) {
+        $jobs = Easyjobs_Api::get( 'internal_jobs', array('page' => $page) );
+        Easyjobs_Helper::check_reload_required( $jobs );
+        if ( $jobs && $jobs->status == 'success' ) {
+            return $jobs->data;
+        }
+        return false;
+    }
+
+    /**
      * Get archived jobs from api
      *
      * @since 1.0.0
@@ -568,16 +584,15 @@ class Easyjobs_Admin_Jobs {
         $job_page_links = array();
 		if ( $type == 'published' ) {
 			$result               = $this->search_results( 'published_jobs', array_merge(Easyjobs_Helper::get_allowed_params_from_request($_POST), ['orderby' => 'expire_at', 'order' => 'desc']) );
-
-			$job_with_page_id     = Easyjobs_Helper::get_job_with_page( $result->data );
-			// $new_job_with_page_id = Easyjobs_Helper::create_pages_if_required( $result->data, $job_with_page_id );
-			// $job_page_ids         = $job_with_page_id + $new_job_with_page_id;
-			foreach ( $result->data as $r ) {
-				$r->view_url = get_permalink( $job_with_page_id[ $r->id ] );
-			}
+			Easyjobs_Helper::add_view_url( $result->data );
+		}
+        if ( $type == 'internal' ) {
+			$result = $this->search_results( 'internal_jobs', Easyjobs_Helper::get_allowed_params_from_request($_POST) );
+            Easyjobs_Helper::add_view_url( $result->data );
 		}
         if ( $type == 'all' ) {
 			$result = $this->search_results( 'all_jobs', Easyjobs_Helper::get_allowed_params_from_request($_POST) );
+            Easyjobs_Helper::add_view_url( $result->data );
 		}
 		if ( $type == 'draft' ) {
 			$result = $this->search_results( 'draft_jobs', Easyjobs_Helper::get_allowed_params_from_request($_POST) );
