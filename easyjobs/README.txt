@@ -1,20 +1,20 @@
-=== easy.jobs- Best Recruitment Plugin for Job Board Listing, Manager, Career Page for Elementor & Gutenberg ===
+=== easy.jobs - AI powered Job Listing, Job Board, Career Page, Recruitment & Hiring Solution ===
 Contributors: wpdevteam, re_enter_rupok, asif2bd, rahat89, priyomukul, nhrrob, fuadragib
 Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.8
-Stable tag: 2.6.1
+Stable tag: 2.6.2
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
 
-Easy solution for job recruitment to attract, manage & hire the right talent faster. Best Job Manager in WordPress with Elementor support.
+Easy solution for job recruitment to attract, manage & hire the right talent faster. Create and manage job listings, career pages, and recruitment seamlessly with Elementor and the Block Editor.
 
 
 == Description ==
 
-**EasyJobs - Best & Easiest Job Manager Plugin for WordPress**
+**easyJobs – Job Manager, Hiring Platform, and Career Portal for WordPress**
 
 [easy.jobs](https://easy.jobs) is a SAAS recruitment solution which comes with full functionality from  WordPress dashboard and it also has Elementor compatibility to manage the hiring process without using any codes. You can get started for FREE & use easy.jobs powerful integration with WordPress.
 
@@ -137,6 +137,9 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.6.2 - 04/09/2025 =
+* Few minor bug fixes & improvements.
 
 = 2.6.1 - 03/07/2025 =
 * Added: Internal job filtering in Jobs.
