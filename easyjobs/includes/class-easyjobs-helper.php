@@ -607,7 +607,7 @@ class Easyjobs_Helper {
 	 * @return bool
 	 */
 	public static function is_success_response( $status ) {
-		if ( strtolower( trim( $status ) ) === 'success' ) {
+		if ( !empty( $status ) && strtolower( trim( $status ) ) === 'success' ) {
 			return true;
 		}
 
@@ -619,6 +619,9 @@ class Easyjobs_Helper {
 	 * @return string
 	 */
 	public static function get_pipeline_label( $name ) {
+		if ( empty( $name ) ) {
+			return '';
+		}
 		switch ( strtolower( $name ) ) {
 			case 'selected':
 				return 'success-label';

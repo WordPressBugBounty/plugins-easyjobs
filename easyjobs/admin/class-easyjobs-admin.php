@@ -1472,7 +1472,7 @@ class Easyjobs_Admin {
             $settings = EasyJobs_DB::get_settings();
             if ( ! empty( $settings['easyjobs_api_key'] ) ) {
                 $response = Easyjobs_Api::get( 'settings_basic_info' );
-                if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
+                if ( isset( $response->status ) && Easyjobs_Helper::is_success_response( $response->status ) ) {
                     set_transient( 'easyjobs_company_verification_status', $response->data->is_verified ? 'yes' : 'no', 3600 );
                 }
             }

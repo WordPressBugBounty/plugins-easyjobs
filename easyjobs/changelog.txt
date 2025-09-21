@@ -1,3 +1,11 @@
+= 2.6.3 - 21/09/2025 =
+* Added: Candidate Usage Limit Indicator.
+* Fixed: Jobs per page inconsistency issue.
+* Few minor bug fixes & improvements.
+
+= 2.6.2 - 04/09/2025 =
+* Few minor bug fixes & improvements.
+
 = 2.6.1 - 03/07/2025 =
 * Added: Internal job filtering in Jobs.
 * Added: Visibility control for Company explore button in settings.

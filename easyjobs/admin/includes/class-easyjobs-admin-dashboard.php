@@ -14,7 +14,40 @@ class Easyjobs_Admin_Dashboard {
 		add_action('wp_ajax_easyjobs_analytics_info', array($this, 'get_analytics_info'));
 		add_action('wp_ajax_easyjobs_job_analytics_stats', array($this, 'get_analytics_stats'));
 		add_action('wp_ajax_easyjobs_get_active_jobs', array($this, 'active_jobs'));
+		add_action('wp_ajax_easyjobs_get_candidate_limit', array($this, 'get_candidate_limit'));
+	}
 
+	public function get_candidate_limit() {
+		if ( ! Easyjobs_Helper::can_update_options() ) {
+			echo wp_json_encode(
+				array(
+					'status'     => 'error',
+					'message'    => 'Invalid request !!',
+				)
+			);
+			wp_die();
+        }
+		if(!Easyjobs_Helper::verified_request($_POST)){
+			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Bad request' ) );
+			wp_die();
+		}
+		$response = Easyjobs_Api::get( 'candidate_limit' );
+		if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
+			echo wp_json_encode(
+				array(
+					'status' => 'success',
+					'data'   => $response->data,
+				)
+			);
+		} else {
+			echo wp_json_encode(
+				array(
+					'status' => 'error',
+					'message'=> $response->message,
+				)
+			);
+		}
+		wp_die();
 	}
 
 	public function company_stats(){

@@ -66,6 +66,7 @@ class Easyjobs_Api {
         'job_analytics_stats'       => EASYJOBS_API_URL . 'company/recent-jobs/analytics',
         'company_active_jobs'       => EASYJOBS_API_URL . 'job/active',
         'job_locations'             => EASYJOBS_API_URL . 'job/locations',
+        'candidate_limit'           => EASYJOBS_API_URL . 'company/candidate-limit-usage',
     );
 
     /**
