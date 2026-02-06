@@ -3,8 +3,8 @@ Contributors: wpdevteam, re_enter_rupok, asif2bd, rahat89, priyomukul, nhrrob, f
 Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 6.8
-Stable tag: 2.6.3
+Tested up to: 6.9
+Stable tag: 2.6.7
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -137,6 +137,22 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.6.7 - 14/01/2025 =
+* Fixed: Plugin Deactivation feedback UI.
+* Few minor bug fixes & improvements.
+
+= 2.6.6 - 18/12/2025 =
+* Improved: New UI for user friendly navigation.
+* Improved: Responsive UI in settings page.
+* Few minor bug fixes & improvements.
+
+= 2.6.5 - 17/11/2025 =
+* Few minor bug fixes & improvements.
+
+= 2.6.4 - 20/10/2025 =
+* Improved: Candidate filter functionality and UI.
+* Few minor bug fixes & improvements.
 
 = 2.6.3 - 21/09/2025 =
 * Added: Candidate Usage Limit Indicator.

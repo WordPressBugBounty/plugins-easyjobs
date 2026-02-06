@@ -290,6 +290,12 @@ class Easyjobs_Api {
 
         $url = $url . '?';
         foreach ( $params as $key => $param ) {
+            if ( is_array( $param ) ) {
+                foreach ( $param as $p ) {
+                    $url .= $key . '[]=' . $p . '&';
+                }
+                continue;
+            }
             $url .= $key . '=' . $param . '&';
         }
         $url = rtrim( $url, '&' );
@@ -516,8 +522,6 @@ class Easyjobs_Api {
             $token = self::get_token();
         }
 
-        // add_filter('https_ssl_verify', '__return_false');
-        // dd($url);
         $response = wp_remote_get(
             $url,
             array_merge(
@@ -542,18 +546,8 @@ class Easyjobs_Api {
             );
         }
 
-        // dd($response);
-        // 5 steps for checking state version
-        // 1. Check if state version error
-        // 2. If error then refetch company data
-        // 3. Update company data in db and update state version
-        // 4. Remove transaint
-        // 5. Recall the same api
         if ( Easyjobs_Helper::is_state_version_error( json_decode( $response['body'] ) ) ) {
-            // dd($response);
             Easyjobs_Helper::update_cache();
-            // var_dump($response);
-            // return self::remote_get( $url, $api_key, array_merge( $options, ['company_cache_updated' => true] ) );
             return (object) array(
                 'reload_required'     => true,
             );
@@ -561,9 +555,6 @@ class Easyjobs_Api {
         
         if ( is_array( $response ) ) {
             $res = json_decode( $response['body'] );
-            // if( is_object( $res ) && !empty( $options['company_cache_updated'] ) ){
-            //     $res->status = 'reload';
-            // }
             return $res; 
         }
         return (object) array(

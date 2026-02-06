@@ -827,6 +827,7 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
                     height: 100%;
                     justify-content: center;
                     align-items: center;
+                    z-index: 9999;
                 }
 
                 .wpinsights-goodbye-form-wrapper-easyjobs .wpinsights-goodbye-form {
@@ -919,16 +920,16 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
                 }
 
                 .wpinsights-goodbye-form-wrapper-easyjobs .wpinsights-goodbye-form-footer .wpinsights-submit-btn {
-                    background-color: #d30c5c;
-                    -webkit-border-radius: 3px;
-                    border-radius: 3px;
+                    background-color: #597dfc;
+                    -webkit-border-radius: 7px;
+                    border-radius: 7px;
                     color: #fff;
                     line-height: 1;
-                    padding: 15px 20px;
+                    padding: 12px 18px;
                     font-size: 13px;
                 }
 
-                .wpinsights-goodbye-form-wrapper-easyjobs .wpinsights-goodbye-form-footer .wpinsights-deactivate-btn {
+                .wpinsights-goodbye-form-wrapper-easyjobs .wpinsights-goodbye-form-footer .wpsp-put-deactivate-btn {
                     font-size: 13px;
                     color: #a4afb7;
                     background: none;
@@ -937,8 +938,6 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
                     width: auto;
                     text-decoration: underline;
                 }
-
-                .wpinsights-goodbye-form-wrapper-easyjobs .test {}
             </style>
 
             <?php

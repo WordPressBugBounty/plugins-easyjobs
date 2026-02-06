@@ -337,13 +337,6 @@ class Easyjobs_Helper {
 	}
 
 	public static function is_state_version_error( $response ) {
-		// 5 step for checking state version
-        // 1. Check if state version error
-        // 2. If error then refetch company data
-        // 3. Update company data in db and update state version
-        // 4. Remove transaint
-        // 5. Recall the same api
-		// var_dump($response->status_code);
 		if( isset( $response->status_code ) && $response->status_code == 412 ) {
 			return true;
 		}

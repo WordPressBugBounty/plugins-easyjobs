@@ -305,51 +305,51 @@ class Easyjobs_Admin {
 		/**
 		 * Black Friday Notice
 		 */		
-		// $upgrade_cta_link_bf = 'https://easy.jobs/bfcm24-pricing';
-		// $black_friday_notice_message = "<p>🔔 This Black Friday manage your candidate pool more smartly with easy.jobs PRO & <strong>Save Up to 80%</strong>.</p><a style='display: inline-flex;column-gap:5px;' class='button button-primary' href='{$upgrade_cta_link_bf}' target='_blank'><img style='width:15px;' src='{$crown_icon}'/>Upgrade to PRO</a>";
+		$company_info = Easyjobs_Helper::get_company_info( true );
+		$upgrade_cta_link_bf = 'https://easy.jobs/bfcm2025-admin-notice';
+		$black_friday_notice_message = "<p><strong>Black Friday Mega Sale:</strong> Hire Faster With Smarter Recruitment Features – Now <strong>Up to 75% OFF! 🎁</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:5px;'><a class='button button-primary' href={$upgrade_cta_link_bf} target='_blank'>Upgrade To PRO</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I’ll Grab It Later</button></div>";
 
-		// $_black_friday_notice = [
-		// 	'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-		// 	'html'      => $black_friday_notice_message,
-		// ];
-		// $notices->add(
-		// 	'black_friday_notice',
-		// 	$_black_friday_notice,
-		// 	[
-		// 		'classes'     => 'updated put-dismiss-notice',
-		// 		'start'       => $notices->time(),
-		// 		// 'start'       => $notices->strtotime( '+2 days' ),
-		// 		"expire"      => strtotime( '11:59:59pm 5th December, 2024' ),
-		// 		'dismissible' => true,
-		// 		'refresh'     => EASYJOBS_VERSION,
-		// 		'screens'     => [ 'dashboard' ],
-		// 		'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
-		// 	]
-		// );
+		$_black_friday_notice = [
+			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
+			'html'      => $black_friday_notice_message,
+		];
+		$notices->add(
+			'black_friday_notice',
+			$_black_friday_notice,
+			[
+				'classes'     => 'updated put-dismiss-notice',
+				'start'       => strtotime( '12:00:00am 16th November, 2025' ),
+				"expire"      => strtotime( '11:59:59pm 4th December, 2025' ),
+				'dismissible' => true,
+				'refresh'     => EASYJOBS_VERSION,
+				'screens'     => [ 'dashboard' ],
+				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
+			]
+		);
 
 		/**
 		 * Holiday Notice
-		 */		
-		// $upgrade_cta_link_h = 'https://easy.jobs/holiday24-admin-notice';
-		// $holiday_notice_message = "<p>🎁 <strong>SAVE up to 70% now</strong> & recruit smarter in 2025 with AI-powered hiring SaaS.</p><a class='button button-primary' href='{$upgrade_cta_link_h}' target='_blank'><img style='width:15px;' src='{$crown_icon}'/> Upgrade to PRO</a><a class='holiday-notice dismiss-btn' data-dismiss='true' href='{$upgrade_cta_link_h}' target='_blank'>No, I'll Pay Full Price Later</a>";
+		 */
+		$upgrade_cta_link = '//easy.jobs/holiday2025-admin-notice';
+		$holiday_notice_message = "<p><strong>Season’s Best Deal:</strong> Hire faster with smarter recruitment features – Now <strong>Up to 75% OFF! ⚡</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:5px;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To PRO</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I’ll Grab It Later</button></div>";
 
-		// $_holiday_notice = [
-		// 	'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-		// 	'html'      => $holiday_notice_message,
-		// ];
-		// $notices->add(
-		// 	'holiday_notice',
-		// 	$_holiday_notice,
-		// 	[
-		// 		'classes'     => 'updated put-dismiss-notice',
-		// 		'start'       => $notices->time(),
-		// 		"expire"      => strtotime( '11:59:59pm 10th January, 2025' ),
-		// 		'dismissible' => true,
-		// 		'refresh'     => EASYJOBS_VERSION,
-		// 		'screens'     => [ 'dashboard' ],
-		// 		'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
-		// 	]
-		// );
+		$_holiday_notice = [
+			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
+			'html'      => $holiday_notice_message,
+		];
+		$notices->add(
+			'ej_holiday_notice',
+			$_holiday_notice,
+			[
+				'classes'     => 'updated put-dismiss-notice',
+				'start'       => $notices->time(),
+				"expire"      => strtotime( '11:59:59pm 7th January, 2026' ),
+				'dismissible' => true,
+				'refresh'     => EASYJOBS_VERSION,
+				'screens'     => [ 'dashboard' ],
+				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
+			]
+		);
 
 		$this->cache_bank->create_account( $notices );
 		$this->cache_bank->calculate_deposits( $notices );
@@ -379,45 +379,115 @@ class Easyjobs_Admin {
             }
 
 			/*
-			* Halloween, black friday, holiday notice css
+			* Black Friday Notice css 2025
 			*/
-			#wpnotice-easyjobs-notice-halloween_notice,
 			#wpnotice-easyjobs-notice-black_friday_notice {
-				border-left-color: #593dbd;
+				border-left-color: #597DFC;
+				padding: 10px 40px 14px 20px;
 			}
-			.notice-easyjobs-notice-halloween_notice .wpnotice-content-wrapper,
-			.notice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper {
+			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
+			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
+			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
+				background-color: #3B4045;
+				color: #fff;
+				box-shadow: 0px 1px 0px 0px #000000;
+				border: none;
+				border-radius: 6px;
+				padding: 2px 16px;
+			}
+
+			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
+				background: none;
+				border: none;
+				color: #424242;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.5;
+				text-decoration: underline;
+				cursor: pointer;
+				padding: 0;
+				margin: 0;
+				display: inline-block;
+				margin-left: 5px;
+			}
+
+			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper {
 				display: flex;
-				align-items: center;
+				align-items: start;
 				justify-content: space-between;
 				width: 100%;
+				flex-direction: column;
 			}
-			a.holiday-notice.dismiss-btn {
-				display: inline-block;
-				padding: 8px;
-				color: #5626E7;
-			}
-			div.updated.easyjobs-notice .wpnotice-content-wrapper p,
-			div.updated.easyjobs-notice .wpnotice-content-wrapper a {
+			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper p{
 				font-size: 15px;
+				margin-top: 0;
+				padding-top: 0;
+				margin-bottom: 3px;
 			}
-			div.updated.easyjobs-notice.notice-easyjobs-notice-holiday_notice .wpnotice-content-wrapper p {
-				font-size: 18px;
-			}
-			.easyjobs-notice .wpnotice-content-wrapper > a.button-primary,
-			.easyjobs-notice .wpnotice-content-wrapper > a.button-primary:focus,
-			.easyjobs-notice .wpnotice-content-wrapper > a.button-primary:hover {
-				background-color: #593dbd;
-				border-color: #593dbd;
+			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper {
+				padding: 0;
 			}
 			@media only screen and (max-width: 767px) {
-				#wpnotice-easyjobs-notice-halloween_notice,
-				#wpnotice-easyjobs-notice-black_friday_notice,
-				#wpnotice-easyjobs-notice-holiday_notice {
+				#wpnotice-easyjobs-notice-black_friday_notice {
 					display: none !important;
 				}
 			}
 
+			/*
+			* Holiday Notice css 2025
+			*/
+			#wpnotice-easyjobs-notice-ej_holiday_notice {
+				border-left-color: #597DFC;
+				padding: 10px 40px 14px 20px;
+			}
+			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
+			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
+			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
+				background-color: #2B65D9;
+				color: #fff;
+				box-shadow: 0px 1px 0px 0px #000000;
+				border: none;
+				border-radius: 6px;
+				padding: 2px 16px;
+			}
+
+			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
+				background: none;
+				border: none;
+				color: #2B65D9;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.5;
+				text-decoration: underline;
+				cursor: pointer;
+				padding: 0;
+				margin: 0;
+				display: inline-block;
+				margin-left: 5px;
+			}
+
+			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper {
+				display: flex;
+				align-items: start;
+				justify-content: space-between;
+				width: 100%;
+				flex-direction: column;
+			}
+			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper p{
+				font-size: 15px;
+				margin-top: 0;
+				padding-top: 0;
+				margin-bottom: 3px;
+				text-transform: capitalize;
+			}
+			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper {
+				padding: 0;
+			}
+			@media only screen and (max-width: 767px) {
+				#wpnotice-easyjobs-notice-ej_holiday_notice {
+					display: none !important;
+				}
+			}
 		</style>
 		<?php
 	}

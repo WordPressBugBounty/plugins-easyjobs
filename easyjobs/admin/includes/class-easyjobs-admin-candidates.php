@@ -542,13 +542,21 @@ class Easyjobs_Admin_Candidates {
 			'page',
 			'rating',
 			'pipeline',
-			'candidate_name'
+			'candidate_name',
+			'pipelineType',
+			'status',
 		];
 		$args = [];
 		foreach ($params as $param){
 			if(isset($_POST[$param])){
 				$args[$param] = sanitize_text_field($_POST[$param]);
 			}
+		}
+		if(isset($_POST['rating'])) {
+			$args['rating'] = array_map('absint', explode(',', $_POST['rating']));
+		}
+		if(isset($_POST['status']) && !empty($_POST['status'])) {
+			$args['status'] = array_map('absint', explode(',', $_POST['status']));
 		}
 		$candidates = $this->get_company_candidates( $args );
 		if($candidates){
