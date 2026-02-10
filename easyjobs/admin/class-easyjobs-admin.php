@@ -351,6 +351,30 @@ class Easyjobs_Admin {
 			]
 		);
 
+		/**
+		 * February Notice
+		 */
+		$upgrade_cta_link = '//easy.jobs/feb2026-admin-notice';
+		$february_notice_message = "<p>Find the Right Talent with AI-driven Recruitment – <strong>Lifetime Deals, Starting at $499</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:0;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To PRO</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I’ll Grab It Later</button></div>";
+
+		$_february_notice = [
+			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
+			'html'      => $february_notice_message,
+		];
+		$notices->add(
+			'february_notice',
+			$_february_notice,
+			[
+				'classes'     => 'updated put-dismiss-notice',
+				'start'       => $notices->time(),
+				"expire"      => strtotime( '11:59:59pm 7th March, 2026' ),
+				'dismissible' => true,
+				'refresh'     => EASYJOBS_VERSION,
+				'screens'     => [ 'dashboard' ],
+				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
+			]
+		);
+
 		$this->cache_bank->create_account( $notices );
 		$this->cache_bank->calculate_deposits( $notices );
 	}
@@ -485,6 +509,64 @@ class Easyjobs_Admin {
 			}
 			@media only screen and (max-width: 767px) {
 				#wpnotice-easyjobs-notice-ej_holiday_notice {
+					display: none !important;
+				}
+			}
+
+			/*
+			* February Notice css 2025
+			*/
+			#wpnotice-easyjobs-notice-february_notice {
+				border-left-color: #597dfc;
+				padding: 10px 40px 14px 20px;
+			}
+			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
+			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
+			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
+				background-color: #5626E7;
+				color: #fff;
+				box-shadow: 0px 1px 0px 0px #000000;
+				border: none;
+				border-radius: 6px;
+				padding: 2px 16px;
+				font-size: 14px;
+			}
+
+			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
+				background: none;
+				border: none;
+				color: #424242;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.5;
+				text-decoration: underline;
+				cursor: pointer;
+				padding: 0;
+				margin: 0;
+				display: inline-block;
+				margin-left: 5px;
+			}
+
+			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper {
+				display: flex;
+				align-items: start;
+				justify-content: space-between;
+				width: 100%;
+				flex-direction: column;
+				font-size: 14px;
+				font-weight: 400;
+			}
+			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper p{
+				font-size: 14px;
+				margin-top: 0;
+				padding-top: 0;
+				margin-bottom: 3px;
+			}
+			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper {
+				padding: 0;
+			}
+			@media only screen and (max-width: 767px) {
+				#wpnotice-easyjobs-notice-february_notice {
 					display: none !important;
 				}
 			}

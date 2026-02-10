@@ -1,5 +1,9 @@
-= 2.6.7 - 14/01/2025 =
-* Fixed: Plugin Deactivation feedback notice.
+= 2.6.8 - 10/02/2026 =
+* Fixed: Analytics visibility inconsistency between App and Plugin. 
+* Few minor bug fixes & improvements.
+
+= 2.6.7 - 14/01/2026 =
+* Fixed: Plugin Deactivation feedback UI.
 * Few minor bug fixes & improvements.
 
 = 2.6.6 - 18/12/2025 =
