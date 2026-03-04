@@ -175,11 +175,28 @@ class Easyjobs_Helper {
 	 *
 	 * @since 1.0.0
 	 * @param $job_id
+	 * @param bool $cached
 	 * @return object|bool
 	 */
-	public static function get_job( $job_id ) {
+	public static function get_job( $job_id, $cached = false ) {
+		$job_id = absint( $job_id );
+		if ( empty( $job_id ) ) {
+			return false;
+		}
+
+		$transient_key = 'easyjobs_job_details_' . $job_id;
+		if ( $cached ) {
+			$cached_job = get_transient( $transient_key );
+			if ( false !== $cached_job ) {
+				return $cached_job;
+			}
+		}
+
 		$job = Easyjobs_Api::get_by_id( 'job', $job_id, 'details' );
 		if ( $job && $job->status == 'success' ) {
+			if ( $cached ) {
+				set_transient( $transient_key, $job->data, DAY_IN_SECONDS );
+			}
 			return $job->data;
 		}
 		return false;

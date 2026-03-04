@@ -53,12 +53,18 @@ class Easyjobs_Shortcode {
 		if ( empty( $atts['id'] ) ) {
 			return '';
 		}
+
+		$job_id = absint( $atts['id'] );
+		if ( empty( $job_id ) ) {
+			return '';
+		}
+
 		$company = $this->get_company_info();
 		if ( ! empty( $company->company_analytics ) && ! empty( $company->company_analytics->id ) ) {
 			$this->insert_analytics_script( $company->company_analytics );
 		}
         $landing_page_link = get_the_permalink(get_option('easyjobs_parent_page'));
-		$job = Easyjobs_Helper::get_job( $atts['id'] );
+		$job = Easyjobs_Helper::get_job( $job_id, true );
 		ob_start();
         include Easyjobs_Helper::get_path_by_template($company->selected_template, 'details');
 		return ob_get_clean();
