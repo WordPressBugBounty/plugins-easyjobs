@@ -1,9 +1,13 @@
+= 2.7.0 - 31/03/2026 =
+* Added: New Jobs page UI.
+* Few minor bug fixes & improvements.
+
 = 2.6.9 - 04/03/2026 =
-* Improved: Optimized job data retrieval by implementing local database caching.  
+* Improved: Optimized job data retrieval by implementing local database caching.
 * Few minor bug fixes & improvements.
 
 = 2.6.8 - 10/02/2026 =
-* Fixed: Analytics visibility inconsistency between App and Plugin. 
+* Fixed: Analytics visibility inconsistency between App and Plugin.
 * Few minor bug fixes & improvements.
 
 = 2.6.7 - 14/01/2026 =

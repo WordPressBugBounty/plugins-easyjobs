@@ -483,7 +483,7 @@ class Easyjobs_Admin_Jobs {
      * @return object|bool
      */
     public function get_published_jobs($args = [], $page=1) {
-		$jobs = Easyjobs_Api::get( 'published_jobs', array_merge( $args, ['page'=>$page] ) );
+		$jobs = Easyjobs_Api::get( 'published_jobs', array_merge( $args, ['page'=>$page, 'rows' => 16] ) );
         Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
@@ -498,7 +498,7 @@ class Easyjobs_Admin_Jobs {
      * @return object|bool
      */
     public function get_draft_jobs($page=1) {
-        $jobs = Easyjobs_Api::get( 'draft_jobs', array('page' => $page) );
+        $jobs = Easyjobs_Api::get( 'draft_jobs', array('page' => $page, 'rows' => 16) );
         Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
@@ -513,7 +513,7 @@ class Easyjobs_Admin_Jobs {
      * @return object|bool
      */
     public function get_all_jobs($page=1) {
-        $jobs = Easyjobs_Api::get( 'all_jobs', array('page' => $page) );
+        $jobs = Easyjobs_Api::get( 'all_jobs', array('page' => $page, 'rows' => 16) );
         Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
@@ -528,7 +528,7 @@ class Easyjobs_Admin_Jobs {
      * @return object|bool
      */
     public function get_internal_jobs($page=1) {
-        $jobs = Easyjobs_Api::get( 'internal_jobs', array('page' => $page) );
+        $jobs = Easyjobs_Api::get( 'internal_jobs', array('page' => $page, 'rows' => 16) );
         Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
@@ -543,7 +543,7 @@ class Easyjobs_Admin_Jobs {
      * @return object|bool
      */
     public function get_archived_jobs($page=1, $rows=10) {
-        $jobs = Easyjobs_Api::get( 'archived_jobs', array('page' => $page, 'rows' => $rows) );
+        $jobs = Easyjobs_Api::get( 'archived_jobs', array('page' => $page, 'rows' => 16) );
         Easyjobs_Helper::check_reload_required( $jobs );
         if ( $jobs && $jobs->status == 'success' ) {
             return $jobs->data;
