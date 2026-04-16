@@ -755,6 +755,7 @@ class Easyjobs_Admin_Jobs {
             $response = Easyjobs_Api::post( 'save_job_info', null, $data );
         }
         if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
+            EasyJobs_Helper::clear_job_details_caches( absint( sanitize_text_field($_POST['job_id']) ) );
             echo wp_json_encode(
                 array(
                     'status' => 'success',
@@ -1280,7 +1281,7 @@ class Easyjobs_Admin_Jobs {
                                 if ($value === 'true') {
                                     $data[ sanitize_text_field( $key ) ] = rest_sanitize_boolean( $value );
                                 } else {
-                                    $data[ sanitize_text_field( $key ) ] = 0;
+                                    $data[ sanitize_text_field( $key ) ] = absint( sanitize_text_field ( $value ) );
                                 }
                             } else{
 								$data[ sanitize_text_field( $key ) ] = sanitize_text_field( $value );

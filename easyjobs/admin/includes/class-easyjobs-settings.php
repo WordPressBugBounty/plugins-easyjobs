@@ -436,6 +436,9 @@ class EasyJobs_Settings {
     public static function update_company_cache()
     {
         try{
+            // Clear all job-related caches before fetching fresh data
+            Easyjobs_Helper::clear_job_details_caches();
+
             $company_info = Easyjobs_Api::get( 'company_info' );
             if ( Easyjobs_Helper::is_success_response( $company_info->status ) ) {
                 update_option( 'easyjobs_company_info', serialize( $company_info->data ) );

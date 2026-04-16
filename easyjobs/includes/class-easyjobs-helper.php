@@ -362,7 +362,29 @@ class Easyjobs_Helper {
 
 	public static function update_cache(){
 		delete_transient( 'easyjobs_state_version' );
+		self::clear_job_details_caches();
 		EasyJobs_Settings::update_company_cache();
+	}
+
+	/**
+	 * Clear job-related caches and transients
+	 * Called during sync to ensure fresh data is fetched
+	 *
+	 * @param int|null $job_id Optional. Specific job ID to clear cache for. If null, clears all job details caches.
+	 */
+	public static function clear_job_details_caches( $job_id = null ) {
+		global $wpdb;
+
+		if ( ! empty( $job_id ) ) {
+			// Clear cache for a specific job
+			delete_transient( 'easyjobs_job_details_' . $job_id );
+		} else {
+			// Clear all job details transients (easyjobs_job_details_*)
+			$wpdb->query(
+				"DELETE FROM {$wpdb->options}
+				WHERE option_name LIKE '%easyjobs_job_details_%'"
+			);
+		}
 	}
 
 	public static function check_reload_required( $response ) {

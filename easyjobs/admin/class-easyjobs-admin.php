@@ -375,6 +375,30 @@ class Easyjobs_Admin {
 			]
 		);
 
+		/**
+		 * Spring Notice
+		 */
+		$upgrade_cta_link = '//easy.jobs/spring2026-admin-notice';
+		$spring_notice_message = "<p>🌸 <strong>Spring Savings:</strong> Hire smarter with AI-powered recruitment features – now <strong>Flat 50% OFF! </strong> ⚡️</p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:0;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To Pro Now</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>Maybe Later</button></div>";
+
+		$_spring_notice = [
+			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
+			'html'      => $spring_notice_message,
+		];
+		$notices->add(
+			'spring_notice',
+			$_spring_notice,
+			[
+				'classes'     => 'updated put-dismiss-notice',
+				'start'       => $notices->time(),
+				"expire"      => strtotime( '11:59:59pm 10th May, 2026' ),
+				'dismissible' => true,
+				'refresh'     => EASYJOBS_VERSION,
+				'screens'     => [ 'dashboard' ],
+				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
+			]
+		);
+
 		$this->cache_bank->create_account( $notices );
 		$this->cache_bank->calculate_deposits( $notices );
 	}
@@ -567,6 +591,64 @@ class Easyjobs_Admin {
 			}
 			@media only screen and (max-width: 767px) {
 				#wpnotice-easyjobs-notice-february_notice {
+					display: none !important;
+				}
+			}
+
+			/*
+			* Spring Notice css 2026
+			*/
+			#wpnotice-easyjobs-notice-spring_notice {
+				border-left-color: #5252dc;
+				padding: 10px 40px 14px 20px;
+			}
+			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
+			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
+			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
+				background-color: #5252DC;
+				color: #fff;
+				border: none;
+				border-radius: 6px;
+				padding: 2px 16px;
+				font-size: 14px;
+			}
+
+			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
+				background: none;
+				border: none;
+				color: #424242;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.5;
+				text-decoration: underline;
+				cursor: pointer;
+				padding: 0;
+				margin: 0;
+				display: inline-block;
+				margin-left: 5px;
+			}
+
+			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper {
+				display: flex;
+				align-items: start;
+				justify-content: space-between;
+				width: 100%;
+				flex-direction: column;
+				font-size: 14px;
+				font-weight: 400;
+			}
+			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper p{
+				font-size: 14px;
+				margin-top: 0;
+				padding-top: 0;
+				margin-bottom: 3px;
+				color: #171717;
+			}
+			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper {
+				padding: 0;
+			}
+			@media only screen and (max-width: 767px) {
+				#wpnotice-easyjobs-notice-spring_notice {
 					display: none !important;
 				}
 			}
