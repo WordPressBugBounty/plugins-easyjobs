@@ -135,8 +135,19 @@ global $post;
 									<?php esc_html_e( 'Location', 'easyjobs' ); ?>
 								</div>
 								<div class="ej-job-highlights-item-value">
-									<?php if ( $job->is_remote ) : ?>
-										<?php esc_html_e( 'Anywhere', 'easyjobs' ); ?>
+									<?php if ( isset($job->remote_location_type) && $job->remote_location_type === 'specific' ) : ?>
+										<?php if ( !empty($job->remote_countries) ) : ?>
+											<?php
+												$country_names = array_map( function( $country ) {
+													return esc_html( $country->name );
+												}, $job->remote_countries );
+												echo implode( ', ', $country_names );
+											?>
+										<?php else : ?>
+											<?php esc_html_e( 'Remote', 'easyjobs' ); ?>
+										<?php endif; ?>
+									<?php elseif ( $job->is_remote ) : ?>
+										<?php esc_html_e( 'Anywhere (Remote)', 'easyjobs' ); ?>
 									<?php else : ?>
 										<?php if(!empty($job->city) || !empty($job->country)): ?>
 											<?php echo ! empty( $job->city ) ? ucfirst( esc_html( $job->city->name ) ) . ', ' : ''; ?>

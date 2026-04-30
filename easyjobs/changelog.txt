@@ -1,3 +1,7 @@
+= 2.7.2 - 30/04/2026 =
+* Improved: Multi-country support added to remote locations.
+* Few minor bug fixes & improvements.
+
 = 2.7.1 - 16/04/2026 =
 * Improved: Local database caching issues.
 * Few minor bug fixes & improvements.

@@ -24,10 +24,21 @@ global $post;
                         <div class="job__details easyjobs-details">
                             <h1 class="job__title"><?php echo esc_html($job->title)?></h1>
                             <div class="meta">
-								<?php if ( $job->is_remote || (!empty($job->city) || !empty($job->country))) { ?>
+								<?php if ( $job->is_remote || (isset($job->remote_location_type) && $job->remote_location_type === 'specific') || (!empty($job->city) || !empty($job->country))) { ?>
 									<span class="label label__primary">
 										<i class="easyjobs-icon easyjobs-map-maker"></i>
-										<?php if ( $job->is_remote  ) : ?>
+										<?php if ( isset($job->remote_location_type) && $job->remote_location_type === 'specific' ) : ?>
+											<?php if ( !empty($job->remote_countries) ) : ?>
+												<?php
+													$country_names = array_map( function( $country ) {
+														return esc_html( $country->name );
+													}, $job->remote_countries );
+													echo implode( ', ', $country_names );
+												?>
+											<?php else : ?>
+												<?php esc_html_e( 'Remote', 'easyjobs' ); ?>
+											<?php endif; ?>
+										<?php elseif ( $job->is_remote ) : ?>
 											<?php esc_html_e( 'Anywhere', 'easyjobs' ); ?>
 										<?php else : ?>
 											<?php if(!empty($job->city) || !empty($job->country)): ?>

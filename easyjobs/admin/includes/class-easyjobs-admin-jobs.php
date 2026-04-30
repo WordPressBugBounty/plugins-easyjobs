@@ -709,6 +709,8 @@ class Easyjobs_Admin_Jobs {
             'vacancies',
             'is_remote',
             'job_type',
+            'remote_location_type',
+            'remote_countries',
             'show_on_job_board',
             'country',
             'state',
@@ -740,6 +742,8 @@ class Easyjobs_Admin_Jobs {
             'salary_type',
             'salary_range',
             'job_type',
+            'remote_location_type',
+            'remote_countries'
         );
         $data          = array();
         foreach ( $this->sanitize_form_fields( $_POST, $fields ) as $key => $form_field ) {

@@ -106,9 +106,20 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                                     <?php if ($job->is_remote || !empty($job->job_address->city) || !empty($job->job_address->country)) { ?>
                                                         <i class="easyjobs-icon easyjobs-map-maker"></i>
                                                     <?php } ?>
-                                                    <?php if ( $job->is_remote ) : ?>
+                                                    <?php if ( isset($job->remote_location_type) && $job->remote_location_type->id === 'specific' ) : ?>
+                                                            <?php if ( !empty($job->remote_countries) ) : ?>
+                                                                <span>
+                                                                <?php
+                                                                    $country_names = array_map( function( $country ) {
+                                                                        return esc_html( $country->name );
+                                                                    }, $job->remote_countries );
+                                                                    echo implode( ', ', $country_names );
+                                                                ?>
+                                                                </span>
+                                                            <?php endif; ?>
+                                                    <?php elseif ( $job->is_remote ) : ?>
                                                         <span>
-                                                            <?php esc_html_e( 'Anywhere', 'easyjobs' ); ?>
+                                                            <?php esc_html_e( 'Anywhere  (Remote)', 'easyjobs' ); ?>
                                                         </span>
                                                     <?php else : ?>
                                                         <span>
@@ -123,6 +134,19 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                                             <?php endif; ?>
                                                         </span>
                                                     <?php endif ?>
+                                                    <?php if ( ( !empty( $job->job_address->country->name ) || $job->job_type == 'remote' ) && ( $job->job_type == 'remote' || $job->job_type == 'on-site' || $job->job_type == 'hybrid') ): ?>
+                                                    <span class="skill-label primary-label mb-0 ml-2">
+                                                        <?php if ( $job->job_type ==  'remote' ): ?>
+                                                            <?php echo 'Remote'; ?>
+                                                        <?php endif; ?>
+                                                        <?php if ( $job->job_type == 'on-site' ): ?>
+                                                            <?php echo 'On-site'; ?>
+                                                        <?php endif; ?>
+                                                        <?php if ( $job->job_type == 'hybrid' ): ?>
+                                                            <?php echo 'Hybrid'; ?>
+                                                        <?php endif; ?>
+                                                    </span>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         <?php endif; ?>

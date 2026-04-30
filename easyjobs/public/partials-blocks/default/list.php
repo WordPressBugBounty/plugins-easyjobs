@@ -60,10 +60,21 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                                         <?php endif; ?>
                                                         <?php if( $atts['showLocation'] ): ?>
                                                             <div class="ej-job-list-info-block ej-job-list-location">
-                                                                <?php if ($job->is_remote || !empty($job->job_address->city) || !empty($job->job_address->country)) { ?>
+                                                                <?php if ($job->is_remote || (isset($job->remote_location_type) && $job->remote_location_type->id === 'specific') || !empty($job->job_address->city) || !empty($job->job_address->country)) { ?>
                                                                     <i class="easyjobs-icon easyjobs-map-maker"></i>
                                                                 <?php } ?>
-                                                                <?php if ( $job->is_remote ) : ?>
+                                                                <?php if ( isset($job->remote_location_type) && $job->remote_location_type->id === 'specific' ) : ?>
+                                                                    <?php if ( !empty($job->remote_countries) ) : ?>
+                                                                        <span>
+                                                                        <?php
+                                                                            $country_names = array_map( function( $country ) {
+                                                                                return esc_html( $country->name );
+                                                                            }, $job->remote_countries );
+                                                                            echo implode( ', ', $country_names );
+                                                                        ?>
+                                                                        </span>
+                                                                    <?php endif; ?>
+                                                                <?php elseif ( $job->is_remote ) : ?>
                                                                     <span>
                                                                         <?php esc_html_e( 'Anywhere', 'easyjobs' ); ?>
                                                                     </span>

@@ -93,10 +93,21 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                     <?php echo is_object( $job ) ? esc_html( $job->company_name ) : ''; ?>
                                 </a>
 
-                                <?php if ( $job->is_remote || !empty($job->job_address->city) || !empty($job->job_address->country) ) { ?>
+                                <?php if ( $job->is_remote || (isset($job->remote_location_type) && $job->remote_location_type->id === 'specific') || !empty($job->job_address->city) || !empty($job->job_address->country) ) { ?>
                                     <span class="office__location">
                                         <i class="easyjobs-icon easyjobs-map-maker"></i>
-                                        <?php if ( $job->is_remote ) : ?>
+                                        <?php if ( isset($job->remote_location_type) && $job->remote_location_type->id === 'specific' ) : ?>
+                                            <?php if ( !empty($job->remote_countries) ) : ?>
+                                                <span>
+                                                <?php
+                                                    $country_names = array_map( function( $country ) {
+                                                        return esc_html( $country->name );
+                                                    }, $job->remote_countries );
+                                                    echo implode( ', ', $country_names );
+                                                ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        <?php elseif ( $job->is_remote ) : ?>
                                             <span><?php esc_html_e( 'Anywhere', 'easyjobs' ); ?></span>
                                         <?php else : ?>
                                             <span>
