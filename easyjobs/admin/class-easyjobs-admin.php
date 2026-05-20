@@ -275,123 +275,25 @@ class Easyjobs_Admin {
 				]
 			);
 		}
-
-		/**
-		 * Halloween Notice
-		 */	
-		// $company_info = Easyjobs_Helper::get_company_info( true );	
-		// $crown_icon = EASYJOBS_ADMIN_URL . 'assets/img/crown.svg';
-		// $halloween_notice_message = "<p>🎃 This Halloween manage your candidate pool more smartly with easy.jobs PRO & save <strong>up to 70%</strong>.</p><a style='display: inline-flex;column-gap:5px;' class='button button-primary' href='https://easy.jobs/halloween-2024' target='_blank'><img style='width:15px;' src='{$crown_icon}'/>Upgrade to PRO</a>";
-
-		// $_halloween_notice = [
-		// 	'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-		// 	'html'      => $halloween_notice_message,
-		// ];
-		// $notices->add(
-		// 	'halloween_notice',
-		// 	$_halloween_notice,
-		// 	[
-		// 		'classes'     => 'updated put-dismiss-notice',
-		// 		'start'       => $notices->time(),
-		// 		// 'start'       => $notices->strtotime( '+2 days' ),
-		// 		"expire"      => strtotime( '11:59:59pm 3nd November, 2024' ),
-		// 		'dismissible' => true,
-		// 		'refresh'     => EASYJOBS_VERSION,
-		// 		'screens'     => [ 'dashboard' ],
-		// 		'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
-		// 	]
-		// );
-
-		/**
-		 * Black Friday Notice
-		 */		
 		$company_info = Easyjobs_Helper::get_company_info( true );
-		$upgrade_cta_link_bf = 'https://easy.jobs/bfcm2025-admin-notice';
-		$black_friday_notice_message = "<p><strong>Black Friday Mega Sale:</strong> Hire Faster With Smarter Recruitment Features – Now <strong>Up to 75% OFF! 🎁</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:5px;'><a class='button button-primary' href={$upgrade_cta_link_bf} target='_blank'>Upgrade To PRO</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I’ll Grab It Later</button></div>";
-
-		$_black_friday_notice = [
-			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-			'html'      => $black_friday_notice_message,
-		];
-		$notices->add(
-			'black_friday_notice',
-			$_black_friday_notice,
-			[
-				'classes'     => 'updated put-dismiss-notice',
-				'start'       => strtotime( '12:00:00am 16th November, 2025' ),
-				"expire"      => strtotime( '11:59:59pm 4th December, 2025' ),
-				'dismissible' => true,
-				'refresh'     => EASYJOBS_VERSION,
-				'screens'     => [ 'dashboard' ],
-				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
-			]
-		);
 
 		/**
-		 * Holiday Notice
+		 * Summer2026 Notice
 		 */
-		$upgrade_cta_link = '//easy.jobs/holiday2025-admin-notice';
-		$holiday_notice_message = "<p><strong>Season’s Best Deal:</strong> Hire faster with smarter recruitment features – Now <strong>Up to 75% OFF! ⚡</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:5px;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To PRO</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I’ll Grab It Later</button></div>";
+		$upgrade_cta_link = '//easy.jobs/summer2026-admin-notice';
+		$summer2026_notice_message = "<p>🏖️ <strong>Summer Savings:</strong> Hire top talents smarter with AI-powered ATS and recruitment SaaS – now <strong>up to 50% OFF!</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:0;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To Pro Now</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I Don't Want Any Discount</button></div>";
 
-		$_holiday_notice = [
+		$_summer2026_notice = [
 			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-			'html'      => $holiday_notice_message,
+			'html'      => $summer2026_notice_message,
 		];
 		$notices->add(
-			'ej_holiday_notice',
-			$_holiday_notice,
+			'summer2026',
+			$_summer2026_notice,
 			[
 				'classes'     => 'updated put-dismiss-notice',
 				'start'       => $notices->time(),
-				"expire"      => strtotime( '11:59:59pm 7th January, 2026' ),
-				'dismissible' => true,
-				'refresh'     => EASYJOBS_VERSION,
-				'screens'     => [ 'dashboard' ],
-				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
-			]
-		);
-
-		/**
-		 * February Notice
-		 */
-		$upgrade_cta_link = '//easy.jobs/feb2026-admin-notice';
-		$february_notice_message = "<p>Find the Right Talent with AI-driven Recruitment – <strong>Lifetime Deals, Starting at $499</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:0;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To PRO</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I’ll Grab It Later</button></div>";
-
-		$_february_notice = [
-			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-			'html'      => $february_notice_message,
-		];
-		$notices->add(
-			'february_notice',
-			$_february_notice,
-			[
-				'classes'     => 'updated put-dismiss-notice',
-				'start'       => $notices->time(),
-				"expire"      => strtotime( '11:59:59pm 7th March, 2026' ),
-				'dismissible' => true,
-				'refresh'     => EASYJOBS_VERSION,
-				'screens'     => [ 'dashboard' ],
-				'display_if'  => !empty($company_info) ? !$company_info->is_pro : true,
-			]
-		);
-
-		/**
-		 * Spring Notice
-		 */
-		$upgrade_cta_link = '//easy.jobs/spring2026-admin-notice';
-		$spring_notice_message = "<p>🌸 <strong>Spring Savings:</strong> Hire smarter with AI-powered recruitment features – now <strong>Flat 50% OFF! </strong> ⚡️</p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:0;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To Pro Now</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>Maybe Later</button></div>";
-
-		$_spring_notice = [
-			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-			'html'      => $spring_notice_message,
-		];
-		$notices->add(
-			'spring_notice',
-			$_spring_notice,
-			[
-				'classes'     => 'updated put-dismiss-notice',
-				'start'       => $notices->time(),
-				"expire"      => strtotime( '11:59:59pm 10th May, 2026' ),
+				"expire"      => strtotime( '11:59:59pm 25th June, 2026' ),
 				'dismissible' => true,
 				'refresh'     => EASYJOBS_VERSION,
 				'screens'     => [ 'dashboard' ],
@@ -427,184 +329,16 @@ class Easyjobs_Admin {
             }
 
 			/*
-			* Black Friday Notice css 2025
+			* Summer2026 Notice css
 			*/
-			#wpnotice-easyjobs-notice-black_friday_notice {
-				border-left-color: #597DFC;
+			#wpnotice-easyjobs-notice-summer2026 {
+				border-left-color: #5252DC;
 				padding: 10px 40px 14px 20px;
+				background-color: #fff;
 			}
-			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
-			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
-			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
-				background-color: #3B4045;
-				color: #fff;
-				box-shadow: 0px 1px 0px 0px #000000;
-				border: none;
-				border-radius: 6px;
-				padding: 2px 16px;
-			}
-
-			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
-				background: none;
-				border: none;
-				color: #424242;
-				font-size: 14px;
-				font-weight: 400;
-				line-height: 1.5;
-				text-decoration: underline;
-				cursor: pointer;
-				padding: 0;
-				margin: 0;
-				display: inline-block;
-				margin-left: 5px;
-			}
-
-			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper {
-				display: flex;
-				align-items: start;
-				justify-content: space-between;
-				width: 100%;
-				flex-direction: column;
-			}
-			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper p{
-				font-size: 15px;
-				margin-top: 0;
-				padding-top: 0;
-				margin-bottom: 3px;
-			}
-			#wpnotice-easyjobs-notice-black_friday_notice .wpnotice-content-wrapper {
-				padding: 0;
-			}
-			@media only screen and (max-width: 767px) {
-				#wpnotice-easyjobs-notice-black_friday_notice {
-					display: none !important;
-				}
-			}
-
-			/*
-			* Holiday Notice css 2025
-			*/
-			#wpnotice-easyjobs-notice-ej_holiday_notice {
-				border-left-color: #597DFC;
-				padding: 10px 40px 14px 20px;
-			}
-			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
-			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
-			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
-				background-color: #2B65D9;
-				color: #fff;
-				box-shadow: 0px 1px 0px 0px #000000;
-				border: none;
-				border-radius: 6px;
-				padding: 2px 16px;
-			}
-
-			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
-				background: none;
-				border: none;
-				color: #2B65D9;
-				font-size: 14px;
-				font-weight: 400;
-				line-height: 1.5;
-				text-decoration: underline;
-				cursor: pointer;
-				padding: 0;
-				margin: 0;
-				display: inline-block;
-				margin-left: 5px;
-			}
-
-			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper {
-				display: flex;
-				align-items: start;
-				justify-content: space-between;
-				width: 100%;
-				flex-direction: column;
-			}
-			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper p{
-				font-size: 15px;
-				margin-top: 0;
-				padding-top: 0;
-				margin-bottom: 3px;
-				text-transform: capitalize;
-			}
-			#wpnotice-easyjobs-notice-ej_holiday_notice .wpnotice-content-wrapper {
-				padding: 0;
-			}
-			@media only screen and (max-width: 767px) {
-				#wpnotice-easyjobs-notice-ej_holiday_notice {
-					display: none !important;
-				}
-			}
-
-			/*
-			* February Notice css 2025
-			*/
-			#wpnotice-easyjobs-notice-february_notice {
-				border-left-color: #597dfc;
-				padding: 10px 40px 14px 20px;
-			}
-			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
-			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
-			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
-				background-color: #5626E7;
-				color: #fff;
-				box-shadow: 0px 1px 0px 0px #000000;
-				border: none;
-				border-radius: 6px;
-				padding: 2px 16px;
-				font-size: 14px;
-			}
-
-			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
-				background: none;
-				border: none;
-				color: #424242;
-				font-size: 14px;
-				font-weight: 400;
-				line-height: 1.5;
-				text-decoration: underline;
-				cursor: pointer;
-				padding: 0;
-				margin: 0;
-				display: inline-block;
-				margin-left: 5px;
-			}
-
-			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper {
-				display: flex;
-				align-items: start;
-				justify-content: space-between;
-				width: 100%;
-				flex-direction: column;
-				font-size: 14px;
-				font-weight: 400;
-			}
-			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper p{
-				font-size: 14px;
-				margin-top: 0;
-				padding-top: 0;
-				margin-bottom: 3px;
-			}
-			#wpnotice-easyjobs-notice-february_notice .wpnotice-content-wrapper {
-				padding: 0;
-			}
-			@media only screen and (max-width: 767px) {
-				#wpnotice-easyjobs-notice-february_notice {
-					display: none !important;
-				}
-			}
-
-			/*
-			* Spring Notice css 2026
-			*/
-			#wpnotice-easyjobs-notice-spring_notice {
-				border-left-color: #5252dc;
-				padding: 10px 40px 14px 20px;
-			}
-			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
-			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
-			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
+			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
+			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
+			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
 				background-color: #5252DC;
 				color: #fff;
 				border: none;
@@ -613,7 +347,7 @@ class Easyjobs_Admin {
 				font-size: 14px;
 			}
 
-			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
+			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
 				background: none;
 				border: none;
 				color: #424242;
@@ -628,7 +362,7 @@ class Easyjobs_Admin {
 				margin-left: 5px;
 			}
 
-			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper {
+			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper {
 				display: flex;
 				align-items: start;
 				justify-content: space-between;
@@ -637,18 +371,20 @@ class Easyjobs_Admin {
 				font-size: 14px;
 				font-weight: 400;
 			}
-			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper p{
+			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper p{
 				font-size: 14px;
 				margin-top: 0;
 				padding-top: 0;
 				margin-bottom: 3px;
 				color: #171717;
 			}
-			#wpnotice-easyjobs-notice-spring_notice .wpnotice-content-wrapper {
+			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper {
 				padding: 0;
-			}
+			}#wpnotice-easyjobs-notice-summer2026 .notice-dismiss:before {
+    content: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjBfaV8xODFfMzM3NjYpIj4KPHBhdGggZD0iTTEwLjAwMDEgOS4wNDc3MkwxMy4zMzM0IDUuNzE0MzZMMTQuMjg1OCA2LjY2Njc0TDEwLjk1MjQgMTAuMDAwMUwxNC4yODU4IDEzLjMzMzRMMTMuMzMzNCAxNC4yODU4TDEwLjAwMDEgMTAuOTUyNUw2LjY2Njc0IDE0LjI4NThMNS43MTQzNiAxMy4zMzM0TDkuMDQ3NjkgMTAuMDAwMUw1LjcxNDM2IDYuNjY2NzRMNi42NjY3NCA1LjcxNDM2TDEwLjAwMDEgOS4wNDc3MloiIGZpbGw9IiMxNzE3MTciLz4KPC9nPgo8ZGVmcz4KPGZpbHRlciBpZD0iZmlsdGVyMF9pXzE4MV8zMzc2NiIgeD0iMCIgeT0iMCIgd2lkdGg9IjIwLjcxNDMiIGhlaWdodD0iMjAiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KPGZlQ29sb3JNYXRyaXggaW49IlNvdXJjZUFscGhhIiB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMTI3IDAiIHJlc3VsdD0iaGFyZEFscGhhIi8+CjxmZU9mZnNldCBkeD0iMC43MTQyODYiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMC43MTQyODYiLz4KPGZlQ29tcG9zaXRlIGluMj0iaGFyZEFscGhhIiBvcGVyYXRvcj0iYXJpdGhtZXRpYyIgazI9Ii0xIiBrMz0iMSIvPgo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAxIDAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMC4wOCAwIi8+CjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW4yPSJzaGFwZSIgcmVzdWx0PSJlZmZlY3QxX2lubmVyU2hhZG93XzE4MV8zMzc2NiIvPgo8L2ZpbHRlcj4KPC9kZWZzPgo8L3N2Zz4K');
+}
 			@media only screen and (max-width: 767px) {
-				#wpnotice-easyjobs-notice-spring_notice {
+				#wpnotice-easyjobs-notice-summer2026 {
 					display: none !important;
 				}
 			}

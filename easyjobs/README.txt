@@ -1,10 +1,10 @@
 === easy.jobs - AI powered Job Listing, Job Board, Career Page, Recruitment & Hiring Solution ===
-Contributors: wpdevteam, re_enter_rupok, asif2bd, rahat89, priyomukul, nhrrob, fuadragib
+Contributors: wpdevteam, re_enter_rupok, asif2bd, rahat89, priyomukul, fuadragib
 Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 6.9
-Stable tag: 2.7.2
+Tested up to: 7.0
+Stable tag: 2.7.3
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -137,6 +137,10 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.7.3 - 20/05/2026 =
+* Added: WordPress 7.0 Compatibility.
+* Few minor bug fixes & improvements.
 
 = 2.7.2 - 30/04/2026 =
 * Improved: Multi-country support added to remote locations.
