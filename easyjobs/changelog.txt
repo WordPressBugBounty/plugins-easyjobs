@@ -1,3 +1,7 @@
+= 2.7.4 - 16/06/2026 =
+* Improved: Admin Dashboard Page
+* Few minor bug fixes & improvements.
+
 = 2.7.3 - 20/05/2026 =
 * Added: WordPress 7.0 Compatibility.
 * Few minor bug fixes & improvements.

@@ -4,7 +4,7 @@ Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 7.0
-Stable tag: 2.7.3
+Stable tag: 2.7.4
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -137,6 +137,10 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.7.4 - 17/06/2026 =
+* Improved: Admin Dashboard Page
+* Few minor bug fixes & improvements.
 
 = 2.7.3 - 20/05/2026 =
 * Added: WordPress 7.0 Compatibility.

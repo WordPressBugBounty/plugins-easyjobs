@@ -440,7 +440,13 @@ class Easyjobs_Admin {
         );
 		/****** end New Styles */
 
-        wp_enqueue_style( $this->plugin_name, EASYJOBS_ADMIN_URL . 'assets/dist/css/easyjobs-admin.min.css', array(), $this->version, 'all' );
+        // Use the compiled file's mtime as the cache-buster so style rebuilds are
+        // picked up immediately instead of being masked by a browser-cached copy
+        // keyed on the (static) plugin version. Falls back to the version if the
+        // file can't be stat'd.
+        $admin_css_path = EASYJOBS_ADMIN_DIR_PATH . 'assets/dist/css/easyjobs-admin.min.css';
+        $admin_css_ver  = file_exists( $admin_css_path ) ? filemtime( $admin_css_path ) : $this->version;
+        wp_enqueue_style( $this->plugin_name, EASYJOBS_ADMIN_URL . 'assets/dist/css/easyjobs-admin.min.css', array(), $admin_css_ver, 'all' );
 
         wp_enqueue_style(
             $this->plugin_name . '-select2',
@@ -786,6 +792,70 @@ class Easyjobs_Admin {
      * @param $title
      * @return string
      */
+    /**
+     * Whether the current admin screen belongs to EasyJobs.
+     *
+     * @return bool
+     */
+    private function is_easyjobs_screen() {
+        if ( ! function_exists( 'get_current_screen' ) ) {
+            return false;
+        }
+        $screen = get_current_screen();
+        if ( ! $screen || empty( $screen->id ) ) {
+            return false;
+        }
+        $id = $screen->id;
+        return ( 'toplevel_page_easyjobs-admin' === $id
+            || false !== strpos( $id, 'easyjobs_page' )
+            || false !== strpos( $id, 'admin_page_easyjobs' ) );
+    }
+
+    /**
+     * Replace the WP admin footer left text on EasyJobs pages.
+     * Hooked to `admin_footer_text`.
+     *
+     * @param string $text Default footer text.
+     * @return string
+     */
+    public function admin_footer_left( $text ) {
+        if ( ! $this->is_easyjobs_screen() ) {
+            return $text;
+        }
+        return sprintf(
+            '<span class="ej-foot-meta">easy<span class="ej-foot-dot">.</span>jobs v%s</span>',
+            esc_html( EASYJOBS_VERSION )
+        );
+    }
+
+    /**
+     * Replace the WP admin footer right text (version area) on EasyJobs pages.
+     * Hooked to `update_footer` at priority 11 so it overrides core's version output.
+     *
+     * @param string $text Default version text.
+     * @return string
+     */
+    public function admin_footer_right( $text ) {
+        if ( ! $this->is_easyjobs_screen() ) {
+            return $text;
+        }
+        $links = array(
+            array( 'label' => __( 'Documentation', 'easyjobs' ), 'href' => 'https://easy.jobs/docs/' ),
+            array( 'label' => __( 'Support', 'easyjobs' ),       'href' => 'https://wpdeveloper.com/support' ),
+            array( 'label' => __( 'Changelog', 'easyjobs' ),     'href' => 'https://wordpress.org/plugins/easyjobs/#developers' ),
+        );
+        $html = '<span class="ej-foot-links">';
+        foreach ( $links as $link ) {
+            $html .= sprintf(
+                '<a href="%s" target="_blank" rel="noreferrer">%s</a>',
+                esc_url( $link['href'] ),
+                esc_html( $link['label'] )
+            );
+        }
+        $html .= '</span>';
+        return $html;
+    }
+
     public function render_inner_page_title( $admin_title, $title ) {
         if ( isset( $_GET['job-id'] ) && isset( $_GET['view'] ) ) {
             $suffix = str_replace( 'Easyjobs', '', $admin_title );

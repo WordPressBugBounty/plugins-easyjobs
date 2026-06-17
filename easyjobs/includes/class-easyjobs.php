@@ -211,6 +211,9 @@ class Easyjobs {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'menu_page' );
+		// Custom admin footer on EasyJobs pages (left brand/version, right links)
+		$this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'admin_footer_left' );
+		$this->loader->add_filter( 'update_footer', $plugin_admin, 'admin_footer_right', 11 );
 		// Settings
 		EasyJobs_Settings::init();
 		// Easyjobs_Page_Template::get_instance();
