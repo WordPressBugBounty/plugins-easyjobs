@@ -149,6 +149,11 @@ class Easyjobs {
          */
         require_once EASYJOBS_ADMIN_DIR_PATH . 'includes/class-easyjobs-admin-candidates.php';
 
+        /**
+         * This class handles the recruiter <-> candidate Messages screen
+         */
+        require_once EASYJOBS_ADMIN_DIR_PATH . 'includes/class-easyjobs-admin-messages.php';
+
         require_once EASYJOBS_ADMIN_DIR_PATH . 'includes/class-easyjobs-page-template.php';
 
         /**

@@ -67,6 +67,9 @@ class Easyjobs_Api {
         'company_active_jobs'       => EASYJOBS_API_URL . 'job/active',
         'job_locations'             => EASYJOBS_API_URL . 'job/locations',
         'candidate_limit'           => EASYJOBS_API_URL . 'company/candidate-limit-usage',
+        'conversation_notifications' => EASYJOBS_API_URL . 'conversation/notifications',
+        'conversation_applicants'    => EASYJOBS_API_URL . 'conversation/applicants',
+        'conversation_applicant'     => EASYJOBS_API_URL . 'conversation/applicants/',
     );
 
     /**
@@ -248,6 +251,14 @@ class Easyjobs_Api {
         'save_city'    => array(
 			'url'  => EASYJOBS_API_URL . 'city/',
 		),
+        'save_conversation_message'    => array(
+			'url'  => EASYJOBS_API_URL . 'conversation/applicants/',
+			'part' => '/message',
+		),
+        'conversation_message_status'    => array(
+			'url'  => EASYJOBS_API_URL . 'conversation/applicants/',
+			'part' => '/message/status',
+		),
     );
 
     /**
@@ -308,9 +319,10 @@ class Easyjobs_Api {
      * @param string $type
      * @param int    $id
      * @param string $suffix
+     * @param array  $params Optional query-string params (e.g. array( 'page' => 2 )).
      * @return bool|object
      */
-    public static function get_by_id( $type, $id, $suffix = '' ) {
+    public static function get_by_id( $type, $id, $suffix = '', $params = array() ) {
         if ( empty( $type ) || ! array_key_exists( $type, self::$get_endpoints ) ) {
             return false;
         }
@@ -320,6 +332,9 @@ class Easyjobs_Api {
         $url = self::$get_endpoints[ $type ] . $id;
         if ( ! empty( $suffix ) ) {
             $url .= '/' . $suffix;
+        }
+        if ( ! empty( $params ) && is_array( $params ) ) {
+            $url = add_query_arg( $params, $url );
         }
         return self::remote_get( $url );
     }

@@ -1,5 +1,9 @@
+= 2.8.0 - 25/06/2026 =
+* Added: Support for conversations.
+* Few minor bug fixes & improvements.
+
 = 2.7.4 - 16/06/2026 =
-* Improved: Admin Dashboard Page
+* Improved: Admin Dashboard Page.
 * Few minor bug fixes & improvements.
 
 = 2.7.3 - 20/05/2026 =

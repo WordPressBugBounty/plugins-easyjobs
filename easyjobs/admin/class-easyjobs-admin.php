@@ -73,6 +73,14 @@ class Easyjobs_Admin {
 	private $candidates;
 
     /**
+     * Messages admin class object
+     *
+     * @since 2.8.0
+     * @var object
+     */
+	private $messages;
+
+    /**
      * Settings object
      *
      * @since 1.0.0
@@ -112,6 +120,7 @@ class Easyjobs_Admin {
 		$this->jobs        = new Easyjobs_Admin_Jobs();
 		$this->pipeline    = new Easyjobs_Admin_Pipeline();
 		$this->candidates  = new Easyjobs_Admin_Candidates();
+		$this->messages    = new Easyjobs_Admin_Messages();
 		$this->settings    = (object) EasyJobs_DB::get_settings();
         $this->dashboard   = new Easyjobs_Admin_Dashboard();
 		// $this->easyjobs_start_plugin_tracking();
@@ -655,6 +664,12 @@ class Easyjobs_Admin {
 					'easyjobs-candidates' => array(
 						'title'      => __( 'Easyjobs - Candidates', 'easyjobs' ),
 						'menu_title' => __( 'Candidates', 'easyjobs' ),
+						'capability' => 'delete_users',
+						'callback'   => array( $this, 'easyjobs_react_layout' ),
+					),
+					'easyjobs-messages' => array(
+						'title'      => __( 'Easyjobs - Messages', 'easyjobs' ),
+						'menu_title' => __( 'Messages', 'easyjobs' ),
 						'capability' => 'delete_users',
 						'callback'   => array( $this, 'easyjobs_react_layout' ),
 					),
