@@ -1,3 +1,9 @@
+= 2.8.1 - 07/07/2026 =
+* Improved: Admin Candidates Page.
+* Improved: Candidate Details Page.
+* Added: Major app features to the Candidate Details page.
+* Few minor bug fixes & improvements.
+
 = 2.8.0 - 25/06/2026 =
 * Added: Support for conversations.
 * Few minor bug fixes & improvements.

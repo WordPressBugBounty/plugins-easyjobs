@@ -522,6 +522,75 @@ class Easyjobs_Api {
         return json_decode( $response['body'] );
     }
 
+	/**
+	 * Multipart POST to an arbitrary URL with a single uploaded file.
+	 * Like post_with_file() but the URL is dynamic and the file field name is
+	 * configurable (the attachments API expects the file under `attachment`).
+	 *
+	 * @param string $url        Full request URL.
+	 * @param array  $data       Text fields (name => value).
+	 * @param array  $file       A single $_FILES entry (name, tmp_name, type).
+	 * @param string $file_field Multipart field name for the file.
+	 * @return object|null
+	 */
+	public static function post_custom_with_file( $url, $data, $file, $file_field = 'attachment' ) {
+		$boundary = wp_generate_password( 24 );
+		$headers  = array(
+			'content-type'     => 'multipart/form-data; boundary=' . $boundary,
+			'Authorization'    => 'Bearer ' . self::get_token(),
+			'x-plugin-version' => EASYJOBS_VERSION,
+		);
+		$payload = '';
+		foreach ( $data as $name => $value ) {
+			$payload .= '--' . $boundary . "\r\n";
+			$payload .= 'Content-Disposition: form-data; name="' . $name . '"' . "\r\n\r\n";
+			$payload .= $value . "\r\n";
+		}
+		if ( ! empty( $file ) && ! empty( $file['tmp_name'] ) ) {
+			$payload .= '--' . $boundary . "\r\n";
+			$payload .= 'Content-Disposition: form-data; name="' . $file_field . '"; filename="' . $file['name'] . '"' . "\r\n";
+			if ( ! empty( $file['type'] ) ) {
+				$payload .= 'Content-Type: ' . $file['type'] . "\r\n";
+			}
+			$payload .= "\r\n";
+			$payload .= file_get_contents( $file['tmp_name'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			$payload .= "\r\n";
+		}
+		$payload .= '--' . $boundary . '--';
+
+		$response = wp_remote_post( $url, array(
+			'headers' => $headers,
+			'body'    => $payload,
+			'timeout' => 30,
+		) );
+		if ( is_wp_error( $response ) ) {
+			return (object) array(
+				'status'  => 'error',
+				'message' => 'Something went wrong: ' . $response->get_error_message(),
+			);
+		}
+		return json_decode( wp_remote_retrieve_body( $response ) );
+	}
+
+	/**
+	 * Authenticated GET returning the raw wp_remote response (for binary files).
+	 * Unlike remote_get()/get_custom() it does NOT json_decode the body, so it
+	 * can be used to proxy/stream a file download.
+	 *
+	 * @param string $url Full request URL.
+	 * @return array|WP_Error
+	 */
+	public static function get_file_raw( $url ) {
+		return wp_remote_get( $url, array(
+			'timeout'   => 30,
+			'sslverify' => false,
+			'headers'   => array(
+				'Authorization'    => 'Bearer ' . self::get_token(),
+				'x-plugin-version' => EASYJOBS_VERSION,
+			),
+		) );
+	}
+
     /**
      * Get data from api
      *
