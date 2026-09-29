@@ -1901,6 +1901,21 @@ function easyjobs_customize_register($wp_customize)
         'settings' => 'easyjobs_single_hide_company_logo',
         'type' => 'light', // light, ios, flat
     )));
+
+    // Show experience level (hidden by default, like the easy.jobs career page)
+    $wp_customize->add_setting('easyjobs_single_show_experience_level', array(
+        'default' => $defaults['easyjobs_single_show_experience_level'],
+        'capability' => 'edit_theme_options',
+        'sanitize_callback' => 'easyjobs_sanitize_checkbox',
+    ));
+
+    $wp_customize->add_control(new Easyjobs_Customizer_Toggle_Control($wp_customize, 'easyjobs_single_show_experience_level', array(
+        'label' => esc_html__('Show Experience Level', 'easyjobs'),
+        'priority' => 219,
+        'section' => 'easyjobs_single_page_settings',
+        'settings' => 'easyjobs_single_show_experience_level',
+        'type' => 'light', // light, ios, flat
+    )));
     // Company name font size
     $wp_customize->add_setting('easyjobs_single_company_name_font_size', array(
         'default' => $defaults['easyjobs_single_company_name_font_size'],

@@ -1,1 +1,1 @@
-export const TypoprefixGalleryTitle    = "gallery_title";
+export const TypoprefixGalleryTitle = 'gallery_title';

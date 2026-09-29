@@ -83,6 +83,29 @@ if(!function_exists('print_css_property')){
     }
 }
 
+/**
+ * Box shadow that follows a button's background color, like the default
+ * "0 10px 10px <color> at 30%" apply button shadow.
+ *
+ * @since 2.8.2
+ * @param string $color Hex or rgb()/rgba() color from the Customizer.
+ * @return string CSS declaration, or '' when the color is empty/transparent/unparseable.
+ */
+function easyjobs_button_shadow_css( $color ) {
+    $color = is_string( $color ) ? trim( $color ) : '';
+    if ( '' === $color || 'rgba(0,0,0,0)' === str_replace( ' ', '', $color ) ) {
+        return '';
+    }
+    $rgb = Easyjobs_Helper::hex_to_rgb( $color );
+    if ( ! $rgb && preg_match( '/^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})/i', $color, $matches ) ) {
+        $rgb = array( min( 255, (int) $matches[1] ), min( 255, (int) $matches[2] ), min( 255, (int) $matches[3] ) );
+    }
+    if ( ! $rgb ) {
+        return '';
+    }
+    return 'box-shadow: 0 10px 10px rgba(' . implode( ', ', $rgb ) . ', 0.3);';
+}
+
 function easyjobs_customize_css() {
     // if(!is_page_template( 'easyjobs-template.php' )) {
 	// 	return;
@@ -242,6 +265,16 @@ function easyjobs_customize_css() {
         .easyjobs-single-page .ej-apply-link .ej-btn.ej-info-btn:hover, .easyjobs-shortcode-wrapper.ej-template-classic .job__more__details > a.button:hover, .ej-template-elegant .ej-hero .job__infos__block .meta .button:hover{
             <?php echo print_css_property( 'background-color', 'easyjobs_single_apply_btn_hover_bg_color', $output ); ?>
             <?php echo print_css_property( 'color', 'easyjobs_single_apply_btn_hover_text_color', $output ); ?>
+        }
+        /* Default template apply button shadow follows the Customizer background color. */
+        .easyjobs-single-page .ej-apply-link .ej-btn.ej-info-btn{
+            <?php echo easyjobs_button_shadow_css( isset( $output['easyjobs_single_apply_btn_bg_color'] ) ? $output['easyjobs_single_apply_btn_bg_color'] : '' ); ?>
+        }
+        .easyjobs-single-page .ej-apply-link .ej-btn.ej-info-btn:hover{
+            <?php
+            $easyjobs_apply_hover_bg = ! empty( $output['easyjobs_single_apply_btn_hover_bg_color'] ) ? $output['easyjobs_single_apply_btn_hover_bg_color'] : ( isset( $output['easyjobs_single_apply_btn_bg_color'] ) ? $output['easyjobs_single_apply_btn_bg_color'] : '' );
+            echo easyjobs_button_shadow_css( $easyjobs_apply_hover_bg );
+            ?>
         }
         .easyjobs-single-page .easyjobs-details .ej-job-header .ej-job-header-left .ej-job-overview-footer .ej-social-share ul li a, .easyjobs-frontend-wrapper .easyjobs-shortcode-wrapper .job__more__details .share__options ul li a{
             width: <?php echo $output['easyjobs_single_social_sharing_icon_bg_size'];?>px;

@@ -220,8 +220,8 @@ class Easyjobs_Admin_Jobs {
 		}
 
         $country_id       = absint( sanitize_text_field( $_POST['country'] ) );
-        $state_id         = absint( sanitize_text_field( $_POST['state'] ) );
-        $city_name        = sanitize_text_field( $_POST['city'] );
+        $state_id         = absint( sanitize_text_field( wp_unslash( $_POST['state'] ) ) );
+        $city_name        = sanitize_text_field( wp_unslash( $_POST['city'] ) );
 
         $url = EASYJOBS_APP_URL . '/api/v1/city/' . $country_id . '/' . $state_id;
         
@@ -272,7 +272,7 @@ class Easyjobs_Admin_Jobs {
 			wp_die();
 		}
         $country_id       = absint( sanitize_text_field( $_POST['country'] ) );
-        $state_name       = sanitize_text_field( $_POST['state'] );
+        $state_name       = sanitize_text_field( wp_unslash( $_POST['state'] ) );
         
         $response = Easyjobs_Api::post( 'save_state', $country_id, ['name' => $state_name] );
 
@@ -746,9 +746,11 @@ class Easyjobs_Admin_Jobs {
             'remote_countries'
         );
         $data          = array();
-        foreach ( $this->sanitize_form_fields( $_POST, $fields ) as $key => $form_field ) {
+        // WordPress always slashes $_POST; unslash once here so quotes are not
+        // saved as \' (and doubled on every re-save).
+        foreach ( $this->sanitize_form_fields( wp_unslash( $_POST ), $fields ) as $key => $form_field ) {
             if ( in_array( $key, $object_values ) ) {
-                $data[ $key ] = ! empty( $form_field ) ? json_decode( stripslashes( $form_field ) ) : null;
+                $data[ $key ] = ! empty( $form_field ) ? json_decode( $form_field ) : null;
             } else {
                 $data[ $key ] = $form_field;
             }
@@ -836,8 +838,8 @@ class Easyjobs_Admin_Jobs {
 			wp_die();
 		}
         $questions      = json_decode( wp_unslash( $_POST['questions'] ) );
-	    $internal_note  = sanitize_text_field($_POST['internal_note']);
-	    $note           = sanitize_text_field($_POST['note']);
+	    $internal_note  = sanitize_text_field( wp_unslash( $_POST['internal_note'] ) );
+	    $note           = sanitize_text_field( wp_unslash( $_POST['note'] ) );
         $job_id         = absint( sanitize_text_field($_POST['job_id']) );
         $sanitized      = array();
 		foreach ( $questions as $question ) {
@@ -1210,7 +1212,7 @@ class Easyjobs_Admin_Jobs {
             'job_templates',
             array(
 				'industry_id' => $industry,
-				'title'       => sanitize_text_field( $_POST['title'] ),
+				'title'       => sanitize_text_field( wp_unslash( $_POST['title'] ) ),
 				'page'        => absint( sanitize_text_field($_POST['page']) ),
 			)
         );

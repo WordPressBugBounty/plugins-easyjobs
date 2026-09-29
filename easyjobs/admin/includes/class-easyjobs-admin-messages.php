@@ -7,7 +7,7 @@
  * WP API endpoints via {@see Easyjobs_Api}.
  *
  * Backend reference: app/Http/Controllers/Api/WpV1/CompanyConversationController.php
- * See docs/api/conversation.md and docs/messages/04-phase2-dynamic.md.
+ * See docs/api/conversation.md and docs/features/messaging/04-phase2-dynamic.md.
  *
  * NOTE: applicants are addressed by their opaque `generated_id` (string), NOT a
  * numeric id, so identifiers here are sanitized with sanitize_text_field() only.

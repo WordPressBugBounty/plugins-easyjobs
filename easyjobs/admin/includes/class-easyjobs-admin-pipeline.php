@@ -12,7 +12,6 @@ class Easyjobs_Admin_Pipeline {
         add_action( 'wp_ajax_easyjobs_change_pipeline', array( $this, 'change_pipeline' ) );
         add_action( 'wp_ajax_easyjobs_save_pipeline', array( $this, 'save_pipeline' ) );
         add_action( 'wp_ajax_easyjobs_get_pipeline', array( $this, 'get_pipeline' ) );
-        add_action( 'wp_ajax_easyjobs_get_job_pipeline', array( $this, 'get_job_pipeline' ) );
         add_action( 'wp_ajax_easyjobs_get_pipeline_templates', array( $this, 'get_pipeline_template' ) );
         add_action( 'wp_ajax_easyjobs_get_evaluation_question', array( $this, 'get_evaluation_question' ) );
         add_action( 'wp_ajax_easyjobs_delete_evaluation_question', array( $this, 'delete_evaluation_question' ) );
@@ -375,8 +374,8 @@ class Easyjobs_Admin_Pipeline {
         $set_type = json_decode( wp_unslash( $_POST['set_type'] ) );
         $set_type = json_decode(json_encode($set_type), true);
         $set_name = sanitize_text_field ($_POST['set_name']);
-        $internal_note = sanitize_text_field( $_POST['internal_note'] );
-        $note = sanitize_text_field( $_POST['note'] );
+        $internal_note = sanitize_text_field( wp_unslash( $_POST['internal_note'] ) );
+        $note = sanitize_text_field( wp_unslash( $_POST['note'] ) );
         $questions = json_decode( wp_unslash( $_POST['questions'] ) );
         $questions = json_decode(json_encode($questions), true);
         $sanitized = array();
@@ -533,9 +532,9 @@ class Easyjobs_Admin_Pipeline {
             wp_die();
         }
         $set_type = absint( sanitize_text_field( $_POST['set_type'] ) );
-        $assessment_name = sanitize_text_field($_POST['assessment_name']);
-        $internal_note = sanitize_text_field( $_POST['internal_note'] );
-        $note = sanitize_text_field( $_POST['note'] );
+        $assessment_name = sanitize_text_field( wp_unslash( $_POST['assessment_name'] ) );
+        $internal_note = sanitize_text_field( wp_unslash( $_POST['internal_note'] ) );
+        $note = sanitize_text_field( wp_unslash( $_POST['note'] ) );
         $exam_duration = sanitize_text_field( $_POST['exam_duration'] );
         $marks_per_question = sanitize_text_field( $_POST['marks_per_question'] );
         $questions = json_decode( wp_unslash( $_POST['questions'] ) );

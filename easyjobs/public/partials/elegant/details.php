@@ -28,14 +28,15 @@ global $post;
                             <div class="job__infos__block">
                                 <div class="job__informations">
                                     <div class="location_time">
-                                        <?php if ( ! empty( $job->experience_level->name ) ) {?>
+                                        <?php if ( get_theme_mod( 'easyjobs_single_show_experience_level', false ) && ! empty( $job->experience_level->name ) ) {?>
                                             <p>
                                                 <span><i class="easyjobs-icon easyjobs-briefcase-2"></i>  
-                                                <?php echo $job->experience_level->name; ?>
+                                                <?php echo esc_html( $job->experience_level->name ); ?>
                                             </p>
                                         <?php } ?>
                                         <p>
-                                            <?php if ( $job->is_remote || (isset($job->remote_location_type) && $job->remote_location_type === 'specific') || !empty($job->city) || !empty($job->country) ) { ?>
+                                            <?php $ej_job_address = Easyjobs_Helper::get_job_address_text( $job ); ?>
+                                            <?php if ( $job->is_remote || (isset($job->remote_location_type) && $job->remote_location_type === 'specific') || '' !== $ej_job_address ) { ?>
                                                 <span><i class="easyjobs-icon easyjobs-map-maker"></i>
                                                 <?php if ( isset($job->remote_location_type) && $job->remote_location_type === 'specific' ) : ?>
                                                     <span>
@@ -54,12 +55,7 @@ global $post;
                                                     <span><?php esc_html_e( 'Anywhere', 'easyjobs' ); ?></span>
                                                 <?php else : ?>
                                                     <span>
-                                                        <?php if(!empty($job->city) || !empty($job->country)): ?>
-                                                            <?php echo ! empty( $job->city ) ? ucfirst( esc_html( $job->city->name ) ) . ', ' : ''; ?>
-                                                            <?php echo ! empty( $job->country ) ? ucfirst( esc_html( $job->country->name ) ) : ''; ?>
-                                                        <?php else: ?>
-                                                            N/A
-                                                        <?php endif ?>
+                                                        <?php echo esc_html( $ej_job_address ); ?>
                                                     </span>
                                                 <?php endif ?>
                                                 </span>
@@ -107,24 +103,25 @@ global $post;
                                     <p class="deadline">
                                         <i class="easyjobs-icon easyjobs-calender"></i>
 										<?php esc_html_e( 'Deadline', 'easyjobs' ); ?>
-                                        : <?php echo esc_html( date( 'd F, Y', strtotime( str_replace( ', ', '', $job->expire_at ) ) ) ); ?>
+                                        : <?php echo esc_html( Easyjobs_Helper::format_job_deadline( $job->expire_at ) ); ?>
                                     </p>
 									<?php if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing', false ) ) : ?>
+									<?php $ej_share_links = Easyjobs_Helper::get_job_share_links( $job ); ?>
                                     <div class="share__options">
-                                        <span>Share on:</span>
+                                        <span><?php esc_html_e( 'Share on:', 'easyjobs' ); ?></span>
                                         <ul>
 											<?php if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing_fb') ) : ?>
 
                                                 <li>
-                                                    <a href="<?php echo !empty($job->social_links->facebook) ? esc_url($job->social_links->facebook) : esc_url('https://www.facebook.com/sharer.php?u=' . get_the_permalink()); ?>" class="social-button semi-button-primary facebook">
-                                                        <i class="easyjobs-icon easyjobs-facebook"></i>
+                                                    <a href="<?php echo esc_url( $ej_share_links['facebook'] ); ?>" class="social-button semi-button-primary facebook" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Share on Facebook', 'easyjobs' ); ?>">
+                                                        <i class="easyjobs-icon easyjobs-facebook" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
 											<?php endif; ?>
 											<?php if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing_twitter') ) : ?>
                                                 <li>
-                                                    <a href="<?php echo !empty($job->social_links->twitter) ? esc_url($job->social_links->twitter) : esc_url('https://twitter.com/intent/tweet?url=' . get_the_permalink() . '&text=' . $job->title); ?>" class="social-button semi-button-primary twitter">
-                                                        <i class="easyjobs-icon easyjobs-twitter"></i>
+                                                    <a href="<?php echo esc_url( $ej_share_links['twitter'] ); ?>" class="social-button semi-button-primary twitter" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Share on X', 'easyjobs' ); ?>">
+                                                        <?php echo Easyjobs_Helper::get_x_logo_svg(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup. ?>
                                                     </a>
                                                 </li>
 											<?php endif; ?>
@@ -132,8 +129,8 @@ global $post;
 											if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing_linkedin' ) ) :
 												?>
                                                 <li>
-                                                    <a href="<?php echo !empty($job->social_links->linkedIn) ? esc_url($job->social_links->linkedIn) : esc_url('http://www.linkedin.com/shareArticle?url=' . get_the_permalink() . '&title=' . $job->title . '&mini=true'); ?>" class="social-button semi-button-primary linkedin">
-                                                        <i class="easyjobs-icon easyjobs-linkedin"></i>
+                                                    <a href="<?php echo esc_url( $ej_share_links['linkedin'] ); ?>" class="social-button semi-button-primary linkedin" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Share on LinkedIn', 'easyjobs' ); ?>">
+                                                        <i class="easyjobs-icon easyjobs-linkedin" aria-hidden="true"></i>
                                                     </a>
                                                 </li>
 											<?php endif; ?>
@@ -171,73 +168,7 @@ global $post;
                             <h3 class="title"><?php echo esc_html( get_theme_mod( 'easyjobs_single_job_description_title', __( 'Description', 'easyjobs' ) ) ); ?></h3>
                             <div class="company__description">
 								<?php
-								echo wp_kses(
-									$job->requirements,
-									array(
-										'div'    => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'p'      => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'h1'     => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'h2'     => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'h3'     => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'h4'     => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'span'   => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'strong' => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'em'     => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'b'      => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'a'      => array(
-											'class' => array(),
-											'style' => array(),
-											'href'  => array(),
-											'title' => array(),
-										),
-										'ul'  => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'li'  => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'ol'  => array(
-											'class' => array(),
-											'style' => array(),
-										),
-										'blockquote'  => array(
-											'class' => array(),
-											'style' => array(),
-										),
-									)
-								);
+								echo Easyjobs_Helper::render_job_content( $job->requirements ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized with wp_kses.
 								?>
                             </div>
                         </div>
@@ -249,73 +180,7 @@ global $post;
                             </h3>
                             <div class="company__description">
 								<?php
-                                    echo wp_kses(
-                                        $job->responsibilies,
-                                        array(
-                                            'div'    => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'p'      => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'h1'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'h2'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'h3'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'h4'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'span'   => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'strong' => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'em'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'b'      => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'a'      => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                                'href'  => array(),
-                                                'title' => array(),
-                                            ),
-                                            'ul'  => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'li'  => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'ol'  => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'blockquote'  => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                        )
-                                    );
+                                    echo Easyjobs_Helper::render_job_content( $job->responsibilies ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized with wp_kses.
 								?>
                             </div>
                         </div>
@@ -327,73 +192,7 @@ global $post;
                             </h3>
                             <div class="company__description">
 								<?php
-                                    echo wp_kses(
-                                        $job->other_benefits,
-                                        array(
-                                            'div'    => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'p'      => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'h1'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'h2'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'h3'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'h4'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'span'   => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'strong' => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'em'     => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'b'      => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'a'      => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                                'href'  => array(),
-                                                'title' => array(),
-                                            ),
-                                            'ul'  => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'li'  => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'ol'  => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                            'blockquote'  => array(
-                                                'class' => array(),
-                                                'style' => array(),
-                                            ),
-                                        )
-                                    );
+                                    echo Easyjobs_Helper::render_job_content( $job->other_benefits ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized with wp_kses.
 								?>
                             </div>
                         </div>

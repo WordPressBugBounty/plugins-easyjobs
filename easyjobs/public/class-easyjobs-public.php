@@ -218,8 +218,13 @@ class Easyjobs_Public {
 	}
 
 	private function easyjobs_brand_color_css( $company_info ) {
+		// Company details can be false (not connected yet, or the API call failed);
+		// without a brand color there is nothing to print.
+		if ( ! is_object( $company_info ) || empty( $company_info->brand_color ) ) {
+			return;
+		}
 		$light_brand_color = '';
-		if( $company_info->selected_template === 'classic' ) {
+		if ( isset( $company_info->selected_template ) && $company_info->selected_template === 'classic' ) {
 			$light_brand_color = $this->colour_brightness( $company_info->brand_color, .1 );
 		}
 		?>
@@ -281,11 +286,60 @@ class Easyjobs_Public {
 			.easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner .ej-job-list-item-col .ej-job-list-info .ej-job-list-info-block a {
 				color: <?php echo $company_info->brand_color; ?>;
 			}
-			.ej-template-elegant .company__description ul li::before, 
+			.ej-template-elegant .company__description ul li::before,
 			.ej-template-elegant .job__details .job__details__block__list li::before,
 			.easyjobs-shortcode-wrapper.ej-template-classic .company__description ul li:before {
 				background-color: <?php echo $company_info->brand_color; ?> !important;
 			}
+			<?php
+			$brand_rgb = Easyjobs_Helper::hex_to_rgb( isset( $company_info->brand_color ) ? $company_info->brand_color : '' );
+			if ( $brand_rgb ) :
+				$brand_rgb = implode( ', ', $brand_rgb );
+				?>
+			.ej-btn.ej-info-btn,
+			.ej-btn.ej-info-btn:hover,
+			.ej-btn.ej-info-btn:focus,
+			.ej-btn.ej-info-btn-light:hover {
+				box-shadow: 0 10px 10px rgba(<?php echo esc_attr( $brand_rgb ); ?>, 0.3);
+			}
+
+			.easyjobs-details .ej-content-block ul li::before {
+				background-color: rgb(<?php echo esc_attr( $brand_rgb ); ?>);
+			}
+
+			.ej-section .ej-section-title .ej-section-title-icon,
+			.easyjobs-details .ej-content-block h1:before {
+				background-color: rgba(<?php echo esc_attr( $brand_rgb ); ?>, 0.1);
+			}
+
+			.easyjobs-details .ej-remote-label {
+				background-color: rgba(<?php echo esc_attr( $brand_rgb ); ?>, 0.15);
+				color: rgb(<?php echo esc_attr( $brand_rgb ); ?>);
+			}
+
+			/* Company description Read more / Show less, in every state (as on the career page). */
+			.easyjobs-shortcode-wrapper .ej-section .ej-read-more,
+			.easyjobs-shortcode-wrapper .ej-section .ej-read-more:hover,
+			.easyjobs-shortcode-wrapper .ej-section .ej-read-more:focus,
+			.easyjobs-shortcode-wrapper .ej-section .ej-read-more:active,
+			.easyjobs-shortcode-wrapper .about__company .ej-modal-trigger,
+			.easyjobs-shortcode-wrapper .about__company .ej-modal-trigger:visited,
+			.easyjobs-shortcode-wrapper .about__company .ej-modal-trigger:hover,
+			.easyjobs-shortcode-wrapper .about__company .ej-modal-trigger:focus,
+			.easyjobs-shortcode-wrapper .about__company .ej-modal-trigger:active {
+				color: rgb(<?php echo esc_attr( $brand_rgb ); ?>) !important;
+			}
+
+			/* Pinned job corner badge + job type label on the job list. */
+			.ej-has-badge:before {
+				border-top-color: rgb(<?php echo esc_attr( $brand_rgb ); ?>);
+			}
+
+			.ej-section .ej-job-list .primary-label {
+				background-color: rgba(<?php echo esc_attr( $brand_rgb ); ?>, 0.1);
+				color: rgb(<?php echo esc_attr( $brand_rgb ); ?>);
+			}
+			<?php endif; ?>
 		</style>
 		<?php
 	}

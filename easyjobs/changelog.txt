@@ -1,3 +1,8 @@
+= 2.8.2 - 29/09/2026 =
+- Fixed: Issues in job details formatting, and stale job data.
+- Improved: Job location, deadline, sharing, branding, messages and conversation UI.
+- Few minor bug fixes & improvements.
+
 = 2.8.1 - 07/07/2026 =
 * Improved: Admin Candidates Page.
 * Improved: Candidate Details Page.

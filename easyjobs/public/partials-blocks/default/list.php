@@ -10,7 +10,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
 }
 ?>
 <div <?php echo wp_kses_data( $wrapper_attributes); ?>>
-    <div class="ej-job-body easyjobs-blocks easyjobs-blocks-job-list">
+    <div class="ej-job-body easyjobs-blocks easyjobs-blocks-job-list" data-testid="ej-block-job-list">
         <?php if ( $ej_is_search || ( ! empty( $jobs ) && ! empty( $job_with_page_id ) ) ) : ?>
             <div class="easyjobs-shortcode-wrapper ej-template-default" id="easyjobs-list">
                 <div class="ej-section">

@@ -1096,7 +1096,10 @@ class Easyjobs_Admin {
 					}
 				} else {
 					$user_key = 'ej-' . sha1( time() );
-					set_transient( $user_key, serialize( $credentials ) );
+					// Hold the sign-in credentials only for the duration of the
+					// company-creation step. The TTL was missing, so these were
+					// stored indefinitely; cap it at 30 minutes.
+					set_transient( $user_key, serialize( $credentials ), 30 * MINUTE_IN_SECONDS );
 					$response_array['user_key'] = $user_key;
 					$response_array['action']   = 'create_company';
 				}

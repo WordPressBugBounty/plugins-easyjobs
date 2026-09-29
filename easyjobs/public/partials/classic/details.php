@@ -24,7 +24,8 @@ global $post;
                         <div class="job__details easyjobs-details">
                             <h1 class="job__title"><?php echo esc_html($job->title)?></h1>
                             <div class="meta">
-								<?php if ( $job->is_remote || (isset($job->remote_location_type) && $job->remote_location_type === 'specific') || (!empty($job->city) || !empty($job->country))) { ?>
+								<?php $ej_job_address = Easyjobs_Helper::get_job_address_text( $job ); ?>
+								<?php if ( $job->is_remote || (isset($job->remote_location_type) && $job->remote_location_type === 'specific') || '' !== $ej_job_address ) { ?>
 									<span class="label label__primary">
 										<i class="easyjobs-icon easyjobs-map-maker"></i>
 										<?php if ( isset($job->remote_location_type) && $job->remote_location_type === 'specific' ) : ?>
@@ -41,12 +42,7 @@ global $post;
 										<?php elseif ( $job->is_remote ) : ?>
 											<?php esc_html_e( 'Anywhere', 'easyjobs' ); ?>
 										<?php else : ?>
-											<?php if(!empty($job->city) || !empty($job->country)): ?>
-												<?php echo ! empty( $job->city ) ? esc_html( $job->city->name ) . ', ' : ''; ?>
-												<?php echo ! empty( $job->country ) ? esc_html( $job->country->name ) : ''; ?>
-											<?php else: ?>
-												'N/A'
-											<?php endif ?>
+											<?php echo esc_html( $ej_job_address ); ?>
 										<?php endif ?>
 									</span>
 								<?php } ?>
@@ -63,9 +59,19 @@ global $post;
 									</span>
 								<?php } ?>
                             </div>
+                            <div class="ej-mobile-apply">
+                                <a href="<?php echo esc_url( $job->apply_url ); ?>" class="button button__success button__radius" target="_blank">
+                                    <?php esc_html_e( 'Apply Now', 'easyjobs' ); ?>
+                                </a>
+                                <p class="deadline">
+                                    <i class="easyjobs-icon easyjobs-calender"></i>
+                                    <span><?php esc_html_e( 'Deadline', 'easyjobs' ); ?>:</span>
+                                    <?php echo esc_html( Easyjobs_Helper::format_job_deadline( $job->expire_at ) ); ?>
+                                </p>
+                            </div>
 							<?php if ( ! empty( $job->skills ) ) : ?>
                             <div class="job__details__block ej-content-block mt60">
-                                <h3 class="title">Skills</h3>
+                                <h3 class="title"><?php esc_html_e( 'Skills', 'easyjobs' ); ?></h3>
                                 <div class="required__skill">
                                     <ul>
                                         <?php foreach ($job->skills as $skill): ?>
@@ -80,73 +86,7 @@ global $post;
                                 <h3 class="title"><?php echo esc_html( get_theme_mod( 'easyjobs_single_job_description_title', __( 'Description','easyjobs' ) ) ); ?></h3>
                                 <div class="company__description">
 									<?php
-									echo wp_kses(
-										$job->requirements,
-										array(
-											'div'    => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'p'      => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h1'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h2'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h3'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h4'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'span'   => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'strong' => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'em'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'b'      => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'a'      => array(
-												'class' => array(),
-												'style' => array(),
-												'href'  => array(),
-												'title' => array(),
-											),
-											'ul'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'li'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'ol'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'blockquote'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-										)
-									);
+									echo Easyjobs_Helper::render_job_content( $job->requirements ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized with wp_kses.
 									?>
                                 </div>
                             </div>
@@ -158,73 +98,7 @@ global $post;
                                 </h3>
                                 <div class="company__description">
 									<?php
-									echo wp_kses(
-										$job->responsibilies,
-										array(
-											'div'    => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'p'      => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h1'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h2'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h3'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h4'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'span'   => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'strong' => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'em'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'b'      => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'a'      => array(
-												'class' => array(),
-												'style' => array(),
-												'href'  => array(),
-												'title' => array(),
-											),
-											'ul'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'li'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'ol'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'blockquote'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-										)
-									);
+									echo Easyjobs_Helper::render_job_content( $job->responsibilies ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized with wp_kses.
 									?>
                                 </div>
                             </div>
@@ -236,73 +110,7 @@ global $post;
                                 </h3>
                                 <div class="company__description">
 									<?php
-									echo wp_kses(
-										$job->other_benefits,
-										array(
-											'div'    => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'p'      => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h1'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h2'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h3'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'h4'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'span'   => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'strong' => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'em'     => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'b'      => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'a'      => array(
-												'class' => array(),
-												'style' => array(),
-												'href'  => array(),
-												'title' => array(),
-											),
-											'ul'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'li'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'ol'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-											'blockquote'  => array(
-												'class' => array(),
-												'style' => array(),
-											),
-										)
-									);
+									echo Easyjobs_Helper::render_job_content( $job->other_benefits ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized with wp_kses.
 									?>
                                 </div>
                             </div>
@@ -311,16 +119,16 @@ global $post;
                     </div>
                     <div class="ej-col-lg-5">
                         <div class="job__more__details">
-                            <a href="<?php echo $job->apply_url?>" class="button button__success button__radius" target="_blank">
+                            <a href="<?php echo esc_url( $job->apply_url ); ?>" class="button button__success button__radius" target="_blank">
 								<?php _e('Apply Now', 'easyjobs')?>
                             </a>
                             <p class="deadline">
                                 <i class="easyjobs-icon easyjobs-calender"></i>
                                 <span>
                                     <?php _e('Deadline', 'easyjobs')?>:
-                                </span> <?php echo esc_html( date( 'd F, Y', strtotime( str_replace( ', ', '', $job->expire_at ) ) ) ); ?>
+                                </span> <?php echo esc_html( Easyjobs_Helper::format_job_deadline( $job->expire_at ) ); ?>
                             </p>
-							<?php if ( ! empty( $job->experience_level->name ) ) { ?>
+							<?php if ( get_theme_mod( 'easyjobs_single_show_experience_level', false ) && ! empty( $job->experience_level->name ) ) { ?>
 								<p class="deadline">
 									<i class="easyjobs-icon easyjobs-briefcase-2"></i>
 									<span>
@@ -356,33 +164,34 @@ global $post;
 								</p>
 							<?php } ?>
 
-							<?php if ( $company->description != '<p><br></p>' ) { ?>
+							<?php $ej_company_short = Easyjobs_Helper::get_company_short_description( $company ); ?>
+							<?php if ( '' !== $ej_company_short['text'] ) : ?>
 								<div class="about__company">
-									<?php
-										echo ! empty( $company->description ) ? esc_html(wp_trim_words(wp_strip_all_tags($company->description)), 80,'') : '';
-									?>
-									<?php if ( ! empty( $company->description ) && strlen( $company->description ) > 80 ) { ?>
-										<a href="#" style="color:#ff5f74;" class="ej-modal-trigger">Read more</a>
-									<?php } ?>
+									<p>
+										<?php echo esc_html( $ej_company_short['text'] ); ?>
+										<?php if ( $ej_company_short['has_more'] ) : ?>
+											<a href="#" class="ej-modal-trigger"><?php esc_html_e( 'Read more', 'easyjobs' ); ?></a>
+										<?php endif; ?>
 									</p>
 								</div>
-							<?php } ?>
+							<?php endif; ?>
 							<?php if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing', false ) ) : ?>
+							<?php $ej_share_links = Easyjobs_Helper::get_job_share_links( $job ); ?>
                             <div class="share__options">
                                 <p> <?php _e('Share on', 'easyjobs')?>:</p>
                                 <ul>
 									<?php if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing_fb', false ) ) : ?>
 
                                         <li>
-                                            <a href="<?php echo !empty($job->social_links->facebook) ? esc_url($job->social_links->facebook) : esc_url('https://www.facebook.com/sharer.php?u=' . get_the_permalink()); ?>" class="ej-social-button social-button semi-button-primary facebook">
-                                                <i class="easyjobs-icon easyjobs-facebook"></i>
+                                            <a href="<?php echo esc_url( $ej_share_links['facebook'] ); ?>" class="ej-social-button social-button semi-button-primary facebook" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Share on Facebook', 'easyjobs' ); ?>">
+                                                <i class="easyjobs-icon easyjobs-facebook" aria-hidden="true"></i>
                                             </a>
                                         </li>
 									<?php endif; ?>
 									<?php if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing_twitter', false ) ) : ?>
                                         <li>
-                                            <a href="<?php echo !empty($job->social_links->twitter) ? esc_url($job->social_links->twitter) : esc_url('https://twitter.com/intent/tweet?url=' . get_the_permalink() . '&text=' . $job->title); ?>" class="ej-social-button social-button semi-button-primary twitter">
-                                                <i class="easyjobs-icon easyjobs-twitter"></i>
+                                            <a href="<?php echo esc_url( $ej_share_links['twitter'] ); ?>" class="ej-social-button social-button semi-button-primary twitter" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Share on X', 'easyjobs' ); ?>">
+                                                <?php echo Easyjobs_Helper::get_x_logo_svg(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup. ?>
                                             </a>
                                         </li>
 									<?php endif; ?>
@@ -390,8 +199,8 @@ global $post;
 									if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing_linkedin', false ) ) :
 										?>
                                         <li>
-                                            <a href="<?php echo !empty($job->social_links->linkedIn) ? esc_url($job->social_links->linkedIn) : esc_url('http://www.linkedin.com/shareArticle?url=' . get_the_permalink() . '&title=' . $job->title . '&mini=true'); ?>" class="ej-social-button social-button semi-button-primary linkedin">
-                                                <i class="easyjobs-icon easyjobs-linkedin"></i>
+                                            <a href="<?php echo esc_url( $ej_share_links['linkedin'] ); ?>" class="ej-social-button social-button semi-button-primary linkedin" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Share on LinkedIn', 'easyjobs' ); ?>">
+                                                <i class="easyjobs-icon easyjobs-linkedin" aria-hidden="true"></i>
                                             </a>
                                         </li>
 									<?php endif; ?>
@@ -410,13 +219,13 @@ global $post;
                         <h5 class="ej-modal-title">
                             <?php _e('Company Description', 'easyjobs');?>
                         </h5>
-                        <button class="ej-modal-close">
-                            <span >×</span>
+                        <button type="button" class="ej-modal-close" aria-label="<?php esc_attr_e( 'Close', 'easyjobs' ); ?>">
+                            <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="ej-modal-body">
                         <div class="company__description">
-                            <?php echo $company->description?>
+                            <?php echo Easyjobs_Helper::render_job_content( isset( $company->description ) ? $company->description : '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized with wp_kses. ?>
                         </div>
                     </div>
                     <div class="ej-modal-footer">

@@ -185,6 +185,7 @@ class Easyjobs_Helper {
 		}
 
 		$transient_key = 'easyjobs_job_details_' . $job_id;
+		$stale_key     = 'easyjobs_job_stale_' . $job_id;
 		if ( $cached ) {
 			$cached_job = get_transient( $transient_key );
 			if ( false !== $cached_job ) {
@@ -193,13 +194,290 @@ class Easyjobs_Helper {
 		}
 
 		$job = Easyjobs_Api::get_by_id( 'job', $job_id, 'details' );
-		if ( $job && $job->status == 'success' ) {
+
+		// A 412 (stale state version) response has already refreshed the local state
+		// version via update_cache(); retry once so the visitor still gets the job.
+		if ( ! empty( $job->reload_required ) ) {
+			$job = Easyjobs_Api::get_by_id( 'job', $job_id, 'details' );
+		}
+
+		if ( ! empty( $job ) && isset( $job->status ) && 'success' === $job->status && ! empty( $job->data ) ) {
 			if ( $cached ) {
-				set_transient( $transient_key, $job->data, DAY_IN_SECONDS );
+				set_transient( $transient_key, $job->data, self::get_job_cache_ttl() );
+				// Last known good copy, served if the API is unreachable later on.
+				set_transient( $stale_key, $job->data, WEEK_IN_SECONDS );
 			}
 			return $job->data;
 		}
+
+		if ( $cached ) {
+			// Only fall back when easy.jobs could not be reached: network error, a
+			// non-JSON body (proxy/CDN error page), or a state-version reload that
+			// still failed after the retry. Any JSON answer from the API (job removed,
+			// not ours, ...) must win, so a job deleted in the app disappears here too.
+			$unreachable = empty( $job ) || ! is_object( $job ) || ! empty( $job->reload_required ) || ( isset( $job->error_type ) && 'fetch error' === $job->error_type );
+			if ( $unreachable ) {
+				$stale_job = get_transient( $stale_key );
+				if ( false !== $stale_job ) {
+					// Re-check in a few minutes instead of making every visitor wait
+					// for the API timeout while easy.jobs is unreachable.
+					set_transient( $transient_key, $stale_job, min( 5 * MINUTE_IN_SECONDS, self::get_job_cache_ttl() ) );
+					return $stale_job;
+				}
+			} else {
+				delete_transient( $stale_key );
+			}
+		}
 		return false;
+	}
+
+	/**
+	 * How long a job's details are cached on the front end before they are
+	 * re-fetched from easy.jobs, so edits made in the app show up quickly.
+	 *
+	 * @since 2.8.2
+	 * @return int Seconds.
+	 */
+	public static function get_job_cache_ttl() {
+		$ttl = absint( apply_filters( 'easyjobs_job_details_cache_ttl', 15 * MINUTE_IN_SECONDS ) );
+		return $ttl > 0 ? $ttl : 15 * MINUTE_IN_SECONDS;
+	}
+
+	/**
+	 * Allowed HTML for rich job/company content coming from easy.jobs
+	 * (description, responsibilities, benefits, company description).
+	 *
+	 * @since 2.8.2
+	 * @return array
+	 */
+	public static function get_job_content_allowed_html() {
+		$common = array(
+			'class' => array(),
+			'style' => array(),
+		);
+		$tags   = array(
+			'div', 'p', 'span', 'br', 'hr',
+			'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+			'strong', 'b', 'em', 'i', 'u', 's', 'strike', 'del', 'ins', 'sub', 'sup', 'small', 'mark',
+			'ul', 'ol', 'li', 'blockquote', 'pre', 'code',
+			'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td', 'caption',
+			'figure', 'figcaption',
+		);
+
+		$allowed = array();
+		foreach ( $tags as $tag ) {
+			$allowed[ $tag ] = $common;
+		}
+		$allowed['a']   = array_merge(
+			$common,
+			array(
+				'href'   => array(),
+				'title'  => array(),
+				'target' => array(),
+				'rel'    => array(),
+			)
+		);
+		$allowed['img'] = array_merge(
+			$common,
+			array(
+				'src'    => array(),
+				'alt'    => array(),
+				'title'  => array(),
+				'width'  => array(),
+				'height' => array(),
+			)
+		);
+		$allowed['ol'] = array_merge(
+			$common,
+			array(
+				'start' => array(),
+				'type'  => array(),
+			)
+		);
+		foreach ( array( 'th', 'td' ) as $cell ) {
+			$allowed[ $cell ] = array_merge(
+				$common,
+				array(
+					'colspan' => array(),
+					'rowspan' => array(),
+				)
+			);
+		}
+
+		return apply_filters( 'easyjobs_job_content_allowed_html', $allowed );
+	}
+
+	/**
+	 * X (formerly Twitter) logo for share buttons. Decorative: the link carries
+	 * the accessible name.
+	 *
+	 * @since 2.8.3
+	 * @return string Static SVG markup.
+	 */
+	public static function get_x_logo_svg() {
+		return '<svg class="ej-x-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
+	}
+
+	/**
+	 * Sanitize rich job/company content for output.
+	 *
+	 * On top of the allowlist this drops leading/trailing empty paragraphs
+	 * (`<p>&nbsp;</p>`, `<p><br></p>`) that pasted content leaves behind,
+	 * keeps in-between ones as blank lines (`<p><br></p>`), and strips inline
+	 * margin/padding the easy.jobs editor adds, so every template controls the
+	 * indentation of its own content.
+	 *
+	 * @since 2.8.3
+	 * @param string $html Raw HTML from easy.jobs.
+	 * @return string Safe HTML.
+	 */
+	public static function render_job_content( $html ) {
+		if ( ! is_string( $html ) || '' === $html ) {
+			return '';
+		}
+		$html = wp_kses( $html, self::get_job_content_allowed_html() );
+		// Empty paragraphs, including ones that only wrap empty inline tags (<p><span>&nbsp;</span></p>).
+		$empty = '<p\b[^>]*>(?:\s|&nbsp;|&\#160;|\xC2\xA0|<br\s*/?>|</?(?:span|strong|b|em|i|u)\b[^>]*>)*</p>';
+		// Leading/trailing ones are leftovers; drop them.
+		$html = preg_replace( '#^(?:\s*' . $empty . ')+\s*|\s*(?:' . $empty . '\s*)+$#iu', '', $html );
+		// In-between ones are blank lines the author typed; keep each as one visible line.
+		$html = preg_replace( '#' . $empty . '#iu', '<p><br></p>', $html );
+
+		return preg_replace_callback(
+			'#\sstyle="([^"]*)"#i',
+			function ( $matches ) {
+				$kept = array();
+				foreach ( explode( ';', $matches[1] ) as $declaration ) {
+					$property = strtolower( trim( strtok( $declaration, ':' ) ) );
+					if ( '' === $property || preg_match( '/^(margin|padding)(-|$)/', $property ) ) {
+						continue;
+					}
+					$kept[] = trim( $declaration );
+				}
+				return $kept ? ' style="' . implode( '; ', $kept ) . '"' : '';
+			},
+			$html
+		);
+	}
+
+	/**
+	 * Plain-text teaser of the company description, for templates that show a
+	 * short description with a "Read more" link.
+	 *
+	 * @since 2.8.3
+	 * @param object $company Company info object.
+	 * @param int    $words   Maximum number of words.
+	 * @return array{text:string,has_more:bool} Unescaped text; escape at output.
+	 */
+	public static function get_company_short_description( $company, $words = 55 ) {
+		$html = is_object( $company ) && ! empty( $company->description ) && is_string( $company->description ) ? $company->description : '';
+		// Keep a space between block elements so "<p>a</p><p>b</p>" does not become "ab".
+		$html  = preg_replace( '#</(p|div|li|h[1-6]|blockquote)>|<br\s*/?>#i', ' ', $html );
+		$plain = html_entity_decode( wp_strip_all_tags( $html ), ENT_QUOTES, 'UTF-8' );
+		$count = count( preg_split( '/[\n\r\t ]+/', $plain, -1, PREG_SPLIT_NO_EMPTY ) );
+
+		return array(
+			'text'     => wp_trim_words( $plain, $words, '…' ),
+			'has_more' => $count > $words,
+		);
+	}
+
+	/**
+	 * On-site job address, built the same way as the easy.jobs career page:
+	 * "City, State, Country" (empty parts skipped).
+	 *
+	 * @since 2.8.2
+	 * @param object $job Job details object.
+	 * @return string Unescaped text; escape at output.
+	 */
+	public static function get_job_address_text( $job ) {
+		if ( ! is_object( $job ) ) {
+			return '';
+		}
+		$parts = array();
+		foreach ( array( 'city', 'state', 'country' ) as $field ) {
+			if ( ! empty( $job->{$field} ) && is_object( $job->{$field} ) && ! empty( $job->{$field}->name ) ) {
+				$name = ucfirst( trim( (string) $job->{$field}->name ) );
+				if ( '' !== $name && ! in_array( $name, $parts, true ) ) {
+					$parts[] = $name;
+				}
+			}
+		}
+		return implode( ', ', $parts );
+	}
+
+	/**
+	 * Share URLs for a job, pointing at the WordPress job page (not the
+	 * easy.jobs career site) so shared traffic lands on this site.
+	 *
+	 * @since 2.8.2
+	 * @param object $job Job details object.
+	 * @param string $url Page URL to share. Defaults to the current post permalink.
+	 * @return array{facebook:string,twitter:string,linkedin:string}
+	 */
+	public static function get_job_share_links( $job, $url = '' ) {
+		if ( empty( $url ) ) {
+			$url = get_the_permalink();
+		}
+		$title = is_object( $job ) && ! empty( $job->title ) ? wp_strip_all_tags( $job->title ) : '';
+
+		if ( empty( $url ) ) {
+			// No WordPress page to point at; fall back to the links easy.jobs provides.
+			$links = array(
+				'facebook' => ! empty( $job->social_links->facebook ) ? $job->social_links->facebook : '',
+				'twitter'  => ! empty( $job->social_links->twitter ) ? $job->social_links->twitter : '',
+				'linkedin' => ! empty( $job->social_links->linkedIn ) ? $job->social_links->linkedIn : '',
+			);
+		} else {
+			$encoded_url = rawurlencode( $url );
+			$links       = array(
+				'facebook' => 'https://www.facebook.com/sharer/sharer.php?u=' . $encoded_url,
+				'twitter'  => 'https://twitter.com/intent/tweet?url=' . $encoded_url . ( '' !== $title ? '&text=' . rawurlencode( $title ) : '' ),
+				'linkedin' => 'https://www.linkedin.com/sharing/share-offsite/?url=' . $encoded_url,
+			);
+		}
+
+		return apply_filters( 'easyjobs_job_share_links', $links, $job, $url );
+	}
+
+	/**
+	 * Convert a hex color (#abc or #aabbcc) to its RGB channels.
+	 *
+	 * @since 2.8.2
+	 * @param string $hex Hex color.
+	 * @return int[]|false [r, g, b], or false when the value is not a valid hex color.
+	 */
+	public static function hex_to_rgb( $hex ) {
+		if ( ! is_string( $hex ) || ! preg_match( '/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i', trim( $hex ), $matches ) ) {
+			return false;
+		}
+		$hex = $matches[1];
+		if ( 3 === strlen( $hex ) ) {
+			$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+		}
+		return array(
+			hexdec( substr( $hex, 0, 2 ) ),
+			hexdec( substr( $hex, 2, 2 ) ),
+			hexdec( substr( $hex, 4, 2 ) ),
+		);
+	}
+
+	/**
+	 * Job deadline in the same "30 Nov, 2026" format the easy.jobs career page uses.
+	 *
+	 * @since 2.8.2
+	 * @param string $expire_at Raw expire_at value from the API.
+	 * @return string
+	 */
+	public static function format_job_deadline( $expire_at ) {
+		if ( empty( $expire_at ) ) {
+			return '';
+		}
+		$timestamp = strtotime( str_replace( ', ', '', $expire_at ) );
+		if ( false === $timestamp ) {
+			return (string) $expire_at;
+		}
+		return date_i18n( apply_filters( 'easyjobs_job_deadline_format', 'd M, Y' ), $timestamp );
 	}
 
 	/**
@@ -843,7 +1121,10 @@ class Easyjobs_Helper {
 				update_option( 'easyjobs_parent_page', $has_parent[0]->ID );
 				return $has_parent[0]->ID;
 			} else {
-				set_transient('easyjobs_parent_creating', 300);
+				// Short-lived lock so concurrent requests don't both create the
+				// parent page. The third arg is the TTL (was missing, leaving the
+				// lock stuck permanently if creation was interrupted mid-flight).
+				set_transient( 'easyjobs_parent_creating', true, 5 * MINUTE_IN_SECONDS );
 				$page_id = wp_insert_post(
 					array(
 						'post_type'     => sanitize_text_field( 'page' ),

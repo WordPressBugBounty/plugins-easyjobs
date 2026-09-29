@@ -31,7 +31,6 @@ class EasyJobs_Settings {
         add_action( 'wp_ajax_easyjobs_create_pipeline', array( __CLASS__, 'create_pipeline' ), 10 );
         add_action( 'wp_ajax_easyjobs_update_pipeline', array( __CLASS__, 'update_pipeline' ), 10 );
         add_action( 'wp_ajax_easyjobs_delete_pipeline', array( __CLASS__, 'delete_pipeline' ), 10 );
-        add_action( 'wp_ajax_easyjobs_save_category', array( __CLASS__, 'save_category' ), 10 );
         add_action( 'wp_ajax_easyjobs_save_apply_settings', array( __CLASS__, 'save_apply_settings' ), 10 );
         add_action( 'wp_ajax_easyjobs_get_minimal_company_info', array( __CLASS__, 'get_company_info' ), 10 );
         add_action( 'wp_ajax_easyjobs_save_template_settings', array( __CLASS__, 'save_template_settings' ), 10 );
