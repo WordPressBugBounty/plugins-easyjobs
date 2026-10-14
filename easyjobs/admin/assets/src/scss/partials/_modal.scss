@@ -1,0 +1,28 @@
+.easyjobs-wrapper{
+	#custom-modal{
+		&.loading{
+			.modal-content{
+				position: relative;
+				z-index: 1;
+				&:before{
+					content: '';
+					position: absolute;
+					left: 0;
+					top:0;
+					right: 0;
+					bottom: 0;
+					background-color: #fff;
+					opacity: 0.6;
+					z-index: 9;
+					@include user_select;
+					@include transition(all 0.3s ease)
+				}
+			}
+
+		}
+		padding: 0 !important;
+		.modal-dialog{
+			max-width: 600px;
+		}
+	}
+}

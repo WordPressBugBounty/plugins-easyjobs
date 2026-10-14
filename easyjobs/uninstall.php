@@ -28,3 +28,8 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+// WordPress ignores register_uninstall_hook() when this file exists, so the
+// cleanup runs from here. Only WordPress core is loaded at this point.
+require_once __DIR__ . '/includes/class-easyjobs-uninstaller.php';
+Easyjobs_Uninstaller::uninstall();

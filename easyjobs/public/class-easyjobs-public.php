@@ -106,7 +106,7 @@ class Easyjobs_Public {
 	 * @param array $editor_data The editor data.
 	 */
 	public function easyjobs_saved_editor_data( $post_id, $post, $update ) {
-		if ( ! empty( $post ) && str_contains( $post->post_content, 'easyjobs' ) ) {
+		if ( ! empty( $post ) && false !== strpos( $post->post_content, 'easyjobs' ) ) {
 			update_option( 'easyjobs_widgets_or_shortcode', true, null );
 		} else {
 			update_option( 'easyjobs_widgets_or_shortcode', false, null );
@@ -135,7 +135,7 @@ class Easyjobs_Public {
 				if ( in_array( $data[ 'widgetType' ], $this->elementor_widgets ) ) {
 					return true;
 				}
-				if ( $data[ 'widgetType' ] === 'shortcode' && str_contains( $data['settings' ]['shortcode'], 'easyjobs' ) ) {
+				if ( $data[ 'widgetType' ] === 'shortcode' && false !== strpos( $data['settings' ]['shortcode'], 'easyjobs' ) ) {
 					return true;
 				}
 			} else {
@@ -153,28 +153,48 @@ class Easyjobs_Public {
 		
 		if( is_page_template( 'easyjobs-template.php' ) || $easyjobs_widgets_or_shortcode ):
 			$company_info = Easyjobs_Helper::get_company_details( true );
-			if (! empty( $company_info ) && isset($company_info->translate_input_fields) && $company_info->translate_input_fields ): 
-				$language = $company_info->lang;
-		?>
-				<script>
-
-					jQuery(function($){
-						$('html').addClass( 'notranslate' );
-					});
-
-				</script>
-				<script>
-					document.cookie = "googtrans=/auto/<?php echo $language; ?>"
-					function googleTranslateElementInit() {
-						new google.translate.TranslateElement({}, 'google_translate_element');
-					}
-				</script>
-				<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-		<?php
-			endif;
+			if ( ! empty( $company_info ) && ! empty( $company_info->translate_input_fields ) ) {
+				$this->enqueue_google_translate( isset( $company_info->lang ) ? $company_info->lang : '' );
+			}
 			$this->easyjobs_brand_color_css( $company_info );
 		endif;
+	}
+
+	/**
+	 * Load Google Translate on the career pages.
+	 *
+	 * Runs only when the company enabled "Translate input fields" on easy.jobs.
+	 * Disclosed in README.txt → External services.
+	 *
+	 * @since 2.8.3
+	 * @param string $language Target language code from easy.jobs (e.g. "de", "zh-CN").
+	 * @return void
+	 */
+	public function enqueue_google_translate( $language ) {
+		wp_enqueue_script(
+			'easyjobs-google-translate',
+			'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
+			array(),
+			EASYJOBS_VERSION,
+			true
+		);
+		wp_add_inline_script( 'easyjobs-google-translate', $this->get_google_translate_init_script( $language ), 'before' );
+	}
+
+	/**
+	 * Inline script that sets the target language and the Translate callback.
+	 *
+	 * @since 2.8.3
+	 * @param string $language Target language code.
+	 * @return string
+	 */
+	public function get_google_translate_init_script( $language ) {
+		$language = preg_replace( '/[^A-Za-z_-]/', '', (string) $language );
+		return 'document.documentElement.classList.add("notranslate");'
+			. 'document.cookie = "googtrans=/auto/" + ' . wp_json_encode( $language ) . ';'
+			. 'function googleTranslateElementInit() {'
+			. 'new google.translate.TranslateElement({}, "google_translate_element");'
+			. '}';
 	}
 
 	private function colour_brightness($hex, $percent) {
@@ -239,21 +259,21 @@ class Easyjobs_Public {
 			.ej-template-elegant .button,
 			.easyjobs-shortcode-wrapper.ej-template-classic .button__success:not(.hover__highlight) {
 				color: #ffffff;
-				background-color: <?php echo $company_info->brand_color; ?>;
+				background-color: <?php echo esc_attr( $company_info->brand_color ); ?>;
 			}
 
 			.ej-template-classic .label__primary,
 			.ej-template-elegant .label.label__primary,
 			.ej-template-classic .label__primary,
 			.easyjobs-shortcode-wrapper.ej-template-classic .label__primary {
-				background-color: <?php echo $light_brand_color; ?> !important;
-				color: <?php echo $company_info->brand_color; ?> !important;
+				background-color: <?php echo esc_attr( $light_brand_color ); ?> !important;
+				color: <?php echo esc_attr( $company_info->brand_color ); ?> !important;
 			}
 
 
 			.ej-template-classic .button__success:not(.hover__highlight),
 			.ej-template-elegant .button__primary:not(.hover__highlight) {
-				border-color: <?php echo $company_info->brand_color; ?>;
+				border-color: <?php echo esc_attr( $company_info->brand_color ); ?>;
 			}
 
 
@@ -266,7 +286,7 @@ class Easyjobs_Public {
 			.ej-template-elegant .button:hover,
 			.easyjobs-shortcode-wrapper.ej-template-classic .button__success:not(.hover__highlight):hover {
 				color: #fff;
-				background-color: <?php echo $company_info->brand_color; ?>;
+				background-color: <?php echo esc_attr( $company_info->brand_color ); ?>;
 			}
 
 
@@ -284,12 +304,12 @@ class Easyjobs_Public {
 			.easyjobs-details .ej-content-block h1:before,
 			.ej-section .ej-section-title .ej-section-title-icon,
 			.easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner .ej-job-list-item-col .ej-job-list-info .ej-job-list-info-block a {
-				color: <?php echo $company_info->brand_color; ?>;
+				color: <?php echo esc_attr( $company_info->brand_color ); ?>;
 			}
 			.ej-template-elegant .company__description ul li::before,
 			.ej-template-elegant .job__details .job__details__block__list li::before,
 			.easyjobs-shortcode-wrapper.ej-template-classic .company__description ul li:before {
-				background-color: <?php echo $company_info->brand_color; ?> !important;
+				background-color: <?php echo esc_attr( $company_info->brand_color ); ?> !important;
 			}
 			<?php
 			$brand_rgb = Easyjobs_Helper::hex_to_rgb( isset( $company_info->brand_color ) ? $company_info->brand_color : '' );
@@ -427,8 +447,8 @@ class Easyjobs_Public {
                     <?php endforeach;?>
                 </select>
             </div>
-            <button class="ej-btn ej-info-btn-light" type="submit"><?php _e("Submit",'easyjobs');?></button>
-            <a href="/" class="ej-btn ej-danger-btn"><?php _e("Reset",'easyjobs');?></a>
+            <button class="ej-btn ej-info-btn-light" type="submit"><?php esc_html_e("Submit",'easyjobs');?></button>
+            <a href="/" class="ej-btn ej-danger-btn"><?php esc_html_e("Reset",'easyjobs');?></a>
         </form>
 		<?php
 		return ob_get_flush();

@@ -37,6 +37,134 @@ class EasyJobs_Settings {
         add_action( 'wp_ajax_easyjobs_delete_company_image', array( __CLASS__, 'delete_company_image' ), 10 );
         add_action( 'wp_ajax_easyjobs_update_show_cover_photo', array( __CLASS__, 'update_show_cover_photo' ), 10 );
         add_action( 'wp_ajax_easyjobs_update_login_attachment', array( __CLASS__, 'update_login_attachment' ), 10 );
+        add_action( 'wp_ajax_easyjobs_get_privacy_settings', array( __CLASS__, 'get_privacy_settings' ), 10 );
+        add_action( 'wp_ajax_easyjobs_save_privacy_settings', array( __CLASS__, 'save_privacy_settings' ), 10 );
+        add_action( 'admin_init', array( __CLASS__, 'add_privacy_policy_content' ), 10 );
+    }
+
+    /**
+     * Return the local privacy settings for the Settings → Privacy tab.
+     *
+     * @since 2.8.3
+     * @return void
+     */
+    public static function get_privacy_settings() {
+        if ( ! Easyjobs_Helper::can_update_options() || ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
+            echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
+            wp_die();
+        }
+        $data                     = self::privacy_settings();
+        $data['policy_guide_url'] = admin_url( 'options-privacy.php?tab=policyguide' );
+        echo wp_json_encode( Easyjobs_Helper::get_success_response( 'Success', $data ) );
+        wp_die();
+    }
+
+    /**
+     * Suggested privacy policy text for sites that use EasyJobs.
+     *
+     * Shown in the WordPress Privacy Policy Guide.
+     *
+     * @since 2.8.3
+     * @return string[]
+     */
+    public static function privacy_policy_paragraphs() {
+        return array(
+            __( 'Our careers pages are powered by easy.jobs. Job details are loaded from easy.jobs, and your browser loads company images from easy.jobs servers. The Apply button takes you to easy.jobs, which stores the application you submit.', 'easyjobs' ),
+            __( 'If visitor analytics is turned on, our job pages load a Matomo analytics script from analytics.easy.jobs. It collects page views, link clicks, your IP address and your browser and device details, so we can see how our job pages perform.', 'easyjobs' ),
+            __( 'easy.jobs privacy policy: https://easy.jobs/privacy/', 'easyjobs' ),
+        );
+    }
+
+    /**
+     * Add the suggested text to the WordPress Privacy Policy Guide.
+     *
+     * @since 2.8.3
+     * @return void
+     */
+    public static function add_privacy_policy_content() {
+        if ( ! function_exists( 'wp_add_privacy_policy_content' ) ) {
+            return;
+        }
+        $content = '';
+        foreach ( self::privacy_policy_paragraphs() as $paragraph ) {
+            $content .= '<p>' . make_clickable( esc_html( $paragraph ) ) . '</p>';
+        }
+        wp_add_privacy_policy_content( 'EasyJobs', wp_kses_post( $content ) );
+    }
+
+    /**
+     * Save the local privacy settings.
+     *
+     * Turning visitor analytics on registers the site URL with easy.jobs
+     * analytics. Turning it off stops the tracking script on the career pages.
+     *
+     * @since 2.8.3
+     * @return void
+     */
+    public static function save_privacy_settings() {
+        if ( ! Easyjobs_Helper::can_update_options() || ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
+            echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
+            wp_die();
+        }
+        if ( ! isset( $_POST['visitor_analytics'] ) ) {
+            echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Data not provided' ) );
+            wp_die();
+        }
+
+        $enabled = filter_var( sanitize_text_field( wp_unslash( $_POST['visitor_analytics'] ) ), FILTER_VALIDATE_BOOLEAN );
+        update_option( 'easyjobs_visitor_analytics', $enabled ? 'yes' : 'no', false );
+
+        if ( $enabled ) {
+            if ( ! self::maybe_connect_visitor_analytics() ) {
+                $error         = Easyjobs_Helper::get_error_response( 'Visitor analytics is enabled, but this site could not be registered with easy.jobs analytics. Use Sync to try again.' );
+                $error['data'] = self::privacy_settings();
+                echo wp_json_encode( $error );
+                wp_die();
+            }
+        } else {
+            delete_option( 'easyjobs_analytics_connected' );
+        }
+
+        echo wp_json_encode( Easyjobs_Helper::get_success_response( 'Privacy settings saved', self::privacy_settings() ) );
+        wp_die();
+    }
+
+    /**
+     * Current local privacy settings.
+     *
+     * @since 2.8.3
+     * @return array{visitor_analytics: bool}
+     */
+    public static function privacy_settings() {
+        return array(
+            'visitor_analytics' => 'yes' === get_option( 'easyjobs_visitor_analytics', 'no' ),
+        );
+    }
+
+    /**
+     * Register the site URL with easy.jobs visitor analytics when the site owner opted in.
+     *
+     * Returns true when visitor analytics is off, because there is nothing to do.
+     *
+     * @since 2.8.3
+     * @return bool
+     */
+    public static function maybe_connect_visitor_analytics() {
+        if ( ! Easyjobs_Helper::is_visitor_analytics_enabled() ) {
+            return true;
+        }
+        $response = Easyjobs_Api::post(
+            'analytics_url',
+            null,
+            array(
+                'url' => get_bloginfo( 'url' ),
+            )
+        );
+        if ( ! empty( $response->status ) && Easyjobs_Helper::is_success_response( $response->status ) ) {
+            update_option( 'easyjobs_analytics_connected', 1 );
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -55,7 +183,7 @@ class EasyJobs_Settings {
      * @return mixed
      */
     public static function update_login_attachment() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -69,6 +197,7 @@ class EasyJobs_Settings {
             wp_die();
 		}
 
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: decoded and sent to the easy.jobs API, which validates it; not stored locally.
         $data = json_decode(wp_unslash($_POST['data']), true);
         
         $response = Easyjobs_Helper::get_generic_response(
@@ -93,7 +222,7 @@ class EasyJobs_Settings {
      * @return mixed
      */
     public static function update_show_cover_photo() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -110,7 +239,7 @@ class EasyJobs_Settings {
             Easyjobs_Api::post(
                 'show_hide_cover_photo',
                 null,
-                array( 'remove_cover_photo' => sanitize_text_field( $_POST['show_hide_cover_photo'] ) == 'true' ? 1 : 0 )
+                array( 'remove_cover_photo' => sanitize_text_field( wp_unslash( $_POST['show_hide_cover_photo'] ) ) == 'true' ? 1 : 0 )
             )
         );
         
@@ -128,7 +257,7 @@ class EasyJobs_Settings {
      * @return mixed
      */
     public static function delete_company_image() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -141,9 +270,9 @@ class EasyJobs_Settings {
             echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Data not provided' ) );
 		}
 
-        $_method    = sanitize_text_field( $_POST['_method'] );
-        $target     = sanitize_text_field( $_POST['target'] );
-        $order      = sanitize_text_field( $_POST['order'] );
+        $_method    = isset( $_POST['_method'] ) ? sanitize_text_field( wp_unslash( $_POST['_method'] ) ) : '';
+        $target     = sanitize_text_field( wp_unslash( $_POST['target'] ) );
+        $order      = isset( $_POST['order'] ) ? sanitize_text_field( wp_unslash( $_POST['order'] ) ) : '';
 
         if ($order === 'null') {
             $order = null;
@@ -354,12 +483,13 @@ class EasyJobs_Settings {
         /**
          * Verify the Nonce
          */
-        if ( ( ! isset( $_POST['nonce'] ) && ! isset( $_POST['key'] ) ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'easyjobs_' . sanitize_text_field( $_POST['key'] ) . '_nonce' ) ) {
+        if ( ( ! isset( $_POST['nonce'] ) && ! isset( $_POST['key'] ) ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_' . sanitize_text_field( wp_unslash( $_POST['key'] ) ) . '_nonce' ) ) {
             return;
         }
 
         if ( isset( $_POST['form_data'] ) ) {
-            self::save_settings( $_POST['form_data'] );
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- array of fields; each value is sanitized per field type by save_settings() via Easyjobs_Helper::sanitize_field().
+            self::save_settings( wp_unslash( $_POST['form_data'] ) );
             echo 'success';
         } else {
             echo 'error';
@@ -369,7 +499,7 @@ class EasyJobs_Settings {
     }
 
     public static function save_basic_info() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -382,6 +512,7 @@ class EasyJobs_Settings {
             echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Form data not found' ) );
             wp_die();
 		}
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: sanitized field-by-field by sanitize_company_object() below.
         $row_data = (array) json_decode( wp_unslash( $_POST['form_data'] ) );
         $sanitized_data = self::sanitize_company_object($row_data);
         $response = Easyjobs_Helper::get_generic_response(
@@ -452,7 +583,9 @@ class EasyJobs_Settings {
             }
             return true;
         }catch (Exception $e){
-            error_log($e->getMessage());
+            if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                error_log( $e->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- logs a real company-cache refresh failure, only when WP_DEBUG is on.
+            }
             return false;
         }
     }
@@ -467,7 +600,7 @@ class EasyJobs_Settings {
 			);
 			wp_die();
         }
-        if( ! Easyjobs_Helper::verified_request($_POST) ){
+        if( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
             wp_die();
 		}
@@ -488,7 +621,7 @@ class EasyJobs_Settings {
     }
 
     public static function update_api_key() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -501,7 +634,7 @@ class EasyJobs_Settings {
             echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Api key not found' ) );
             wp_die();
 		}
-        $api_key = sanitize_text_field( $_POST['api_key'] );
+        $api_key = sanitize_text_field( wp_unslash( $_POST['api_key'] ) );
 		if ( Easyjobs_Api::authenticate( $api_key )) {
 			try {
 				self::save_settings(
@@ -539,7 +672,7 @@ class EasyJobs_Settings {
 			);
 			wp_die();
         }
-        if( ! Easyjobs_Helper::verified_request($_POST) ){
+        if( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
             wp_die();
 		}
@@ -566,7 +699,7 @@ class EasyJobs_Settings {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -590,7 +723,7 @@ class EasyJobs_Settings {
     }
 
     public static function verify_company() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -623,7 +756,7 @@ class EasyJobs_Settings {
 			);
 			wp_die();
         }
-        if( ! Easyjobs_Helper::verified_request($_POST) ){
+        if( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
             wp_die();
 		}
@@ -663,7 +796,7 @@ class EasyJobs_Settings {
     }
 
     public static function upload_company_image() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -676,9 +809,10 @@ class EasyJobs_Settings {
             Easyjobs_Api::post_with_file(
                 'company_photo',
                 array(
-                    'target' => isset($_POST['target']) ? sanitize_text_field( $_POST['target'] ) : '',
+                    'target' => isset($_POST['target']) ? sanitize_text_field( wp_unslash( $_POST['target'] ) ) : '',
                 ),
-                $_FILES['file']
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- uploaded file array is streamed as-is to the easy.jobs API, which validates the file.
+                isset( $_FILES['file'] ) ? $_FILES['file'] : null
             )
         );
 
@@ -691,7 +825,7 @@ class EasyJobs_Settings {
     }
 
     public static function update_brand_color() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -708,7 +842,7 @@ class EasyJobs_Settings {
             Easyjobs_Api::post(
                 'brand_color',
                 null,
-                array( 'brand_color' => sanitize_text_field( $_POST['brand_color'] ) )
+                array( 'brand_color' => sanitize_text_field( wp_unslash( $_POST['brand_color'] ) ) )
             )
         );
 
@@ -721,7 +855,7 @@ class EasyJobs_Settings {
     }
 
     public static function update_show_life() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -738,7 +872,7 @@ class EasyJobs_Settings {
             Easyjobs_Api::post(
                 'show_life',
                 null,
-                array( 'show_life' => sanitize_text_field( $_POST['show_life'] ) == 'true' ? 1 : 0 )
+                array( 'show_life' => sanitize_text_field( wp_unslash( $_POST['show_life'] ) ) == 'true' ? 1 : 0 )
             )
         );
         
@@ -750,7 +884,7 @@ class EasyJobs_Settings {
         wp_die();
     }
     public static function update_ai_setup() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -779,7 +913,7 @@ class EasyJobs_Settings {
     }
 
     public static function create_pipeline() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -788,7 +922,8 @@ class EasyJobs_Settings {
             );
             wp_die();
         }
-        $steps = json_decode( wp_unslash( $_POST['steps'] ) );
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: pipeline steps decoded and sent to the easy.jobs API, which validates them.
+        $steps = isset( $_POST['steps'] ) ? json_decode( wp_unslash( $_POST['steps'] ) ) : array();
         array_walk( $steps, 'sanitize_text_field' );
         echo wp_json_encode(
             Easyjobs_Helper::get_generic_response(
@@ -796,7 +931,7 @@ class EasyJobs_Settings {
                     'create_pipeline',
                     null,
                     array(
-						'name'  => sanitize_text_field( $_POST['name'] ),
+						'name'  => isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '',
 						'steps' => $steps,
                     )
                 )
@@ -806,7 +941,7 @@ class EasyJobs_Settings {
     }
 
     public static function update_pipeline() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -819,15 +954,16 @@ class EasyJobs_Settings {
             echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Pipeline id not provided' ) );
             wp_die();
 		}
-        $steps = json_decode( wp_unslash( $_POST['steps'] ) );
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: pipeline steps decoded and sent to the easy.jobs API, which validates them.
+        $steps = isset( $_POST['steps'] ) ? json_decode( wp_unslash( $_POST['steps'] ) ) : array();
         array_walk( $steps, 'sanitize_text_field' );
         echo wp_json_encode(
             Easyjobs_Helper::get_generic_response(
                 Easyjobs_Api::post(
                     'update_pipeline',
-                    abs( sanitize_text_field( $_POST['id'] ) ),
+                    abs( sanitize_text_field( wp_unslash( $_POST['id'] ) ) ),
                     array(
-						'name'  => sanitize_text_field( $_POST['name'] ),
+						'name'  => isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '',
 						'steps' => $steps,
                     )
                 )
@@ -837,7 +973,7 @@ class EasyJobs_Settings {
     }
 
     public static function delete_pipeline() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -854,7 +990,8 @@ class EasyJobs_Settings {
             Easyjobs_Helper::get_generic_response(
                 Easyjobs_Api::post(
                     'delete_pipeline',
-                    abs( sanitize_text_field( $_POST['index'] ) ),
+                    isset( $_POST['index'] ) ? abs( sanitize_text_field( wp_unslash( $_POST['index'] ) ) ) : 0,
+                    // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload sent to the easy.jobs API; decoded without unslash to preserve existing behaviour (see report).
                     json_decode(  $_POST['pipeline'] )
                 )
             )
@@ -869,7 +1006,7 @@ class EasyJobs_Settings {
      * @since 1.3.0
      */
     public static function save_apply_settings() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -878,7 +1015,8 @@ class EasyJobs_Settings {
             );
             wp_die();
         }
-        $custom_fields_data = json_decode( wp_unslash( $_POST['custom_fields'] ) );
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: each custom field is sanitized field-by-field below.
+        $custom_fields_data = isset( $_POST['custom_fields'] ) ? json_decode( wp_unslash( $_POST['custom_fields'] ) ) : array();
         $custom_fields = array();
         foreach ( $custom_fields_data as $custom_field ) {
             $custom_fields[] = (object) array(
@@ -913,7 +1051,7 @@ class EasyJobs_Settings {
 			);
 			wp_die();
         }
-        if( ! Easyjobs_Helper::verified_request($_POST) ){
+        if( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
             wp_die();
 		}
@@ -926,7 +1064,7 @@ class EasyJobs_Settings {
     }
 
     public static function save_template_settings() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -942,7 +1080,7 @@ class EasyJobs_Settings {
         $response = Easyjobs_Api::post(
             'template_settings',
             null,
-            ['template' => sanitize_text_field($_POST['template'])]
+            ['template' => sanitize_text_field( wp_unslash( $_POST['template'] ) )]
         );
 
         if(Easyjobs_Helper::is_success_response($response->status)){
@@ -952,7 +1090,7 @@ class EasyJobs_Settings {
                 delete_transient('elej_company_' . md5( $settings['easyjobs_api_key'] ));
             }
             if($saved_data = unserialize(get_option('easyjobs_company_info'))){
-                $saved_data->selected_template = sanitize_text_field($_POST['template']);
+                $saved_data->selected_template = sanitize_text_field( wp_unslash( $_POST['template'] ) );
                 update_option('easyjobs_company_info', serialize($saved_data));
             }
         }

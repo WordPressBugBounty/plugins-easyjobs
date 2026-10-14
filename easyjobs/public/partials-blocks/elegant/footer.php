@@ -3,7 +3,12 @@
  * Render landing page for elegant template
  * @since 1.0.0
  */
-echo Easyjobs_Helper::generate_block_style($atts);
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+Easyjobs_Helper::generate_block_style( $atts );
 ?>
 <?php if( empty( $company->ejel_hide_company_gallery ) ) : ?>
 	<?php if ( $company->show_life && ! empty( $company->showcase_photo ) ) : ?>
@@ -25,7 +30,7 @@ echo Easyjobs_Helper::generate_block_style($atts);
 											<?php echo esc_html__( 'Life at ', 'easyjobs' ) . esc_html( $company->name ); ?>
 										<?php endif; ?>
 									<?php else : ?>
-										<?php esc_html_e( $company->ejel_galelry_section_title, 'easyjobs' ); ?>
+										<?php echo esc_html( $company->ejel_galelry_section_title ); ?>
 									<?php endif; ?>
 								</h2>
 							</div>

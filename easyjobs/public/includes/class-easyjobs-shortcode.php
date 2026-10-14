@@ -60,9 +60,7 @@ class Easyjobs_Shortcode {
 		}
 
 		$company = $this->get_company_info();
-		if ( ! empty( $company->company_analytics ) && ! empty( $company->company_analytics->id ) ) {
-			$this->insert_analytics_script( $company->company_analytics );
-		}
+		$this->maybe_insert_analytics_script( $company );
         $landing_page_link = get_the_permalink(get_option('easyjobs_parent_page'));
 		$job = Easyjobs_Helper::get_job( $job_id, true );
 		ob_start();
@@ -85,9 +83,7 @@ class Easyjobs_Shortcode {
 			return esc_html__( 'Api is not connected', 'easyjobs' );
 		}
 		$company = Easyjobs_Helper::get_company_info(true);
-		if ( ! empty( $company->company_analytics ) && ! empty( $company->company_analytics->id ) ) {
-			$this->insert_analytics_script( $company->company_analytics );
-		}
+		$this->maybe_insert_analytics_script( $company );
 		$ej_is_search						= false;
 		$sanitized_get_data 		= $this->sanitize_get_data();
 		$job_page 							= isset($sanitized_get_data['job_page']) ? $sanitized_get_data['job_page'] : 1;
@@ -146,15 +142,17 @@ class Easyjobs_Shortcode {
 		];
 		$sanitized = [];
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only query args (public job list filters/pagination), no state change.
 		foreach($requred as $field){
 			if(isset($_GET[$field])){
 				if($field == 'job_page'){
 					$sanitized[$field] = absint($_GET[$field]);
 				}else{
-					$sanitized[$field] = sanitize_text_field($_GET[$field]);
+					$sanitized[$field] = sanitize_text_field( wp_unslash( $_GET[$field] ) );
 				}
 			}
 		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		return $sanitized;
 	}
@@ -195,36 +193,77 @@ class Easyjobs_Shortcode {
 		return false;
 	}
 
-    /**
-     * Insert analytics script
-     * @param object $analytics - analytics info of company
-     * @return void
-     */
+	/**
+	 * Add the visitor analytics script when the site owner opted in.
+	 *
+	 * Nothing is printed unless visitor analytics is enabled under
+	 * Settings → Privacy (see Easyjobs_Helper::is_visitor_analytics_enabled())
+	 * and the company has an analytics site on easy.jobs.
+	 *
+	 * @since 2.8.3
+	 * @param object|false $company Cached company info.
+	 * @return bool True when the script was queued.
+	 */
+	public function maybe_insert_analytics_script( $company ) {
+		if ( ! Easyjobs_Helper::is_visitor_analytics_enabled() ) {
+			return false;
+		}
+		if ( empty( $company->company_analytics ) || empty( $company->company_analytics->id ) ) {
+			return false;
+		}
+		$this->insert_analytics_script( $company->company_analytics );
+		return true;
+	}
 
+	/**
+	 * Insert analytics script
+	 *
+	 * @param object $analytics - analytics info of company
+	 * @return void
+	 */
 	private function insert_analytics_script( $analytics ) {
 		add_action(
 			'wp_footer',
 			function() use ( $analytics ) {
-				?>
+				echo $this->get_analytics_markup( $analytics ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in get_analytics_markup().
+			}
+		);
+	}
+
+	/**
+	 * Build the Matomo tracking markup for the career pages.
+	 *
+	 * Both the script tracker and the <noscript> pixel use EASYJOBS_ANALYTICS_URL,
+	 * so production never sends hits to the development host.
+	 *
+	 * @since 2.8.3
+	 * @param object $analytics Analytics info of the company (id, urls).
+	 * @return string
+	 */
+	public function get_analytics_markup( $analytics ) {
+		$site_id = absint( $analytics->id );
+		$domains = isset( $analytics->urls ) ? wp_unslash( $analytics->urls ) : array();
+		$tracker = esc_url( EASYJOBS_ANALYTICS_URL );
+		ob_start();
+		?>
 			<!-- Matomo -->
 			<script type="text/javascript">
 				var _paq = window._paq = window._paq || [];
 				/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-				_paq.push(["setDomains", <?php echo wp_json_encode( wp_unslash( $analytics->urls ) ); ?>]);
+				_paq.push(["setDomains", <?php echo wp_json_encode( $domains ); ?>]);
 				_paq.push(['trackPageView']);
 				_paq.push(['enableLinkTracking']);
 				(function() {
-					var u="<?php echo esc_url( EASYJOBS_ANALYTICS_URL ); ?>";
+					var u=<?php echo wp_json_encode( $tracker ); ?>;
 					_paq.push(['setTrackerUrl', u+'matomo.php']);
-					_paq.push(['setSiteId', <?php echo esc_attr( $analytics->id ); ?>]);
+					_paq.push(['setSiteId', <?php echo (int) $site_id; ?>]);
 					var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
 					g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
 				})();
 			</script>
-			<noscript><p><img src="//matomo.easyjobs.dev/matomo.php?idsite=<?php echo esc_attr( $analytics->id ); ?>&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+			<noscript><p><img src="<?php echo esc_url( $tracker . 'matomo.php?idsite=' . $site_id . '&rec=1' ); ?>" style="border:0;" alt="" /></p></noscript>
 			<!-- End Matomo Code -->
-				<?php
-			}
-		);
+		<?php
+		return (string) ob_get_clean();
 	}
 }

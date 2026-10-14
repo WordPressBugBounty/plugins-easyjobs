@@ -5,6 +5,11 @@
  * @since 1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+
 global $post;
 ?>
 <div class="easyjobs-shortcode-wrapper ej-template-classic translate">
@@ -32,9 +37,9 @@ global $post;
 											<?php if ( !empty($job->remote_countries) ) : ?>
 												<?php
 													$country_names = array_map( function( $country ) {
-														return esc_html( $country->name );
+														return $country->name;
 													}, $job->remote_countries );
-													echo implode( ', ', $country_names );
+													echo esc_html( implode( ', ', $country_names ) );
 												?>
 											<?php else : ?>
 												<?php esc_html_e( 'Remote', 'easyjobs' ); ?>
@@ -49,7 +54,7 @@ global $post;
 
 								<?php if ( ! empty( $job->job_type ) ) { ?>
 									<span class="label label__primary"> <i class="easyjobs-icon"></i>
-										<?php echo ucfirst(esc_html( $job->job_type )); ?>
+										<?php echo esc_html( ucfirst( $job->job_type ) ); ?>
 									</span>
 								<?php } ?>
 
@@ -120,19 +125,19 @@ global $post;
                     <div class="ej-col-lg-5">
                         <div class="job__more__details">
                             <a href="<?php echo esc_url( $job->apply_url ); ?>" class="button button__success button__radius" target="_blank">
-								<?php _e('Apply Now', 'easyjobs')?>
+								<?php esc_html_e('Apply Now', 'easyjobs')?>
                             </a>
                             <p class="deadline">
                                 <i class="easyjobs-icon easyjobs-calender"></i>
                                 <span>
-                                    <?php _e('Deadline', 'easyjobs')?>:
+                                    <?php esc_html_e('Deadline', 'easyjobs')?>:
                                 </span> <?php echo esc_html( Easyjobs_Helper::format_job_deadline( $job->expire_at ) ); ?>
                             </p>
 							<?php if ( get_theme_mod( 'easyjobs_single_show_experience_level', false ) && ! empty( $job->experience_level->name ) ) { ?>
 								<p class="deadline">
 									<i class="easyjobs-icon easyjobs-briefcase-2"></i>
 									<span>
-										<?php _e('Experience', 'easyjobs')?>:
+										<?php esc_html_e('Experience', 'easyjobs')?>:
 									</span> <?php echo esc_html($job->experience_level->name); ?>
 								</p>
 							<?php } ?>
@@ -147,19 +152,19 @@ global $post;
                                             }
                                         ?>
                                     </p>
-                                    <span><?php _e('Job Type', 'easyjobs')?></span>
+                                    <span><?php esc_html_e('Job Type', 'easyjobs')?></span>
                                 </div>
 								<?php if ( ! empty( $job->vacancies ) ) { ?>
 									<div class="info">
 										<p><?php echo ! empty( $job->vacancies ) ? esc_html( $job->vacancies ) : 'N/A'; ?></p>
-										<span><?php _e('No of vacancies', 'easyjobs')?></span>
+										<span><?php esc_html_e('No of vacancies', 'easyjobs')?></span>
 									</div>
 								<?php } ?>
                             </div>
 							<?php if ( ! empty( $job->office_time ) ) { ?>
 								<p class="office__time">
 									<i class="easyjobs-icon easyjobs-clock"></i>
-									<span><?php _e('Office Time', 'easyjobs')?>:</span>
+									<span><?php esc_html_e('Office Time', 'easyjobs')?>:</span>
 									<?php echo esc_html( $job->office_time ); ?>
 								</p>
 							<?php } ?>
@@ -178,7 +183,7 @@ global $post;
 							<?php if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing', false ) ) : ?>
 							<?php $ej_share_links = Easyjobs_Helper::get_job_share_links( $job ); ?>
                             <div class="share__options">
-                                <p> <?php _e('Share on', 'easyjobs')?>:</p>
+                                <p> <?php esc_html_e('Share on', 'easyjobs')?>:</p>
                                 <ul>
 									<?php if ( ! get_theme_mod( 'easyjobs_single_disable_social_sharing_fb', false ) ) : ?>
 
@@ -217,7 +222,7 @@ global $post;
                 <div class="ej-modal-content">
                     <div class="ej-modal-header">
                         <h5 class="ej-modal-title">
-                            <?php _e('Company Description', 'easyjobs');?>
+                            <?php esc_html_e('Company Description', 'easyjobs');?>
                         </h5>
                         <button type="button" class="ej-modal-close" aria-label="<?php esc_attr_e( 'Close', 'easyjobs' ); ?>">
                             <span aria-hidden="true">×</span>
@@ -230,7 +235,7 @@ global $post;
                     </div>
                     <div class="ej-modal-footer">
                         <button type="button" class="btn btn-secondary ej-modal-close">
-                            <?php _e('Close', 'easyjobs');?>
+                            <?php esc_html_e('Close', 'easyjobs');?>
                         </button>
                     </div>
                 </div>

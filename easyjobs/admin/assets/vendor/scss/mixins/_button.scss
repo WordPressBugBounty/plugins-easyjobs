@@ -1,0 +1,171 @@
+// Button design
+@mixin button-emphasis-variant($parent, $color) {
+	#{$parent} {
+		background: $color !important;
+		color: set-text-color($color);
+		box-shadow: 0 10px 10px rgba($color, $shadow-opacity);
+		@include transition;
+		&.pipeline-toggle,
+		&.dropdown-toggle {
+			&:after {
+				@include transition;
+				@if (lightness($color) < 70) {
+					background: rgba($white, $dropdown-control-opacity);
+					color: $white;
+				}
+			}
+			&:hover {
+				&:after {
+					@if (lightness($color) < 70) {
+						background: $white;
+						color: $color;
+					}
+				}
+			}
+		}
+	}
+	a#{$parent},
+	.file-browse-button#{$parent},
+	button#{$parent} {
+		@include hover-focus {
+			@if $color != #000000 {
+				background: darken($color, 5%) !important;
+				color: set-text-color($color);
+			}
+		}
+	}
+}
+// semi Button design
+@mixin semi-button-emphasis-variant($parent, $color) {
+	#{$parent} {
+		background: rgba($color, $sub-button-opacity);
+		color: $color;
+	}
+	a#{$parent},
+	.file-browse-button#{$parent},
+	button#{$parent} {
+		@include hover-focus {
+			background: $color !important;
+			color: set-text-color($color) !important;
+			box-shadow: 0 10px 10px rgba($color, $shadow-opacity);
+		}
+		&.active {
+			background: $color !important;
+			color: set-text-color($color) !important;
+			box-shadow: 0 10px 10px rgba($color, $shadow-opacity);
+		}
+	}
+}
+
+// info button
+@mixin info-button-emphasis-variant($parent, $color) {
+	#{$parent} {
+		background: $color !important;
+		color: set-text-color($color);
+		border-radius: 50px;
+		padding: 5px 6px;
+		font-size: 0.875rem;
+		line-height: 1;
+		display: inline-block;
+		i {
+			color: $warning;
+		}
+		&.disabled {
+			i {
+				color: rgba($secondary, $shadow-opacity) !important;
+			}
+		}
+	}
+}
+
+// label
+@mixin label-emphasis-variant($parent, $color) {
+	#{$parent} {
+		background: rgba($color, $label-opacity);
+		color: $color;
+		border-radius: $b-radius-50;
+		padding: 10px 20px;
+		line-height: 1.42858;
+		font-size: 0.875rem;
+		display: inline-block;
+		@include respond-below(xs){
+			padding: 8px 15px;
+		}
+	}
+}
+
+// label full
+@mixin label-full-emphasis-variant($parent, $color) {
+	#{$parent} {
+		background-color: $light;
+		border: 1px solid rgba($color, $shadow-opacity) !important;
+		.label__content {
+			color: $color;
+		}
+		span {
+			color: $secondary;
+		}
+	}
+}
+// list item
+@mixin list-item-emphasis-variant($parent, $color) {
+	#{$parent} {
+		&:before {
+			background: $color !important;
+		}
+	}
+}
+
+// label full
+@mixin tab-emphasis-variant($parent, $color) {
+	#{$parent} {
+		.active {
+			.tab__control__icon {
+				color: $color;
+			}
+		}
+	}
+}
+
+// thumbnail status
+@mixin thumbnail-status-emphasis-variant($parent, $color) {
+	#{$parent} {
+		@extend .thumbnail__status;
+		color: $white;
+		background: $color;
+		border: 1px solid darken($color, 15%);
+		box-shadow: 0 10px 10px rgba($color, $shadow-opacity);
+	}
+}
+
+// list item
+@mixin card-control-emphasis-variant($parent, $color) {
+	#{$parent} {
+		@extend .control-button;
+		box-shadow: 0px 10px 10px rgba($color, $sub-button-opacity);
+		color: $color;
+		background: set-text-color($color);
+		text-transform: capitalize;
+		@include transition;
+		
+		span {
+			color: $color !important;
+		}
+		.control-button__icon {
+			background: $color;
+			color: set-text-color($color);
+		}
+		&.has_bg_color {
+			background: rgba($color, $sub-button-opacity) !important;
+			box-shadow: none !important;
+		}
+		&:hover {
+			background: $color !important;
+			color: set-text-color($color) !important;
+			span {
+				color: $color !important;
+				color: set-text-color($color) !important;
+			}
+		}
+	}
+}

@@ -1,0 +1,685 @@
+#google_translate_element {
+    display: none !important;
+}
+.skiptranslate .skiptranslate {
+    visibility: hidden !important;
+}
+
+body {
+    top: 0 !important;
+}
+
+.skip-link.screen-reader-text {
+    display: none !important;
+}
+
+.ej-header {
+    margin: -50px 50px 0;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 50px;
+    position: relative;
+    z-index: 1;
+
+    @media(max-width: 767px) {
+        margin: -30px 10px 0;
+        padding: 20px;
+    }
+}
+
+.ej-company-highlights {
+    @include flex;
+    @include align_items('center');
+    @include justify_content('space-between');
+
+    @media(max-width: 767px) {
+        flex-direction: column;
+    }
+}
+
+.ej-company-info {
+    @include flex;
+    @include align_items('center');
+    margin-right: 10px;
+
+    .logo {
+        @include flex;
+        @include align_items('center');
+        @include justify_content('center');
+        background: #e0e6f9;
+        border-radius: 8px;
+        height: 100px;
+        width: 100px;
+        min-width: 100px;
+        border: 5px solid #e0e6f9;
+
+        margin-right: 30px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    }
+
+    .info {
+
+        .name {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.333333;
+            color: #212529;
+            margin: 0 0 5px;
+        }
+
+        .location {
+            font-size: 14px;
+            line-height: 1.5rem;
+            color: #7d8091;
+
+            i {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    @media(max-width: 767px) {
+        flex-direction: column;
+
+        .info {
+            margin-left: 0;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.ej-company-description {
+    margin-top: 50px;
+    color: #7d8091;
+    font-size: 16px;
+    line-height: 1.5;
+
+    @media(max-width: 767px) {
+        margin-top: 30px;
+    }
+
+    p {
+        font-size: inherit;
+        color: inherit;
+        margin-bottom: 5px;
+    }
+}
+
+.ej-landingpage-alignment-left {
+
+    .easyjobs-elementor,
+    .ej-job-list-container {
+        float: left;
+    }
+}
+
+.ej-landingpage-alignment-right {
+
+    .easyjobs-elementor,
+    .ej-job-list-container {
+        float: right;
+    }
+}
+
+.ej-landingpage-alignment-center {
+
+    .easyjobs-elementor,
+    .ej-job-list-container {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+.elej-error-msg {
+    margin: 10px 0;
+    background-color: rgb(242, 222, 222);
+    color: rgb(169, 68, 66);
+    font-size: 85%;
+    padding: 15px;
+    border-radius: 3px;
+}
+
+.elej-error-msg-editor {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.tooltip {
+    position: relative;
+    vertical-align: middle;
+    display: inline-flex;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    bottom: 35px;
+    margin-left: -150px;
+    opacity: 0;
+    transition: opacity .3s;
+    font-size: 14px;
+    font-weight: 400;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 10px;
+    word-wrap: break-word;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+// ---------------- default  theme responsive
+
+// default  theme  tab
+@media only screen and (max-width: 768px) {
+
+    .easyjobs-shortcode-wrapper {
+        &.ej-template-default {
+            .easyjobs-details {
+
+                // default-header
+                .ej-header {
+                    background-color: #fff;
+                    margin: 20px 0 0 0;
+                    padding: 40px;
+
+                    .ej-company-highlights {
+                        .ej-company-info {
+                            margin: 0px;
+
+                            .logo {
+                                margin: 0px 0px 20px 0px;
+                            }
+
+                            .info {
+                                padding: 0 10px;
+                            }
+                        }
+                    }
+                }
+
+                //    default-body
+                .ej-job-body {
+                    .easyjobs-shortcode-wrapper {
+                        .ej-job-filter-wrap {
+                            .ej-section-title {
+                                .ej-section-title-text {
+                                    font-size: 28px;
+                                }
+                            }
+
+
+                        }
+
+                        .ej-section-content {
+                            .ej-job-list {
+                                .ej-job-list-item-cat {
+                                    .ej-job-list-item-inner {
+
+                                        .ej-job-list-item-col {
+                                            .ej-job-title {
+                                                a {
+                                                    font-size: 20px;
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .ej-section {
+                        .ej-section-title {
+                            .ej-section-title-text {
+                                font-size: 28px;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+}
+
+// default theme phone
+@media only screen and (max-width: 499px) {
+
+
+    .easyjobs-landing-page {
+        padding: 15px !important;
+
+        .easyjobs-shortcode-wrapper {
+            &.ej-template-default {
+                overflow: hidden;
+
+                .easyjobs-details {
+
+                    // default-header
+                    .ej-header {
+                        padding: 20px;
+
+                        .ej-company-highlights {
+                            .ej-company-info {
+                                margin: 0px;
+
+                                .info {
+                                    padding: 0;
+
+                                    .name {
+                                        font-size: 20px;
+                                    }
+                                }
+                            }
+
+                            .ej-header-tools {
+                                a {
+                                    padding: 13px 18px;
+                                }
+                            }
+                        }
+
+                    }
+
+                    //    default-body
+                    .ej-job-body {
+                        .easyjobs-shortcode-wrapper {
+                            .ej-job-filter-wrap {
+                                .ej-section-title {
+                                    .ej-section-title-icon {
+                                        width: 25px !important;
+                                        height: 45px !important;
+                                    }
+
+                                    .ej-section-title-text {
+                                        font-size: 20px;
+                                        margin-left: 15px;
+                                    }
+                                }
+
+
+                            }
+
+                            .ej-section-content {
+                                .ej-job-list {
+                                    .ej-job-list-item-cat {
+                                        .ej-job-list-item-inner {
+
+                                            .ej-job-list-item-col {
+                                                padding: 20px !important;
+
+                                                .ej-job-title {
+                                                    a {
+                                                        font-size: 18px;
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .ej-section {
+                            .ej-section-title {
+                                .ej-section-title-icon {
+                                    width: 25px !important;
+                                    height: 45px !important;
+                                }
+
+                                .ej-section-title-text {
+                                    font-size: 20px;
+                                    margin-left: 15px;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    footer {
+        padding: 0 15px;
+    }
+
+}
+
+// ----------------- classic  theme responsive
+
+// classic  theme  tab
+@media only screen and (max-width: 768px) {
+    .easyjobs-landing-page {
+
+        .easyjobs-shortcode-wrapper {
+            &.ej-template-classic {
+                overflow: hidden;
+
+                .easyjobs-details {
+                    .pb100 {
+                        .carrier__company {
+                            padding: 0px;
+
+                            .ej-company-info {
+                                margin: 0px;
+                            }
+                        }
+                    }
+
+                    .pb50 {
+                        .ej-section {
+                            .ej-template-classic {
+                                .ej-section {
+                                    .ej-section-title {
+                                        span {
+                                            font-size: 28px;
+                                        }
+                                    }
+                                }
+
+                                .ej-job-list-classic {
+                                    .job__card {
+                                        .job__info {
+                                            .ej-job-title {
+                                                font-size: 20px;
+                                            }
+                                        }
+
+                                        .job__vacancy {
+                                            h4 {
+                                                font-size: 23px;
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    .ej-company-showcase-classic {
+                        padding: 30px;
+
+                        .ej-section-title {
+                            .ej-section-title-text {
+                                font-size: 28px;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+// classic  theme  phone
+@media only screen and (max-width: 499px) {
+    .easyjobs-landing-page {
+
+        .easyjobs-shortcode-wrapper {
+            &.ej-template-classic {
+                padding-left: 0px;
+                padding-right: 0px;
+
+                .easyjobs-details {
+                    .pb100 {
+                        padding-bottom: 80px;
+
+                        .ej-container {
+                            padding: 0px;
+                        }
+                    }
+
+                    .ej-job-cover {
+
+                        padding-left: 0px;
+                        padding-right: 0px;
+                    }
+
+                    .pb50 {
+                        .ej-container {
+                            padding-left: 0px;
+                            padding-right: 0px;
+
+                            .ej-section {
+                                .ej-template-classic {
+                                    .ej-section {
+                                        .ej-section-title {
+                                            span {
+                                                font-size: 20px;
+                                            }
+                                        }
+                                    }
+
+                                    .ej-job-list-classic {
+                                        .job__card {
+                                            padding: 15px;
+
+                                            .job__info {
+                                                .ej-job-title {
+                                                    font-size: 18px;
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+
+                    .ej-company-showcase-classic {
+
+                        padding: 15px;
+
+                        .ej-section-title {
+                            .ej-section-title-text {
+                                font-size: 20px;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+
+// ----------------- elegant  theme responsive
+
+// classic  theme  tab
+@media only screen and (max-width: 768px) {
+    .easyjobs-landing-page {
+        .easyjobs-shortcode-wrapper {
+            &.ej-template-elegant {
+                .pb100 {
+                    .ej-container {
+                        .about__company {
+                            padding: 20px;
+
+                            .ej-company-info {
+                                margin: 0px;
+                                flex-direction: column;
+
+                                .logo {
+                                    margin: 0px 0px 20px 0px;
+                                }
+                            }
+                        }
+                    }
+
+                    .mt60 {
+                        .ej-section {
+                            .ej-section-title {
+                                .ej-section-title-text {
+                                    font-size: 28px;
+                                }
+                            }
+
+                        }
+
+                        .ej-job-list-elegant {
+                            .ej-job-list-item-cat {
+                                .job__card {
+                                    .ej-job-title {
+                                        font-size: 20px;
+                                    }
+                                    .job__bottom{
+                                .job__vacancy{
+                                    h4{
+                                        font-size: 23px;
+                                    }
+                                }
+                                    }
+                                }
+                            }
+
+                        }
+
+                        // coll-2 2nd mt60
+                        .ej-container {
+                            .section__header {
+                                h2 {
+                                    font-size: 28px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// classic  theme  phone
+@media only screen and (max-width: 499px) {
+    .easyjobs-landing-page {
+        .easyjobs-shortcode-wrapper {
+            &.ej-template-elegant {
+                overflow: hidden;
+
+                .pb100 {
+                    .ej-container {
+                        .ej-col {
+                            padding-left: 0px;
+                            padding-right: 0px;
+
+                            .about__company {
+                                padding: 0px;
+
+
+                                .ej-company-info {
+                                    margin: 0px;
+                                    flex-direction: column;
+
+                                    .logo {
+                                        margin: 0px 0px 20px 0px;
+                                    }
+
+                                    .name {
+                                        font-size: 20px;
+                                    }
+
+                                    .ej-header-tools {
+                                        a {
+                                            padding: 15px 20px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .mt60 {
+                        .ej-container{
+                            padding-right: 0px;
+                            padding-left: 0px;
+                            .ej-section {
+                                .ej-section-title {
+                                    .ej-section-title-text {
+                                        font-size: 20px;
+                                    }
+                                }
+                            }
+                        }
+
+
+                        .ej-job-list-elegant {
+                            .ej-job-list-item-cat {
+                                padding-left: 0px;
+                                padding-right: 0px;
+                                .job__card {
+                                    .ej-job-title {
+                                        font-size: 18px;
+                                    }
+                                }
+                            }
+
+                        }
+
+                        // coll-2 2nd mt60
+                        .ej-container {
+                            width: 100%;
+                            .ej-row{
+                                margin: 0px;
+                            }
+
+                            .section__header {
+                                h2 {
+                                    font-size: 20px;
+                                }
+
+                            }
+                        }
+                        .image__gallery{
+                            padding: 0px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.easyjobs-shortcode-wrapper .ej-job-list .ej-job-list-item .ej-job-list-item-inner .ej-job-list-item-col .ej-job-title a {
+    font-family: "Poppins";
+    text-decoration: none;
+}

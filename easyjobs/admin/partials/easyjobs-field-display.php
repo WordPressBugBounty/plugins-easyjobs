@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
 $opt_alert_class = '';
 if ( isset( $field['disable'] ) && $field['disable'] === true ) {
     $opt_alert_class = 'easyjobs-opt-alert';
@@ -6,13 +10,13 @@ if ( isset( $field['disable'] ) && $field['disable'] === true ) {
 ?>
 <tr data-id="<?php echo esc_attr( $key ); ?>" id="<?php echo esc_attr( $id ); ?>" class="easyjobs-field <?php echo esc_attr( $row_class ) . ' type-' . esc_attr( $field['type'] ); ?>">
     <?php if ( $field['type'] == 'title' && ! empty( $field['label'] ) ) : ?>
-        <th colspan="2" class="easyjobs-control easyjobs-title"><h3><?php esc_html_e( $field['label'], 'easyjobs' ); ?></h3></th>
+        <th colspan="2" class="easyjobs-control easyjobs-title"><h3><?php echo esc_html( $field['label'] ); ?></h3></th>
     <?php else : ?>
         <?php if ( empty( $field['label'] ) ) : ?>
             <td class="easyjobs-control" colspan="2">
         <?php else : ?>
         <th class="easyjobs-label">
-            <label for="<?php echo esc_attr( $name ); ?>"><?php esc_html_e( $field['label'], 'easyjobs' ); ?></label>
+            <label for="<?php echo esc_attr( $name ); ?>"><?php echo esc_html( $field['label'] ); ?></label>
         </th>
         <td class="easyjobs-control">
 			<?php
@@ -32,12 +36,12 @@ if ( isset( $field['disable'] ) && $field['disable'] === true ) {
 			}
 			if ( isset( $field['description'] ) && ! empty( $field['description'] ) ) :
 				?>
-                        <p class="easyjobs-field-description"><?php _e( esc_attr( $field['description'] ), 'easyjobs' ); ?></p>
+                        <p class="easyjobs-field-description"><?php echo esc_html( $field['description'] ); ?></p>
                     <?php
                 endif;
 			if ( isset( $field['help'] ) && ! empty( $field['help'] ) ) :
 				?>
-                        <p class="easyjobs-field-help"><?php _e( esc_attr( $field['help'] ), 'easyjobs' ); ?></p>
+                        <p class="easyjobs-field-help"><?php echo esc_html( $field['help'] ); ?></p>
                     <?php
                 endif;
             ?>

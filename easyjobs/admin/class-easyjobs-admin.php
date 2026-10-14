@@ -284,25 +284,27 @@ class Easyjobs_Admin {
 				]
 			);
 		}
+		// Campaign notices (added with the /add-ej-notice skill) go below and use
+		// $company_info to hide themselves for Pro companies.
 		$company_info = Easyjobs_Helper::get_company_info( true );
 
 		/**
-		 * Summer2026 Notice
+		 * Halloween2026 Notice
 		 */
-		$upgrade_cta_link = '//easy.jobs/summer2026-admin-notice';
-		$summer2026_notice_message = "<p>🏖️ <strong>Summer Savings:</strong> Hire top talents smarter with AI-powered ATS and recruitment SaaS – now <strong>up to 50% OFF!</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:0;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To Pro Now</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I Don't Want Any Discount</button></div>";
+		$upgrade_cta_link = 'https://easy.jobs/halloween2026/admin-notice';
+		$halloween2026_notice_message = "<p><span class='wp-exclude-emoji'>👻</span> <strong>Halloween Sale:</strong> Hire top talents smarter with AI-powered ATS and recruitment SaaS – now <strong>up to 50% OFF!</strong> </p><div class='wpsp-notice-action-button' style='display: inline-flex;column-gap:0;'><a class='button button-primary' href={$upgrade_cta_link} target='_blank'>Upgrade To Pro Now</a> <button class='wpsp-notice-action-dismiss dismiss-btn' data-dismiss='true' target='_blank'>I Don’t Want Any Discount</button></div>";
 
-		$_summer2026_notice = [
+		$_halloween2026_notice = [
 			'thumbnail' => EASYJOBS_ADMIN_URL . 'assets/img/easyjobs-halloween-logo.svg',
-			'html'      => $summer2026_notice_message,
+			'html'      => $halloween2026_notice_message,
 		];
 		$notices->add(
-			'summer2026',
-			$_summer2026_notice,
+			'halloween2026',
+			$_halloween2026_notice,
 			[
 				'classes'     => 'updated put-dismiss-notice',
-				'start'       => $notices->time(),
-				"expire"      => strtotime( '11:59:59pm 25th June, 2026' ),
+				'start'       => strtotime( '00:00:00 14th October, 2026' ),
+				"expire"      => strtotime( '11:59:59pm 5th November, 2026' ),
 				'dismissible' => true,
 				'refresh'     => EASYJOBS_VERSION,
 				'screens'     => [ 'dashboard' ],
@@ -324,39 +326,43 @@ class Easyjobs_Admin {
             .easyjobs-notice .wpnotice-content-wrapper{
                 padding: 10px 10px;
             }
-			.easyjobs-notice.notice-easyjobs-notice-holiday_notice .wpnotice-content-wrapper{
-                padding: 0 10px 10px 30px;
-            }
             .easyjobs-notice .wpnotice-content-wrapper a{
                 margin-right: 15px;
-            }
-            .easyjobs-notice .wpnotice-content-wrapper .ej-black-friday-notice{
-                font-size: 14px;
             }
             .easyjobs-notice .wpnotice-thumbnail-wrapper img{
                 min-width: 120px;
             }
 
 			/*
-			* Summer2026 Notice css
+			* Halloween2026 Notice css
 			*/
-			#wpnotice-easyjobs-notice-summer2026 {
+			#wpnotice-easyjobs-notice-halloween2026 {
 				border-left-color: #5252DC;
-				padding: 10px 40px 14px 20px;
 				background-color: #fff;
+				padding: 10px 40px 14px 20px;
 			}
-			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
-			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
-			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-thumbnail-wrapper {
+				margin-right: 20px;
+			}
+			#wpnotice-easyjobs-notice-halloween2026 .notice-dismiss {
+				top: 0;
+				right: 0;
+				padding: 6px;
+			}
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary,
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:focus,
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:hover {
 				background-color: #5252DC;
 				color: #fff;
 				border: none;
 				border-radius: 6px;
-				padding: 2px 16px;
+				min-height: 0;
+				line-height: 20px;
+				padding: 6px 16px;
 				font-size: 14px;
 			}
 
-			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss {
 				background: none;
 				border: none;
 				color: #424242;
@@ -371,7 +377,30 @@ class Easyjobs_Admin {
 				margin-left: 5px;
 			}
 
-			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper {
+			#wpnotice-easyjobs-notice-halloween2026 a:focus,
+			#wpnotice-easyjobs-notice-halloween2026 a:active,
+			#wpnotice-easyjobs-notice-halloween2026 button:focus,
+			#wpnotice-easyjobs-notice-halloween2026 button:active {
+				outline: none;
+				box-shadow: none;
+			}
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper .wpsp-notice-action-button > a.button-primary:active {
+				background-color: #5252DC;
+				transform: none;
+			}
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss:hover,
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss:focus,
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper .wpsp-notice-action-button .wpsp-notice-action-dismiss:active {
+				color: #424242;
+				background: none;
+			}
+			#wpnotice-easyjobs-notice-halloween2026 a:focus-visible,
+			#wpnotice-easyjobs-notice-halloween2026 button:focus-visible {
+				outline: 2px solid #5252DC;
+				outline-offset: 2px;
+			}
+
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper {
 				display: flex;
 				align-items: start;
 				justify-content: space-between;
@@ -380,20 +409,18 @@ class Easyjobs_Admin {
 				font-size: 14px;
 				font-weight: 400;
 			}
-			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper p{
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper p{
 				font-size: 14px;
 				margin-top: 0;
 				padding-top: 0;
-				margin-bottom: 3px;
+				margin-bottom: 10px;
 				color: #171717;
 			}
-			#wpnotice-easyjobs-notice-summer2026 .wpnotice-content-wrapper {
+			#wpnotice-easyjobs-notice-halloween2026 .wpnotice-content-wrapper {
 				padding: 0;
-			}#wpnotice-easyjobs-notice-summer2026 .notice-dismiss:before {
-    content: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjBfaV8xODFfMzM3NjYpIj4KPHBhdGggZD0iTTEwLjAwMDEgOS4wNDc3MkwxMy4zMzM0IDUuNzE0MzZMMTQuMjg1OCA2LjY2Njc0TDEwLjk1MjQgMTAuMDAwMUwxNC4yODU4IDEzLjMzMzRMMTMuMzMzNCAxNC4yODU4TDEwLjAwMDEgMTAuOTUyNUw2LjY2Njc0IDE0LjI4NThMNS43MTQzNiAxMy4zMzM0TDkuMDQ3NjkgMTAuMDAwMUw1LjcxNDM2IDYuNjY2NzRMNi42NjY3NCA1LjcxNDM2TDEwLjAwMDEgOS4wNDc3MloiIGZpbGw9IiMxNzE3MTciLz4KPC9nPgo8ZGVmcz4KPGZpbHRlciBpZD0iZmlsdGVyMF9pXzE4MV8zMzc2NiIgeD0iMCIgeT0iMCIgd2lkdGg9IjIwLjcxNDMiIGhlaWdodD0iMjAiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0ic2hhcGUiLz4KPGZlQ29sb3JNYXRyaXggaW49IlNvdXJjZUFscGhhIiB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMTI3IDAiIHJlc3VsdD0iaGFyZEFscGhhIi8+CjxmZU9mZnNldCBkeD0iMC43MTQyODYiLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMC43MTQyODYiLz4KPGZlQ29tcG9zaXRlIGluMj0iaGFyZEFscGhhIiBvcGVyYXRvcj0iYXJpdGhtZXRpYyIgazI9Ii0xIiBrMz0iMSIvPgo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAxIDAgMCAwIDAgMSAwIDAgMCAwIDEgMCAwIDAgMC4wOCAwIi8+CjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW4yPSJzaGFwZSIgcmVzdWx0PSJlZmZlY3QxX2lubmVyU2hhZG93XzE4MV8zMzc2NiIvPgo8L2ZpbHRlcj4KPC9kZWZzPgo8L3N2Zz4K');
-}
+			}
 			@media only screen and (max-width: 767px) {
-				#wpnotice-easyjobs-notice-summer2026 {
+				#wpnotice-easyjobs-notice-halloween2026 {
 					display: none !important;
 				}
 			}
@@ -532,13 +559,15 @@ class Easyjobs_Admin {
 		wp_enqueue_script( 'easyjobs-react', EASYJOBS_ADMIN_URL . 'assets/dist/react/easyjobs.js', $dependencies, filemtime( EASYJOBS_ADMIN_DIR_PATH . 'assets/dist/react/easyjobs.js' ), true );
 
 		$current_page_schema = isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+		$current_host        = isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+		$current_request_uri = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
         $data = array(
             'easyjobs_admin_url' => admin_url( 'admin.php?page=easyjobs-admin' ),
 			'easyjobs_api_connected' => !empty( $this->settings->easyjobs_api_key ),
             'easyjobs_app_url'   => EASYJOBS_APP_URL,
             'admin_url'          => admin_url( 'admin.php' ),
             'ajax_url'           => admin_url( 'admin-ajax.php' ),
-            'current_page'       => $current_page_schema . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+            'current_page'       => $current_page_schema . '://' . $current_host . $current_request_uri,
             'devtool'            => defined( 'EASYJOBS_DEVTOOL' ) ? EASYJOBS_DEVTOOL : false,
             'plugin_url'         => EASYJOBS_URL,
             'title'              => get_bloginfo( 'name' ),
@@ -761,10 +790,11 @@ class Easyjobs_Admin {
             $this->render_landing();
             return;
         }
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only query args used to pick which admin view to render, no state change.
         // Render page navigation for sub pages
         if ( isset( $_GET['job-id'] ) && isset( $_GET['view'] ) ) {
             $job_id = sanitize_text_field( wp_unslash( $_GET['job-id'] ) );
-            switch ( sanitize_text_field( $_GET['view'] ) ) {
+            switch ( sanitize_text_field( wp_unslash( $_GET['view'] ) ) ) {
                 case 'pipeline':
                     $this->pipeline->show( $job_id );
                     break;
@@ -779,13 +809,14 @@ class Easyjobs_Admin {
             return;
         }
         if ( isset( $_GET['candidate-id'] ) ) {
-            $this->candidates->show_details( intval( sanitize_text_field( $_GET['candidate-id'] ) ) );
+            $this->candidates->show_details( intval( sanitize_text_field( wp_unslash( $_GET['candidate-id'] ) ) ) );
             return;
         }
         if ( isset( $_GET['recent-jobs-page'] ) ) {
-            $this->dashboard->show_dashboard( sanitize_text_field( $_GET['recent-jobs-page'] ) );
+            $this->dashboard->show_dashboard( sanitize_text_field( wp_unslash( $_GET['recent-jobs-page'] ) ) );
             return;
         }
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
         $this->dashboard->show_dashboard( 1 );
     }
 
@@ -872,9 +903,9 @@ class Easyjobs_Admin {
     }
 
     public function render_inner_page_title( $admin_title, $title ) {
-        if ( isset( $_GET['job-id'] ) && isset( $_GET['view'] ) ) {
+        if ( isset( $_GET['job-id'] ) && isset( $_GET['view'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
             $suffix = str_replace( 'Easyjobs', '', $admin_title );
-            switch ( sanitize_text_field( $_GET['view'] ) ) {
+            switch ( sanitize_text_field( wp_unslash( $_GET['view'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
                 case 'pipeline':
                     $title = __( 'Easyjobs Pipelines ', 'easyjobs' ) . $suffix;
                     break;
@@ -916,7 +947,7 @@ class Easyjobs_Admin {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -950,7 +981,7 @@ class Easyjobs_Admin {
         $company_create_view = null;
         $company_metadata     = null;
         $login_view           = null;
-        $landing_view         = isset( $_GET['landing_view'] ) ? trim( sanitize_text_field( $_GET['landing_view'] ) ) : '';
+        $landing_view         = isset( $_GET['landing_view'] ) ? trim( sanitize_text_field( wp_unslash( $_GET['landing_view'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
         if ( $landing_view == 'create_company' ) {
             $company_create_view = true;
             $metadata            = Easyjobs_Api::get( 'company_metadata' );
@@ -993,7 +1024,7 @@ class Easyjobs_Admin {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1039,7 +1070,7 @@ class Easyjobs_Admin {
             $this->render_landing();
             return;
 		}
-        $this->candidates->show_all_candidates( array( 'page' => isset($_GET['all-candidate-page']) ? $_GET['all-candidate-page'] : 1 ) );
+        $this->candidates->show_all_candidates( array( 'page' => isset($_GET['all-candidate-page']) ? sanitize_text_field( wp_unslash( $_GET['all-candidate-page'] ) ) : 1 ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
     }
 
     /**
@@ -1059,7 +1090,7 @@ class Easyjobs_Admin {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1070,7 +1101,8 @@ class Easyjobs_Admin {
 			wp_die();
 		}
 		$credentials = [];
-		foreach ( json_decode(wp_unslash($_POST['data'])) as $key => $value ) {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON credentials payload: each decoded key/value is handled individually below and sent to the easy.jobs API.
+		foreach ( (array) ( isset( $_POST['data'] ) ? json_decode( wp_unslash( $_POST['data'] ) ) : array() ) as $key => $value ) {
 			$credentials[ sanitize_text_field($key ) ] = sanitize_text_field( $value );
 		}
 
@@ -1140,7 +1172,7 @@ class Easyjobs_Admin {
 			);
 			wp_die();
         }
-		if ( ! Easyjobs_Helper::verified_request($_POST) ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
             echo wp_json_encode(
                 array(
 					'status'  => 'error',
@@ -1149,7 +1181,7 @@ class Easyjobs_Admin {
 			);
 			wp_die();
 		}
-        $api_key = sanitize_text_field( $_POST['company'] );
+        $api_key = isset( $_POST['company'] ) ? sanitize_text_field( wp_unslash( $_POST['company'] ) ) : '';
 
         $is_authenticated = Easyjobs_Api::authenticate( $api_key );
 
@@ -1180,7 +1212,7 @@ class Easyjobs_Admin {
 			);
 			wp_die();
         }
-		if ( !Easyjobs_Helper::verified_request($_POST) ) {
+		if ( !( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
             echo wp_json_encode(
                 array(
 					'status'  => 'error',
@@ -1194,7 +1226,8 @@ class Easyjobs_Admin {
 
         $password        = null;
         $passwordConfirm = null;
-		foreach (json_decode( wp_unslash($_POST['form_data'])) as $key => $value ) {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON sign-up payload: each decoded key/value is handled individually below (passwords must not be altered by a generic sanitizer here).
+		foreach ( (array) ( isset( $_POST['form_data'] ) ? json_decode( wp_unslash( $_POST['form_data'] ) ) : array() ) as $key => $value ) {
 			if ( sanitize_text_field( $key ) === 'password' ) {
 				$password = sanitize_key( $value );
 			}
@@ -1253,7 +1286,7 @@ class Easyjobs_Admin {
 			);
 			wp_die();
         }
-		if ( !Easyjobs_Helper::verified_request($_POST) || !isset($_POST['user'])) {
+		if ( !( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || !isset($_POST['user'])) {
             echo wp_json_encode(
                 array(
 					'status'  => 'error',
@@ -1264,14 +1297,16 @@ class Easyjobs_Admin {
 		}
         $data = array();
 
-		foreach ( json_decode(wp_unslash($_POST['form_data'])) as $key => $value ) {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON company payload: scalar fields sanitized below, nested fields forwarded to the easy.jobs API which validates them.
+		foreach ( (array) ( isset( $_POST['form_data'] ) ? json_decode( wp_unslash( $_POST['form_data'] ) ) : array() ) as $key => $value ) {
 			if ( is_array( $value ) || is_object($value)) {
 				$data[ sanitize_text_field( $key ) ] = $value;
 			} else {
 				$data[ sanitize_text_field( $key ) ] = sanitize_text_field( $value );
 			}
 		}
-        $user = (array) json_decode(wp_unslash($_POST['user']));
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON {email, password} used verbatim as HTTP basic-auth credentials for the easy.jobs API; a password must not be altered by sanitization.
+        $user = isset( $_POST['user'] ) ? (array) json_decode( wp_unslash( $_POST['user'] ) ) : array();
 		if ( ! empty( $user ) ) {
 			$response = Easyjobs_Api::post_with_basic_auth(
                 'create_company',
@@ -1318,7 +1353,7 @@ class Easyjobs_Admin {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1334,9 +1369,10 @@ class Easyjobs_Admin {
 		}
         $params = array();
 		if ( ! empty( $_POST['params'] ) ) {
-			$params = (array) json_decode( stripslashes( $_POST['params'] ) );
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON query params: decoded and passed as query args to the easy.jobs API (type alias validated against Easyjobs_Api endpoints).
+			$params = (array) json_decode( wp_unslash( $_POST['params'] ) );
 		}
-		$response = Easyjobs_Api::get( sanitize_text_field( $_POST['type'] ), $params );
+		$response = Easyjobs_Api::get( sanitize_text_field( wp_unslash( $_POST['type'] ) ), $params );
 		
 		Easyjobs_Helper::check_reload_required( $response );
 		
@@ -1358,7 +1394,7 @@ class Easyjobs_Admin {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1377,7 +1413,7 @@ class Easyjobs_Admin {
 			);
 			wp_die();
 		}
-        $states = Easyjobs_Api::get_by_id( 'states', sanitize_text_field( $_POST['country'] ) );
+        $states = Easyjobs_Api::get_by_id( 'states', sanitize_text_field( wp_unslash( $_POST['country'] ) ) );
 		if ( Easyjobs_Helper::is_success_response( $states->status ) ) {
 			echo wp_json_encode(
                 array(
@@ -1410,7 +1446,7 @@ class Easyjobs_Admin {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1448,7 +1484,7 @@ class Easyjobs_Admin {
             );
             wp_die();
         }
-        $url = EASYJOBS_APP_URL . '/api/v1/city/custom/' . sanitize_text_field( $_POST['country'] ) . '/' . sanitize_text_field( $_POST['state'] );
+        $url = EASYJOBS_APP_URL . '/api/v1/city/custom/' . sanitize_text_field( wp_unslash( $_POST['country'] ) ) . '/' . sanitize_text_field( wp_unslash( $_POST['state'] ) );
 
         $cities = Easyjobs_Api::get_custom( $url );
 
@@ -1484,7 +1520,7 @@ class Easyjobs_Admin {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1554,7 +1590,7 @@ class Easyjobs_Admin {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1571,19 +1607,21 @@ class Easyjobs_Admin {
         $id = null;
 
 		if ( isset( $_POST['id'] ) ) {
-			$id = abs( $_POST['id'] );
+			$id = abs( sanitize_text_field( wp_unslash( $_POST['id'] ) ) );
 		}
         $data = array();
-		if ( ! is_array( $_POST['data'] ) ) {
-			foreach ( (array) json_decode( stripslashes( $_POST['data'] ) ) as $key => $value ) {
+		if ( isset( $_POST['data'] ) && ! is_array( $_POST['data'] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: each decoded field is sanitized below before being sent to the easy.jobs API.
+			foreach ( (array) json_decode( wp_unslash( $_POST['data'] ) ) as $key => $value ) {
 				if ( $key == 'id' ) {
 					$data['id'] = $value;
 					continue;
 				}
 				$data[ $key ] = sanitize_text_field( $value );
 			}
-		} elseif ( is_array( $_POST['data'] ) ) {
-			foreach ( $_POST['data'] as $key => $value ) {
+		} elseif ( isset( $_POST['data'] ) && is_array( $_POST['data'] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- each field is sanitized below before being sent to the easy.jobs API.
+			foreach ( wp_unslash( $_POST['data'] ) as $key => $value ) {
 				if ( $key == 'id' ) {
 					$data['id'] = $value;
 					continue;
@@ -1595,7 +1633,7 @@ class Easyjobs_Admin {
             echo wp_json_encode(
                 Easyjobs_Helper::get_generic_response(
                     Easyjobs_Api::post(
-                        sanitize_text_field( $_POST['type'] ),
+                        sanitize_text_field( wp_unslash( $_POST['type'] ) ),
                         $id,
                         $data
                     )
@@ -1605,7 +1643,7 @@ class Easyjobs_Admin {
             echo wp_json_encode(
                 Easyjobs_Helper::get_generic_response(
                     Easyjobs_Api::post(
-                        sanitize_text_field( $_POST['type'] ),
+                        sanitize_text_field( wp_unslash( $_POST['type'] ) ),
                         $id
                     )
                 )
@@ -1630,7 +1668,7 @@ class Easyjobs_Admin {
 
         delete_transient( 'easyjobs_activation_redirect' );
 
-		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
 			return;
 		}
 
@@ -1649,7 +1687,7 @@ class Easyjobs_Admin {
 			);
 			wp_die();
         }
-		if ( ! Easyjobs_Helper::verified_request($_POST) ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
             echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
             wp_die();
 		}
@@ -1730,19 +1768,14 @@ class Easyjobs_Admin {
         $tracker->init();
     }
 
+    /**
+     * Register this site with easy.jobs visitor analytics, only when opted in.
+     *
+     * @see EasyJobs_Settings::maybe_connect_visitor_analytics()
+     * @return bool
+     */
     private function connect_analytics() {
-        $analytics_connected = Easyjobs_Api::post(
-            'analytics_url',
-            null,
-            array(
-				'url' => get_bloginfo( 'url' ),
-            )
-		);
-        if ( Easyjobs_Helper::is_success_response( $analytics_connected->status ) ) {
-            update_option( 'easyjobs_analytics_connected', 1 );
-            return true;
-        }
-        return false;
+        return EasyJobs_Settings::maybe_connect_visitor_analytics();
     }
 
     private function update_company_data() {
@@ -1777,7 +1810,7 @@ class Easyjobs_Admin {
 		];
 		global $pagenow;
 		if($pagenow == 'admin.php') {
-			$page = isset($_GET['page']) ? $_GET['page'] : '';
+			$page = isset($_GET['page']) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
 			if(in_array($page, $allowed_pages)) {
 				return true;
 			}

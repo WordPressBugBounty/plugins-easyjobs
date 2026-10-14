@@ -1,0 +1,530 @@
+.easyjobs-wrapper{
+	.btn.btn-primary{
+		color: #fff;
+	}
+	&.admin-area{
+		a{
+			&:focus{
+				box-shadow: none;
+				outline: none;
+			}
+		}
+		.page-header{
+			display: flex;
+			align-items: center;
+			padding: 10px 15px 20px;
+			.logo{
+				margin-right: 15px;
+				img{
+					max-width: 200px;
+					width: 100%;
+				}
+			}
+		}
+	}
+	&.loading{
+		position: relative;
+		z-index: 1;
+		&:before{
+			content: '';
+			position: absolute;
+			left: 0;
+			top:0;
+			right: 0;
+			bottom: 0;
+			background-color: #fff;
+			opacity: 0.6;
+			z-index: 9;
+			@include user_select;
+			@include transition(all 0.3s ease)
+		}
+	}
+	.jobDetailsList{
+		margin-right: 5px;
+		li{
+			margin: 0;
+			a:focus{
+				outline: none;
+				box-shadow: none;
+			}
+		}
+	}
+	.nav-tabs li a{
+		&:focus{
+			outline: none;
+			box-shadow: none;
+		}
+	}
+	.search-easyjobs{
+		.input-group-append{
+			i{
+				color: $gray-700;
+			}
+		}
+	}
+	.easyjobs-svg-icon{
+		width: 20px;
+		height: 20px;
+	}
+}
+.easy-page-body {
+	.max-w-100 {
+		max-width: 100% !important;
+	}
+	.gap15 {
+		gap: 15px;
+	}
+}
+#easyjobs-meta-easyjobs_api_key{
+	.easyjobs-control-wrapper{
+		.easyjobs-field-help{
+			background: none;
+			padding: 5px 2px;
+			border: 0;
+			font-size: 14px;
+			a{
+				color: $primary;
+			}
+		}
+	}
+}
+.easyjobs-copy-shortcode{
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: -3px;
+	color: #f2f2f2;
+	cursor: pointer;
+	position: relative;
+	.easyjobs-copytext {
+		visibility: hidden;
+		width: 140px;
+		background-color: #555;
+		color: #fff;
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px;
+		position: absolute;
+		z-index: 1;
+		bottom: 150%;
+		left: 50%;
+		margin-left: -75px;
+		opacity: 0;
+		transition: opacity 0.3s;
+		&:after {
+			content: "";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: #555 transparent transparent transparent;
+		}
+
+	}
+	&:hover{
+		color: #ddd;
+		.easyjobs-copytext {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+}
+
+.customize-control-easyjobs-number .number-field.has-suffix input.easyjobs-number{
+	max-width: 90%;
+	display: inline-block;
+}
+.easy-page-body .table__body{
+	width: 100%;
+	display: table-row-group;
+}
+.ej-loading{
+	position: relative;
+	z-index: 1;
+	&:before{
+		content: '';
+		position: absolute;
+		left: 0;
+		top:0;
+		right: 0;
+		bottom: 0;
+		background-color: #fff;
+		opacity: 0.6;
+		z-index: 9;
+		@include user_select;
+		@include transition(all 0.3s ease)
+	}
+}
+.easy-page-body header img:not(.p-head-brand-icon){
+	width: 170px;
+}
+.easy-page-body a:focus{
+	outline: none !important;
+}
+.easyjobs-version{
+	padding-left: 10px;
+	text-align: right;
+	margin-top: -5px;
+	display: block;
+}
+.pipeline-box .pipeline-menu .nav-tabs{
+	box-shadow: none;
+	border: 0;
+}
+.ej-job-type-select .dropdown-menu .dropdown-item.active{
+	background: none;
+}
+.ej-quiz-questions{
+	padding-top: 50px;
+}
+.easy-page-body .candidate-tabs .tab__control.nav-link{
+	border-top: 0;
+	border-left: 0;
+	border-bottom: 0;
+}
+.easy-page-body .candidate-tabs .tab__control.nav-link:focus{
+	outline: none;
+	box-shadow: none;
+}
+#easyjobs-recent-jobs .table-cell a:focus{
+	outline: none !important;
+	box-shadow: none;
+}
+.candidate-resume .candidate-resume-iframe{
+	min-height: 400px;
+}
+.easy-page-body .easyjobs-settings-left{
+	padding: 20px 30px;
+}
+
+.easy-page-body .form-filter .select-option select{
+	max-width: 100%;
+}
+.easy-page-body{
+	// NOTE: margin/overflow intentionally removed.
+	// `overflow: hidden` here broke `position: sticky` on the dashboard header,
+	// and the negative margin is superseded by the full-bleed shell in _dashboard.scss.
+	position: relative;
+}
+.easy-page-body .table{
+	border-collapse: initial !important;
+}
+.easy-page-body .has-ai-score{
+	position: relative;
+}
+.easy-page-body .has-ai-score .easyjobs-ai-chart{
+	position: absolute;
+	left: 0;
+	top:0;
+	z-index: 2;
+}
+.easy-page-body .has-ai-score  .user-picture{
+	position: relative;
+}
+.easy-page-body .has-ai-score .user-picture img{
+	position: relative;
+	z-index: 1;
+}
+.easy-page-body .has-ai-score .ai-score-details{
+	position: absolute;
+	background: #fff;
+	padding: 10px 15px;
+	font-size: 0.8em;
+	border-radius: 10px;
+	bottom: 101%;
+	box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+	width: 140px;
+	display: none;
+	z-index: 11;
+}
+.easy-page-body .has-ai-score .ai-score-details:after{
+	content: '';
+	position: absolute;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #fff;
+	bottom: -10px;
+	left: 60px;
+}
+.easy-page-body .has-ai-score:hover .ai-score-details{
+	display: block;
+}
+.easy-page-body .pipeline-list-box .pipeline__board .pipeline__board--title h5{
+	font-size: 1.3em;
+}
+.easy-page-body .content-area__body .pipeline-section .pipeline-list-box .pipeline__board--content .pipeline-card .user__details .user__name{
+	font-size: 1.06125em;
+}
+.pipeline-card-not-found{
+	display: flex;
+	position: relative;
+	background: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	pointer-events: none;
+}
+.easy-page-body .content-area__body .pipeline-section .pipeline-list-box .pipeline__board--content{
+	flex: 1;
+}
+.easy-page-body .success-label,.easy-page-body .danger-label,.easy-page-body .info-label, .easy-page-body .primary-label{
+	font-size: 0.875em;
+}
+.easy-page-body .user__text__ratting .rate-count{
+	font-size: inherit;
+}
+.easy-page-body .user__text__ratting .rate-count.rating-hover{
+	color: #ff9635;
+	opacity: 1;
+}
+.easy-page-body{
+	.button{
+		border: 0;
+		&.disabled-button{
+			background: #777 !important;
+			cursor: not-allowed !important;
+			box-shadow: 0 10px 10px rgba(57, 74, 78, 0.3);
+			&:hover, &:focus{
+				background: #777 !important;
+			}
+		}
+		&:focus{
+			outline: none;
+			border-color: transparent;
+			box-shadow: inherit;
+		}
+	}
+	.form-group{
+		.react-select__menu{
+			z-index: 99;
+		}
+		.select-option{
+			.react-select__control{
+				height: 48px;
+				position: relative;
+				&.react-select__control--is-disabled{
+					background: #e6e6e6;
+					cursor: not-allowed;
+				}
+			}
+		}
+	}
+}
+#pipeline-modal{
+	background: rgba(2,32,135,0.5);
+	z-index: 9999;
+}
+.save-pipeline{
+	width: 100%;
+}
+.easy-page-body{
+	.settings-tab{
+		display: none;
+		&.active{
+			display: block;
+		}
+	}
+	.ej-admin-notice{
+		h4{
+			padding: 30px 26.5px;
+			font-size: 1.125rem;
+			line-height: 1.5;
+			border-radius: 10px;
+			font-weight: 500;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 30px 30px 0;
+			text-align: center;
+			position: relative;
+			a{
+				color: #597dfc;
+				padding: 0 5px;
+			}
+			.link-help{
+				font-size: 14px;
+				top: 10px;
+				position: absolute;
+				right: 15px;
+
+			}
+		}
+		&.ej-warning-notice{
+			h4{
+				background: #ff96351a;
+				color: #ff9635;
+			}
+		}
+		&.ej-danger-notice{
+			h4{
+				color: #842029;
+				background-color: #f8d7da;
+				border-color: #f5c2c7;
+			}
+		}
+	}
+}
+.easy-page-body .modal.show .modal-dialog .modal-body{
+	overflow-y: auto;
+}
+.easy-page-body .ej-modal{
+	background: rgba(2,32,135,.5);
+	z-index: 9999;
+	form{
+		width: 100%;
+	}
+	.modal-footer{
+		padding: 10px 50px;
+	}
+}
+.toplevel_page_easyjobs-admin .swal-overlay, .easyjobs_page_easyjobs-all-jobs .swal-overlay{
+	z-index: 999999;
+}
+.easy-page-body{
+    .row{
+        width: auto;
+    }
+	.dg-wrapper{
+		display: none;
+	}
+	.dg-backdrop{
+		z-index: 99999;
+	}
+	.dg-container{
+		z-index: 99999;
+	}
+	.modal.show{
+		display: block;
+	}
+    .ej-toast{
+        opacity: 0;
+        padding: 12px 24px;
+        position: fixed;
+        top: 45px;
+        right: -200px;
+        font-size: 12px;
+        font-family: "Poppins", sans-serif;
+        border-radius: 5px;
+        color: #fff;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        .ej-toast-body{
+            i{
+                margin-right: 10px;
+                font-size: 25px;
+                line-height: 1;
+                margin-top: -4px;
+            }
+        }
+    }
+	a{
+		&:focus{
+			box-shadow: none;
+		}
+	}
+}
+.ej-logo .ej-pro-label.ej-is-expired{
+	background: #ff5f74;
+}
+.easy-page-body .form-group .select-option .react-select__control{
+	box-shadow: none;
+	/*.react-select__clear-indicator{
+		display: none;
+	}*/
+	/*.react-select__value-container--has-value{
+		&+.react-select__indicators{
+			.react-select__clear-indicator{
+				display: block;
+			}
+		}
+	}*/
+}
+
+.easy-page-body #easyjobs-react .form-group{
+	.ej-switch{
+		position: relative;
+		width: 80px;
+		height: 36px;
+		overflow: hidden;
+		.knobs,
+		.layer {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+		input[type="checkbox"] {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			opacity: 0;
+			cursor: pointer;
+			z-index: 3;
+			&:checked + .knobs span {
+				left: 4px;
+			}
+			&:checked{
+				&+ .knobs{
+					&:before{
+						opacity: 0;
+					}
+					&:after{
+						opacity: 1;
+					}
+				}
+				&~ .layer {
+					background-color: #FF5F74;
+				}
+			}
+
+		}
+		.knobs {
+			z-index: 2;
+			&:before {
+				content: "Show";
+				left: 6px;
+				top: 4px;
+			}
+			&:after {
+				content: "Hide";
+				right: 6px;
+				top: 4px;
+				opacity: 0;
+			}
+		}
+		.layer {
+			width: 100%;
+			background-color: #60CE83;
+			transition: 0.3s ease all;
+			z-index: 1;
+			border-radius: 50px;
+		}
+		.knobs:before, .knobs:after, .knobs span {
+			position: absolute;
+			width: 28px;
+			height: 10px;
+			font-size: 11px;
+			font-weight: 500;
+			text-align: center;
+			line-height: 1;
+			padding: 9px 4px;
+			transition: 0.3s ease all;
+			color: #fff;
+		}
+		.knobs span {
+			width: 30px;
+			left: 46px;
+			top: 3px;
+			background-color: #fff;
+			z-index: 2;
+			border-radius: 50%;
+			height: 30px;
+			padding: 0;
+		}
+	}
+}
+.easy-page-body .pipeline-content .empty-message:not(first-child) {
+	margin-top: 0;
+}

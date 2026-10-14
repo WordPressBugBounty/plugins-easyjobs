@@ -9,11 +9,16 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+
 ?>
 
 <div class="wrap">
 	<hr class="wp-header-end">
-	<input type="hidden" class="easyjobs-job-id" value="<?php echo esc_attr( wp_unslash( $_GET['job-id'] ) ); ?>">
+	<input type="hidden" class="easyjobs-job-id" value="<?php echo esc_attr( ( isset( $_GET['job-id'] ) ? sanitize_text_field( wp_unslash( $_GET['job-id'] ) ) : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>">
 	<input type="hidden" class="easyjobs-ai-enabled" value="<?php echo esc_html( $ai_enabled ); ?>">
 	<div class="easy-page-body">
 		<main class="content-area">
@@ -37,7 +42,7 @@
 								<a class="dropdown-item" href="#" data-toggle="modal"
 								   data-target="#ej-invite-candidate-modal"><?php esc_html_e( 'Invite candidates', 'easyjobs' ); ?></a>
 								<a class="dropdown-item"
-								   href="<?php echo esc_url( admin_url( 'admin.php?page=easyjobs-admin&job-id=' . esc_attr( $_GET['job-id'] ) . '&view=pipeline' ) ); ?>"><?php esc_html_e( 'Pipeline', 'easyjobs' ); ?></a>
+								   href="<?php echo esc_url( admin_url( 'admin.php?page=easyjobs-admin&job-id=' . esc_attr( ( isset( $_GET['job-id'] ) ? sanitize_text_field( wp_unslash( $_GET['job-id'] ) ) : '' ) ) . '&view=pipeline' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>"><?php esc_html_e( 'Pipeline', 'easyjobs' ); ?></a>
 								<a class="dropdown-item ej-export-candidates"
 								   href="#"><?php esc_html_e( 'Export', 'easyjobs' ); ?></a>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
@@ -50,7 +55,7 @@
 							<div class="mt-1">
 								<div class="section-title"><?php echo esc_html( $job->title ); ?></div>
 								<p class="section-label">
-									<?php echo esc_html( date( 'd F, Y', strtotime( str_replace( ', ', '', $job->expire_at ) ) ) ); ?>
+									<?php echo esc_html( gmdate( 'd F, Y', strtotime( str_replace( ', ', '', $job->expire_at ) ) ) ); ?>
 								</p>
 							</div>
 						<?php endif; ?>
@@ -60,9 +65,19 @@
 									<select>
 										<option value="select"
 												selected><?php esc_html_e( 'Sort candidates', 'easyjobs' ); ?></option>
+										<?php
+										$easyjobs_sort_titles = array(
+											'SORT_BY_EXPERIENCE'       => __( 'Sort by experience', 'easyjobs' ),
+											'SORT_BY_SKILL_MATCH'      => __( 'Sort by skill match', 'easyjobs' ),
+											'SORT_BY_EDUCATION_MATCH'  => __( 'Sort by education match', 'easyjobs' ),
+											'SORT_BY_EXPERIENCE_MATCH' => __( 'Sort by experience match', 'easyjobs' ),
+											'SORT_BY_TOTAL_AI_SCORE'   => __( 'Sort by AI score', 'easyjobs' ),
+											'SORT_BY_QUIZ_SCORE'       => __( 'Sort by quiz score', 'easyjobs' ),
+										);
+										?>
 										<?php foreach ( Easyjobs_Helper::candidate_sort_options() as $sort_option ) : ?>
 											<option
-												value="<?php echo esc_html( $sort_option['value'] ); ?>"><?php echo __( esc_html( $sort_option['title'] ), 'easyjobs' ); ?></option>
+												value="<?php echo esc_html( $sort_option['value'] ); ?>"><?php echo esc_html( isset( $easyjobs_sort_titles[ $sort_option['value'] ] ) ? $easyjobs_sort_titles[ $sort_option['value'] ] : $sort_option['title'] ); ?></option>
 										<?php endforeach; ?>
 									</select>
 								</div>
@@ -222,7 +237,7 @@
 							<div class="modal-body invite__candidate">
 								<form class="ej-invite-candidate"
 									  data-nonce="<?php echo esc_html( wp_create_nonce( 'easyjobs_invite_candidate' ) ); ?>"
-									  data-job-id="<?php echo esc_attr( $_GET['job-id'] ); ?>">
+									  data-job-id="<?php echo esc_attr( ( isset( $_GET['job-id'] ) ? sanitize_text_field( wp_unslash( $_GET['job-id'] ) ) : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>">
 									<label>Email*</label>
 									<div class="input-group mb-3 mt-1">
 										<input type="email" name="email" placeholder="user@easy.jobs"

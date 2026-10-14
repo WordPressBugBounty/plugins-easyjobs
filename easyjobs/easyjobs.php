@@ -10,7 +10,7 @@
  * Plugin Name:       easy.jobs
  * Plugin URI:        https://easy.jobs
  * Description:       Easy solution for the job recruitment to attract, manage & hire right talent faster.
- * Version:           2.8.2
+ * Version:           2.8.3
  * Author:            easy.jobs
  * Author URI:        https://easy.jobs
  * License:           GPL-3.0+
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Defines CONSTANTS for Whole plugins.
  */
-define( 'EASYJOBS_VERSION', '2.8.2' );
+define( 'EASYJOBS_VERSION', '2.8.3' );
 define( 'EASYJOBS_PLUGIN_URL', 'https://easy.jobs' );
 define( 'EASYJOBS_URL', plugins_url( '/', __FILE__ ) );
 define( 'EASYJOBS_ADMIN_URL', EASYJOBS_URL . 'admin/' );
@@ -63,8 +63,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-easyjobs.php';
  *
  * @since    1.0.0
  */
-function run_easyjobs() {
+function easyjobs_run() {
 	$plugin = new Easyjobs();
 	$plugin->run();
 }
-run_easyjobs();
+easyjobs_run();

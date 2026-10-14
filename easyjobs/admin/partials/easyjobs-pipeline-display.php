@@ -1,3 +1,9 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+?>
 <div class="wrap">
     <hr class="wp-header-end">
     <div class="easyjobs-wrapper admin-area">
@@ -62,7 +68,7 @@
                                 <div class="d-none d-md-block job-title">
                                     <div class="section-title"><?php echo esc_html( $job->title ); ?></div>
                                     <span class="section-label">
-                                        <?php echo esc_html( date( 'd F, Y', strtotime( str_replace( ', ', '', $job->expire_at ) ) ) ); ?>
+                                        <?php echo esc_html( gmdate( 'd F, Y', strtotime( str_replace( ', ', '', $job->expire_at ) ) ) ); ?>
                                     </span>
                                 </div>
                                 <div class="nav pipeline-toggler" id="nav-tab" role="tablist">

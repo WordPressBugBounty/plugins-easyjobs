@@ -1,0 +1,35 @@
+// color lightness check
+@function set-text-color($color, $opacity: 1) {
+	@if (lightness($color) > 70) {
+		@return rgba($dark, $opacity);
+	} @else {
+		@return rgba($white, $opacity);
+	}
+}
+
+// color lightness check
+@function set-conversation-text-color($color, $opacity: 1) {
+	@if (lightness($color) > 70) {
+		@return rgba($secondary, $opacity);
+	} @else {
+		@return rgba($white, $opacity);
+	}
+}
+
+
+// nav text lightness check
+@function set-nav-text-color($color, $opacity: 1) {
+	@if (lightness($color) > 70) {
+		@return rgba($dark, $opacity);
+	} @else {
+		@return rgba($white, $opacity);
+	}
+}
+// nav text lightness check
+@function set-direct-color($color, $opacity: 1) {
+	@if (lightness($color) > 70) {
+		@return rgba($color, $opacity);
+	} @else {
+		@return rgba($white, $opacity);
+	}
+}

@@ -31,17 +31,17 @@ trait Helper {
 	 * @return int
 	 */
 	public function strtotime( $time = '+7 day' ) {
-		return intval( strtotime( date( 'r', $this->time() ) . " $time" ) );
+		return intval( strtotime( gmdate( 'r', $this->time() ) . " $time" ) );
 	}
 
 	public function date( $time ) {
-		return date( 'd-m-Y h:i:s', $time );
+		return gmdate( 'd-m-Y h:i:s', $time );
 	}
 
 	/**
 	 * @throws Exception
 	 */
 	private function error( $message ) {
-		throw new Exception( $message );
+		throw new Exception( esc_html( $message ) );
 	}
 }

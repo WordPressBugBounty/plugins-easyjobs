@@ -4,6 +4,10 @@
  *
  * @since 1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 // echo Easyjobs_Helper::generate_block_style($atts);
 ?>
 <div class="ej-job-body easyjobs-blocks easyjobs-blocks-job-list" data-testid="ej-block-job-list">

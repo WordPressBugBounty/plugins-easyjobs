@@ -27,7 +27,7 @@ class Easyjobs_Admin_Dashboard {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Bad request' ) );
 			wp_die();
 		}
@@ -61,7 +61,7 @@ class Easyjobs_Admin_Dashboard {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -96,7 +96,7 @@ class Easyjobs_Admin_Dashboard {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Bad request' ) );
 			wp_die();
 		}
@@ -125,7 +125,7 @@ class Easyjobs_Admin_Dashboard {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Bad request' ) );
 			wp_die();
 		}
@@ -154,12 +154,12 @@ class Easyjobs_Admin_Dashboard {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Bad request' ) );
 			wp_die();
 		}
 
-		$jobs = $this->get_recent_jobs(isset($_POST['page']) ? sanitize_text_field($_POST['page']) : 1);
+		$jobs = $this->get_recent_jobs(isset($_POST['page']) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : 1);
 		$job_with_page_id       = Easyjobs_Helper::sync_job_pages($jobs->data);
 		foreach ($jobs->data as $job){
 			$job->view_url = esc_url(get_the_permalink($job_with_page_id[$job->id]));
@@ -288,12 +288,13 @@ class Easyjobs_Admin_Dashboard {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
 			wp_die();
 		}
 		$params = ['period', 'noOfDays'];
-		$post_params = json_decode( wp_unslash( $_POST['params'] ), true );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: decoded here, only the whitelisted period/noOfDays keys are kept and each is sanitized with sanitize_text_field() below.
+		$post_params = isset( $_POST['params'] ) ? json_decode( wp_unslash( $_POST['params'] ), true ) : array();
 		$args = [];
 		foreach ($params as $param){
 			if(isset($post_params[$param])){
@@ -323,7 +324,6 @@ class Easyjobs_Admin_Dashboard {
 	/**
 	* Get analytics stats of jobs
 	*
-	* @param 
 	* @return object|bool
 	* @since 2.1.2
 	*/
@@ -337,7 +337,7 @@ class Easyjobs_Admin_Dashboard {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
 			wp_die();
 		}

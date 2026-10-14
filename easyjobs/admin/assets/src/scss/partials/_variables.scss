@@ -1,0 +1,49 @@
+// Colors
+$blue_light: #6c63ff;
+$blue : #7253ec;
+$pink: #fe67b7;
+$dark_blue: #484d6b;
+$primary: #ff715b;
+// stylelint-disable
+$gray-100: #f1f5f7;
+$gray-200: #f7f7f7;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #98a6ad;
+$gray-700: #707791;
+$gray-800: #343a40;
+$gray-900: #323a46;
+// fonts
+$base_font: 'Poppins', sans-serif;
+
+// box shadow
+$nx_wrapper_shadow : 0 0 25px rgba(36, 30, 157, .12);
+
+// ─── Dashboard redesign tokens ────────────────────────────────────────────────
+:root {
+  --ej-accent:       #4F46E5;
+  --ej-accent-600:   #4338CA;
+  --ej-accent-50:    #EEF0FF;
+  --ej-accent-100:   #E0E4FF;
+  --ej-bg:           #F8F9FB;
+  --ej-surface:      #FFFFFF;
+  --ej-surface-2:    #F7F7F8;
+  --ej-border:       #EAEAEC;
+  --ej-border-2:     #E2E2E4;
+  --ej-hover:        #F3F3F4;
+  --ej-text:         #0A0A0A;
+  --ej-text-2:       #3A3A3C;
+  --ej-muted:        #6E7079;
+  --ej-muted-2:      #9698A1;
+  --ej-green:        #15803D;
+  --ej-green-bg:     #E7F6EC;
+  --ej-amber:        #B45309;
+  --ej-amber-bg:     #FDF3DE;
+  --ej-red:          #B91C1C;
+  --ej-red-bg:       #FBE7E7;
+  --ej-red-700:      #991B1B;
+  --ej-red-ring:     rgba(185, 28, 28, .22);
+  --ej-shadow-pop:   0 1px 2px rgba(15,15,15,.04), 0 10px 30px -10px rgba(15,15,15,.18);
+  --ej-radius:       12px;
+}

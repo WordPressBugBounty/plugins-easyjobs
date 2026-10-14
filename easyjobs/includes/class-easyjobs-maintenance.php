@@ -94,16 +94,22 @@ class Easyjobs_Maintenance {
 	 */
 	public static function deactivation() {
 		require_once plugin_dir_path( __FILE__ ) . 'class-easyjobs-deactivator.php';
+		// Empty today; kept as the extension point for deactivation tasks.
+		// @phpstan-ignore-next-line staticMethod.resultUnused
 		Easyjobs_Deactivator::deactivate();
 	}
 
 	/**
 	 * Runs on uninstallation.
 	 *
+	 * WordPress uses uninstall.php instead while that file exists; this stays as
+	 * a fallback and runs the same cleanup.
+	 *
 	 * @since 2.4.2
 	 * @return void
 	 */
 	public static function uninstall() {
-		Easyjobs_Helper::after_disconnect_api();
+		require_once plugin_dir_path( __FILE__ ) . 'class-easyjobs-uninstaller.php';
+		Easyjobs_Uninstaller::uninstall();
 	}
 }

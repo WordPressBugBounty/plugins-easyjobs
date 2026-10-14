@@ -9,6 +9,10 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 ?>
 <?php if ( ! empty( $scores ) ) : ?>
 	<div class="easyjobs-ai-chart">

@@ -99,10 +99,12 @@ class BlockUsage {
 	public static function get_used_blocks_count() {
 		global $wpdb;
 
-		$sql = "SELECT `meta_value`
-		FROM $wpdb->postmeta
-		WHERE `meta_key` = '_ej_block_lists'";
-		$meta_values      = $wpdb->get_col( $sql );
+		$meta_values = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- aggregates one meta key across all posts (no core API for that); only run when the opt-in usage tracker builds its periodic report, so caching would add nothing.
+			$wpdb->prepare(
+				"SELECT `meta_value` FROM {$wpdb->postmeta} WHERE `meta_key` = %s",
+				'_ej_block_lists'
+			)
+		);
 
 		$used_blocks = [];
 

@@ -1329,7 +1329,7 @@ class Easyjobs_Elementor_Job_List extends Widget_Base {
 		
 		$company  = Easyjobs_Helper::get_company_info(true);
 		if ( empty( $company ) ) {
-			printf( "<h2 class='elej-error-msg'>%s</h2>", $error_msg );
+			printf( "<h2 class='elej-error-msg'>%s</h2>", esc_html( $error_msg ) );
 
 			return;
 		}
@@ -1363,12 +1363,17 @@ class Easyjobs_Elementor_Job_List extends Widget_Base {
 		$company->ejel_apply_button_text = ! empty( $apply_button_text = trim( $settings['easyjobs_joblist_apply_button_text'] ) ) ? esc_html( $apply_button_text ) : '';
 		
 		
-		$content = "<div {$this->get_render_attribute_string('easyjobs-job-list')}>";
-		ob_start();
-		echo $this->job_list_shortcode_template( $company );
-		$content .= ob_get_clean();
-		$content .= '</div>';
-		echo $content;
+		echo '<div ';
+		if ( method_exists( $this, 'print_render_attribute_string' ) ) {
+			$this->print_render_attribute_string( 'easyjobs-job-list' );
+		} else {
+			// Elementor < 3.1: get_render_attribute_string() returns escaped attributes.
+			echo $this->get_render_attribute_string( 'easyjobs-job-list' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		echo '>';
+		// The list template escapes its own output; print it directly.
+		$this->job_list_shortcode_template( $company, true );
+		echo '</div>';
 		?>
 		<?php
 	}

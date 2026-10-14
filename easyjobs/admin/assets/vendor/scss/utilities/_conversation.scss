@@ -1,0 +1,107 @@
+.easy-page-body {
+	.conversation-group {
+		.conversation {
+			display: flex;
+			font-weight: 500;
+			font-size: 0.875em;
+			line-height: 1.5em;
+			@include respond-below(md) {
+				// font-size: 0.75em;
+			}
+			@include respond-below(xs) {
+				line-height: 1.25;
+				font-size: 0.75em;
+			}
+		}
+		.left-conversation {
+			@extend .conversation;
+			@extend .conversation-primary;
+			flex-direction: row;
+			.conversation-text-group {
+				align-items: flex-start;
+				.conversation-text {
+					white-space: pre-line;
+					border-radius: $b-radius-3 $b-radius-50 $b-radius-50 $b-radius-3;
+					&:last-of-type {
+						border-bottom-left-radius: $b-radius-50;
+					}
+					.conversation-attachment {
+						display: block;
+						color: lighten($love, 15%);
+						i {
+							margin-right: 5px;
+						}
+						&:hover {
+							color: lighten($love, 10%);
+						}
+					}
+				}
+			}
+		}
+		.right-conversation {
+			@extend .conversation;
+			@extend .conversation-light;
+			flex-direction: row-reverse;
+			.conversation-text-group {
+				align-items: flex-end;
+				text-align: right;
+				.conversation-text {
+					white-space: pre-line;
+					border-radius: $b-radius-50 $b-radius-3 $b-radius-3 $b-radius-50;
+					&:last-of-type {
+						border-bottom-right-radius: $b-radius-50;
+					}
+					.conversation-attachment {
+						display: block;
+						color: $primary;
+						i {
+							margin-right: 5px;
+						}
+						&:hover {
+							color: darken($primary, 5%);
+						}
+					}
+				}
+			}
+		}
+		.conversation-maker-img {
+			height: 50px;
+			width: 50px;
+			border-radius: $b-radius-100;
+			overflow: hidden;
+			@include respond-below(md) {
+				height: 35px;
+				width: 35px;
+			}
+		}
+		.conversation-text-group {
+			display: flex;
+			flex-direction: column;
+			margin-left: 10px;
+			margin-right: 10px;
+			width: 75%;
+			max-width: 500px;
+			margin-top: 10px;
+			.conversation-text {
+				display: inline-block;
+				padding: 20px 35px;
+				margin-bottom: 5px;
+				word-break: break-word;
+				@include respond-below(md) {
+					padding: 7px 15px;
+				}
+				img {
+					margin-top: 5px;
+					margin-bottom: 5px;
+					border: 2px solid rgba($border-color, 0.5);
+					border-radius: $b-radius-3;
+					max-width: 100%;
+				}
+			}
+			.conversation-time {
+				color: $secondary;
+				opacity: $small-opacity;
+			}
+		}
+	}
+}

@@ -188,8 +188,9 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
          * @return void
          */
         private function redirect_to() {
-            $request_uri  = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
-            $query_string = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_QUERY );
+            $raw_uri      = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+            $request_uri  = wp_parse_url( $raw_uri, PHP_URL_PATH );
+            $query_string = wp_parse_url( $raw_uri, PHP_URL_QUERY );
             parse_str( $query_string, $current_url );
 
             $unset_array = array( 'dismiss', 'plugin', '_wpnonce', 'later', 'plugin_action', 'marketing_optin' );
@@ -372,7 +373,7 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
                 }
             }
             $body['marketing_method'] = $this->marketing;
-            $body['server']           = isset( $_SERVER['SERVER_SOFTWARE'] ) ? $_SERVER['SERVER_SOFTWARE'] : '';
+            $body['server']           = isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '';
 
             /**
              * Collect all active and inactive plugins
@@ -401,7 +402,7 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
              */
             $plugin = $this->plugin_data();
             if ( empty( $plugin ) ) {
-                $body['message'] .= __( 'We can\'t detect any plugin information. This is most probably because you have not included the code in the plugin main file.', 'plugin-usage-tracker' );
+                $body['message'] .= __( 'We can\'t detect any plugin information. This is most probably because you have not included the code in the plugin main file.', 'easyjobs' );
                 $body['status']   = 'NOT FOUND';
             } else {
                 if ( isset( $plugin['Name'] ) ) {
@@ -469,13 +470,10 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
              * Send Initial Data to API
              */
             if ( $site_id == false && $this->item_id !== false && $original_site_url === false ) {
-                if ( isset( $_SERVER['REMOTE_ADDR'] ) && ! empty( $_SERVER['REMOTE_ADDR'] && $_SERVER['REMOTE_ADDR'] != '127.0.0.1' ) ) {
-                    $country_request = wp_remote_get( 'http://ip-api.com/json/' . $_SERVER['REMOTE_ADDR'] . '?fields=country' );
-                    if ( ! is_wp_error( $country_request ) && $country_request['response']['code'] == 200 ) {
-                        $ip_data         = json_decode( $country_request['body'] );
-                        $body['country'] = isset( $ip_data->country ) ? $ip_data->country : 'NOT SET';
-                    }
-                }
+                // EasyJobs: no IP geolocation. The original SDK sent the admin's IP
+                // address to a third-party geolocation API over plain HTTP; that call
+                // is removed (WordPress.org Guidelines 6/7, GitHub issue #133).
+                $body['country'] = 'NOT SET';
 
                 $body['plugin_slug'] = $this->plugin_name;
                 $body['url']         = $site_url;
@@ -631,12 +629,14 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
                 array(
 					'plugin'        => $this->plugin_name,
 					'plugin_action' => 'yes',
+					'_wpnonce'      => wp_create_nonce( 'wpins_optin_' . $this->plugin_name ),
                 )
             );
             $url_no  = add_query_arg(
                 array(
 					'plugin'        => $this->plugin_name,
 					'plugin_action' => 'no',
+					'_wpnonce'      => wp_create_nonce( 'wpins_optin_' . $this->plugin_name ),
                 )
             );
 
@@ -676,9 +676,9 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
          */
         public function set_notice_options( $options = array() ) {
             $default_options      = array(
-                'consent_button_text' => __( 'What we collect.', 'wpinsight' ),
-                'yes'                 => __( 'Sure, I\'d like to help', 'wpinsight' ),
-                'no'                  => __( 'No Thanks.', 'wpinsight' ),
+                'consent_button_text' => __( 'What we collect.', 'easyjobs' ),
+                'yes'                 => __( 'Sure, I\'d like to help', 'easyjobs' ),
+                'no'                  => __( 'No Thanks.', 'easyjobs' ),
             );
             $options              = wp_parse_args( $options, $default_options );
             $this->notice_options = $options;
@@ -690,11 +690,19 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
          */
         public function clicked() {
             if ( isset( $_GET['plugin'] ) && isset( $_GET['plugin_action'] ) ) {
-                if ( isset( $_GET['tab'] ) && sanitize_text_field( $_GET['tab'] ) === 'plugin-information' ) {
+                if ( isset( $_GET['tab'] ) && sanitize_text_field( wp_unslash( $_GET['tab'] ) ) === 'plugin-information' ) {
                     return;
                 }
-                $plugin = sanitize_text_field( $_GET['plugin'] );
-                $action = sanitize_text_field( $_GET['plugin_action'] );
+                $plugin = sanitize_text_field( wp_unslash( $_GET['plugin'] ) );
+                // EasyJobs: only handle this plugin's links, and only from an admin who clicked a
+                // real opt-in link (nonce added in notice()). Prevents CSRF on the opt-in choice.
+                if ( $plugin !== $this->plugin_name || ! current_user_can( 'manage_options' ) ) {
+                    return;
+                }
+                if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'wpins_optin_' . $this->plugin_name ) ) {
+                    return;
+                }
+                $action = sanitize_text_field( wp_unslash( $_GET['plugin_action'] ) );
                 if ( $action == 'yes' ) {
                     $this->schedule_tracking();
                     $this->set_is_tracking_allowed( true, $plugin );
@@ -736,11 +744,11 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
         public function deactivate_reasons_form_submit() {
             check_ajax_referer( 'wpins_deactivation_nonce', 'security' );
             if ( isset( $_POST['values'] ) ) {
-                $values = sanitize_text_field( $_POST['values'] );
+                $values = sanitize_text_field( wp_unslash( $_POST['values'] ) );
                 update_option( 'wpins_deactivation_reason_' . $this->plugin_name, $values, 'no' );
             }
             if ( isset( $_POST['details'] ) ) {
-                $details = sanitize_text_field( $_POST['details'] );
+                $details = sanitize_text_field( wp_unslash( $_POST['details'] ) );
                 update_option( 'wpins_deactivation_details_' . $this->plugin_name, $details, 'no' );
             }
             echo 'success';
@@ -775,23 +783,24 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
          */
         public function deactivation_reasons() {
             $form            = array();
-            $form['heading'] = __( 'Sorry to see you go', 'wpinsight' );
-            $form['body']    = __( 'Before you deactivate the plugin, would you quickly give us your reason for doing so?', 'wpinsight' );
+            $form['heading'] = __( 'Sorry to see you go', 'easyjobs' );
+            $form['body']    = __( 'Before you deactivate the plugin, would you quickly give us your reason for doing so?', 'easyjobs' );
 
             $form['options'] = array(
-                __( 'I no longer need the plugin', 'wpinsight' ),
+                __( 'I no longer need the plugin', 'easyjobs' ),
                 array(
-                    'label'       => __( 'I found a better plugin', 'wpinsight' ),
-                    'extra_field' => __( 'Please share which plugin', 'wpinsight' ),
+                    'label'       => __( 'I found a better plugin', 'easyjobs' ),
+                    'extra_field' => __( 'Please share which plugin', 'easyjobs' ),
                 ),
-                __( "I couldn't get the plugin to work", 'wpinsight' ),
-                __( 'It\'s a temporary deactivation', 'wpinsight' ),
+                __( "I couldn't get the plugin to work", 'easyjobs' ),
+                __( 'It\'s a temporary deactivation', 'easyjobs' ),
                 array(
-                    'label'       => __( 'Other', 'wpinsight' ),
-                    'extra_field' => __( 'Please share the reason', 'wpinsight' ),
+                    'label'       => __( 'Other', 'easyjobs' ),
+                    'extra_field' => __( 'Please share the reason', 'easyjobs' ),
                     'type'        => 'textarea',
                 ),
             );
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- bundled WPDeveloper/WPInsights tracker: public filter name shared across WPDeveloper plugins.
             return apply_filters( 'wpins_form_text_' . $this->plugin_name, $form );
         }
         /**
@@ -980,25 +989,25 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
                 $html .= '</ul></div><!-- .wpinsights-' . $class_plugin_name . '-goodbye-options -->';
             }
             $html .= '</div><!-- .wpinsights-goodbye-form-body -->';
-            $html .= '<p class="deactivating-spinner"><span class="spinner"></span> ' . __( 'Submitting form', 'wpinsight' ) . '</p>';
+            $html .= '<p class="deactivating-spinner"><span class="spinner"></span> ' . __( 'Submitting form', 'easyjobs' ) . '</p>';
 
             ?>
             <script type="text/javascript">
               jQuery(document).ready(function($){
-                $("#wpinsights-goodbye-link-<?php echo $class_plugin_name; ?>").on("click",function(){
+                $("#wpinsights-goodbye-link-<?php echo esc_attr( $class_plugin_name ); ?>").on("click",function(){
                   // We'll send the user to this deactivation link when they've completed or dismissed the form
-                  var url = document.getElementById("wpinsights-goodbye-link-<?php echo $class_plugin_name; ?>");
-                  $('body').toggleClass('wpinsights-form-active-<?php echo $class_plugin_name; ?>');
-                  $(".wpinsights-goodbye-form-wrapper-<?php echo $class_plugin_name; ?> #wpinsights-goodbye-form").fadeIn();
-                  $(".wpinsights-goodbye-form-wrapper-<?php echo $class_plugin_name; ?> #wpinsights-goodbye-form").html( '<?php echo $html; ?>' + '<div class="wpinsights-goodbye-form-footer"><div class="wpinsights-goodbye-form-buttons"><a id="wpinsights-submit-form-<?php echo $class_plugin_name; ?>" class="wpinsights-submit-btn" href="#"><?php esc_html_e( 'Submit and Deactivate', 'wpinsight' ); ?></a>&nbsp;<a class="wpsp-put-deactivate-btn" href="'+url+'"><?php esc_html_e( 'Just Deactivate', 'wpinsight' ); ?></a></div></div>');
-                  $('#wpinsights-submit-form-<?php echo $class_plugin_name; ?>').on('click', function(e){
+                  var url = document.getElementById("wpinsights-goodbye-link-<?php echo esc_attr( $class_plugin_name ); ?>");
+                  $('body').toggleClass('wpinsights-form-active-<?php echo esc_attr( $class_plugin_name ); ?>');
+                  $(".wpinsights-goodbye-form-wrapper-<?php echo esc_attr( $class_plugin_name ); ?> #wpinsights-goodbye-form").fadeIn();
+                  $(".wpinsights-goodbye-form-wrapper-<?php echo esc_attr( $class_plugin_name ); ?> #wpinsights-goodbye-form").html( '<?php echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Form markup built above from esc_attr()/esc_html()-escaped parts, injected into a JS string. ?>' + '<div class="wpinsights-goodbye-form-footer"><div class="wpinsights-goodbye-form-buttons"><a id="wpinsights-submit-form-<?php echo esc_attr( $class_plugin_name ); ?>" class="wpinsights-submit-btn" href="#"><?php esc_html_e( 'Submit and Deactivate', 'easyjobs' ); ?></a>&nbsp;<a class="wpsp-put-deactivate-btn" href="'+url+'"><?php esc_html_e( 'Just Deactivate', 'easyjobs' ); ?></a></div></div>');
+                  $('#wpinsights-submit-form-<?php echo esc_attr( $class_plugin_name ); ?>').on('click', function(e){
                     // As soon as we click, the body of the form should disappear
-                    $("#wpinsights-goodbye-form-<?php echo $class_plugin_name; ?> .wpinsights-goodbye-form-body").fadeOut();
-                    $("#wpinsights-goodbye-form-<?php echo $class_plugin_name; ?> .wpinsights-goodbye-form-footer").fadeOut();
+                    $("#wpinsights-goodbye-form-<?php echo esc_attr( $class_plugin_name ); ?> .wpinsights-goodbye-form-body").fadeOut();
+                    $("#wpinsights-goodbye-form-<?php echo esc_attr( $class_plugin_name ); ?> .wpinsights-goodbye-form-footer").fadeOut();
                     // Fade in spinner
-                    $("#wpinsights-goodbye-form-<?php echo $class_plugin_name; ?> .deactivating-spinner").fadeIn();
+                    $("#wpinsights-goodbye-form-<?php echo esc_attr( $class_plugin_name ); ?> .deactivating-spinner").fadeIn();
                     e.preventDefault();
-                    var checkedInput = $("input[name='wpinsights-<?php echo $class_plugin_name; ?>-goodbye-options']:checked"),
+                    var checkedInput = $("input[name='wpinsights-<?php echo esc_attr( $class_plugin_name ); ?>-goodbye-options']:checked"),
                       checkedInputVal, details;
                     if( checkedInput.length > 0 ) {
                       checkedInputVal = checkedInput.val();

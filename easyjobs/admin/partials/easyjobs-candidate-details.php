@@ -9,6 +9,11 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; legacy view not included anywhere in the plugin, any include must happen inside a function scope.
+
 ?>
 <div class="wrap">
 	<hr class="wp-header-end">
@@ -488,7 +493,7 @@
 																		<?php foreach ( $data->evaluation->quiz_questions as $k => $q ) : ?>
 																			<li class="list-item--primary">
 																				<p class="question">
-																					<strong><?php esc_html_e( 'Question-' . ( $k + 1 ) . ': ', 'easyjobs' ); ?></strong><?php echo esc_html( $q->asked ); ?>
+																					<strong><?php /* translators: %d: question number. */ echo esc_html( sprintf( __( 'Question-%d: ', 'easyjobs' ), $k + 1 ) ); ?></strong><?php echo esc_html( $q->asked ); ?>
 																				</p>
 																				<p class="label__full--modified label__full--primary answer">
 																					<span
@@ -525,7 +530,7 @@
 																		<?php foreach ( $data->evaluation->questions as $key => $question ) : ?>
 																			<li class="list-item--primary">
 																				<p class="question">
-																					<strong><?php esc_html_e( 'Question-' . ( $key + 1 ) . ': ', 'easyjobs' ); ?></strong><?php echo esc_html( $question->asked ); ?>
+																					<strong><?php /* translators: %d: question number. */ echo esc_html( sprintf( __( 'Question-%d: ', 'easyjobs' ), $key + 1 ) ); ?></strong><?php echo esc_html( $question->asked ); ?>
 																				</p>
 																				<p class="label__full--modified label__full--primary answer">
 																					<span
@@ -585,7 +590,7 @@
 									</div>
 									<div class="details__card__body">
 										<form class="ej-add-note"
-											  data-candidate-id="<?php echo ! empty( $_GET['candidate-id'] ) ? esc_attr( $_GET['candidate-id'] ) : ''; ?>">
+											  data-candidate-id="<?php echo ! empty( $_GET['candidate-id'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['candidate-id'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>">
 											<textarea name="note" id="" rows="5" placeholder="Add a note here . . . "
 													  class="label__full--primary form-control"></textarea>
 											<?php if ( ! empty( $notes ) && ! empty( $notes->managers ) ) : ?>

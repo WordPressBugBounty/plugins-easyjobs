@@ -4,7 +4,12 @@
  *
  * @since 1.0.0
  */
-echo Easyjobs_Helper::generate_block_style($atts);
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+Easyjobs_Helper::generate_block_style( $atts );
 if ( ! isset( $jobs ) && empty( $jobs ) ) {
     $jobs = [];
 }
@@ -28,7 +33,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                             )
                                         );
                                     } else {
-                                        esc_html_e( $company->ejel_joblist_heading, 'easyjobs' );
+                                        echo esc_html( $company->ejel_joblist_heading );
                                     }
                                     ?>
                                 </h2>
@@ -54,7 +59,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                                 )
                                             );
                                         } else {
-                                            esc_html_e( $company->ejel_joblist_heading, 'easyjobs' );
+                                            echo esc_html( $company->ejel_joblist_heading );
                                         }
                                         ?>
                                     </span>
@@ -101,9 +106,9 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                                         <span>
                                                         <?php
                                                             $country_names = array_map( function( $country ) {
-                                                                return esc_html( $country->name );
+                                                                return $country->name;
                                                             }, $job->remote_countries );
-                                                            echo implode( ', ', $country_names );
+                                                            echo esc_html( implode( ', ', $country_names ) );
                                                         ?>
                                                         </span>
                                                     <?php endif; ?>
@@ -139,12 +144,12 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                 <?php } ?>
                                 <div class="job__apply ej-job-list-item-col">
                                     <a href="<?php echo ! empty( $job->apply_url ) ? esc_url( $job->apply_url ) : '#'; ?>" class="button button__success button__radius" target="_blank">
-                                        <?php esc_html_e( $company->apply_button_text ); ?>
+                                        <?php echo esc_html( $company->apply_button_text ); ?>
                                     </a>
                                     <?php if( $atts['showDateLine'] ): ?>
                                         <span class="deadline ej-deadline">
                                             <?php if ( ! $job->is_expired ) : ?>
-                                                <i class="easyjobs-icon easyjobs-calender"></i> <span><?php _e('Deadline:', 'easyjobs')?> <?php echo esc_html( $job->expire_at ); ?></span>
+                                                <i class="easyjobs-icon easyjobs-calender"></i> <span><?php esc_html_e('Deadline:', 'easyjobs')?> <?php echo esc_html( $job->expire_at ); ?></span>
                                             <?php else: ?>
                                                 <span class="ej-expired"><?php esc_html_e( 'Expired', 'easyjobs' ); ?></span>
                                             <?php endif;?>

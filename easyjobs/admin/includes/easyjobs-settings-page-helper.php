@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 function easyjobs_settings_args() {
     $settings_tabs = array(
         'general' => array(

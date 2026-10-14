@@ -1,0 +1,1163 @@
+.easyjobs-details {
+	padding-bottom: 30px;
+	border-radius: 5px;
+
+	div.ej-section-margin {
+		margin-bottom: 25px;
+	}
+
+	.ej-job-cover {
+		position: relative;
+		border-radius: 10px;
+		overflow: hidden;
+
+		img {
+			width: 100%;
+			height: auto;
+			max-width: 100%;
+			display: block;
+			margin: 0 auto;
+		}
+	}
+
+	.ej-job-header {
+		@include flex;
+		width: 100%;
+		padding: 0 50px;
+
+		.ej-job-header-left {
+			width: 41%;
+			width: -webkit-calc((100% / 12) * 5);
+			width: calc((100% / 12) * 5);
+			padding-right: 15px;
+			height: 100%;
+
+			.ej-job-overview {
+				padding: 50px;
+				margin-top: -50px;
+				background-color: #fff;
+				position: relative;
+				z-index: 1;
+				border-radius: 10px;
+
+				.ej-job-highlights {
+					margin-top: 45px;
+					margin-bottom: 30px;
+					display: table;
+					border-collapse: separate;
+					border-spacing: 0 20px;
+
+					.ej-job-highlights-item {
+						display: table-row;
+						color: $list-text-color;
+						font-size: 16px;
+						font-weight: 500;
+						line-height: 1.333333;
+
+						.ej-job-highlights-item-label {
+							display: table-cell;
+							color: #1c2238;
+							font-weight: 600;
+							white-space: nowrap;
+							width: 1%;
+							padding-right: 12px;
+
+							// Floated (not absolute) so the colon stays on the label's
+							// line even when a pill makes the row taller.
+							&:after {
+								content: ":";
+								float: right;
+								margin-right: -12px;
+							}
+						}
+
+						.ej-job-highlights-item-value {
+							display: table-cell;
+							padding-left: 20px;
+						}
+					}
+				}
+
+				@media (max-width: 767px) {
+					padding: 20px;
+					margin-top: -30px;
+				}
+			}
+
+			.ej-job-overview-footer {
+				@include flex;
+				@include align_items(center);
+				@include justify_content(space-between);
+
+				@media (max-width: 1400px) {
+					flex-direction: column;
+					@include align_items(flex-start);
+
+					.ej-apply-link {
+						margin-bottom: 20px;
+					}
+				}
+
+				.ej-social-share {
+					margin-left: 8px;
+					@include flex;
+					@include align_items(center);
+
+					.ej-social-share-title {
+						margin-bottom: 0;
+						font-size: 16px;
+						font-weight: 500;
+					}
+
+					ul {
+						list-style: none;
+						padding-left: 10px;
+						display: flex;
+
+						li {
+							display: inline-block;
+							margin: 0 0 0 8px;
+
+							a {
+								display: flex;
+								@include align_items(center);
+								@include justify_content(center);
+								width: 44px;
+								height: 44px;
+								background: rgba(47, 193, 225, 0.1);
+								border-radius: 50px;
+
+								svg {
+									width: 18px;
+									height: 18px;
+								}
+
+								&.ej-facebook {
+									svg {
+										fill: #597dfc;
+									}
+
+									&:hover {
+										background-color: #597dfc;
+
+										svg {
+											fill: #fff;
+										}
+									}
+								}
+
+								&.ej-twitter {
+									svg {
+										fill: #597dfc;
+									}
+
+									&:hover {
+										background-color: #2fc1e1;
+
+										svg {
+											fill: #fff;
+										}
+									}
+								}
+
+								&.ej-linkedin {
+									svg {
+										fill: #597dfc;
+									}
+
+									&:hover {
+										background-color: #597dfc;
+
+										svg {
+											fill: #fff;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				@media (max-width: 1170px) {
+					flex-direction: row;
+					justify-content: space-between;
+
+					.ej-apply-link {
+						margin-bottom: 0;
+					}
+				}
+
+				@media (max-width: 600px) {
+					flex-direction: column;
+
+					.ej-apply-link {
+						margin-bottom: 20px;
+					}
+				}
+			}
+
+			@media (max-width: 1170px) {
+				width: 100%;
+				padding: 0;
+				margin-bottom: 50px;
+			}
+		}
+
+		.ej-job-header-right {
+			width: 59%;
+			width: -webkit-calc((100% / 12) * 7);
+			width: calc((100% / 12) * 7);
+			padding-left: 15px;
+			padding-top: 50px;
+
+			@media (max-width: 1170px) {
+				width: 100%;
+				padding: 0;
+
+				.ej-content-block,
+				.ej-section {
+					width: calc(100% + 100px);
+					margin-left: -50px;
+				}
+			}
+		}
+
+		@media (max-width: 1170px) {
+			flex-direction: column;
+		}
+
+		@media (max-width: 767px) {
+			padding: 0 15px;
+
+			.ej-job-header-right .ej-content-block,
+			.ej-job-header-right .ej-section {
+				width: calc(100% + 30px);
+				margin-left: -15px;
+			}
+		}
+
+		&.no-cover {
+			.ej-job-header-left {
+				.ej-job-overview {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+
+	.ej-content-block {
+		h1 {
+			padding-left: 70px;
+			color: #1c2238;
+			font-size: 32px;
+			font-weight: 600;
+			line-height: 1.25;
+			padding-top: 8px;
+			position: relative;
+			margin: 0 0 40px;
+
+			&:before {
+				position: absolute;
+				font-family: "eicon";
+				content: "\e930";
+				height: 50px;
+				width: 50px;
+				@include flex;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				justify-content: center;
+				left: 0;
+				top: 0;
+				border-radius: 5px;
+				background: rgba(89, 125, 252, 0.1);
+				color: #597dfc;
+				font-size: 22px;
+			}
+		}
+
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin-top: 0;
+			margin-bottom: 10px;
+			font-weight: 500;
+			line-height: 1.2;
+		}
+
+		h2 {
+			font-size: 28px;
+		}
+
+		h3 {
+			font-size: 24px;
+		}
+
+		h4 {
+			font-size: 21px;
+		}
+
+		h5 {
+			font-size: 18px;
+		}
+
+		h6 {
+			font-size: 16px;
+		}
+
+		& > *:not(h1) {
+			margin-left: 70px;
+		}
+
+		p {
+			color: $list-text-color;
+			font-size: 14px;
+			line-height: 1.5;
+			margin-bottom: 5px;
+		}
+
+		ul {
+			padding-left: 0;
+			list-style: none !important;
+
+			li {
+				color: $list-text-color;
+				font-size: 14px;
+				line-height: 1.5;
+				position: relative;
+				padding-left: 22px;
+				margin: 0 0 10px;
+
+				&:before {
+					content: "";
+					width: 8px;
+					height: 8px;
+					border-radius: 10px;
+					position: absolute;
+					left: 0;
+					top: 6px;
+					background-color: #597dfc;
+				}
+			}
+		}
+
+		ol {
+			padding-left: 0;
+
+			li {
+				color: $list-text-color;
+				font-size: 14px;
+				line-height: 1.5;
+				margin: 0 0 10px;
+			}
+		}
+	}
+
+	.ej-job-body {
+		margin: 0 auto;
+
+		.ej-job-highlights {
+			margin-bottom: 25px;
+
+			ul {
+				list-style: none;
+				margin: 0;
+
+				li {
+					font-size: 17px;
+					color: #343a40;
+					margin: 5px 0;
+
+					span {
+						display: inline-block;
+						width: 145px;
+						color: #707791;
+						margin-right: 10px;
+					}
+				}
+			}
+		}
+
+		.ej-job-section-title {
+			font-size: 20px;
+			line-height: 1.5;
+			font-weight: 500;
+			margin: 10px 0;
+		}
+
+		.ej-job-benefits {
+			.ej-job-benefits-title {
+				font-size: 16px;
+				color: #98a6ad;
+				line-height: 1.5;
+				font-weight: 500;
+				margin: 10px 0;
+			}
+
+			.ej-job-benefits-highlight {
+				@include flex;
+				@include flex_wrap;
+				justify-content: flex-start;
+
+				.ej-job-benefits-block {
+					margin-bottom: 20px;
+					width: 32%;
+
+					& + .ej-job-benefits-block {
+						margin-left: 2%;
+					}
+
+					@media (max-width: 767px) {
+						width: 100%;
+
+						& + .ej-job-benefits-block {
+							margin-left: 0;
+						}
+					}
+				}
+
+				.ej-job-benefits-text {
+					margin: 0;
+					font-size: 18px;
+					line-height: 1.5;
+				}
+			}
+
+			ul {
+				li {
+					font-size: 16px;
+				}
+			}
+		}
+
+		.ej-company-showcase {
+			.ej-showcase-inner {
+				@include flex;
+				@include flex_wrap;
+				margin: 0 -12px;
+
+				.ej-showcase-image {
+					padding: 12px;
+
+					.ej-image {
+						background-color: #dee2e6;
+						height: 100%;
+						width: 100%;
+						@include flex;
+						@include align_items("center");
+						border-radius: 5px;
+						overflow: hidden;
+					}
+				}
+
+				.ej-showcase-left {
+					width: 50%;
+
+					.ej-showcase-image {
+						width: 100%;
+						display: block;
+						height: 450px;
+
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: cover;
+							max-width: 100%;
+						}
+					}
+
+					@media (max-width: 991px) {
+						width: 100%;
+
+						.ej-showcase-image {
+							height: auto;
+						}
+					}
+				}
+
+				.ej-showcase-right {
+					@include flex;
+					@include flex_wrap;
+					width: 50%;
+
+					.ej-showcase-image {
+						width: 50%;
+						height: 225px;
+					}
+
+					.ej-image {
+						img {
+							height: 100%;
+							width: 100%;
+							object-fit: cover;
+						}
+					}
+
+					@media (max-width: 991px) {
+						width: 100%;
+
+						.ej-showcase-image {
+							height: auto;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.ej-job-skills {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			display: inline-block;
+			margin: 0 4px 5px;
+		}
+	}
+
+	.ej-label {
+		padding: 10px 20px;
+		margin-bottom: 5px;
+		border-radius: 50px;
+		line-height: 1.42858;
+		font-size: 14px;
+		font-weight: 500;
+		display: inline-block;
+
+		&.ej-info-label {
+			background: rgba(47, 193, 225, 0.15);
+			color: #2fc1e1;
+		}
+
+		&.ej-success-label {
+			background: rgba(96, 206, 131, 0.15);
+			color: #60ce83;
+		}
+
+		&.ej-primary-label {
+			background: rgba(89, 125, 252, 0.15);
+			color: #597dfc;
+		}
+
+		&.ej-danger-label {
+			background: rgba(255, 95, 116, 0.15);
+			color: #ff5f74;
+		}
+
+		&.ej-warning-label {
+			background: rgba(255, 150, 53, 0.15);
+			color: #ff9635;
+		}
+	}
+
+	.ej-remote-label {
+		padding: 10px 20px;
+		background: rgba(89, 125, 252, 0.15);
+		color: #597dfc;
+		border-radius: 50px;
+		line-height: 1.42858;
+		font-size: 14px;
+		font-weight: 500;
+		display: inline-block;
+		margin-left: 8px;
+	}
+}
+
+.ej-template-default .easyjobs-details .ej-content-block ol {
+	padding-left: 12px;
+}
+
+.ej-template-classic .easyjobs-details .ej-content-block ol {
+	padding-left: 18px;
+}
+
+// default share logos
+@media (min-width: 1600.98px) {
+	.easyjobs-frontend-wrapper {
+		&.easyjobs-single-page {
+			padding: 40px !important;
+			overflow: hidden;
+
+			.ej-template-default {
+				.easyjobs-details {
+					.ej-job-header {
+						.ej-job-header-left {
+							.ej-job-overview {
+								.ej-job-overview-footer {
+									align-items: center;
+
+									.ej-btn {
+										padding: 14px 18px;
+									}
+
+									.ej-social-share {
+										.ej-social-share-title {
+											font-size: 14px;
+										}
+
+										ul {
+											li {
+												margin-left: 5px;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// default template
+@media (max-width: 1600.98px) {
+	.easyjobs-frontend-wrapper {
+		&.easyjobs-single-page {
+			padding: 40px !important;
+			overflow: hidden;
+
+			.ej-template-default {
+				.easyjobs-details {
+					.ej-job-header {
+						.ej-job-header-left {
+							.ej-job-overview {
+								.ej-job-overview-footer {
+									align-items: center;
+
+									.ej-btn {
+										padding: 14px 18px;
+									}
+
+									.ej-social-share {
+										.ej-social-share-title {
+											font-size: 14px;
+										}
+
+										ul {
+											li {
+												margin-left: 5px;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					.ej-job-body {
+						.ej-content-block {
+							h1 {
+								font-size: 1.875rem;
+
+								&::before {
+									height: 46px;
+									width: 46px;
+									min-width: 46px;
+									font-size: 20px;
+								}
+							}
+						}
+					}
+				}
+
+				// Header and body sections share one title size.
+				.ej-section-title {
+					.ej-section-title-icon {
+						height: 46px;
+						width: 46px;
+						min-width: 46px;
+						font-size: 20px;
+					}
+
+					.ej-section-title-text {
+						font-size: 1.875rem;
+					}
+				}
+			}
+		}
+	}
+}
+
+// default template
+@media (max-width: 991.98px) {
+	.easyjobs-frontend-wrapper {
+		&.easyjobs-single-page {
+			padding: 40px !important;
+
+			.ej-template-default {
+				.easyjobs-details {
+					.ej-job-header {
+						.ej-job-header-left {
+							.ej-job-overview {
+								.ej-job-overview-footer {
+									align-items: center;
+
+									.ej-btn {
+										padding: 14px 18px;
+									}
+
+									.ej-social-share {
+										.ej-social-share-title {
+											font-size: 14px;
+										}
+
+										ul {
+											li {
+												margin-left: 5px;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					.ej-job-body {
+						.ej-section-content {
+							.ej-content-block {
+								h1 {
+									font-size: 1.75rem;
+
+									&::before {
+										height: 40px;
+										width: 40px;
+										min-width: 40px;
+										font-size: 1rem;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				.ej-section-title {
+					.ej-section-title-icon {
+						height: 40px;
+						width: 40px;
+						min-width: 40px;
+						font-size: 1rem;
+					}
+
+					.ej-section-title-text {
+						font-size: 1.75rem;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 767.98px) {
+	.easyjobs-frontend-wrapper {
+		&.easyjobs-single-page {
+			padding: 30px !important;
+
+			// default template
+			.ej-template-default {
+				.easyjobs-details {
+					.ej-job-header {
+						padding: 0px;
+						display: block;
+
+						.ej-job-header-left {
+							.ej-job-overview {
+								padding: 20px !important;
+								margin: 20px 0px 0px 0px;
+
+								.ej-company-info {
+									margin: 0px;
+
+									.logo {
+										height: 80px;
+										width: 80px;
+										min-width: 80px;
+										margin: 0 0 10px 0;
+									}
+
+									h2 {
+										font-size: 1.25rem;
+									}
+								}
+							}
+						}
+
+						.ej-job-header-right {
+							.ej-content-block {
+								width: 100%;
+								padding-right: 10px;
+							}
+
+							.ej-section {
+								width: 100% !important;
+								padding: 0px !important;
+								margin-left: 0px !important;
+							}
+						}
+					}
+				}
+			}
+
+			// elegant template
+			.ej-template-elegant {
+				.ej-hero {
+					padding: 70px 0;
+				}
+			}
+		}
+	}
+}
+
+@media all and (max-width: 575px) {
+	.easyjobs-frontend-wrapper.easyjobs-single-page
+		.ej-template-default
+		.easyjobs-details
+		.ej-job-header
+		.ej-job-header-left {
+		width: 100% !important;
+	}
+}
+
+// default classic elegant (tempate)
+@media (max-width: 600px) {
+	.easyjobs-frontend-wrapper {
+		&.easyjobs-single-page {
+			padding: 20px !important;
+
+			// default
+			.ej-template-default {
+				.easyjobs-details {
+					.ej-job-header {
+						.ej-job-header-left {
+							flex: 1;
+
+							.ej-job-overview {
+								.ej-job-highlights {
+									margin: 0px 10px 0px 0px;
+
+									.ej-job-highlights-item {
+										display: block;
+										padding: 10px 0px;
+
+										.ej-job-highlights-item-label {
+											display: block;
+
+											&::after {
+												content: "";
+											}
+										}
+
+										.ej-job-highlights-item-value {
+											display: block;
+											padding: 5px 0;
+										}
+									}
+								}
+
+								.ej-job-overview-footer {
+									flex-direction: column-reverse;
+									// align-items: center;
+
+									.ej-btn {
+										padding: 14px 18px;
+									}
+
+									.ej-social-share {
+										margin-bottom: 40px;
+										margin-left: 0px;
+
+										.ej-social-share-title {
+											margin-top: 0px;
+										}
+
+										ul {
+											li {
+												margin-left: 5px;
+											}
+										}
+									}
+								}
+							}
+						}
+
+						.ej-job-header-right {
+							.ej-section {
+								.ej-section-content {
+									&.with-margin {
+										padding: 0px;
+										margin: 0px;
+
+										.ej-job-skills {
+											li {
+												.ej-info-label {
+													padding: 8px 10px;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					// One title offset for every section (header and body alike).
+					.ej-section-title {
+						.ej-section-title-text {
+							font-size: 18px !important;
+							margin-left: 12px;
+						}
+					}
+
+					.ej-job-body {
+						.ej-section-content {
+							.ej-content-block {
+								h2 {
+									font-size: 18px !important;
+									margin-left: 0px;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// classic
+			.ej-template-classic {
+				.ej-container {
+					padding: 0;
+
+					.ej-row {
+						.ej-col-lg-7 {
+							.easyjobs-details {
+								.job__title {
+									font-size: 25px;
+								}
+
+								.job__details__block {
+									.title {
+										font-size: 18px;
+									}
+
+									.company__description {
+										h2 {
+											font-size: 18px;
+										}
+									}
+								}
+							}
+						}
+
+						.ej-col-lg-5 {
+							.job__more__details {
+								padding: 30px;
+
+								.button {
+									padding: 14px 18px;
+								}
+
+								.infos {
+									flex-wrap: wrap;
+
+									.info {
+										width: 100%;
+										border: none;
+										padding: 10px 0;
+									}
+								}
+
+								.share__options {
+									p {
+										margin: 0px 10px 0px 0px;
+									}
+
+									ul {
+										li {
+											margin-right: 9px;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// elegant
+			.ej-template-elegant {
+				.hero__bg {
+					.ej-hero {
+						.job__title {
+							font-size: 25px;
+						}
+					}
+
+					.job__infos__block {
+						.meta {
+							.button {
+								padding: 14px 18px;
+							}
+						}
+					}
+				}
+
+				.job__details__block {
+					&.ej-content-block {
+						h3 {
+							&.title {
+								font-size: 18px;
+							}
+						}
+
+						.company__description {
+							h2 {
+								font-size: 18px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// Rich job/company content from easy.jobs (description, responsibilities, benefits).
+// Themes may set a light body weight (e.g. 300), which makes `bolder` render as 400,
+// so pin bold text to a real bold weight like the easy.jobs career page does.
+.easyjobs-shortcode-wrapper .ej-content-block,
+.easyjobs-shortcode-wrapper .company__description {
+	strong,
+	b {
+		font-weight: 700;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	// WordPress emoji images pasted into the content should stay inline, text-sized.
+	img.emoji,
+	img[src*="/images/core/emoji/"] {
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		margin: 0 0.07em;
+		vertical-align: -0.1em;
+		box-shadow: none;
+		border: none;
+	}
+}
+
+// Default template: section layout.
+.ej-template-default .easyjobs-details {
+	// The header column already has top padding; the first section needs no extra gap.
+	.ej-job-header-right > .ej-section:first-child {
+		margin-top: 0;
+	}
+
+	// The header column's full-bleed rules for .ej-content-block (negative margins
+	// below 1170px) must not pull content inside a section out of line.
+	.ej-job-header .ej-job-header-right .ej-section .ej-content-block {
+		width: auto;
+		margin-left: 0;
+	}
+
+	// The job title row doubles as the page H1 without changing its look.
+	.ej-job-title {
+		font: inherit;
+		color: inherit;
+		letter-spacing: inherit;
+		text-transform: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	// Link-styled button (it toggles content, it does not navigate).
+	.ej-read-more {
+		display: inline;
+		padding: 0;
+		margin: 0;
+		font: inherit;
+		font-weight: 500;
+		white-space: nowrap;
+		cursor: pointer;
+	}
+
+	.ej-company-description-full[hidden],
+	.ej-company-description-short[hidden] {
+		display: none;
+	}
+
+	// Phones: content sits flush with the section icon instead of a 70px indent.
+	@media (max-width: 767.98px) {
+		.ej-content-block > *:not(h1),
+		.ej-section-content.with-margin {
+			margin-left: 0;
+		}
+	}
+}
+
+// Company description "Read more" / "Show less" (default toggle button, classic
+// modal link): never underlined or restyled as a button, in any state. Themes
+// commonly underline links and restyle button:hover, so these must win.
+.easyjobs-shortcode-wrapper .ej-read-more,
+.easyjobs-shortcode-wrapper .about__company .ej-modal-trigger {
+	&,
+	&:link,
+	&:visited,
+	&:hover,
+	&:focus,
+	&:focus-visible,
+	&:active {
+		text-decoration: none !important;
+		border: 0 !important;
+		box-shadow: none !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+}
+
+// Fallback colours; the company brand colour (printed in wp_head by
+// Easyjobs_Public::easyjobs_brand_color_css()) overrides them.
+.easyjobs-shortcode-wrapper .ej-read-more {
+	&,
+	&:hover,
+	&:focus,
+	&:active {
+		color: #597dfc !important;
+	}
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
+.easyjobs-shortcode-wrapper .about__company .ej-modal-trigger {
+	&,
+	&:visited,
+	&:hover,
+	&:focus,
+	&:active {
+		color: #ff5f74 !important;
+	}
+}
+
+// Keyboard users still need to see focus; use an outline, not an underline.
+.easyjobs-shortcode-wrapper .ej-read-more,
+.easyjobs-shortcode-wrapper .about__company .ej-modal-trigger {
+	&:focus {
+		outline: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
+}

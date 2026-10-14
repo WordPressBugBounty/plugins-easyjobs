@@ -1,0 +1,333 @@
+.easy-page-body{
+  .form-group .quill{
+    display: flex !important;
+    height: auto !important;
+    flex-direction: column !important;
+    border-radius: 5px !important;
+    border: 1px solid #c6d3fd;
+    .ql-toolbar{
+      border-top: none !important;
+      border-left: none !important;
+      border-right: none !important;
+      background-color: #f5f7fd;
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+    }
+    .ql-container{
+      height: 18em !important;
+      border: none !important;
+      background-color: #f5f7fd;
+      border-bottom-left-radius: inherit;
+      border-bottom-right-radius: inherit;
+    }
+  }
+  .text-editor__nav{
+    a{
+      & + a{
+        margin-left: 5px;
+      }
+      &.active{
+        background: #587dfc;
+        color: #fff;
+      }
+    }
+  }
+  .form-group{
+    .react-select__input{
+      input{
+        border: 0;
+        &:focus{
+          border: 0;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+  .modal.resize-image-modal{
+    display: block;
+    z-index: 999999;
+    background: rgba(0,0,0,0.5);
+    .cropper-container{
+      position: relative;
+      min-height: 350px;
+    }
+  }
+  .form-box .form-group .thumbnail-upload{
+    height: 300px;
+  }
+  .Job-create-section .section-title-wrap .section-title{
+   flex: 1;
+   + div{
+     display: flex;
+   }
+ }
+  .modal.custom-fields, .modal.congrates-modal{
+    z-index: 9999991;
+    &.show{
+      display: block;
+    }
+  }
+  .modal-backdrop.show{
+    z-index: 99999;
+  }
+  .modal.custom-fields .custom-field-card{
+    height: calc(100% - 30px);
+    &.auto-height{
+      height: auto;
+    }
+  }
+  .custom-fields-status{
+    position: fixed;
+    right: -100%;
+    top: 50px;
+    font-size: 12px;
+    padding: 15px 20px;
+    border-radius: 3px;
+    color: #fff;
+    z-index: 9999999;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 20px rgba(0,0,0,0.25);
+    &.success-status{
+      background: #60ce83;
+    }
+    &.error-status{
+      background: #ff5f74;
+    }
+    &.show{
+      right: 10px;
+    }
+  }
+  .modal.congrates-modal{
+    img{
+      max-width: 300px;
+    }
+  }
+  .row{
+    justify-content: flex-start;
+  }
+  .ej-job-limit-alert{
+    margin-top: -30px;
+    position: relative;
+    i{
+      display: inline-block;
+      margin-right: 5px;
+    }
+    .close{
+      font-size: 14px;
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+  }
+  .ej-select-template-btn{
+    margin-left: 15px;
+  }
+  .select-option{
+    &.multiple{
+      height: auto;
+      .react-select__control{
+        height: auto;
+      }
+    }
+    &:after{
+      content: none;
+    }
+    .react-select__control{
+      padding-right: 0;
+      .react-select__indicators{
+        display: flex;
+        margin-right: 10px;
+        .react-select__indicator-separator{
+          display: none;
+        }
+        .react-select__dropdown-indicator{
+          color: #597dfc;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          padding: 0;
+          svg{
+            background: rgba(89,125,252,.1);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  .ej-job-templates{
+    .table-cell{
+      a{
+        display: block;
+      }
+    }
+  }
+}
+.easy-page-body .custom-fields .custom-field-card .checkbox input[type='checkbox']:disabled+span:before {
+  color: #a5f1bf !important;
+}
+.custom-field-card__body input:disabled + span {
+  cursor: not-allowed;
+}
+
+.basic-info .expire-date-button {
+  .btn {
+    line-height: 1;
+    font-size: 12px;
+    &:not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+}
+
+.job-card .job__pinned {
+  color: #fff;
+  width: 100px;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  height: 30px;
+  overflow: hidden;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  //background: #ff5f74;
+}
+.job-card .job__pinned.active {
+  background: #60ce83;
+}
+.job-card .job__pinned .follow__state {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  font-size: 12px;
+  color: #fff;
+  transition: all .2s ease;
+  opacity: .5;
+  visibility: hidden;
+}
+.job-card .job__pinned .follow__state.active {
+  opacity: 1;
+  visibility: visible;
+}
+.job-card .job__pinned .follow__state.follow__state--following {
+  background: #60ce83;
+  border: 1px solid #35ac5b;
+}
+.job-card .job__pinned .follow__state.follow__state--unfollow {
+  background: #A29597;
+  border: 1px solid #8f8688;
+}
+.job-card .job__pinned:hover .follow__state {
+  visibility: visible;
+  opacity: 1;
+}
+.job-card .job__pinned .follow__state:not(.active) {
+  z-index: 2;
+}
+
+
+
+.job-card .card-thumbnail .thumbnail__status {
+  padding: 5px 28px;
+}
+
+.custom-fields {
+  .custom-field-card {
+    .custom-field-header-col {
+      width: 150px;
+      min-width: 150px;
+      div:first-child {
+        min-width: 70px;
+      }
+      .ej-switch {
+        input {
+          &:checked {
+            & ~.switch__btn {
+              &::before {
+                left: 32px;
+              }
+              .off {
+                opacity: 0;
+              }
+            }
+          }
+          &:not(:checked) {
+            & ~.switch__btn {
+              .on {
+                opacity: 0;
+              }
+              .off {
+                left: auto;
+              }
+            }
+          }
+        }
+        .switch__btn {
+          height: 22px !important;
+          width: 50px;
+          &.disabled {
+            background: #888;
+            cursor: not-allowed;
+            .on,
+            .off {
+              font-size: 0;
+            }
+          }
+          &::before {
+            width: 14px;
+            height: 14px;
+            top: 4px;
+          }
+          .off,
+          .on {
+            font-size: .7rem;
+            padding: 3px 6px;
+            top: 0;
+            text-transform: uppercase;
+          }
+          .on {
+            left: 0;
+          }
+          .off {
+            right: 0;
+          }
+        }
+      }
+    }
+    .custom-field-card__body {
+      .sub-list {
+        li {
+          font-size: 14px;
+          margin-bottom: 5px;
+          &::before {
+            content: '-';
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }  
+}
+
+.react-select__menu-list .react-select__option {
+  cursor: pointer;
+}
+
+.easy-page-body .no-experience {
+  opacity: 0;
+  .ej-switch .switch__btn {
+    cursor: default;
+  }
+}

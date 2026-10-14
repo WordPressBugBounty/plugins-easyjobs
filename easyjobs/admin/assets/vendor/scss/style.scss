@@ -1,0 +1,2388 @@
+@import 'utilities/bootstrap-overwirte';
+@import 'variables';
+@import 'mixins/media';
+@import 'reboot';
+@import 'functions';
+@import 'mixins/transition';
+@import 'mixins/hover-focus';
+@import 'utilities/background&color';
+@import 'utilities/button';
+@import 'utilities/dropdown';
+@import 'utilities/login';
+@import 'utilities/utilities';
+@import 'utilities/form';
+@import 'utilities/multiselect';
+@import 'utilities/conversation';
+@import 'utilities/pagination';
+@import 'utilities/modal';
+
+.easy-page-body {
+	display: flex;
+	.content-area {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		background: $light;
+		min-height: 100vh;
+		width: 100%;
+		@include respond-below(xl) {
+			min-width: calc(100% - 260px);
+		}
+		@include respond-below(lg) {
+			width: calc(100% - 75px);
+		}
+		@include respond-below(md) {
+			width: calc(100% - 50px);
+		}
+		// body header
+		&__header {
+			padding: 25px 20px;
+			background-color: $white;
+			align-items: center;
+			@include respond-below(md) {
+				padding: 15px !important;
+			}
+			@include respond-below(sm) {
+				padding: 10px !important;
+				left: 50px;
+			}
+			.button {
+				height: 50px;
+				padding-top: 0;
+				padding-bottom: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				line-height: 1.1;
+				margin-right: 20px;
+				@include respond-below(md) {
+					padding: 10px 12px;
+					min-height: 40px;
+					height: 40px;
+					margin-right: 10px;
+				}
+				@include respond-below(sm) {
+					padding: 8px 10px;
+					min-height: 25px;
+					height: 25px;
+					font-size: 0.625em;
+					margin-right: 5px;
+				}
+				@include respond-below(xs) {
+					font-size: 0.5em;
+					line-height: 1;
+					padding: 0 5px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+			}
+			.profile-control {
+				display: flex;
+				align-items: center;
+				> .button {
+					padding: 5px 0;
+					display: flex;
+					align-items: center;
+					text-transform: unset !important;
+					.company-logo {
+						height: 40px;
+						width: 40px;
+						min-width: 40px;
+						overflow: hidden;
+						border-radius: $b-radius-1;
+						img {
+							height: 100%;
+						}
+						@include respond-below(md) {
+							height: 30px;
+							width: 30px;
+							min-width: 30px;
+						}
+						@include respond-below(sm) {
+							height: 25px;
+							width: 25px;
+							min-width: 25px;
+						}
+					}
+					.company-name {
+						font-size: 1.25em;
+						font-weight: 500;
+						margin-left: 10px;
+						color: $secondary;
+						@include respond-below(lg) {
+							font-size: 1em;
+						}
+						@include respond-below(sm) {
+							font-size: 0.75em;
+							margin-left: 5px;
+						}
+					}
+					@include respond-below(md) {
+						min-height: 40px;
+						height: 40px;
+					}
+					@include respond-below(sm) {
+						padding: 0;
+						min-height: 25px;
+						height: 25px;
+					}
+				}
+			}
+		}
+		&__body {
+			flex: 1;
+			padding: 0 30px 50px;
+			@include respond-below(xl) {
+				padding-bottom: 30px;
+			}
+			@include respond-below(md) {
+				padding: 0 15px 15px;
+			}
+			// counter
+			.counter-box {
+				@include respond-below(xxl) {
+					.row-cols-md-4 {
+						margin-bottom: -15px;
+						margin-left: -7.5px;
+						margin-right: -7.5px;
+						.col {
+							padding-left: 7.5px;
+							padding-right: 7.5px;
+							margin-bottom: 15px;
+						}
+					}
+				}
+				@include respond-below(xl) {
+					.row-cols-md-4 {
+						.col {
+							flex: 0 0 50%;
+							max-width: 50%;
+						}
+					}
+				}
+				.counter__card {
+					@extend .info-card;
+					padding: 20px;
+					display: flex;
+					align-items: center;
+					height: 100%;
+					@include respond-below(xxl) {
+						padding: 15px;
+					}
+					@include respond-below(md) {
+						padding: 10px;
+					}
+					.counter__card__icon {
+						font-size: 2.875em;
+						height: 100px;
+						min-width: 100px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						border-radius: $b-radius-3;
+						@include respond-below(hl) {
+							height: 75px;
+							min-width: 75px;
+							font-size: 2.25em;
+						}
+						@include respond-between(xl, xxl) {
+							height: 70px;
+							min-width: 70px;
+							font-size: 2.25em;
+						}
+						@include respond-below(xs) {
+							height: 40px;
+							min-width: 40px;
+							font-size: 1.25em;
+							border-radius: $b-radius-2;
+						}
+					}
+					.counter__card__text {
+						margin-left: 20px;
+						@include respond-between(lg, xxl) {
+							margin-left: 15px;
+						}
+						@include respond-below(md) {
+							margin-left: 15px;
+						}
+						@include respond-below(xs) {
+							margin-left: 7px;
+						}
+						h4 {
+							font-weight: 600;
+							font-size: 1.875em;
+							margin-bottom: 10px;
+							color: $dark;
+							@include respond-between(xxl, hl) {
+								font-size: 1.75em;
+								margin-bottom: 5px;
+							}
+							@include respond-between(lg, xxl) {
+								font-size: 1.625em;
+								margin-bottom: 5px;
+								line-height: 1.3;
+							}
+							@include respond-below(md) {
+								font-size: 1.75em;
+								margin-bottom: 5px;
+							}
+							@include respond-below(xs) {
+								font-size: 1.125em;
+								margin-bottom: 0;
+							}
+						}
+						p {
+							font-size: 1em;
+							font-weight: 500;
+							color: $secondary;
+							text-transform: capitalize;
+							@include respond-between(xxl, hl) {
+								font-size: 0.875em;
+							}
+							@include respond-between(lg, xxl) {
+								font-size: 0.875em;
+								margin-bottom: 5px;
+								line-height: 1.3;
+							}
+							@include respond-below(md) {
+								font-size: 0.875em;
+							}
+							@include respond-below(xs) {
+								font-size: 0.625em;
+							}
+						}
+					}
+				}
+			}
+
+			// user list
+			.user-list {
+				@include respond-below(hl) {
+					.row-cols-xl-5 {
+						margin-bottom: -30px;
+						justify-content: center;
+						.col {
+							max-width: 33.333333%;
+							flex: 0 0 33.333333%;
+							margin-bottom: 30px;
+						}
+					}
+				}
+				@include respond-below(xl) {
+					.row-cols-xl-5 {
+						.col {
+							max-width: 50%;
+							flex: 0 0 50%;
+						}
+					}
+				}
+				@include respond-below(md) {
+					.row-cols-xl-5 {
+						margin-bottom: -15px;
+						margin-left: -7.5px;
+						margin-right: -7.5px;
+						.col {
+							padding-left: 7.5px;
+							padding-right: 7.5px;
+							margin-bottom: 15px;
+						}
+					}
+				}
+				@include respond-below(xs) {
+					.row-cols-xl-5 {
+						.col {
+							flex: 0 0 100%;
+							max-width: 100%;
+						}
+					}
+				}
+			}
+			.user-card {
+				@extend .info-card;
+				height: 100%;
+				position: relative;
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				.user-picture {
+					width: 100px;
+					height: 100px;
+					border-radius: $b-radius-100;
+					overflow: hidden;
+					img {
+						width: 100%;
+					}
+					@include respond-below(md) {
+						height: 70px;
+						width: 70px;
+					}
+				}
+				.user-info {
+					text-align: center;
+					h5 {
+						margin-top: 20px;
+						font-size: 1.125em;
+						font-weight: 500;
+						margin-bottom: 8px;
+						@include respond-below(md) {
+							margin-top: 5px;
+							font-size: 1em;
+							margin-bottom: 5px;
+						}
+					}
+					p {
+						font-size: 0.875em;
+						font-weight: 500;
+						margin-bottom: 20px;
+						color: $secondary;
+						@include respond-below(md) {
+							font-size: 0.75em;
+							margin-bottom: 5px;
+						}
+					}
+					&.user-info__list {
+						li {
+							display: flex;
+							justify-content: flex-start;
+							text-align: left;
+							margin-bottom: 30px;
+							@include respond-below(md) {
+								margin-bottom: 15px;
+							}
+							.user-icon {
+								height: 50px;
+								width: 50px;
+								min-width: 50px;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								font-size: 1.25em;
+								border-radius: $b-radius-2;
+								background: rgba($primary, $button-icon-opacity);
+								color: $primary;
+								@include respond-below(md) {
+									height: 30px;
+									width: 30px;
+									min-width: 30px;
+									font-size: 0.875em;
+								}
+							}
+							.user-text {
+								display: flex;
+								flex-direction: column;
+								justify-content: space-between;
+								margin-left: 15px;
+								p {
+									margin-bottom: 0;
+									word-break: break-word;
+									color: $dark;
+									&.user-text__label {
+										color: $secondary;
+									}
+								}
+							}
+						}
+					}
+				}
+				.user__ratting {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+					font-weight: 500;
+					display: block;
+					font-size: 0.75em;
+					@include respond-below(md) {
+						top: 15px;
+						right: 15px;
+					}
+					@include respond-below(xs) {
+						top: 10px;
+						right: 10px;
+					}
+					&.user__ratting--removable {
+						cursor: pointer;
+						&:hover {
+							filter: brightness(0.95);
+						}
+					}
+				}
+				.pipeline-action {
+					.button {
+						min-width: 200px;
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						padding-left: 15px;
+						padding-right: 15px;
+					}
+					.dropdown-menu {
+						min-width: 200px;
+						z-index: 500 !important;
+					}
+					&.selected {
+						.button {
+							background: $success !important;
+							box-shadow: 0 10px 10px rgba($success, $shadow-opacity) !important;
+						}
+					}
+					&.rejected {
+						.button {
+							background: $danger !important;
+							box-shadow: 0 10px 10px rgba($danger, $shadow-opacity) !important;
+						}
+					}
+				}
+			}
+
+			// data table
+			.data-table {
+				.table-wrap {
+					margin-left: -2px;
+					margin-right: -2px;
+					margin-top: -20px;
+					margin-bottom: -20px;
+					@include respond-below(xl) {
+						margin-top: -15px;
+						margin-bottom: -15px;
+					}
+					.table {
+						display: table;
+						margin-bottom: 0;
+						border-collapse: separate;
+						border-spacing: 2px 20px;
+						font-size: 1.125em;
+						font-weight: 500;
+						width: 100%;
+						@include respond-below(hl) {
+							font-size: 1em;
+						}
+						@include respond-below(xl) {
+							border-spacing: 2px 15px;
+						}
+						.table__row {
+							display: table-row;
+							background: $white;
+							&.table__head {
+								background: $white;
+								height: 50px;
+								border-radius: $b-radius-3;
+								box-shadow: 0 0 10px $border-color;
+								.table-cell {
+									padding-top: 0;
+									padding-bottom: 0;
+									color: $dark;
+									font-weight: 600;
+								}
+							}
+							.table-cell {
+								display: table-cell;
+								padding: 25px 20px;
+								@include respond-below(xxl) {
+									padding: 15px;
+								}
+								@include respond-below(xl) {
+									padding: 12px;
+								}
+								vertical-align: middle;
+								&:first-child {
+									border-top-left-radius: $b-radius-3;
+									border-bottom-left-radius: $b-radius-3;
+								}
+								&:last-child {
+									border-top-right-radius: $b-radius-3;
+									border-bottom-right-radius: $b-radius-3;
+								}
+								small {
+									font-size: 0.78em;
+									font-weight: 500;
+									opacity: $small-opacity;
+									&:before {
+										content: '( ';
+									}
+									&:after {
+										content: ' )';
+									}
+								}
+								&.designation {
+									line-height: 1.3;
+									@include respond-below(md) {
+										width: 100%;
+										font-weight: 600;
+										&:nth-child(2) {
+											text-align: right;
+										}
+									}
+								}
+								&.applicant-list {
+									min-width: 310px;
+									@include respond-below(hl) {
+										min-width: 210px;
+									}
+									@include respond-below(xxl) {
+										min-width: 135px;
+									}
+									@include respond-below(xl) {
+										min-width: 130px;
+									}
+									@include respond-below(lg) {
+										min-width: 110px;
+									}
+									@include respond-below(md) {
+										width: calc(100% - 120px);
+									}
+									.applicant-list__wrap {
+										display: flex;
+										@include respond-below(hl) {
+											flex-direction: column;
+											align-items: flex-start;
+											small {
+												margin-top: 5px;
+											}
+										}
+										justify-content: space-between;
+										align-items: center;
+										.applicants__img {
+											display: flex;
+											p,
+											img {
+												height: 50px;
+												width: 50px;
+												min-width: 50px;
+												padding: 0;
+												margin: 0;
+												background-color: $light;
+												border-radius: $b-radius-100;
+												border: 2px solid $white;
+												color: $secondary;
+												display: flex;
+												align-items: center;
+												justify-content: center;
+												box-shadow: 0 5px 5px rgba($secondary, $sub-button-opacity);
+												&:not(:first-child) {
+													margin-left: -25px;
+												}
+												@include respond-below(xxl) {
+													height: 40px;
+													width: 40px;
+													min-width: 40px;
+												}
+												@include respond-below(lg) {
+													height: 30px;
+													width: 30px;
+													min-width: 30px;
+													&:not(:first-child) {
+														margin-left: -17px;
+													}
+												}
+											}
+										}
+										small {
+											@include respond-below(xxl) {
+												display: none;
+											}
+										}
+									}
+								}
+								&.job__status {
+									text-align: center;
+									width: 160px;
+									span {
+										padding-left: 7px;
+										padding-right: 7px;
+									}
+									@include respond-below(hl) {
+										width: 140px;
+									}
+									@include respond-below(xxl) {
+										width: 90px;
+										span {
+											padding: 6px 10px;
+											font-size: 0.75em;
+										}
+									}
+									@include respond-below(md) {
+										margin-left: auto;
+										width: 120px;
+										margin-top: 2px;
+										.semi-button {
+											font-size: 0.78em;
+										}
+									}
+									span {
+										width: 100%;
+									}
+								}
+								&.job__deadline {
+									width: 200px;
+									@include respond-below(hl) {
+										width: 150px;
+									}
+									@include respond-below(xxl) {
+										width: 135px;
+									}
+									@include respond-below(xl) {
+										width: 110px;
+										font-size: 0.875em;
+										small {
+											font-size: 0.75em;
+										}
+									}
+									@include respond-below(md) {
+										width: 50%;
+										font-size: 0.75em;
+									}
+									@include respond-below(xs) {
+										width: 100%;
+									}
+									.deadline__text {
+										display: flex;
+										justify-content: center;
+										text-align: center;
+										align-items: center;
+										display: flex;
+										flex-direction: column;
+										@include respond-below(md) {
+											justify-content: flex-start;
+											flex-direction: row;
+											align-items: center;
+											small {
+												margin-left: 5px;
+											}
+										}
+										p {
+											// font-size: 0.721em;
+											font-size: 0.875em;
+										}
+									}
+								}
+								&.author-action {
+									width: 200px;
+									@include respond-below(xxl) {
+										width: 175px;
+										.social-button {
+											&:not(:last-child) {
+												margin-right: 5px;
+											}
+										}
+									}
+									@include respond-below(xl) {
+										width: 140px;
+										.social-button {
+											width: 30px;
+											height: 30px;
+											line-height: 32px;
+											font-size: 1em;
+											&:not(:last-child) {
+												margin-right: 5px;
+											}
+										}
+									}
+									@include respond-below(md) {
+										width: 50%;
+										text-align: right;
+									}
+									@include respond-below(xs) {
+										width: 100%;
+										text-align: right;
+									}
+								}
+								&.user__info {
+									.user__image {
+										width: 40px;
+										min-width: 40px;
+										height: 40px;
+										border-radius: $b-radius-100;
+										overflow: hidden;
+										img {
+											display: block;
+										}
+										@include respond-below(md) {
+											width: 30px;
+											min-width: 30px;
+											height: 30px;
+										}
+										@include respond-below(xs) {
+											width: 20px;
+											min-width: 20px;
+											height: 20px;
+										}
+									}
+									.user__name {
+										font-size: 0.875em;
+										font-weight: 500;
+										margin-left: 15px;
+										@include respond-below(hl) {
+											margin-left: 10px !important;
+										}
+									}
+									@include respond-below(md) {
+										width: 100%;
+									}
+								}
+								&.user__email {
+									font-size: 0.875em;
+									font-weight: 500;
+									margin-left: 15px;
+									@include respond-below(md) {
+										width: 100%;
+										margin-left: 0;
+									}
+								}
+								&.user__role {
+									min-width: 190px;
+									@include respond-below(hl) {
+										min-width: 100px;
+										text-align: center;
+										line-height: 1.25;
+										.d-flex {
+											flex-direction: column;
+											.semi-role {
+												margin-top: 5px;
+											}
+										}
+									}
+									@include respond-below(md) {
+										width: calc(100% - 90px);
+										margin-left: 0;
+										.d-flex {
+											flex-direction: row;
+											span {
+												margin-top: 0 !important;
+											}
+										}
+									}
+									font-size: 0.875em;
+									font-weight: 500;
+									margin-left: 15px;
+									.semi-role {
+										line-height: 1.5;
+										font-size: 0.875em;
+										padding: 5px 15px;
+									}
+								}
+								&.user-action {
+									width: 250px;
+									@include respond-below(hl) {
+										width: 90px;
+										.control-button {
+											span {
+												display: none;
+											}
+											&:not(:last-child) {
+												margin-right: 5px;
+											}
+										}
+									}
+								}
+								&.apply-action {
+									width: 205px;
+									@include respond-below(xxl) {
+										width: 190px;
+										min-width: 190px;
+										.button {
+											padding-left: 0;
+											padding-right: 0;
+											display: block;
+										}
+									}
+									@include respond-below(xl) {
+										width: 170px;
+										min-width: 170px;
+									}
+									@include respond-below(lg) {
+										width: 155px;
+										min-width: 155px;
+									}
+									@include respond-below(md) {
+										min-width: 140px;
+										margin-left: auto;
+									}
+								}
+								&.candidate-apply-time {
+									width: 200px;
+									text-align: center;
+									@include respond-below(xl) {
+										display: none !important;
+									}
+								}
+								&.pipeline-counter{
+									min-width: 75px;
+									text-align: center;
+									@include respond-below(hl) {
+										width: 60px;
+									}
+									@include respond-below(md) {
+										display: none !important;
+									}
+								}
+								&.pipeline-name {
+									@include respond-below(lg) {
+										min-width: 120px;
+									}
+									@include respond-below(md) {
+										order: 2;
+										font-weight: 600;
+									}
+								}
+								&.pipeline-steps {
+									ul {
+										li {
+											display: inline-block;
+											&:not(:last-child):after {
+												content: '>>';
+												display: inline-block;
+												margin-left: 5px;
+											}
+										}
+									}
+									@include respond-below(lg) {
+										min-width: 250px;
+									}
+									@include respond-below(md) {
+										width: 100%;
+										order: 1;
+									}
+								}
+								&.pipeline-action {
+									width: 250px;
+									.semi-button {
+										min-width: 80px;
+										&:not(:last-child) {
+											margin-right: 10px;
+										}
+									}
+									@include respond-below(hl) {
+										width: 210px;
+									}
+									@include respond-below(lg) {
+										width: 160px;
+										.semi-button {
+											min-width: 60px;
+										}
+									}
+									@include respond-below(md) {
+										order: 3;
+										margin-left: auto;
+									}
+								}
+								&.user-rate {
+									width: 130px;
+									min-width: 130px;
+									@include respond-below(lg) {
+										width: 110px;
+										min-width: 110px;
+									}
+									@include respond-below(md) {
+										margin-left: auto;
+										margin-top: 3px;
+									}
+								}
+								&.job-vacancies-no {
+									width: 150px;
+									text-align: center;
+									@include respond-below(hl) {
+										width: 130px;
+									}
+									@include respond-below(xxl) {
+										display: none;
+									}
+									@include respond-below(md) {
+										display: none !important;
+									}
+								}
+							}
+						}
+						@include respond-below(md) {
+							font-size: 0.875em;
+						}
+					}
+					@include respond-below(md) {
+						margin: 0 !important;
+						.table {
+							display: block;
+							border-spacing: 0 !important;
+							.table__row {
+								display: flex !important;
+								border-radius: $b-radius-2 !important;
+								flex-wrap: wrap;
+								height: unset !important;
+								&:not(:last-child) {
+									margin-bottom: 10px;
+								}
+								&.table__head {
+									display: none !important;
+								}
+								.table-cell {
+									display: block !important;
+									border-bottom: 1px solid $light;
+									padding: 5px 10px;
+									&.pay-counter {
+										display: none !important;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// tab card
+			.tab__card {
+				display: flex;
+				overflow: hidden;
+				.tab__control {
+					flex: 1;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					font-size: 1.0675em;
+					font-weight: 500;
+					padding: 15px;
+					background: $white;
+					color: $secondary;
+					.tab__control__text {
+						margin-left: 10px;
+					}
+					&.active {
+						color: $dark;
+					}
+					&:not(:last-of-type) {
+						border-right: 2px solid $light;
+					}
+					@include respond-between(xxl, hl) {
+						font-size: 1em;
+						padding: 10px;
+						.tab__control__text {
+							margin-left: 5px;
+						}
+					}
+					@include respond-below(md) {
+						font-size: 0.75em;
+						padding: 10px 5px;
+						.tab__control__text {
+							margin-left: 5px;
+						}
+					}
+					@include respond-below(xs) {
+						font-size: 0.625em;
+						padding: 10px 5px;
+						flex-direction: column;
+						.tab__control__text {
+							margin-left: 0;
+						}
+					}
+				}
+			}
+			// details card
+			.details__card {
+				background: $white;
+				border-radius: $b-radius-3;
+				.details__card__head {
+					padding: 20px 30px;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					border-bottom: 2px solid $light;
+					h4 {
+						text-transform: uppercase;
+						font-size: 1.0675em;
+					}
+					p {
+						font-size: 0.875em;
+						color: $secondary;
+						span {
+							color: $primary;
+						}
+					}
+					&.nav.nav-pills{
+						padding: unset!important;
+						.tab--toggler{
+							background: $white;
+							color: $dark;
+							flex: 1;
+							display: flex;
+							padding: 15px 5px;
+							justify-content: center;
+							text-align: center;
+							font-weight: 600;
+							&.active{
+								color: $primary;
+								background: rgba($primary, $sub-button-opacity);
+							}
+						}
+					}
+					@include respond-below(md) {
+						padding: 7.5px 15px;
+						h4 {
+							font-size: 0.875em;
+						}
+						p {
+							font-size: 0.75em;
+						}
+					}
+					@include respond-below(xs) {
+						p {
+							font-size: 0.5em;
+						}
+					}
+				}
+				&__body {
+					padding: 30px;
+					@include respond-below(md) {
+						padding: 7.5px 15px;
+						font-size: 0.875em;
+					}
+					@include respond-below(xs) {
+						font-size: 0.6875em;
+					}
+					.total-mark-obtained {
+						h3 {
+							color: $secondary;
+							font-weight: 600;
+							font-size: 2.5em;
+							@include respond-below(md) {
+								font-size: 2em;
+							}
+						}
+						p {
+							font-size: 1em;
+							font-weight: 500;
+							color: $secondary;
+							text-transform: capitalize;
+							@include respond-below(md) {
+								font-size: 0.625em;
+							}
+						}
+					}
+					.details__text__pre {
+						white-space: pre-line;
+					}
+					.info__list {
+						li {
+							position: relative;
+							padding-left: 40px;
+							font-weight: 500;
+							line-height: 1.25;
+							@include respond-below(hl) {
+								&.label__full {
+									p {
+										font-size: 0.8125em;
+									}
+								}
+							}
+							@include respond-below(md) {
+								padding-left: 20px;
+							}
+							&:before {
+								position: absolute;
+								content: '';
+								left: 20px;
+								top: 9px;
+								width: 10px;
+								height: 10px;
+								background: $secondary;
+								border-radius: $b-radius-100;
+								@include respond-below(md) {
+									left: 10px;
+									top: 6px;
+									width: 5px;
+									height: 5px;
+								}
+							}
+							&.label__full:before {
+								top: 25px;
+								@include respond-below(md) {
+									top: 14px;
+								}
+							}
+							&:not(:last-child) {
+								margin-bottom: 10px;
+							}
+						}
+						&.question-answer {
+							li {
+								.question {
+									@include respond-below(hl) {
+										font-size: 0.875em;
+									}
+								}
+								.answer {
+									@include respond-below(hl) {
+										font-size: 0.8em;
+									}
+								}
+							}
+						}
+					}
+					.form-action {
+						display: flex;
+						justify-content: space-between;
+						> * {
+							width: calc(50% - 10px);
+						}
+						&--right-view {
+							display: flex;
+							justify-content: flex-end;
+							align-items: center;
+							.attached-file-name {
+								text-align: right;
+								color: $primary;
+								text-decoration: underline;
+								&:before {
+									content: '[';
+									display: inline-block;
+								}
+								&:after {
+									content: ']';
+									display: inline-block;
+								}
+								@include respond-between(xxl, hl) {
+									font-size: 0.75em;
+								}
+								@include respond-below(xs) {
+									font-size: 0.5em;
+								}
+							}
+							> * {
+								min-width: 120px;
+								&:not(:last-child) {
+									margin-right: 20px;
+								}
+								@include respond-below(md) {
+									min-width: 80px;
+									&:not(:last-child) {
+										margin-right: 10px;
+									}
+								}
+								@include respond-below(xs) {
+									min-width: 60px;
+									padding: 10px 7.5px;
+								}
+							}
+						}
+					}
+				}
+				&__footer {
+					border-top: 2px solid $light;
+					padding: 15px 30px;
+					background: $white;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					@include respond-below(md) {
+						padding: 7.5px 15px;
+						font-size: 0.875em;
+					}
+				}
+				.note-info {
+					position: relative;
+					.label__full--eraseble {
+						padding: 15px;
+						border-radius: $b-radius-2;
+						color: $secondary;
+						font-size: 0.75em;
+						white-space: pre-line;
+						@include transition;
+						span {
+							color: $dark;
+							font-weight: 500;
+						}
+					}
+					.note-admin-info {
+						display: flex;
+						justify-content: space-between;
+						font-size: 0.75em;
+						font-weight: 500;
+						margin-top: 10px;
+						color: $dark;
+						opacity: $small-opacity;
+						span {
+							color: $secondary;
+						}
+					}
+					.erase-button {
+						position: absolute;
+						@include transition;
+						top: -12px;
+						right: -12px;
+						visibility: hidden;
+						opacity: 0;
+						@include respond-below(xl) {
+							visibility: visible;
+							opacity: 1;
+						}
+					}
+					&:hover {
+						.erase-button {
+							visibility: visible;
+							opacity: 1;
+						}
+					}
+					&:not(:last-child) {
+						margin-bottom: 30px;
+					}
+				}
+				&:not(:last-of-type) {
+					margin-bottom: 30px;
+				}
+			}
+			.applicant-details {
+				.order-3 {
+					.details__card:last-of-type {
+						height: 100%;
+					}
+				}
+				@include respond-between(xxl, hl) {
+					.user-card {
+						padding: 20px;
+						.social-button {
+							height: 35px;
+							width: 35px;
+							line-height: 37px;
+						}
+					}
+					.details__card__head,
+					.details__card__body {
+						padding: 20px;
+					}
+				}
+				@include respond-below(xxl) {
+					.order-1 {
+						max-width: 50%;
+						flex: 0 0 50%;
+						order: 1;
+						padding-right: 7.5px !important;
+					}
+					.order-2 {
+						max-width: 100%;
+						flex: 0 0 100%;
+						order: 3;
+						margin-top: 15px;
+						padding-right: 15px !important;
+					}
+					.order-3 {
+						padding-left: 7.5px !important;
+						max-width: 50%;
+						flex: 0 0 50%;
+						order: 2;
+						display: flex;
+						flex-direction: column;
+					}
+				}
+				@include respond-below(xs) {
+					.order-1 {
+						max-width: 100%;
+						flex: 0 0 100%;
+						order: 1;
+						padding-right: 15px !important;
+					}
+					.order-2 {
+						max-width: 100%;
+						flex: 0 0 100%;
+						order: 3;
+						margin-top: 15px;
+						padding-right: 15px !important;
+					}
+					.order-3 {
+						padding-left: 15px !important;
+						max-width: 100%;
+						flex: 0 0 100%;
+						margin-top: 15px;
+					}
+				}
+			}
+
+			.published-jobs {
+				.pipeline-action {
+					.button {
+						display: flex;
+						min-width: 200px;
+						padding-left: 15px;
+						padding-right: 15px;
+						display: flex;
+						align-items: center;
+						&:after {
+							margin-left: auto !important;
+						}
+						@include respond-below(md) {
+							min-width: 150px;
+						}
+					}
+					.dropdown-menu {
+						min-width: 200px !important;
+					}
+				}
+				@include respond-below(xl) {
+					.row-cols-lg-2 {
+						.col {
+							flex: 0 0 100%;
+							max-width: 100%;
+						}
+					}
+				}
+			}
+
+			// job card
+			.job-card {
+				background: $white;
+				border-radius: $b-radius-3;
+				height: calc(100% - 30px);
+				margin-bottom: 30px;
+				.card-thumbnail {
+					margin: 0 12px;
+					border-top: 20px solid $white;
+					height: 280px;
+					position: relative;
+					background-repeat: no-repeat;
+					background-position: center;
+					background-attachment: scroll;
+					background-size: cover;
+					.card-control {
+						position: absolute;
+						top: calc(100% - 15px);
+						right: 0;
+						padding-right: 18px;
+						display: flex;
+						align-items: center;
+						.control-button {
+							@include respond-between(xl, xxl) {
+								span {
+									display: none;
+								}
+							}
+						}
+						.dropdown-menu-center {
+							transform: translate3D(calc(-50% + 40px), 30px, 0) !important;
+							@include respond-below(xs) {
+								transform: translate3D(calc(-100% + 30px), 30px, 0) !important;
+							}
+						}
+						.job-control-more {
+							.control-button {
+								margin-right: 0 !important;
+							}
+						}
+					}
+					@include respond-below(hl) {
+						height: 250px;
+					}
+					@include respond-below(xl) {
+						height: 300px;
+					}
+					@include respond-below(lg) {
+						height: 250px;
+					}
+					@include respond-below(xs) {
+						height: 160px;
+					}
+				}
+				.card-content {
+					padding: 30px;
+					display: flex;
+					justify-content: space-between;
+					@include respond-below(xs) {
+						flex-wrap: wrap;
+					}
+					.card-content__left {
+						.card-title {
+							color: $dark;
+							margin-bottom: 10px;
+							font-size: 1.5em;
+							line-height: 1.5;
+							font-weight: 600;
+							@include respond-below(xs) {
+								font-size: 1.125em;
+							}
+						}
+						.card-sub-title {
+							color: $dark;
+							margin-bottom: 20px;
+							font-size: 1.125em;
+							line-height: 1.5;
+							font-weight: 600;
+							@include respond-below(xs) {
+								font-size: 1em;
+							}
+						}
+						.card-info-group {
+							display: flex;
+							align-items: center;
+							@include respond-between(xl, hl) {
+								flex-direction: column;
+								align-items: flex-start;
+							}
+							@include respond-below(md) {
+								flex-direction: column;
+								align-items: flex-start;
+							}
+							.card-info {
+								position: relative;
+								padding-left: 12px;
+								margin-right: 20px;
+								font-size: 0.875em;
+								color: $secondary;
+								font-weight: 500;
+								&:before {
+									position: absolute;
+									top: 6px;
+									left: 0;
+									content: '';
+									height: 8px;
+									width: 8px;
+									border-radius: $b-radius-100;
+									display: inline-block;
+									background: $primary;
+									@include respond-below(xs) {
+										top: 4px;
+									}
+								}
+							}
+						}
+						@include respond-below(xs) {
+							width: 100%;
+						}
+					}
+					.card-content__right {
+						text-align: end;
+						padding-top: 10px;
+						p {
+							color: $secondary;
+							font-weight: 500;
+							margin-bottom: 10px;
+						}
+						.applicants__img {
+							display: flex;
+							justify-content: flex-end;
+							p,
+							img {
+								height: 50px;
+								width: 50px;
+								min-width: 50px;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								line-height: 50px;
+								padding: 0;
+								margin: 0;
+								background-color: $light;
+								border-radius: $b-radius-100;
+								border: 2px solid $white;
+								color: $secondary;
+								box-shadow: 0 5px 5px rgba($secondary, $sub-button-opacity);
+								&:not(:first-child) {
+									margin-left: -20px;
+								}
+								@include respond-below(md) {
+									height: 40px;
+									width: 40px;
+									min-width: 40px;
+									font-size: 0.875em;
+									&:not(:first-child) {
+										margin-left: -15px;
+									}
+								}
+							}
+							@include respond-between(xxl, hl) {
+								min-width: 115px;
+								flex-wrap: wrap;
+							}
+							@include respond-below(md) {
+								min-width: 90px;
+								flex-wrap: wrap;
+							}
+						}
+						@include respond-below(xs) {
+							width: 100%;
+						}
+					}
+				}
+				@include respond-below(md) {
+					margin-bottom: 15px;
+					height: calc(100% - 15px);
+				}
+			}
+
+			.user-list.total-candidates {
+				@include respond-below(hl) {
+					.row-cols-xl-5 {
+						margin-bottom: -30px;
+						justify-content: flex-start;
+						.col {
+							max-width: 25%;
+							flex: 0 0 25%;
+							margin-bottom: 30px;
+						}
+					}
+				}
+				@include respond-below(xl) {
+					.row-cols-xl-5 {
+						.col {
+							max-width: 33.333333%;
+							flex: 0 0 33.333333%;
+						}
+					}
+				}
+				@include respond-below(md) {
+					.row-cols-xl-5 {
+						.col {
+							max-width: 50%;
+							flex: 0 0 50%;
+						}
+					}
+				}
+				@include respond-below(md) {
+					.row-cols-xl-5 {
+						margin-bottom: -15px;
+						margin-left: -7.5px;
+						margin-right: -7.5px;
+						.col {
+							padding-left: 7.5px;
+							padding-right: 7.5px;
+							margin-bottom: 15px;
+						}
+					}
+				}
+				@include respond-below(xs) {
+					.row-cols-xl-5 {
+						.col {
+							flex: 0 0 100%;
+							max-width: 100%;
+						}
+					}
+				}
+			}
+
+			.candidates-section {
+				.section-title-wrap {
+					flex-wrap: wrap;
+					> * {
+						margin-bottom: 5px;
+					}
+				}
+			}
+			.candidates-box {
+				display: flex;
+				.candidates-filter-box {
+					width: 300px;
+					@include respond-below(hl) {
+						width: 250px;
+					}
+					@include respond-below(lg) {
+						width: 180px;
+					}
+					@include respond-below(md) {
+						width: 150px;
+					}
+					@include respond-below(xs) {
+						width: 75px;
+					}
+					.filter-card {
+						width: 100%;
+						&:not(:last-child) {
+							margin-bottom: 20px;
+							@include respond-below(xs) {
+								margin-bottom: 10px;
+							}
+						}
+						.filter-card__heading {
+							padding: 20px 30px;
+							background: $white;
+							min-height: 60px;
+							@include respond-below(lg) {
+								min-height: 40px;
+								.section-title {
+									font-size: 1em;
+								}
+							}
+							@include respond-below(md) {
+								padding: 15px;
+								min-height: 30px;
+								.section-title {
+									font-size: 0.875em;
+								}
+							}
+							@include respond-below(xs) {
+								padding: 10px 5px;
+								min-height: 20px;
+								margin-bottom: 5px !important;
+								.section-title {
+									font-size: 0.625em;
+								}
+							}
+						}
+						.filter-card__body {
+							padding: 30px;
+							background: $white;
+							@include respond-below(md) {
+								padding: 15px;
+								li {
+									line-height: 1.125;
+								}
+							}
+							@include respond-below(xs) {
+								padding: 5px;
+							}
+							li:not(:last-child) {
+								margin-bottom: 20px;
+								@include respond-below(lg) {
+									margin-bottom: 5px;
+								}
+								@include respond-below(md) {
+									// margin-bottom: 0;
+								}
+							}
+							.checkbox {
+								font-size: 1.125em;
+								margin-bottom: 0;
+								@include respond-below(lg) {
+									font-size: 0.875em;
+								}
+								@include respond-below(md) {
+									font-size: 0.725em;
+								}
+								input[type='checkbox'] {
+									+ span {
+										color: $secondary;
+										font-weight: 500;
+										&:before {
+											color: $success;
+											font-size: 1em;
+											@include respond-below(md) {
+												font-size: 0.625em;
+											}
+											@include respond-below(xs) {
+												font-size: 0.5em;
+												margin-right: 5px;
+											}
+										}
+									}
+									&:checked + span {
+										color: $dark;
+										&:before {
+											color: $success;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				.candidates-table {
+					flex: 1;
+					padding-left: 30px;
+					@include respond-below(lg) {
+						padding-left: 15px;
+					}
+					// data table
+					&.data-table {
+						.table-wrap {
+							margin-top: -10px;
+							margin-bottom: -10px;
+							.table {
+								border-spacing: 2px 10px;
+								font-size: 0.875em;
+								.table__row {
+									min-height: 60px;
+									&.table__head {
+										background: $white;
+										font-size: 1.125em;
+										border-radius: $b-radius-3;
+										box-shadow: none;
+										@include respond-below(md) {
+											font-size: 0.9375em;
+										}
+										.table-cell {
+											color: $dark;
+											font-weight: 600;
+										}
+									}
+									&:first-child {
+										.table-cell {
+											&:first-child {
+												border-top-left-radius: $b-radius-3;
+											}
+											&:last-child {
+												border-top-right-radius: $b-radius-3;
+											}
+										}
+									}
+									&:last-child {
+										.table-cell {
+											&:first-child {
+												border-bottom-left-radius: $b-radius-3;
+											}
+											&:last-child {
+												border-bottom-right-radius: $b-radius-3;
+											}
+										}
+									}
+									.table-cell {
+										display: table-cell;
+										padding: 10px 20px;
+										vertical-align: middle;
+										@include respond-below(lg) {
+											padding: 7.5px 12.5px;
+										}
+										@include respond-below(md) {
+											padding: 5px 10px;
+										}
+										&:first-child {
+											border-top-left-radius: 0;
+											border-bottom-left-radius: 0;
+										}
+										&:last-child {
+											border-top-right-radius: 0;
+											border-bottom-right-radius: 0;
+										}
+										&.job__status {
+											@include respond-below(lg) {
+												margin-left: 0 !important;
+												margin-top: 0 !important;
+											}
+											@include respond-below(xs) {
+												width: 100%;
+											}
+										}
+										&.user-rate {
+											@include respond-below(lg) {
+												width: 90px;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					@include respond-below(md) {
+						padding-left: 15px;
+					}
+				}
+			}
+			.pipeline-section {
+				.section-title-wrap {
+					.active-pipeline {
+						min-width: 220px;
+						max-width: 280px;
+						display: none;
+						height: 44px;
+						line-height: 1.2em;
+						margin-top: 3px;
+						border: 1px solid $primary;
+						color: $primary;
+						margin-right: 15px;
+						padding-left: 15px;
+						.candidates-number {
+							background: $primary;
+							color: $white;
+							width: 30px;
+							height: 30px;
+							min-width: 30px;
+						}
+						&.selected {
+							background: $success !important;
+							color: $white;
+							border: 1px solid $success;
+							.candidates-number {
+								color: $success !important;
+								background: $white;
+							}
+						}
+						&.rejected {
+							background: $danger !important;
+							color: $white;
+							border: 1px solid $danger;
+							.candidates-number {
+								color: $danger !important;
+								background: $white;
+							}
+						}
+						@include respond-below(xl) {
+							display: flex;
+						}
+						@include respond-below(md) {
+							min-width: 180px;
+							max-width: 200px;
+						}
+						@include respond-below(md) {
+							height: 32px;
+							margin-top: 0px;
+							font-size: 0.75em;
+							line-height: 1.2;
+							margin-right: 0;
+							.candidates-number {
+								height: 26px;
+								width: 26px;
+								min-width: 26px;
+								font-size: 0.75em;
+								margin-left: 5px;
+							}
+						}
+						@include respond-below(xs) {
+							margin-left: auto;
+						}
+					}
+				}
+				.pipeline-toggler{
+					display: flex;
+					margin-left: 20px;
+					.toggler-button{
+						height: 40px;
+						width: 40px;
+						min-width: 32px;
+						border-radius: $b-radius-2;
+						background: rgba($primary, $button-icon-opacity);
+						color: $primary;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 1.25em;
+						line-height: 1;
+						cursor: pointer;
+						@include respond-below(sm){
+							height: 32px;
+							width: 32px;
+							min-width: 32px;
+							font-size: 0.875em;
+						}
+						&.active{
+							background: $primary;
+							color: $white;
+						}
+						&:not(:first-child){
+							margin-left: 10px;
+						}
+					}
+				}
+				@include respond-below(xl) {
+					> .d-flex {
+						align-items: center;
+					}
+					> .section-title-wrap {
+						align-items: flex-start;
+						.job-title {
+							text-align: right;
+							max-width: 500px;
+						}
+					}
+				}
+				@include respond-between(lg, xl) {
+					.back-button__text {
+						display: none !important;
+					}
+					.edit-button {
+						height: 50px;
+					}
+				}
+				@include respond-below(md) {
+					> .d-flex.my-5 {
+						margin-top: 25px !important;
+						margin-bottom: 25px !important;
+						.back-button {
+							min-height: 35px;
+						}
+					}
+					.pipeline-toggler{
+						margin-bottom: 10px;
+						margin-left: auto;
+					}
+				}
+				@include respond-below(xs) {
+					> .d-flex.my-5 {
+						margin-top: 10px !important;
+						margin-bottom: 10px !important;
+						min-height: 70px;
+						flex-wrap: wrap;
+						.pipeline-action {
+							margin-top: 5px;
+							margin-left: auto !important;
+						}
+					}
+					> .section-title-wrap {
+						flex-direction: column-reverse;
+					}
+				}
+				.pipeline-box {
+					display: flex;
+					.pipeline-menu {
+						width: 300px;
+						@include respond-below(hl) {
+							width: 250px;
+						}
+						.pipeline-nav {
+							border-radius: $b-radius-2 !important;
+							li:not(:last-child) {
+								margin-bottom: 10px;
+							}
+							@include respond-below(xxl) {
+								background: $light;
+							}
+						}
+					}
+					.pipeline-content {
+						flex: 1;
+						padding-left: 30px;
+						.row-cols-xl-3 {
+							margin-bottom: -30px;
+							.col {
+								margin-bottom: 30px;
+							}
+						}
+						@include respond-below(hl) {
+							.row-cols-xl-3 {
+								.col {
+									flex: 0 0 50%;
+									max-width: 50%;
+								}
+							}
+						}
+						@include respond-below(md) {
+							.row-cols-xl-3 {
+								margin-bottom: 15px;
+								margin-left: -7.5px;
+								margin-right: -7.5px;
+								.col {
+									padding-left: 7.5px;
+									padding-right: 7.5px;
+									margin-bottom: 15px;
+									flex: 0 0 100%;
+									max-width: 100%;
+								}
+							}
+						}
+						.pipeline-card {
+							display: flex;
+							height: 100%;
+							position: relative;
+							background: $white;
+							padding: 30px;
+							border-radius: $b-radius-3;
+							.user__image {
+								min-width: 50px;
+								max-width: 50px;
+								height: 50px;
+								border-radius: $b-radius-100;
+								overflow: hidden;
+								margin-right: 20px;
+								img {
+									display: block;
+								}
+							}
+							.user__details {
+								width: 100%;
+								.user__name {
+									font-size: 1.125em;
+									display: block;
+									font-weight: 500;
+									line-height: 1.5;
+									margin-bottom: 5px;
+									padding-right: 15px;
+									@include respond-below(xs) {
+										font-size: 0.9375em;
+									}
+								}
+								.user__address {
+									color: $secondary;
+									font-size: 0.875em;
+									line-height: 1.5;
+									font-weight: 500;
+									&:after {
+										content: ',';
+										display: inline-block;
+									}
+								}
+								.user__experience {
+									color: $dark;
+									font-size: 0.875em;
+									line-height: 1.5;
+									font-weight: 500;
+								}
+								.application-duration {
+									font-size: 0.625em;
+									line-height: 1.5;
+									font-weight: 500;
+									color: $secondary;
+								}
+							}
+							.pipeline-checkbox {
+								position: absolute;
+								right: 15px;
+								top: 15px;
+								span {
+									line-height: 1;
+									&:before {
+										color: lighten($primary, 5%);
+										font-size: 0.875em;
+										margin-right: 0;
+									}
+								}
+							}
+							@include respond-below(xxl) {
+								padding: 20px;
+								.user__image {
+									min-width: 40px;
+									max-width: 40px;
+									height: 40px;
+									margin-right: 10px;
+								}
+							}
+						}
+					}
+				}
+				.pipeline-list-box{
+					display: flex;
+					height: 100%;
+					width: 100%;
+					padding-bottom: 10px;
+					overflow-x: auto;
+					&::-webkit-scrollbar {
+						height: 6px;
+					}
+					&::-webkit-scrollbar-track {
+						box-shadow: inset 0 0 6px rgba($light, 0.2);
+						background-image: linear-gradient(to right bottom, rgba($light,0.05), rgba($white,0.05));
+					}
+					&::-webkit-scrollbar-thumb {
+						border-radius: 3px;
+						background: rgba($dark, 0.2);
+					}
+					.pipeline__board{
+						display: flex;
+						flex-direction: column;
+						width: 320px;
+						min-width: 320px;
+						background: $white;
+						padding: 5px;
+						border-radius: $b-radius-3;
+						box-shadow: 0 0 5px rgba($border-color, 0.5);
+						height: 100%;
+						min-height: 400px;
+						@include respond-below(xs){
+							width: 250px;
+							min-width: 250px;
+						}
+						&.selected {
+							background: rgba($success, $sub-button-opacity) !important;
+							.pipeline__board--title{
+								h5{
+									color: darken($success, 13%);
+								}
+								.candidates-number {
+									background: $success;
+									color: $white;
+								}
+							}
+						}
+						&.rejected {
+							background: rgba($danger, $sub-button-opacity) !important;
+							.pipeline__board--title{
+								h5{
+									color: darken($danger, 10%);
+								}
+								.candidates-number {
+									background: $danger;
+									color: $white;
+								}
+							}
+						}
+						&:not(:last-child){
+							margin-right: 20px;
+						}
+						&--title{
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							border-radius: $b-radius-3 $b-radius-3 0 0;
+							width: 100%;
+							padding: 10px 10px 15px;
+							.candidates-number {
+								background: $primary;
+								color: $white;
+								width: 30px;
+								height: 30px;
+								min-width: 30px;
+								border-radius: $b-radius-50;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								line-height: 1;
+								font-size: 0.875em;
+							}
+						}
+						&--content{
+							background: $light;
+							border: 1px solid rgba($border-color, 0.2);
+							border-radius: $b-radius-3;
+							padding: 10px;
+							box-shadow: inset 0 0 5px rgba($border-color, 0.5);
+							height: 100%;
+							max-height: 500px;
+							overflow-y: auto;
+							&::-webkit-scrollbar {
+								width: 6px;
+							}
+							&::-webkit-scrollbar-track {
+								box-shadow: inset 0 0 6px rgba($light, 0.2);
+								background-image: linear-gradient(to right bottom, rgba($light,0.05), rgba($white,0.05));
+							}
+							&::-webkit-scrollbar-thumb {
+								border-radius: 3px;
+								background: rgba($dark, 0.2);
+							}
+							.pipeline-card {
+								display: flex;
+								position: relative;
+								background: $white;
+								padding: 20px;
+								border-radius: $b-radius-3;
+								.user__image {
+									min-width: 40px;
+									max-width: 40px;
+									height: 40px;
+									border-radius: $b-radius-100;
+									overflow: hidden;
+									margin-right: 15px;
+									img {
+										display: block;
+									}
+									@include respond-below(xs){
+										min-width: 30px!important;
+										max-width: 30px!important;
+										height: 30px!important;
+									}
+								}
+								.user__details {
+									width: 100%;
+									.user__name {
+										font-size: 1.06125em;
+										display: block;
+										font-weight: 500;
+										line-height: 1.2;
+										margin-bottom: 5px;
+										padding-right: 15px;
+										@include respond-below(xs) {
+											font-size: 0.9375em;
+										}
+									}
+									.user__address {
+										color: $secondary;
+										font-size: 0.875em;
+										line-height: 1.2;
+										font-weight: 500;
+										margin-top: 2px;
+										&:after {
+											content: ', ';
+											display: inline-block;
+										}
+									}
+									.user__experience {
+										color: $dark;
+										font-size: 0.875em;
+										line-height: 1.2;
+										font-weight: 500;
+										margin-top: 2px;
+									}
+									.application-duration {
+										font-size: 0.625em;
+										line-height: 1.5;
+										font-weight: 500;
+										color: $secondary;
+									}
+								}
+								@include respond-below(xl) {
+									padding: 20px;
+									.user__image {
+										min-width: 40px;
+										max-width: 40px;
+										height: 40px;
+										margin-right: 10px;
+									}
+								}
+								&:not(:last-child){
+									margin-bottom: 10px;
+								}
+							}
+						}
+					}
+				}
+				&.list-view{
+					@include respond-below(xl) {
+						> .section-title-wrap {
+							margin-left: unset!important;
+							align-items: center;
+							.active-pipeline{
+								display: none!important;
+							}
+							.job-title {
+								text-align: left;
+								margin-left: unset!important;
+							}
+						}
+					}
+					@include respond-below(sm) {
+						> .section-title-wrap {
+							.pipeline-toggler{
+								margin-left: auto!important;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@include respond-below(xl) {
+		.pipeline-section{
+			position: relative;
+			.pipeline-menu{
+				position: absolute;
+				left: 0;
+				top: 4px;
+				z-index: 500;
+				width: 60px !important;
+				.pipeline-hamburger{
+					cursor: pointer;
+					background-color: $primary !important;
+					color: transparent;
+					position: relative;
+					height: 44px;
+					width: 50px;
+					border-radius: $b-radius-2 !important;
+					padding: 0 !important;
+					margin-bottom: 0 !important;
+					box-shadow: 0 10px 10px rgba($primary, $shadow-opacity);
+					.hamburger-toggler{
+						position: absolute;
+						overflow: hidden;
+						height: 2px;
+						width: 24px;
+						text-indent: 50px;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						background: $white;
+						@include transition($duration: 0.05s);
+					}
+					&:before,
+					&:after {
+						position: absolute;
+						left: 50%;
+						transform: translateX(-50%);
+						content: '';
+						height: 2px;
+						width: 24px;
+						background: white;
+						@include transition($duration: 0.05s);
+					}
+					&:before {
+						top: 14px;
+					}
+					&:after {
+						bottom: 14px;
+					}
+					&.hamburger-button-active {
+						.hamburger-toggler{
+							background: transparent !important;
+						}
+						&:before {
+							transform: rotateZ(45deg) translate(-3px, 12.75px);
+						}
+						&:after {
+							transform: rotateZ(-45deg) translate(-3px, -12.75px);
+						}
+					}
+				}
+				.pipeline-nav{
+					position: absolute;
+					top: 60px;
+					width: 240px !important;
+					padding: 20px 20px !important;
+					border-radius: $b-radius-3 !important;
+					min-height: initial !important;
+					visibility: hidden;
+					opacity: 0;
+					@include transition;
+					box-shadow: 0 0 20px rgba($dark, $shadow-opacity);
+					li {
+						font-size: 1em;
+					}
+					&.hamburger-menu-show {
+						visibility: visible;
+						opacity: 1;
+					}
+				}
+				&.pipeline-menu {
+					top: 95px;
+				}
+			}
+			.pipeline-content{
+				padding-left: 0 !important;
+			}
+		}
+		.pipeline-section {
+			.section-title-wrap {
+				margin-left: 70px;
+			}
+		}
+	}
+	@include respond-below(md) {
+		.pipeline-section{
+			.pipeline-menu{
+				top: 9px;
+				.pipeline-hamburger{
+					height: 32px;
+					width: 40px;
+					&:before {
+						top: 9px;
+					}
+					&:after {
+						bottom: 9px;
+					}
+					&.hamburger-button-active {
+						&:before {
+							transform: rotateZ(45deg) translate(-4px, 12.5px);
+						}
+						&:after {
+							transform: rotateZ(-45deg) translate(-4px, -12.5px);
+						}
+					}
+				}
+				.pipeline-nav{
+					width: 240px !important;
+					border-radius: $b-radius-3 !important;
+					min-height: initial !important;
+					visibility: hidden;
+					box-shadow: 0 0 20px rgba($dark, $shadow-opacity);
+					.button.mb-3 {
+						margin-bottom: 0 !important;
+					}
+					&.hamburger-menu-show {
+						visibility: visible;
+					}
+				}
+				&.pipeline-menu {
+					top: 61px;
+				}
+			}
+			.pipeline-content{
+				padding-left: 0 !important;
+			}
+		}
+		.pipeline-section {
+			.section-title-wrap {
+				margin-left: 55px;
+			}
+		}
+	}
+	@include respond-below(md) {
+		.pipeline-box {
+			position: relative;
+			.pipeline-menu {
+				left: 0;
+				top: -52px !important;
+			}
+		}
+	}
+}
+
+

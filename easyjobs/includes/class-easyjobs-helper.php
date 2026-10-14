@@ -585,7 +585,7 @@ class Easyjobs_Helper {
 			array(
 				'post_type'      => 'page',
 				'posts_per_page' => - 1,
-				'meta_query'     => array(
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- single indexed meta_key lookup (easyjobs_job_id) over pages only; no alternative API.
 					'relation' => 'OR',
 					array(
 						'key'     => 'easyjobs_job_id',
@@ -658,6 +658,7 @@ class Easyjobs_Helper {
 			delete_transient( 'easyjobs_job_details_' . $job_id );
 		} else {
 			// Clear all job details transients (easyjobs_job_details_*)
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- bulk-purges our own easyjobs_job_details_* transients by LIKE during sync; core has no API for wildcard transient deletion and the purge itself is the cache invalidation.
 			$wpdb->query(
 				"DELETE FROM {$wpdb->options}
 				WHERE option_name LIKE '%easyjobs_job_details_%'"
@@ -716,7 +717,7 @@ class Easyjobs_Helper {
 				array(
 					'post_type'      => 'page',
 					'posts_per_page' => 1,
-					'meta_query'     => array(
+					'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- single indexed meta_key lookup (easyjobs_job_id) over pages only; no alternative API.
 						array(
 							'key'     => 'easyjobs_job_id',
 							'value'   => 'all',
@@ -861,7 +862,7 @@ class Easyjobs_Helper {
 			$prev_result = $result;
 
 			?>
-			<circle class="donut-segment" cx="18" cy="18" r="18" fill="transparent" stroke="<?php echo self::get_ai_score_color( esc_attr( $name ) ); ?>" stroke-width="3" stroke-dasharray="<?php echo esc_attr( $result ); ?>, <?php echo ( 100 - esc_attr( $result ) ); ?>" stroke-dashoffset="<?php echo esc_attr( $offset ); ?>"></circle>
+			<circle class="donut-segment" cx="18" cy="18" r="18" fill="transparent" stroke="<?php echo esc_attr( self::get_ai_score_color( esc_attr( $name ) ) ); ?>" stroke-width="3" stroke-dasharray="<?php echo esc_attr( $result ); ?>, <?php echo ( 100 - esc_attr( $result ) ); ?>" stroke-dashoffset="<?php echo esc_attr( $offset ); ?>"></circle>
 			<?php
 
 			$key++;
@@ -1108,7 +1109,7 @@ class Easyjobs_Helper {
 				array(
 					'post_type'      => 'page',
 					'posts_per_page' => - 1,
-					'meta_query'     => array(
+					'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- single indexed meta_key lookup (easyjobs_job_id) over pages only; no alternative API.
 						array(
 							'key'     => 'easyjobs_job_id',
 							'value'   => 'all',
@@ -1192,9 +1193,32 @@ class Easyjobs_Helper {
 		return current_user_can('manage_options');
 	}
 
+	/**
+	 * Whether the site owner opted in to visitor analytics on career pages.
+	 *
+	 * Visitor analytics sends page views and link clicks from the public job
+	 * pages to the easy.jobs analytics service (Matomo). It is off by default
+	 * and must be enabled explicitly under Settings → Privacy.
+	 *
+	 * @since 2.8.3
+	 * @return bool
+	 */
+	public static function is_visitor_analytics_enabled()
+	{
+		$enabled = 'yes' === get_option( 'easyjobs_visitor_analytics', 'no' );
+
+		/**
+		 * Filters whether visitor analytics runs on the career pages.
+		 *
+		 * @since 2.8.3
+		 * @param bool $enabled True when the site owner opted in.
+		 */
+		return (bool) apply_filters( 'easyjobs_enable_visitor_analytics', $enabled );
+	}
+
 	public static function check_verified_request()
 	{
-		if(isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'easyjobs_react_nonce')){
+		if(isset($_POST['nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce')){
 			return true;
 		}
 		echo wp_json_encode(self::get_error_response('Invalid request'));
@@ -1220,7 +1244,13 @@ class Easyjobs_Helper {
 
 	/**
 	 * Job pagination
-	 * @param 
+	 *
+	 * @param object $jobs_data     Paginated jobs response.
+	 * @param array  $get_data      Sanitized query args.
+	 * @param string $permalink     Page URL.
+	 * @param int    $prev_page     Previous page number.
+	 * @param int    $next_page     Next page number.
+	 * @param object $paginate_data Pagination meta.
 	 * @return false|string
 	 */
 	public static function job_pagination($jobs_data, $get_data, $permalink, $prev_page, $next_page, $paginate_data) {
@@ -1242,7 +1272,7 @@ class Easyjobs_Helper {
 							}
 							$job_page_url = $permalink . "?" . self::get_pagination_url($get_data, $paginate_data['items'][$ej_p]);
 						?>
-							<li class="page-item <?php echo $dot_class; echo $jobs_data->current_page == $paginate_data['items'][$ej_p] ? 'active' : ''; ?>" aria-current="page"><a href="<?php echo esc_url($job_page_url)?>" class="page-link"><?php echo $paginate_data['items'][$ej_p]; ?></a></li>
+							<li class="page-item <?php echo esc_attr( $dot_class ); echo $jobs_data->current_page == $paginate_data['items'][$ej_p] ? 'active' : ''; ?>" aria-current="page"><a href="<?php echo esc_url($job_page_url)?>" class="page-link"><?php echo esc_html( $paginate_data['items'][$ej_p] ); ?></a></li>
 						<?php }?>
 						<li class="page-item <?php echo $jobs_data->current_page == $jobs_data->last_page ? 'disabled' : ''; ?>">
 							<a class="page-link" href="<?php echo esc_url( $next_page ); ?>" rel="next" aria-label="Next »"><span class="pagination-text">Next</span>
@@ -1266,8 +1296,8 @@ class Easyjobs_Helper {
 		?>
 		<form id="ejJobFilterForm" class="ej-job-filter-form job-filter d-flex" action="" method="get">
 			<?php if(count($settings)) { ?>
-				<?php if( isset($_GET['page_id']) ) { ?>
-					<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr($_GET['page_id']); ?>"/>
+				<?php if( isset($_GET['page_id']) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>
+					<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_GET['page_id'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>"/>
 				<?php } ?>
 				<?php if ( (isset($settings['easyjobs_job_filter_by_title_control']) && $settings['easyjobs_job_filter_by_title_control'] === 'yes' )): ?>
 					<div class="search-bar">
@@ -1306,13 +1336,13 @@ class Easyjobs_Helper {
 				<?php endif; ?>
 				<?php if ( (isset($settings['easyjobs_job_filter_by_title_control']) && $settings['easyjobs_job_filter_by_title_control'] === 'yes') || (isset($settings['easyjobs_job_filter_by_category_control']) && $settings['easyjobs_job_filter_by_category_control'] === 'yes') || ((isset($company->show_location_filter) && $company->show_location_filter) && isset($settings['easyjobs_job_filter_by_location_control']) && $settings['easyjobs_job_filter_by_location_control'] === 'yes') ): ?>
 					<div class="d-flex">
-						<button class="ej-btn ej-info-btn-light mr15" type="submit"><?php _e("Submit",'easyjobs');?></button>
-						<button id="ej-reset-form" class="ej-btn ej-danger-btn" type="reset"><?php _e("Reset",'easyjobs');?></button>
+						<button class="ej-btn ej-info-btn-light mr15" type="submit"><?php esc_html_e("Submit",'easyjobs');?></button>
+						<button id="ej-reset-form" class="ej-btn ej-danger-btn" type="reset"><?php esc_html_e("Reset",'easyjobs');?></button>
 					</div>
 				<?php endif; ?>
 			<?php } else { ?>
-				<?php if( isset($_GET['page_id']) ) { ?>
-					<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr($_GET['page_id']); ?>"/>
+				<?php if( isset($_GET['page_id']) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>
+					<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_GET['page_id'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>"/>
 				<?php } ?>
 				<?php if ( get_theme_mod('easyjobs_landing_hide_job_search_by_title', true) == '1'): ?>
 					<div class="search-bar">
@@ -1352,8 +1382,8 @@ class Easyjobs_Helper {
 				<?php endif; ?>
 				<?php if ( get_theme_mod('easyjobs_landing_hide_job_search_by_title', true) == '1' || get_theme_mod('easyjobs_landing_hide_job_search_by_category', true) == '1' || ( (isset($company->show_location_filter) && $company->show_location_filter) && get_theme_mod('easyjobs_landing_hide_job_search_by_location', true) == '1' )): ?>
 					<div class="d-flex gap-4">
-						<button class="ej-btn ej-info-btn-light mr15" type="submit"><?php _e("Submit",'easyjobs');?></button>
-						<button id="ej-reset-form" class="ej-btn ej-danger-btn" type="reset"><?php _e("Reset",'easyjobs');?></button>
+						<button class="ej-btn ej-info-btn-light mr15" type="submit"><?php esc_html_e("Submit",'easyjobs');?></button>
+						<button id="ej-reset-form" class="ej-btn ej-danger-btn" type="reset"><?php esc_html_e("Reset",'easyjobs');?></button>
 					</div>
 				<?php endif; ?>
 			<?php } ?>
@@ -1364,15 +1394,21 @@ class Easyjobs_Helper {
 	}
 
 	public static function generate_block_style($atts) {
+		// Block CSS goes inside <style>, where HTML entities are not decoded, so
+		// esc_html()/esc_attr() would corrupt quoted values. Strip tags instead so
+		// nothing (e.g. "</style>") can break out of the style element.
+		$desktop_css = isset( $atts['blockMeta']['desktop'] ) ? wp_strip_all_tags( $atts['blockMeta']['desktop'] ) : '';
+		$tab_css     = isset( $atts['blockMeta']['tab'] ) ? wp_strip_all_tags( $atts['blockMeta']['tab'] ) : '';
+		$mobile_css  = isset( $atts['blockMeta']['mobile'] ) ? wp_strip_all_tags( $atts['blockMeta']['mobile'] ) : '';
 		?>
 		<style>
-			<?php echo isset( $atts['blockMeta']['desktop'] ) ? $atts['blockMeta']['desktop'] : ""; ?>
+			<?php echo $desktop_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS for a <style> element; tags stripped above, entity escaping would break CSS. ?>
 			@media(max-width: 1024px) {
-				<?php echo isset( $atts['blockMeta']['tab'] ) ? $atts['blockMeta']['tab'] : ""; ?>
+				<?php echo $tab_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS for a <style> element; tags stripped above, entity escaping would break CSS. ?>
 			}
 
 			@media(max-width: 767px) {
-				<?php echo isset( $atts['blockMeta']['mobile'] ) ? $atts['blockMeta']['mobile'] : ""; ?>
+				<?php echo $mobile_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS for a <style> element; tags stripped above, entity escaping would break CSS. ?>
 			}
 		</style>
 		<?php
@@ -1388,8 +1424,8 @@ class Easyjobs_Helper {
 		?>
 		<?php if ( $settings['filterByTitle'] || $settings['filterByCategory'] || $settings['filterByLocation'] ): ?>
 			<form id="ejJobFilterForm" class="ej-job-filter-form job-filter d-flex" action="" method="get">
-				<?php if( isset($_GET['page_id']) ) { ?>
-				<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr($_GET['page_id']); ?>"/>
+				<?php if( isset($_GET['page_id']) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>
+				<input type="hidden" id="page_id" name="page_id" value="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_GET['page_id'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>"/>
 				<?php } ?>
 				<?php if ( $settings['filterByTitle'] ): ?>
 					<div class="search-bar">
@@ -1428,8 +1464,8 @@ class Easyjobs_Helper {
 				<?php endif; ?>
 				
 				<div class="d-flex">
-					<button class="ej-btn ej-info-btn-light mr15" type="submit"><?php _e("Submit",'easyjobs');?></button>
-					<button id="ej-reset-form" class="ej-btn ej-danger-btn" type="reset"><?php _e("Reset",'easyjobs');?></button>
+					<button class="ej-btn ej-info-btn-light mr15" type="submit"><?php esc_html_e("Submit",'easyjobs');?></button>
+					<button id="ej-reset-form" class="ej-btn ej-danger-btn" type="reset"><?php esc_html_e("Reset",'easyjobs');?></button>
 				</div>
 			</form>
 			<p id="ejErrorMessage" class="error-message">Please, provide at least one filed value.</p>
@@ -1439,8 +1475,10 @@ class Easyjobs_Helper {
 	}
 
 	public static function get_value($name){
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg (public job filter value), no state change.
 		if(isset($_GET[$name])){
-			return $_GET[$name];
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg (public job filter value), no state change.
+			return sanitize_text_field( wp_unslash( $_GET[$name] ) );
 		}
 		return '';
 	}
@@ -1571,6 +1609,7 @@ class Easyjobs_Helper {
 
 	public static function get_job_pages_by_meta(  ) {
         global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- maintenance rebuild of the job=>page map from all easyjobs_job_id meta rows (no core API for that); must read fresh data, result is stored via update_wp_pages().
 		$metas = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "postmeta WHERE meta_key='easyjobs_job_id' AND meta_value IS NOT NULL ");
         $pages = [];
         if(!empty($metas)){
@@ -1592,9 +1631,13 @@ class Easyjobs_Helper {
             </head>
             <body <?php body_class();?>>
 			<?php
-			wp_body_open();
+			if ( function_exists( 'wp_body_open' ) ) {
+				wp_body_open();
+			} else {
+				do_action( 'wp_body_open' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- core hook, fallback for WordPress < 5.2 where wp_body_open() does not exist.
+			}
 			?>
-			<?php echo $header; ?>
+			<?php echo $header; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Block theme header template part rendered by core do_blocks(); escaped by the blocks themselves and may contain markup (svg, forms, scripts) that kses would strip. ?>
 			<?php
 		} else {
 			get_header();
@@ -1602,7 +1645,7 @@ class Easyjobs_Helper {
 	}
 	public static function easyjobs_footer($footer) {
 		if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {
-			echo $footer;
+			echo $footer; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Block theme footer template part rendered by core do_blocks(); escaped by the blocks themselves and may contain markup (svg, forms, scripts) that kses would strip.
 			wp_footer();
 		} else {
 			get_footer();
@@ -1617,7 +1660,17 @@ class Easyjobs_Helper {
 		if( ! file_exists( $path ) ) {
 			$path = EASYJOBS_PUBLIC_PATH . 'partials-blocks/default/' . $name . '.php';
 		}
-		$wrapper_attributes = get_block_wrapper_attributes();
+		if ( function_exists( 'get_block_wrapper_attributes' ) ) {
+			$wrapper_attributes = get_block_wrapper_attributes();
+		} else {
+			// WP < 5.6 fallback: the default block class core would add for this block.
+			$block_slugs        = array(
+				'list'   => 'job-list',
+				'info'   => 'job-header',
+				'footer' => 'job-footer',
+			);
+			$wrapper_attributes = isset( $block_slugs[ $name ] ) ? 'class="wp-block-easyjobs-' . $block_slugs[ $name ] . '"' : '';
+		}
 		ob_start();
 		include $path;
 		return ob_get_clean();

@@ -1,0 +1,226 @@
+.easy-page-body {
+	// dropdown button design
+	.dropdown-button {
+		font-family: 'eicon' !important;
+		content: '\e913';
+		vertical-align: middle;
+		border: 0;
+		width: 17px;
+		height: 17px;
+		text-align: center;
+		line-height: 18px;
+		margin: unset;
+		font-size: 0.6125em;
+		border-radius: 3px;
+		cursor: pointer;
+		@include respond-below(md) {
+			width: 10px;
+			height: 10px;
+			line-height: 10px;
+			font-size: 0.375em;
+		}
+	}
+
+	.job-control-more .dropdown-menu {
+		padding: 0;
+		border: none;
+		width: 150px !important;
+		border-radius: $b-radius-2;
+		box-shadow: 0 5px 10px rgba($primary, $shadow-opacity);
+		top: 10px !important;
+		.dropdown-item {
+			padding: 10px 15px;
+			display: flex;
+			align-items: center;
+			font-size: 0.75em;
+			font-weight: 500;
+			line-height: 1.25;
+			color: $primary;
+			.dropdown-icon {
+				margin-right: 10px;
+				display: flex;
+				align-items: center;
+				font-size: 1em;
+			}
+			&.delete {
+				color: $danger;
+			}
+			&:hover {
+				background: $light;
+			}
+		}
+		.share-button {
+			.share-button-menu {
+				margin-left: 10px;
+				.dropdown-item {
+					height: calc(0.9375rem + 20px);
+					transition: 0.35s ease;
+				}
+			}
+			&:not(:hover) {
+				.share-button-menu {
+					.dropdown-item {
+						height: 0;
+						padding-top: 0;
+						padding-bottom: 0;
+						opacity: 0;
+					}
+				}
+			}
+		}
+	}
+
+	.job-share-dashboard {
+		display: inline-block;
+		position: relative;
+		.share-button-menu {
+			position: absolute;
+			right: 10px;
+			top: calc(100% + 5px);
+			@include transition($delay: 0.3s);
+			z-index: 1;
+			background: $white;
+			border: none;
+			width: 150px !important;
+			border-radius: $b-radius-2;
+			box-shadow: 0 5px 10px rgba($primary, $shadow-opacity);
+			.dropdown-item {
+				height: calc(0.9375rem + 20px);
+				@include transition;
+				padding: 10px 15px;
+				display: flex;
+				align-items: center;
+				font-size: 0.75em;
+				font-weight: 500;
+				line-height: 1.25;
+				color: $primary;
+				.dropdown-icon {
+					margin-right: 10px;
+					display: flex;
+					align-items: center;
+					font-size: 0.875em;
+				}
+			}
+		}
+		&:not(:hover) {
+			.share-button-menu {
+				.dropdown-item {
+					height: 0;
+					padding-top: 0;
+					padding-bottom: 0;
+					visibility: hidden;
+					color: transparent;
+				}
+			}
+		}
+	}
+
+	.pipeline-action .dropdown-menu {
+		padding: 10px;
+		border: none;
+		width: 150px !important;
+		border-radius: $b-radius-2;
+		box-shadow: 0 5px 10px rgba($secondary, $shadow-opacity);
+		top: 10px !important;
+		.dropdown-item {
+			padding: 10px;
+			display: flex;
+			align-items: center;
+			font-size: 0.875em;
+			font-weight: 500;
+			line-height: 1.25;
+			color: $secondary;
+			&:active,
+			&:hover {
+				background: $light;
+				color: $dark;
+			}
+		}
+	}
+}
+
+// profile control dropdown
+.profile-control .dropdown-menu {
+	padding: 0;
+	border: none;
+	min-width: 220px !important;
+	max-width: 250px !important;
+	border-radius: $b-radius-2;
+	box-shadow: 0 10px 10px rgba($secondary, $shadow-opacity);
+	top: 30px !important;
+	ul {
+		padding: 7px;
+		li {
+			a {
+				display: flex;
+				line-height: 1;
+				padding: 7px;
+				align-items: center;
+				.navigation-icon {
+					width: 25px;
+					min-width: 25px;
+					display: inline-block;
+					color: $primary;
+					font-size: 0.75em;
+					border-radius: $b-radius-2;
+					height: 25px;
+					line-height: 25px;
+					text-align: center;
+					background: rgba($primary, $button-icon-opacity);
+				}
+				.navigation-image {
+					min-width: 25px;
+					width: 25px;
+					display: inline-block;
+					overflow: hidden;
+					color: $primary;
+					font-size: 0.75em;
+					border-radius: $b-radius-2;
+					height: 25px;
+					padding: 3px;
+					line-height: 25px;
+					text-align: center;
+					background: rgba($primary, $button-icon-opacity);
+					img {
+						width: 100%;
+						display: block;
+					}
+				}
+				.navigation-text {
+					margin-left: 10px;
+					color: $secondary;
+					font-size: 0.875em;
+					font-weight: 500;
+					line-height: 1.15;
+				}
+			}
+			&.active {
+				a {
+					.navigation-icon {
+						color: $white;
+						background: $primary;
+					}
+					.navigation-text {
+						color: $dark;
+					}
+				}
+			}
+			&:hover {
+				background: $light;
+			}
+		}
+	}
+	@include respond-below(sm) {
+		min-width: 180px !important;
+		max-width: 200px !important;
+		top: 15px !important;
+		ul {
+			padding: 4px;
+			li {
+				a {
+					padding: 4px;
+				}
+			}
+		}
+	}
+}

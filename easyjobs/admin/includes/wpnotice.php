@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 if ( ! class_exists( 'PriyoMukul\WPNotice\Utils\Base' ) ) {
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'Notice/Utils/Base.php';
 }

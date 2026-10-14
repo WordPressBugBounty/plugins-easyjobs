@@ -1,0 +1,448 @@
+	.easy-page-body {
+	// import files
+	@import '../mixins/button';
+
+	.button {
+		padding: 15px 26px;
+		font-size: 0.875em;
+		line-height: 1.4286;
+		font-weight: 500;
+		text-align: center;
+		display: inline-block;
+		text-transform: capitalize;
+		border-radius: $b-radius-2;
+		min-height: 50px;
+		@include transition;
+		@include respond-below(xl) {
+			padding: 15px;
+		}
+		@include respond-below(md) {
+			min-height: 32px;
+			padding: 10px 15px;
+			font-size: 0.75em;
+		}
+		@include respond-below(xs) {
+			font-size: 0.625em;
+		}
+		&.pipeline-toggle,
+		&.dropdown-toggle {
+			&:after {
+				@include transition;
+				@extend .dropdown-button;
+				margin-left: 20px !important;
+				background: rgba($primary, $dropdown-control-opacity);
+				color: $primary;
+				@include respond-below(xl) {
+					margin-left: 8px !important;
+				}
+				@include respond-below(md) {
+					margin-left: 5px !important;
+				}
+			}
+			&:hover {
+				&:after {
+					background: $primary;
+					color: $white;
+				}
+			}
+			@include respond-below(md) {
+				min-height: 30px;
+			}
+		}
+	}
+	.edit-button {
+		padding: 10px 25px 10px 15px;
+		font-size: 0.875em;
+		line-height: 1.5;
+		display: flex;
+		@include transition;
+		align-items: center;
+		font-weight: 500;
+		text-align: center;
+		text-transform: capitalize;
+		border-radius: $b-radius-2;
+		background: $primary;
+		color: $white;
+		box-shadow: 0 10px 10px rgba($primary, $shadow-opacity);
+		.edit-icon {
+			height: 30px;
+			width: 30px;
+			min-width: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.75em;
+			margin-right: 10px;
+			background: rgba($white, $button-icon-opacity);
+			border-radius: $b-radius-100;
+		}
+		&:focus,
+		&:active,
+		&:hover {
+			background: darken($primary, 5%);
+			color: $white;
+			.edit-icon {
+				background: rgba($white, $button-icon-opacity + 0.15);
+			}
+		}
+		@include respond-below(md) {
+			padding: 5px 15px 5px 10px;
+			.edit-icon {
+				height: 23px;
+				width: 23px;
+				min-width: 23px;
+			}
+		}
+	}
+	// button color control
+	@each $parent, $color in $theme-colors {
+		@include button-emphasis-variant('.#{$parent}-button', $color);
+	}
+	.semi-button {
+		padding: 10px 22px;
+		text-align: center;
+		text-align: center;
+		text-transform: capitalize;
+		line-height: 1.5;
+		display: inline-block;
+		font-size: 0.875em;
+		font-weight: 500;
+		border-radius: $b-radius-2;
+		@include transition;
+		&.h-modified {
+			padding: 5px 12px;
+		}
+		@include respond-below(md) {
+			padding: 5px 10px;
+			font-size: 0.6875em;
+			border-radius: $b-radius-1;
+		}
+	}
+	// semi button color control
+	@each $parent, $color in $theme-colors {
+		@include semi-button-emphasis-variant('.semi-button-#{$parent}', $color);
+	}
+
+	// pipeline button
+	.pipeline-button {
+		padding: 10px 30px;
+		padding-right: 10px;
+		font-size: 1.125em;
+		line-height: 1.5;
+		font-weight: 500;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		text-transform: capitalize;
+		border-radius: $b-radius-2;
+		color: $secondary;
+		background: $white;
+		@include transition($type: linear);
+		span {
+			line-height: 1.1;
+		}
+		.candidates-number {
+			height: 40px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 40px;
+			min-width: 40px;
+			border-radius: $b-radius-100;
+			background: rgba($primary, $button-icon-opacity);
+			color: $primary;
+		}
+		&:not(.active-pipeline):hover,
+		&.active {
+			color: $white;
+			background: $primary;
+			box-shadow: 0 10px 10px rgba($primary, $shadow-opacity);
+			.candidates-number {
+				background: $white;
+				color: $primary;
+			}
+		}
+
+		&.selected {
+			color: darken($success, 13%);
+			background: rgba($success, $sub-button-opacity) !important;
+			.candidates-number {
+				background: $success;
+				color: $white;
+			}
+			&.active,
+			&:hover {
+				background: $success !important;
+				color: set-text-color($success);
+				box-shadow: 0 10px 10px rgba($success, $shadow-opacity);
+				.candidates-number {
+					background: white;
+					color: $success;
+				}
+			}
+		}
+		&.rejected {
+			color: $danger;
+			background: rgba($danger, $sub-button-opacity) !important;
+			.candidates-number {
+				background: $danger;
+				color: $white;
+			}
+			&:hover,
+			&.active {
+				background: $danger !important;
+				color: set-text-color($danger);
+				box-shadow: 0 10px 10px rgba($danger, $shadow-opacity);
+				.candidates-number {
+					background: white;
+					color: $danger;
+				}
+			}
+		}
+		@include respond-below(hl) {
+			font-size: 1em;
+			.candidates-number {
+				height: 35px;
+				width: 35px;
+				min-width: 35px;
+			}
+		}
+	}
+
+	// info button
+	@each $parent, $color in $theme-colors {
+		@include info-button-emphasis-variant('.info-button-#{$parent}', $color);
+	}
+	// label
+	@each $parent, $color in $theme-colors {
+		@include label-emphasis-variant('.#{$parent}-label', $color);
+	}
+
+	.social-button {
+		height: 40px;
+		width: 40px;
+		line-height: 43px;
+		font-size: 1em;
+		display: inline-block;
+		text-align: center;
+		border-radius: $b-radius-100;
+		padding: 0;
+		@include transition;
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+		@include respond-below(md) {
+			height: 20px;
+			width: 20px;
+			line-height: 21px;
+			font-size: 0.5625em;
+			&:not(:last-child) {
+				margin-right: 5px;
+			}
+		}
+	}
+
+	.label__full {
+		padding: 20px;
+		border-radius: $b-radius-2;
+		&--modified {
+			@extend .label__full;
+			padding-top: 15px;
+			padding-bottom: 15px;
+			margin-top: 20px;
+			@include respond-below(md) {
+				padding: 10px;
+			}
+		}
+		@include respond-below(md) {
+			padding: 10px;
+		}
+	}
+
+	// thumbnail status setup
+	.thumbnail__status {
+		position: absolute;
+		top: 10px;
+		right: 0;
+		font-size: 0.875em;
+		font-weight: 500;
+		line-height: 1.4286;
+		padding: 10px 28px;
+		min-width: 100px;
+		justify-content: center;
+		border-top-left-radius: $b-radius-50;
+		border-bottom-left-radius: $b-radius-50;
+	}
+	@each $parent, $color in $theme-colors {
+		@include thumbnail-status-emphasis-variant('.thumbnail__status--#{$parent}', $color);
+	}
+	// label full
+	@each $parent, $color in $theme-colors {
+		@include label-full-emphasis-variant('.label__full--#{$parent}', $color);
+	}
+	// label full
+	@each $parent, $color in $theme-colors {
+		@include list-item-emphasis-variant('.list-item--#{$parent}', $color);
+	}
+	// tab control
+	@each $parent, $color in $theme-colors {
+		@include tab-emphasis-variant('.tab__card--#{$parent}', $color);
+	}
+
+	// card control button
+	.control-button {
+		font-size: 0.875em;
+		font-weight: 500;
+		line-height: 1.2857;
+		border-radius: $b-radius-50;
+		display: flex;
+		align-items: center;
+		.control-button__icon {
+			height: 30px;
+			width: 30px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-radius: $b-radius-100;
+			font-size: 0.875em;
+		}
+		span {
+			margin-left: 7px;
+			padding-right: 12px;
+			@include respond-below(md) {
+				display: none;
+			}
+		}
+		&:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+	@each $parent, $color in $theme-colors {
+		@include card-control-emphasis-variant('.control-button--#{$parent}', $color);
+	}
+
+	.progress-step-group {
+		display: flex;
+		align-items: center;
+		margin-bottom: 50px;
+		@include respond-below(md) {
+			flex-direction: column;
+			margin-bottom: 30px;
+		}
+		.progress-step__wrap {
+			flex: 1;
+			display: flex;
+			position: relative;
+			justify-content: center;
+			@include respond-below(md) {
+				width: 100%;
+				&:not(:last-child) {
+					margin-bottom: 10px;
+				}
+			}
+			.progress-step {
+				padding: 13px 20px;
+				background: $disable-color;
+				color: $secondary;
+				border-radius: $b-radius-2;
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+				z-index: 1;
+				.progress-step__icon {
+					font-size: 30px;
+					line-height: 1;
+				}
+				.progress-step__text {
+					font-size: 1.125em;
+					font-weight: 500;
+					line-height: 1.5;
+					margin-left: 11px;
+				}
+				&--activated {
+					background: $success;
+					color: $white;
+					box-shadow: 0 10px 10px rgba($success, $shadow-opacity);
+				}
+				@include respond-below(lg) {
+					padding: 10px 12px;
+					.progress-step__icon {
+						font-size: 22px;
+					}
+					.progress-step__text {
+						font-size: 0.9375em;
+						margin-left: 7px;
+					}
+				}
+				@include respond-below(md) {
+					width: 100%;
+					justify-content: center;
+				}
+			}
+			&:before {
+				content: '';
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				left: 2px;
+				right: 50%;
+				border-bottom: 5px dotted $border-color;
+				@include respond-below(xs) {
+					display: none;
+				}
+			}
+			&:after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				right: 2px;
+				transform: translateY(-50%);
+				border-bottom: 5px dotted $border-color;
+				@include respond-below(xs) {
+					display: none;
+				}
+			}
+			&:first-child:before {
+				display: none;
+			}
+			&:last-child:after {
+				display: none;
+			}
+		}
+	}
+
+	.erase-button {
+		display: flex;
+		align-items: center;
+		border-radius: $b-radius-50;
+		font-size: 0.75em;
+		text-transform: capitalize;
+		background-color: rgba($danger, $sub-button-opacity);
+		@include transition;
+		i {
+			height: 30px;
+			width: 30px;
+			display: block;
+			line-height: 30px;
+			text-align: center;
+			border-radius: $b-radius-100;
+			background: $danger;
+			color: $white;
+		}
+		span {
+			color: $danger;
+			padding: 0 20px 0 10px;
+			@include respond-below(md) {
+				display: none;
+			}
+		}
+		&:hover {
+			background-color: rgba($danger, 1);
+			span {
+				color: $white;
+			}
+		}
+	}
+}

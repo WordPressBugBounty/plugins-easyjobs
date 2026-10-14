@@ -9,9 +9,14 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+
 $active_tab = 'published';
-if ( isset( $_GET['tab'] ) && !empty( $_GET['tab'] ) ) {
-    $active_tab = trim( strtolower( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) ) );
+if ( isset( $_GET['tab'] ) && !empty( $_GET['tab'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
+    $active_tab = trim( strtolower( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
 }
 $toggle_title = __( 'Published jobs', 'easyjobs' );
 if ( $active_tab === 'draft' ) {
@@ -197,7 +202,7 @@ $duplicate_nonce = wp_create_nonce('ej_duplicate_nonce');
                                                 $dot_class = 'dot_li_published';
                                             }
                                             ?>
-                                            <li class="pagination-list__item <?php echo $dot_class; ?> <?php echo $current_page == $pages_to_show[$i] ? esc_html( 'pagination-list__item--active' ) : ''; ?>">
+                                            <li class="pagination-list__item <?php echo esc_attr( $dot_class ); ?> <?php echo $current_page == $pages_to_show[$i] ? esc_html( 'pagination-list__item--active' ) : ''; ?>">
                                                 <a class="pagination-list__link" href="<?php echo esc_url( admin_url( 'admin.php?page=easyjobs-all-jobs&published-job-page=' . $pages_to_show[$i] . '&tab=published' ) ); ?>
                                                     ">
                                                     <?php echo esc_html( $pages_to_show[$i] ); ?>
@@ -320,7 +325,7 @@ $duplicate_nonce = wp_create_nonce('ej_duplicate_nonce');
                                                 $dot_class = 'dot_li_archived';
                                             }
                                             ?>
-                                            <li class="pagination-list__item <?php echo $dot_class; ?> <?php echo $current_page_archived == $pages_to_show_archived[$i] ? esc_html( 'pagination-list__item--active' ) : ''; ?>">
+                                            <li class="pagination-list__item <?php echo esc_attr( $dot_class ); ?> <?php echo $current_page_archived == $pages_to_show_archived[$i] ? esc_html( 'pagination-list__item--active' ) : ''; ?>">
                                                 <a class="pagination-list__link" href="<?php echo esc_url( admin_url( 'admin.php?page=easyjobs-all-jobs&archived-job-page=' . $pages_to_show_archived[$i] . '&tab=archive' ) ); ?>
                                                     ">
                                                     <?php echo esc_html( $pages_to_show_archived[$i] ); ?>
@@ -435,7 +440,7 @@ $duplicate_nonce = wp_create_nonce('ej_duplicate_nonce');
                                                 $dot_class = 'dot_li_draft';
                                             }
                                             ?>
-                                            <li class="pagination-list__item <?php echo $dot_class; ?> <?php echo $current_page_draft == $pages_to_show_draft[$i] ? esc_html( 'pagination-list__item--active' ) : ''; ?>">
+                                            <li class="pagination-list__item <?php echo esc_attr( $dot_class ); ?> <?php echo $current_page_draft == $pages_to_show_draft[$i] ? esc_html( 'pagination-list__item--active' ) : ''; ?>">
                                                 <a class="pagination-list__link" href="<?php echo esc_url( admin_url( 'admin.php?page=easyjobs-all-jobs&draft-job-page=' . $pages_to_show_draft[$i] . '&tab=draft' ) ); ?>
                                                     ">
                                                     <?php echo esc_html( $pages_to_show_draft[$i] ); ?>

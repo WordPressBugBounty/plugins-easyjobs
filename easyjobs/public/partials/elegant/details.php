@@ -5,6 +5,11 @@
  * @since 1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+
 global $post;
 ?>
 <div class="easyjobs-shortcode-wrapper ej-template-elegant easyjobs-details translate">
@@ -19,7 +24,7 @@ global $post;
 		?>
         <!--Start your html here-->
         <div class="ej-hero__wrap hero__bg "
-			<?php echo !empty( $job->banner_image ) && get_theme_mod( 'easyjobs_single_display_job_banner', true ) && ! $job->hideCoverPhoto ? 'style="background-image: url('.$job->banner_image.');"' : ''; ?>>
+			<?php echo !empty( $job->banner_image ) && get_theme_mod( 'easyjobs_single_display_job_banner', true ) && ! $job->hideCoverPhoto ? 'style="background-image: url(' . esc_url( $job->banner_image ) . ');"' : ''; ?>>
             <div class="ej-container">
                 <div class="ej-row">
                     <div class="ej-col">
@@ -43,9 +48,9 @@ global $post;
                                                         <?php if ( !empty($job->remote_countries) ) : ?>
                                                             <?php
                                                                 $country_names = array_map( function( $country ) {
-                                                                    return esc_html( $country->name );
+                                                                    return $country->name;
                                                                 }, $job->remote_countries );
-                                                                echo implode( ', ', $country_names );
+                                                                echo esc_html( implode( ', ', $country_names ) );
                                                             ?>
                                                         <?php else : ?>
                                                             <?php esc_html_e( 'Remote', 'easyjobs' ); ?>
@@ -71,7 +76,7 @@ global $post;
                                             <span>
                                                 <i class="easyjobs-icon easyjobs-clock"></i>
                                                 <?php echo ! empty($job->office_time) ? esc_html( $job->office_time ) : ''; ?>
-                                                <?php echo ! empty($job->job_type) ? ' (' . ucfirst( esc_html( $job->job_type ) ) . ')' : ''; ?>
+                                                <?php echo ! empty($job->job_type) ? ' (' . esc_html( ucfirst( $job->job_type ) ) . ')' : ''; ?>
                                             </span>
                                         </p>
                                     </div>

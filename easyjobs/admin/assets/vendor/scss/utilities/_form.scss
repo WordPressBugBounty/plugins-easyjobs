@@ -1,0 +1,942 @@
+.easy-page-body {
+	.form-filter {
+		display: flex;
+		margin-bottom: 20px;
+		& > * {
+			&:not(:last-child) {
+				margin-right: 20px;
+			}
+			@include respond-below(md) {
+				&:not(:last-child) {
+					margin-right: 10px;
+				}
+			}
+		}
+		@include respond-below(xs) {
+			flex-wrap: wrap;
+			margin-bottom: -5px;
+			> * {
+				flex: 0 0 100%;
+				margin-bottom: 10px;
+			}
+		}
+		&.candidates-filter {
+			display: block;
+			margin-bottom: 30px;
+			.search-bar {
+				width: initial !important;
+			}
+			& > * {
+				margin-bottom: 10px;
+				&:not(:last-child) {
+					margin-right: 0 !important;
+				}
+			}
+			@include respond-below(lg) {
+				.button {
+					width: 100% !important;
+				}
+			}
+			@include respond-below(md) {
+				> .row {
+					margin-bottom: -10px;
+					margin-left: -5px;
+					margin-right: -5px;
+					> .col-md-4,
+					> .col-md-3,
+					> .col-md-2 {
+						padding-left: 5px;
+						padding-right: 5px;
+						margin-bottom: 10px;
+						flex: 0 0 50%;
+						max-width: 50%;
+						.form-group {
+							margin-bottom: 0 !important;
+						}
+					}
+				}
+			}
+			@include respond-below(xs) {
+				> .row {
+					margin-bottom: -10px;
+					> .col-md-4,
+					> .col-md-3,
+					> .col-md-2 {
+						margin-bottom: 10px;
+						flex: 0 0 100%;
+						max-width: 100%;
+					}
+				}
+			}
+		}
+		.search-bar {
+			width: 400px;
+			position: relative;
+			background: $white;
+			border-radius: $b-radius-2;
+			border: none;
+			@include respond-below(xl) {
+				width: 240px;
+			}
+			@include respond-below(md) {
+				width: 220px;
+			}
+			input {
+				padding: 15px 26px;
+				padding-left: 45px;
+				height: 48px;
+				background: transparent;
+				font-size: 0.875em;
+				line-height: 1.4286;
+				color: $secondary;
+				width: 100%;
+				border-radius: $b-radius-2;
+				@include respond-below(xs) {
+					height: 30px;
+				}
+				&:focus {
+					box-shadow: 0 0 0 0.1rem rgba($info, $button-opacity);
+				}
+			}
+			&:before {
+				font-family: 'eicon' !important;
+				content: '\e919';
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				left: 15px;
+				color: $secondary;
+				font-size: 20px;
+				@include respond-below(xs) {
+					font-size: 15px;
+				}
+			}
+		}
+		.select-option {
+			position: relative;
+			background: $white;
+			border-radius: $b-radius-2;
+			height: 48px;
+			border: none;
+			@include respond-below(xs) {
+				height: 30px;
+			}
+			select {
+				padding: 15px 27px;
+				padding-right: 26px + 40px;
+				font-size: 0.875em;
+				line-height: 1.4286;
+				font-family: unset;
+				font-weight: 500;
+				border-radius: $b-radius-2;
+				background: transparent;
+				color: $secondary;
+				appearance: none;
+				@include respond-below(xs) {
+					padding: 2px 15px;
+					height: 30px;
+				}
+			}
+			&:after {
+				@extend .dropdown-button;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				right: 20px;
+				background: rgba(89, 125, 252, 0.1);
+				color: #597dfc;
+				margin-left: 20px !important;
+			}
+		}
+		.button {
+			height: 48px !important;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			@include respond-below(lg) {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			@include respond-below(xs) {
+				height: 30px !important;
+				line-height: 1;
+			}
+		}
+	}
+	.form-group {
+		label:not(.checkbox):not(.radio):not(.file-browse-button) {
+			font-size: 0.875em;
+			font-weight: 500;
+			color: $secondary;
+			height: 20px;
+			margin-bottom: 10px !important;
+		}
+		.date-group {
+			display: flex;
+			justify-content: space-between;
+			@include respond-below(xs) {
+				flex-direction: column;
+				h4 {
+					height: 30px !important;
+				}
+			}
+			h4 {
+				font-size: 0.875em;
+				font-weight: 500;
+				line-height: 1.5;
+				height: 50px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.date-field-wrap {
+				width: calc(50% - 20px);
+				input {
+					padding-left: 10px;
+					padding-right: 10px;
+				}
+				span {
+					font-size: 0.75em;
+				}
+				@include respond-below(xs) {
+					width: 100%;
+				}
+			}
+		}
+	}
+
+	textarea.form-control {
+		width: 100%;
+		padding: 20px;
+		font-size: 0.875em;
+		font-weight: 500;
+		border-radius: $b-radius-2;
+		resize: none;
+		color: $dark;
+		&:focus {
+			box-shadow: 0 0 0 0.1rem rgba($info, $button-opacity);
+		}
+	}
+	input.form-control {
+		height: 50px;
+		padding: 0 26px;
+		font-size: 0.875em;
+		font-weight: 500;
+		border-radius: $b-radius-2;
+		color: $dark;
+		border: none;
+		&:focus {
+			box-shadow: 0 0 0 0.1rem rgba($info, $button-opacity);
+		}
+		@include respond-below(hl) {
+			height: 46px;
+		}
+	}
+	// for error message
+	.has-error {
+		border: 1px solid $danger !important;
+	}
+	.error-message {
+		font-size: 0.875em;
+		color: $danger;
+		margin-top: 5px;
+	}
+
+	.add-option-button {
+		display: flex;
+		margin-bottom: 10px;
+		.add-icon {
+			height: 20px;
+			width: 20px;
+			border-radius: $b-radius-2;
+			background: rgba($primary, $button-icon-opacity);
+			font-size: 0.5em;
+			line-height: 22px;
+			color: $primary;
+			text-align: center;
+		}
+		span {
+			margin-left: 15px;
+			font-size: 0.875em;
+			font-weight: 500;
+			color: $primary;
+		}
+	}
+
+	.select-option {
+		position: relative;
+		border-radius: $b-radius-2;
+		border: 1px solid $white;
+		background: $white;
+		height: 50px;
+		select {
+			position: absolute;
+			padding: 0 26px;
+			height: 48px;
+			width: 100%;
+			width: 100%;
+			padding-right: 26px + 40px;
+			font-size: 0.875em;
+			line-height: 1.4286;
+			font-family: unset;
+			font-weight: 500;
+			border-radius: $b-radius-2;
+			background: transparent;
+			color: $dark;
+			appearance: none;
+			z-index: 2;
+			@include respond-below(xs) {
+				padding-right: 12px + 15px;
+				padding-left: 12px;
+			}
+			&:focus {
+				box-shadow: 0 0 0 0.1rem rgba($info, $button-opacity);
+			}
+		}
+		&:after {
+			@extend .dropdown-button;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right: 20px;
+			background: rgba(89, 125, 252, 0.1);
+			color: #597dfc;
+			margin-left: 20px !important;
+			@include respond-below(xs) {
+				right: 10px;
+			}
+		}
+	}
+
+	.checkbox {
+		cursor: pointer;
+		font-size: 0.875em;
+		font-weight: 500;
+		@include transition;
+		input[type='checkbox'] {
+			display: none;
+			+ span:before {
+				font-family: 'eicon' !important;
+				content: '\e90f';
+				font-size: 0.75em;
+				margin-right: 10px;
+			}
+			&:checked + span:before {
+				content: '\e90d';
+			}
+		}
+	}
+
+	.radio {
+		cursor: pointer;
+		font-size: 0.875em;
+		font-weight: 500;
+		@include transition;
+		input[type='radio'] {
+			display: none;
+			+ span:before {
+				font-family: 'eicon' !important;
+				content: '\e90c';
+				font-size: 0.75em;
+				margin-right: 10px;
+			}
+			&:checked + span:before {
+				content: '\e90a';
+			}
+		}
+	}
+
+	.file-browse-button {
+		cursor: pointer;
+		input {
+			display: none;
+		}
+	}
+
+	.date-picker {
+		position: relative;
+		height: 50px;
+		.form-control {
+			background: transparent !important;
+			position: absolute;
+			z-index: 2;
+		}
+		&:after {
+			font-family: 'eicon' !important;
+			position: absolute;
+			content: '\e939' !important;
+			font-size: 1.25em;
+			top: 50%;
+			transform: translateY(-50%);
+			right: 15px;
+			color: $primary;
+			margin-left: 20px !important;
+		}
+		&.time-only {
+			&:after {
+				content: '\e93A' !important;
+			}
+		}
+	}
+
+	.card-adder {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		height: 50px;
+		font-size: 0.875em;
+		@extend .label__full--primary;
+		font-weight: 500;
+		border-radius: $b-radius-2;
+		color: $dark;
+		border: none;
+		.card-icon {
+			width: 20px;
+			font-size: 1em;
+			margin-left: 25px;
+			margin-right: 10px;
+			color: $dark;
+			opacity: 0.5;
+		}
+		input {
+			height: 100%;
+			background: transparent;
+		}
+		.card-number {
+			width: calc(100% - (55px + 60px + 50px));
+			padding-right: 20px;
+		}
+		.card-expire-date {
+			width: 50px;
+			margin-right: 10px;
+		}
+		.card-cvc {
+			width: 50px;
+		}
+		&:focus {
+			box-shadow: 0 0 0 0.1rem rgba($info, $button-opacity);
+		}
+	}
+
+	.input-group {
+		:not(:last-child) {
+			border-top-right-radius: 0 !important;
+			border-bottom-right-radius: 0 !important;
+		}
+		:not(:first-child) {
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+			border-left: 0 !important;
+		}
+		.input-group-append {
+			.input-group-text {
+				font-size: 0.875em;
+				font-weight: 500;
+				padding-left: 25px;
+				padding-right: 25px;
+				border: none;
+				border: 1px solid $border-color !important;
+				@include respond-below(xs) {
+					padding-left: 10px;
+					padding-right: 10px;
+				}
+			}
+		}
+	}
+
+	.form-note {
+		color: $secondary;
+		font-size: 0.875em;
+		line-height: 1.5;
+		font-weight: 500;
+		span {
+			color: $primary;
+		}
+		&:not(:last-child) {
+			margin-bottom: 10px;
+		}
+	}
+
+	.form-box {
+		background: $white;
+		border-radius: $b-radius-3;
+		padding: 50px;
+		@include respond-below(xl) {
+			padding: 30px;
+		}
+		@include respond-below(lg) {
+			padding: 20px;
+		}
+		@include respond-below(xs) {
+			padding: 10px;
+		}
+	}
+	.details__card,
+	.form-box {
+		.form-group {
+			margin-bottom: 15px;
+			input.form-control,
+			textarea.form-control,
+			.select-option {
+				@extend .label__full--primary;
+			}
+			.date-picker {
+				background: $light;
+			}
+			.form-note {
+				margin-top: 10px;
+			}
+			.checkbox {
+				input[type='checkbox'] {
+					+ span:before {
+						color: $primary;
+					}
+					&:checked + span:before {
+						color: $primary;
+					}
+				}
+				span {
+					color: $primary;
+				}
+			}
+			.thumbnail-upload {
+				height: 400px;
+				border-radius: $b-radius-3;
+				border: 5px solid $light;
+				background-position: center;
+				background-attachment: scroll;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-color: $light;
+				position: relative;
+				@include respond-below(hl) {
+					height: 250px;
+				}
+				@include respond-below(lg) {
+					height: 200px;
+				}
+				@include respond-below(xs) {
+					height: 130px;
+				}
+				.file-browse-button {
+					display: block;
+					margin-bottom: 0;
+					color: $primary;
+					border: none;
+					@extend .thumbnail__status;
+					@extend .thumbnail__status--light;
+					&:hover {
+						color: darken($primary, 50%);
+					}
+					input {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
+	.form__margin__control {
+		margin-bottom: -15px;
+	}
+
+	.custom-fields {
+		.custom-field-tab {
+			display: flex;
+			.tab-option {
+				padding: 15px 30px;
+				min-width: 150px;
+				background: rgba($info, $sub-button-opacity);
+				color: $info;
+				text-align: center;
+				cursor: pointer;
+				@include respond-below(xs) {
+					padding: 15px 10px;
+					flex: 1;
+					min-width: unset;
+				}
+				&:first-child {
+					border-top-left-radius: $b-radius-2;
+				}
+				&:last-child {
+					border-top-right-radius: $b-radius-2;
+				}
+				&.active {
+					background: $info;
+					color: set-text-color($info);
+				}
+				&:not(.active):hover {
+					background: lighten($info, 10%);
+					color: set-text-color($info);
+				}
+			}
+			&-wrap {
+				.custom-field-card {
+					border-top-left-radius: 0;
+				}
+			}
+		}
+		.custom-field-card {
+			margin-bottom: 30px;
+			height: calc(100% - 30px) !important;
+			background: $light;
+			border: 1px solid $border-color;
+			border-radius: $b-radius-2;
+			.checkbox {
+				font-size: 1em;
+				margin-bottom: 0;
+				input[type='checkbox'] {
+					+ span:before {
+						color: $success;
+						font-size: 0.875em;
+					}
+					&:checked + span:before {
+						color: $success;
+					}
+				}
+				span {
+					color: $dark;
+					font-weight: 500;
+				}
+			}
+			&__head {
+				padding: 15px 20px;
+				border-bottom: 1px solid $border-color;
+				&:not(.check-left) {
+					.checkbox {
+						display: block;
+						position: relative;
+						padding-right: 15px;
+						span:before {
+							position: absolute;
+							margin-right: 0;
+							right: 0;
+						}
+					}
+				}
+			}
+			&__body {
+				padding: 20px 20px;
+				ul.two-row {
+					display: flex;
+					flex-wrap: wrap;
+					li {
+						width: 50%;
+						@include respond-below(xs) {
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+		@include respond-below(md) {
+			.modal-body {
+				.button {
+					height: 50px !important;
+				}
+			}
+		}
+	}
+	.screening-question-card {
+		@include respond-below(xs) {
+			> .d-flex {
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+		}
+		&__title {
+			font-size: 1.125em;
+			line-height: 1.5;
+			font-weight: 500;
+			margin-top: 30px;
+			color: $secondary;
+			margin-bottom: 10px;
+			@include respond-below(xs) {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+			&:before {
+				content: '';
+				display: inline-block;
+				height: 10px;
+				width: 10px;
+				border-radius: $b-radius-100;
+				background: $primary;
+				margin-right: 10px;
+			}
+		}
+		.form-box {
+			padding-top: 30px;
+			padding-bottom: 30px;
+			@include respond-below(md) {
+				> .row {
+					> .col-md-4,
+					> .col-md-8 {
+						&:not(:last-child) {
+							margin-bottom: 15px;
+						}
+					}
+				}
+			}
+			@include respond-below(xs) {
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
+		}
+		@include respond-below(lg) {
+			.row {
+				.col-md-3 {
+					flex: 0 0 33.333333%;
+					max-width: 33.333333%;
+				}
+			}
+		}
+		@include respond-below(md) {
+			.row {
+				.col-md-3 {
+					flex: 0 0 50%;
+					max-width: 50%;
+				}
+			}
+		}
+		@include respond-below(xs) {
+			.row {
+				.col-md-3 {
+					flex: 0 0 100%;
+					max-width: 100%;
+				}
+			}
+		}
+		.screening-question-answer {
+			position: relative;
+			.checkbox {
+				margin-bottom: 0;
+				margin-right: 10px;
+				input[type='checkbox'] {
+					+ span:before {
+						color: $success;
+						font-size: 0.875em;
+					}
+					&:checked + span:before {
+						color: $success;
+					}
+				}
+				@include respond-below(lg) {
+					margin-right: 0;
+				}
+			}
+			.radio {
+				margin-bottom: 0;
+				margin-right: 10px;
+				input[type='radio'] {
+					+ span:before {
+						color: $success;
+						font-size: 0.875em;
+					}
+					&:checked + span:before {
+						color: $success;
+					}
+				}
+				@include respond-below(lg) {
+					margin-right: 0;
+				}
+			}
+			input[type='text'] {
+				padding-left: 15px;
+				padding-right: 35px;
+			}
+			.remove-button {
+				position: absolute;
+				top: calc(50% + 15px);
+				transform: translateY(-50%);
+				right: 15px;
+				@extend .dropdown-button;
+				background: rgba($danger, $dropdown-control-opacity);
+				color: $danger;
+			}
+		}
+	}
+
+	.image-selector {
+		display: flex;
+		flex-wrap: wrap;
+		@include respond-below(xs) {
+			.company-logo {
+				margin-right: 0 !important;
+				width: 100%;
+			}
+			.company-favicon {
+				margin-top: 10px;
+			}
+		}
+		.company-logo,
+		.company-favicon {
+			.img-box {
+				margin-right: 20px;
+			}
+			&:not(:last-child) {
+				margin-right: 50px;
+			}
+		}
+		.company-favicon {
+			.img-box {
+				width: 64px;
+				min-width: 64px;
+				height: 64px;
+			}
+		}
+		.selection-box {
+			display: flex;
+			align-items: center;
+			min-height: 100px;
+		}
+		.img-box {
+			border-radius: $b-radius-2;
+			background: $light;
+			height: 100px;
+			width: 100px;
+			min-width: 100px;
+			border: 1px solid $border-color;
+			overflow: hidden;
+			img {
+				max-width: 100%;
+				max-height: 100%;
+			}
+		}
+		.file-browse-button {
+			color: $primary;
+			font-style: italic;
+			text-decoration: underline;
+			font-weight: 500;
+			display: inline-block;
+			:hover {
+				color: darken($primary, 20%);
+			}
+		}
+	}
+
+	.pipeline-step-list {
+		.input-wrapper:not(:last-child) {
+			margin-bottom: 10px;
+		}
+		.pipeline-wrapper {
+			position: relative;
+			input {
+				padding-right: 50px;
+			}
+			.input-wrapper-append {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				height: 30px;
+				width: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 0.75em;
+				color: $white;
+				background: $danger;
+				border-radius: $b-radius-100;
+				cursor: pointer;
+			}
+		}
+	}
+
+	#editor {
+		.quill-editor {
+			display: flex !important;
+			height: auto !important;
+			flex-direction: column !important;
+			border-radius: $b-radius-2 !important;
+			border: 1px solid $border-color;
+			.ql-toolbar {
+				border-top: none !important;
+				border-left: none !important;
+				border-right: none !important;
+			}
+			.ql-container {
+				height: 18rem !important;
+				border: none !important;
+				.ql-editor {
+					height: 100% !important;
+				}
+			}
+		}
+	}
+	input:disabled {
+		cursor: no-drop;
+	}
+
+	// employee number selection
+	.employeeNumber {
+	    > label {
+	        font-size: 0.875em;
+	        font-weight: 500;
+	        color: $secondary;
+	        height: 20px;
+	        margin-bottom: 10px;
+	        width: 100%;
+	        margin-left: 15px;
+	        @include respond-below(sm) {
+	            margin-left: 2.5px;
+	        }
+	    }
+	    &__counter {
+	        input[type="radio"] {
+	            display: none;
+	            &:hover + .employeeNumber__info,
+	            &:checked + .employeeNumber__info {
+	                background: $success;
+	                border: 1px solid $success;
+	                .employeeNumber__total,
+	                .employeeNumber__title {
+	                    color: $white;
+	                }
+	            }
+	        }
+	        .employeeNumber__info {
+	            padding: 20px;
+	            width: 100%;
+	            @include transition;
+	            @include transition-properties(background, color);
+	            @include respond-below(sm) {
+	                padding: 10px 2.5px;
+	            }
+	            cursor: pointer;
+	            border-radius: $b-radius-2;
+	            background: $light;
+	            border: 1px solid $border-color;
+	            text-align: center;
+	            .employeeNumber__total {
+	                font-size: 1.5em;
+	                font-weight: 600;
+	                line-height: 1.5;
+	            }
+	            .employeeNumber__title {
+	                font-size: 0.875em;
+	                font-weight: 500;
+	                line-height: 1.5;
+	            }
+	        }
+	    }
+	    @include respond-below(sm) {
+	        &.row {
+	            margin-left: -2.5px !important;
+	            margin-right: -2.5px !important;
+	            > .col-md-3 {
+	                padding: 2.5px;
+	                flex: 0 0 25%;
+	                max-width: 25%;
+	            }
+	        }
+	    }
+	    @include respond-below(xs) {
+	        &.row {
+	            > .col-md-3 {
+	                flex: 0 0 50%;
+	                max-width: 50%;
+	            }
+	        }
+	    }
+	}
+
+}

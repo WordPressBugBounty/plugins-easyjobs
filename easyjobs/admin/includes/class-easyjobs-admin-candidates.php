@@ -56,7 +56,7 @@ class Easyjobs_Admin_Candidates {
     public function stream_resume() {
         // GET is used by the in-page pdf.js viewer; POST (nonce in body) by the
         // open-in-new-tab / download buttons. Capability + nonce enforced either way.
-        if ( ! Easyjobs_Helper::can_update_options() || ! Easyjobs_Helper::verified_request( $_REQUEST ) ) {
+        if ( ! Easyjobs_Helper::can_update_options() || ! ( isset( $_REQUEST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
             status_header( 403 );
             exit;
         }
@@ -159,11 +159,11 @@ class Easyjobs_Admin_Candidates {
 			);
 			wp_die();
         }
-        if(!Easyjobs_Helper::verified_request($_POST)){
+        if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
 			wp_die();
 		}
-        $job_id = isset($_POST['job_id']) ? $_POST['job_id'] : 4;
+        $job_id = isset( $_POST['job_id'] ) ? sanitize_text_field( wp_unslash( $_POST['job_id'] ) ) : 4;
         $candidates = $this->get_job_candidates_data($job_id);
 
         if($candidates){
@@ -192,7 +192,7 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -206,7 +206,8 @@ class Easyjobs_Admin_Candidates {
 		if ( ! isset( $_POST['job_id'] ) || ! isset( $_POST['parameters'] ) ) {
             return;
 		};
-        $post = $this->build_search_keyword( json_decode( wp_unslash( $_POST['parameters'] ) ));
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: decoded here and every key/value is sanitized with sanitize_text_field() in build_search_keyword().
+        $post = $this->build_search_keyword( json_decode( wp_unslash( $_POST['parameters'] ) ) );
         echo wp_json_encode(
             $this->get_results(
                 sanitize_text_field( wp_unslash( $_POST['job_id'] ) ),
@@ -232,7 +233,7 @@ class Easyjobs_Admin_Candidates {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
 			wp_die();
 		}
@@ -240,10 +241,11 @@ class Easyjobs_Admin_Candidates {
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Candidate id not provided'));
 			wp_die();
 		}
-        $data = $this->get_details( sanitize_text_field($_POST['id']) );
+        $candidate_id = sanitize_text_field( wp_unslash( $_POST['id'] ) );
+        $data         = $this->get_details( $candidate_id );
 		if(!empty($data)){
 			$data->global_ai_enabled = Easyjobs_Helper::is_ai_enabled();
-			$data->notes = $this->get_notes( sanitize_text_field($_POST['id']) );
+			$data->notes = $this->get_notes( $candidate_id );
 			echo wp_json_encode(Easyjobs_Helper::get_success_response('success', $data));
 		}else{
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Unable to get candidate details'));
@@ -295,7 +297,7 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -307,8 +309,11 @@ class Easyjobs_Admin_Candidates {
         }
 		$parameters = array();
         if ( isset( $_POST['parameters'] ) ) {
-            foreach ( $_POST['parameters'] as $key => $value ) {
-                $parameters[ sanitize_text_field( $key ) ] = sanitize_text_field( $value );
+            $raw_parameters = map_deep( wp_unslash( $_POST['parameters'] ), 'sanitize_text_field' );
+            if ( is_array( $raw_parameters ) ) {
+                foreach ( $raw_parameters as $key => $value ) {
+                    $parameters[ sanitize_text_field( $key ) ] = sanitize_text_field( $value );
+                }
             }
         };
         echo wp_json_encode( Easyjobs_Api::get( 'company_candidates', $parameters ) );
@@ -316,48 +321,90 @@ class Easyjobs_Admin_Candidates {
     }
 
     /**
-     * ajax callback for export candidates
+     * Ajax callback for export candidates.
+     *
+     * Same-origin proxy: asks the API for the signed export link, fetches the
+     * file server-side and streams it back. The browser never navigates to the
+     * app (the link carries the company API key as `?token=`), and a missing or
+     * broken export route surfaces as a JSON error instead of an off-site 404.
+     *
+     * POST: action=easyjobs_export_job_candidates&job_id=<id>&keywords=<json>
      *
      * @since 1.3.1
      */
     public function export_job_candidates() {
         if ( ! Easyjobs_Helper::can_update_options() ) {
-			echo wp_json_encode(
-				array(
-					'status'     => 'error',
-					'message'    => 'Invalid request !!',
-				)
-			);
-			wp_die();
+            $this->send_export_error( 'Invalid request !!', 403 );
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
-			echo wp_json_encode(
-				array(
-					'status'     => 'error',
-					'error_type' => 'invalid_nonce',
-					'message'    => 'Bad request !!',
-				)
-			);
-			wp_die();
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
+            $this->send_export_error( 'Bad request !!', 403 );
         }
 
-		if ( ! isset( $_POST['job_id'] ) || empty( $_POST['job_id'] ) ) {
-            echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Job id not provided' ) );
-			wp_die();
-		}
+        $job_id = isset( $_POST['job_id'] ) ? absint( $_POST['job_id'] ) : 0;
+        if ( ! $job_id ) {
+            $this->send_export_error( __( 'Job id not provided', 'easyjobs' ), 400 );
+        }
 
-        echo wp_json_encode( Easyjobs_Helper::get_generic_response(
-                Easyjobs_Api::search_within_job(
-                    abs( sanitize_text_field( $_POST['job_id'] ) ),
-                    '',
-                    $this->build_search_keyword( $_POST['keywords'] ),
-                    EASYJOBS_APP_URL . '/api/v1/job/' . abs( sanitize_text_field( $_POST['job_id'] ) ) . '/candidates/export'
-                )
-            )
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: decoded here and every key/value is sanitized with sanitize_text_field() in build_search_keyword().
+        $keywords = isset( $_POST['keywords'] ) ? json_decode( wp_unslash( $_POST['keywords'] ), true ) : array();
+
+        $link = Easyjobs_Api::search_within_job(
+            $job_id,
+            '',
+            $this->build_search_keyword( is_array( $keywords ) ? $keywords : array() ),
+            EASYJOBS_APP_URL . '/api/v1/job/' . $job_id . '/candidates/export'
         );
+        $url  = ( $link && isset( $link->status ) && 'success' === $link->status && ! empty( $link->data->url ) ) ? (string) $link->data->url : '';
 
-        wp_die();
+        // Only follow links back to the easy.jobs app: get_file_raw() sends the API key.
+        if ( '' === $url || wp_parse_url( $url, PHP_URL_HOST ) !== wp_parse_url( EASYJOBS_APP_URL, PHP_URL_HOST ) ) {
+            $this->send_export_error( __( 'Unable to export candidates. Please try again later.', 'easyjobs' ), 502 );
+        }
+
+        $response = Easyjobs_Api::get_file_raw( esc_url_raw( $url ) );
+        $ctype    = is_wp_error( $response ) ? '' : wp_remote_retrieve_header( $response, 'content-type' );
+        $ctype    = is_array( $ctype ) ? '' : strtolower( (string) $ctype );
+
+        // The app answers a missing route with its SPA (text/html) and a failure
+        // with JSON — neither is an export file.
+        if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) || '' === $ctype || 0 === strpos( $ctype, 'text/html' ) || 0 === strpos( $ctype, 'application/json' ) ) {
+            $this->send_export_error( __( 'Candidate export is not available right now. Please try again later.', 'easyjobs' ), 502 );
+        }
+
+        $filename    = 'candidates-' . $job_id . '.xls';
+        $disposition = wp_remote_retrieve_header( $response, 'content-disposition' );
+        if ( is_string( $disposition ) && preg_match( '/filename\*?=(?:UTF-8\'\')?"?([^";]+)"?/i', $disposition, $match ) ) {
+            $name = sanitize_file_name( rawurldecode( $match[1] ) );
+            if ( '' !== $name ) {
+                $filename = $name;
+            }
+        }
+
+        $body = wp_remote_retrieve_body( $response );
+
+        nocache_headers();
+        header( 'Content-Type: ' . preg_replace( '/[^a-z0-9\/\.\-\+;=, ]/', '', $ctype ) );
+        header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+        header( 'X-Content-Type-Options: nosniff' );
+        header( 'Content-Length: ' . strlen( $body ) );
+        echo $body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- binary spreadsheet stream
+        exit;
+    }
+
+    /**
+     * Bail out of the export proxy with a JSON error and a non-200 status, so
+     * streamFile() rejects it instead of saving the error as the file.
+     *
+     * @param string $message Error message shown to the user.
+     * @param int    $code    HTTP status code.
+     * @return void
+     */
+    private function send_export_error( $message, $code ) {
+        // The AJAX wp_die() handler re-sends the status, so pass it through
+        // `response` (a bare status_header() would be reset to 200).
+        echo wp_json_encode( Easyjobs_Helper::get_error_response( $message ) );
+        wp_die( '', '', array( 'response' => (int) $code ) );
     }
 
 	/**
@@ -374,7 +421,7 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -390,7 +437,7 @@ class Easyjobs_Admin_Candidates {
 		}
 		$response = Easyjobs_Api::get_by_id(
 			'job',
-			abs( sanitize_text_field( $_POST['job_id'] ) ),
+			abs( sanitize_text_field( wp_unslash( $_POST['job_id'] ) ) ),
 			'invitations'
 		);
 		Easyjobs_Helper::check_reload_required( $response );
@@ -408,7 +455,7 @@ class Easyjobs_Admin_Candidates {
 	 * @since 1.3.7
 	 */
 	public function save_candidate_note() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -423,8 +470,9 @@ class Easyjobs_Admin_Candidates {
 		}
 		$data = array();
 
-        $form_data = json_decode(wp_unslash($_POST['form_data']), true);
-		foreach ( $form_data as $d ) {
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: decoded here; the note is sanitized with sanitize_text_field() below and tag ids are forwarded to the easy.jobs API, which validates them.
+        $form_data = isset( $_POST['form_data'] ) ? json_decode( wp_unslash( $_POST['form_data'] ), true ) : array();
+		foreach ( (array) $form_data as $d ) {
 			if ( $d['name'] == 'note' ) {
 				if ( empty( $d['value'] ) ) {
 					echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Please write some note' ) );
@@ -443,7 +491,7 @@ class Easyjobs_Admin_Candidates {
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(
                 Easyjobs_Api::post(
                     'save_candidate_note',
-                    abs( sanitize_text_field( $_POST['candidate_id'] ) ),
+                    abs( sanitize_text_field( wp_unslash( $_POST['candidate_id'] ) ) ),
                     $data
                 )
             )
@@ -458,7 +506,7 @@ class Easyjobs_Admin_Candidates {
 	 * @since 1.3.7
 	 */
 	public function delete_candidate_note() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -476,7 +524,7 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
 		}
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(
-                Easyjobs_Api::post_custom( EASYJOBS_API_URL . 'job/applicants/' . abs( $_POST['candidate_id'] ) . '/note/' . abs( $_POST['note_id'] ) . '/delete' )
+                Easyjobs_Api::post_custom( EASYJOBS_API_URL . 'job/applicants/' . absint( wp_unslash( $_POST['candidate_id'] ) ) . '/note/' . absint( wp_unslash( $_POST['note_id'] ) ) . '/delete' )
             )
         );
 		wp_die();
@@ -488,7 +536,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function get_custom_fields() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -510,7 +558,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function save_custom_field() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -563,7 +611,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function delete_custom_field() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -598,7 +646,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function get_attachments() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -619,7 +667,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function upload_attachment() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -691,7 +739,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function update_attachment() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -727,7 +775,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function delete_attachment_file() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -757,7 +805,7 @@ class Easyjobs_Admin_Candidates {
 	public function stream_attachment() {
 		// Accept the request via POST (nonce in the body — keeps it out of the URL)
 		// or GET; either way the capability + nonce are still enforced.
-		if ( ! Easyjobs_Helper::can_update_options() || ! Easyjobs_Helper::verified_request( $_REQUEST ) ) {
+		if ( ! Easyjobs_Helper::can_update_options() || ! ( isset( $_REQUEST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			status_header( 403 );
 			exit;
 		}
@@ -835,7 +883,7 @@ class Easyjobs_Admin_Candidates {
 
 
 	public function delete_candidate() {
-        if ( ! Easyjobs_Helper::verified_request($_POST) || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -853,12 +901,13 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
 		}
 		$candidates = array();
-		foreach (json_decode( $_POST['candidates'] ) as $data ) {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: decoded here and each candidate id is sanitized with sanitize_text_field() below.
+		foreach ( json_decode( wp_unslash( $_POST['candidates'] ) ) as $data ) {
 			$candidates[] = sanitize_text_field( $data );
 		}
 		$response = Easyjobs_Api::post(
             'delete_candidate',
-            abs( sanitize_text_field( $_POST['job'] ) ),
+            abs( sanitize_text_field( wp_unslash( $_POST['job'] ) ) ),
             array(
 				'candidates' => $candidates,
 			)
@@ -897,7 +946,7 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -914,7 +963,7 @@ class Easyjobs_Admin_Candidates {
 		}
 		$response = Easyjobs_Api::get_by_id(
 			'job',
-			abs( sanitize_text_field( $_POST['job_id'] ) ),
+			abs( sanitize_text_field( wp_unslash( $_POST['job_id'] ) ) ),
 			'candidate/pending'
 		);
 		Easyjobs_Helper::check_reload_required( $response );
@@ -931,7 +980,7 @@ class Easyjobs_Admin_Candidates {
 	 * @since 1.5.0
 	 */
 	public function delete_pending_candidate() {
-        if ( ! Easyjobs_Helper::verified_request($_POST)  || ! Easyjobs_Helper::can_update_options()) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )  || ! Easyjobs_Helper::can_update_options()) {
             echo json_encode(
                 array(
 					'status'  => 'error',
@@ -951,8 +1000,8 @@ class Easyjobs_Admin_Candidates {
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(
 			Easyjobs_Api::post(
 				'delete_pending_candidate',
-				abs( sanitize_text_field( $_POST['job_id'] ) ),
-				array('candidates' => [sanitize_text_field($_POST['candidate'])])
+				abs( sanitize_text_field( wp_unslash( $_POST['job_id'] ) ) ),
+				array( 'candidates' => array( sanitize_text_field( wp_unslash( $_POST['candidate'] ) ) ) )
 			)
 		)
 		);
@@ -974,7 +1023,7 @@ class Easyjobs_Admin_Candidates {
 			);
 			wp_die();
         }
-		if(!Easyjobs_Helper::verified_request($_POST)){
+		if(!( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) )){
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
             wp_die();
 		}
@@ -991,14 +1040,14 @@ class Easyjobs_Admin_Candidates {
 		$args = [];
 		foreach ($params as $param){
 			if(isset($_POST[$param])){
-				$args[$param] = sanitize_text_field($_POST[$param]);
+				$args[ $param ] = sanitize_text_field( wp_unslash( $_POST[ $param ] ) );
 			}
 		}
 		if(isset($_POST['rating'])) {
-			$args['rating'] = array_map('absint', explode(',', $_POST['rating']));
+			$args['rating'] = array_map( 'absint', explode( ',', sanitize_text_field( wp_unslash( $_POST['rating'] ) ) ) );
 		}
 		if(isset($_POST['status']) && !empty($_POST['status'])) {
-			$args['status'] = array_map('absint', explode(',', $_POST['status']));
+			$args['status'] = array_map( 'absint', explode( ',', sanitize_text_field( wp_unslash( $_POST['status'] ) ) ) );
 		}
 		$candidates = $this->get_company_candidates( $args );
 		if($candidates){
@@ -1026,7 +1075,7 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1150,7 +1199,7 @@ class Easyjobs_Admin_Candidates {
 			wp_die();
         }
 
-        if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+        if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -1166,7 +1215,7 @@ class Easyjobs_Admin_Candidates {
 		}
 		$response = Easyjobs_Api::get_by_id(
 			'candidate_ids',
-			absint( sanitize_text_field( $_POST['id'] ) )
+			absint( sanitize_text_field( wp_unslash( $_POST['id'] ) ) )
 		);
 		Easyjobs_Helper::check_reload_required( $response );
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(
@@ -1228,7 +1277,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function get_assessment_list() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -1263,7 +1312,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function assign_candidate_assessment() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -1279,7 +1328,7 @@ class Easyjobs_Admin_Candidates {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Please select an assessment.' ) );
 			wp_die();
 		}
-		$expire_date = $this->sanitize_assessment_expire_date( isset( $_POST['expire_date'] ) ? $_POST['expire_date'] : '' );
+		$expire_date = $this->sanitize_assessment_expire_date( isset( $_POST['expire_date'] ) ? sanitize_text_field( wp_unslash( $_POST['expire_date'] ) ) : '' );
 		if ( false === $expire_date ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'A valid, current or future expire date is required.' ) );
 			wp_die();
@@ -1308,7 +1357,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function update_candidate_assessment() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}
@@ -1318,7 +1367,7 @@ class Easyjobs_Admin_Candidates {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Job or assessment id not provided' ) );
 			wp_die();
 		}
-		$expire_date = $this->sanitize_assessment_expire_date( isset( $_POST['expire_date'] ) ? $_POST['expire_date'] : '' );
+		$expire_date = $this->sanitize_assessment_expire_date( isset( $_POST['expire_date'] ) ? sanitize_text_field( wp_unslash( $_POST['expire_date'] ) ) : '' );
 		if ( false === $expire_date ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'A valid, current or future expire date is required.' ) );
 			wp_die();
@@ -1341,7 +1390,7 @@ class Easyjobs_Admin_Candidates {
 	 * @return void
 	 */
 	public function delete_candidate_assessment() {
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) || ! Easyjobs_Helper::can_update_options() ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) || ! Easyjobs_Helper::can_update_options() ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid request' ) );
 			wp_die();
 		}

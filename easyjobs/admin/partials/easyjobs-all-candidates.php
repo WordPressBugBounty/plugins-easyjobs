@@ -9,6 +9,11 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+
 ?>
 <div class="wrap">
 	<hr class="wp-header-end">
@@ -107,7 +112,7 @@
 										$dot_class = 'dot_li_candidate';
 									}
 									?>
-									<li class="pagination-list__item <?php echo $dot_class; ?> <?php echo $current_page == $pages_to_show[$i] ? esc_html( 'pagination-list__item--active' ) : ''; ?>">
+									<li class="pagination-list__item <?php echo esc_attr( $dot_class ); ?> <?php echo $current_page == $pages_to_show[$i] ? esc_html( 'pagination-list__item--active' ) : ''; ?>">
 										<a class="pagination-list__link" href="<?php echo esc_url( admin_url( 'admin.php?page=easyjobs-candidates&all-candidate-page=' . $pages_to_show[$i] ) ); ?>
 											">
 											<?php echo esc_html( $pages_to_show[$i] ); ?>

@@ -1,17 +1,17 @@
-# Copyright (C) 2025 easy.jobs
+# Copyright (C) 2026 easy.jobs
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: easy.jobs 2.5.10\n"
+"Project-Id-Version: easy.jobs 2.8.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easyjobs\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-10T11:44:47+00:00\n"
+"POT-Creation-Date: 2026-10-13T10:03:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: easyjobs\n"
 
 #. Plugin Name of the plugin
@@ -31,155 +31,179 @@ msgstr ""
 msgid "Easy solution for the job recruitment to attract, manage & hire right talent faster."
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:187
+#: admin/class-easyjobs-admin.php:196
 msgid "We hope you're enjoying EasyJobs! Could you please do us a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:198
+#: admin/class-easyjobs-admin.php:207
 msgid "Sure, you deserve it!"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:207
+#: admin/class-easyjobs-admin.php:216
 msgid "I already did"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:214
+#: admin/class-easyjobs-admin.php:223
 msgid "Maybe Later"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:226
+#: admin/class-easyjobs-admin.php:235
 msgid "I need help"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:230
+#: admin/class-easyjobs-admin.php:239
 msgid "Never show again"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:654
+#: admin/class-easyjobs-admin.php:552
 msgid "Easyjobs - Dashboard"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:655
+#: admin/class-easyjobs-admin.php:553
 msgid "Dashboard"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:660
+#: admin/class-easyjobs-admin.php:558
 msgid "Easyjobs - All jobs"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:661
+#: admin/class-easyjobs-admin.php:559
 msgid "Jobs"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:666
+#: admin/class-easyjobs-admin.php:564
 msgid "Easyjobs - Create job"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:667
+#: admin/class-easyjobs-admin.php:565
 msgid "Create Job"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:673
+#: admin/class-easyjobs-admin.php:571
 msgid "Easyjobs - Edit job"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:674
+#: admin/class-easyjobs-admin.php:572
 msgid "Edit Job"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:680
+#: admin/class-easyjobs-admin.php:578
 msgid "Easyjobs - Candidates"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:681
-#: admin/partials/easyjobs-admin-display.php:104
-#: admin/partials/easyjobs-admin-display.php:143
-#: admin/partials/easyjobs-admin-display.php:180
-#: admin/partials/easyjobs-admin-display.php:221
-#: admin/partials/easyjobs-admin-display.php:258
-#: admin/partials/easyjobs-admin-display.php:300
-#: admin/partials/easyjobs-jobs-display.php:96
-#: admin/partials/easyjobs-pipeline-display.php:32
-#: admin/assets/dist/react/easyjobs.js:13682
-#: admin/assets/dist/react/easyjobs.js:22501
-#: admin/react/src/components/Job/AllJobs/Controls.js:55
+#: admin/class-easyjobs-admin.php:579
+#: admin/partials/easyjobs-admin-display.php:109
+#: admin/partials/easyjobs-admin-display.php:148
+#: admin/partials/easyjobs-admin-display.php:185
+#: admin/partials/easyjobs-admin-display.php:226
+#: admin/partials/easyjobs-admin-display.php:263
+#: admin/partials/easyjobs-admin-display.php:305
+#: admin/partials/easyjobs-jobs-display.php:101
+#: admin/partials/easyjobs-pipeline-display.php:38
+#: admin/react/src/components/Candidate/index.js:899
+#: admin/react/src/components/Job/AllJobs/Controls.js:56
 #: admin/react/src/components/Pipeline/PipelineTopOptions.js:45
 msgid "Candidates"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:686
-#: admin/class-easyjobs-admin.php:692
-#: admin/class-easyjobs-admin.php:699
+#: admin/class-easyjobs-admin.php:584
+msgid "Easyjobs - Messages"
+msgstr ""
+
+#: admin/class-easyjobs-admin.php:585
+#: admin/react/src/components/Messages/index.js:302
+#: admin/react/src/layouts/header/index.js:236
+#: admin/react/src/layouts/header/index.js:239
+msgid "Messages"
+msgstr ""
+
+#: admin/class-easyjobs-admin.php:590
+#: admin/class-easyjobs-admin.php:596
+#: admin/class-easyjobs-admin.php:603
 msgid "Easyjobs - Questions"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:687
+#: admin/class-easyjobs-admin.php:591
 msgid "Question Set"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:693
+#: admin/class-easyjobs-admin.php:597
 msgid "Question Create"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:700
+#: admin/class-easyjobs-admin.php:604
 msgid "Question Edit"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:706
-#: admin/class-easyjobs-admin.php:712
-#: admin/class-easyjobs-admin.php:719
+#: admin/class-easyjobs-admin.php:610
+#: admin/class-easyjobs-admin.php:616
+#: admin/class-easyjobs-admin.php:623
 msgid "Easyjobs - Assessments"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:707
+#: admin/class-easyjobs-admin.php:611
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:856
 msgid "Assessments"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:713
+#: admin/class-easyjobs-admin.php:617
 msgid "Assessment Edit"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:720
+#: admin/class-easyjobs-admin.php:624
 msgid "Assessment Create"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:726
+#: admin/class-easyjobs-admin.php:630
 msgid "Easyjobs - Job Candidates"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:727
+#: admin/class-easyjobs-admin.php:631
 msgid "Job Candidates"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:733
+#: admin/class-easyjobs-admin.php:637
 msgid "Easyjobs - Pipelines"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:734
+#: admin/class-easyjobs-admin.php:638
 msgid "Job Pipelines"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:740
+#: admin/class-easyjobs-admin.php:644
 msgid "Easyjobs - Settings"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:741
+#: admin/class-easyjobs-admin.php:645
+#: admin/react/src/layouts/header/index.js:403
 msgid "Settings"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:824
+#: admin/class-easyjobs-admin.php:773
+msgid "Documentation"
+msgstr ""
+
+#: admin/class-easyjobs-admin.php:774
+msgid "Support"
+msgstr ""
+
+#: admin/class-easyjobs-admin.php:775
+msgid "Changelog"
+msgstr ""
+
+#: admin/class-easyjobs-admin.php:794
 msgid "Easyjobs Pipelines "
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:827
+#: admin/class-easyjobs-admin.php:797
 msgid "Easyjobs Candidates "
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:1664
+#: admin/class-easyjobs-admin.php:1648
 msgid "Want to help make <strong>EasyJobs</strong> even more awesome?"
 msgstr ""
 
-#: admin/class-easyjobs-admin.php:1665
+#: admin/class-easyjobs-admin.php:1649
 msgid "We collect non-sensitive diagnostic data and plugin usage information. Your site URL, WordPress & PHP version, plugins & themes and email address to send you the  discount coupon. This data lets us make sure this plugin always stays compatible with the most popular plugins and themes. No spam, I promise."
 msgstr ""
 
@@ -187,12 +211,12 @@ msgstr ""
 #: admin/customizer/controls.php:433
 #: admin/customizer/controls.php:525
 #: admin/customizer/controls.php:563
-#: includes/class-easyjobs-helper.php:983
-#: includes/class-easyjobs-helper.php:1029
-#: includes/class-easyjobs-helper.php:1105
-#: public/class-easyjobs-public.php:377
-#: admin/assets/dist/react/easyjobs.js:9142
-#: admin/react/src/components/Candidate/index.js:265
+#: includes/class-easyjobs-helper.php:1340
+#: includes/class-easyjobs-helper.php:1386
+#: includes/class-easyjobs-helper.php:1468
+#: public/class-easyjobs-public.php:451
+#: admin/react/src/components/Messages/ConversationList.js:99
+#: admin/react/src/components/Messages/FilterPanel.js:210
 msgid "Reset"
 msgstr ""
 
@@ -225,10 +249,6 @@ msgstr ""
 
 #: admin/customizer/controls.php:383
 msgid "Angle"
-msgstr ""
-
-#: admin/customizer/controls.php:624
-msgid "Go Pro"
 msgstr ""
 
 #: admin/customizer/customizer.php:36
@@ -345,19 +365,12 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1285
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1642
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1677
-#: blocks/blocks/job-list/src/components/inspector.js:790
-#: blocks/blocks/job-list/src/components/inspector.js:820
-#: blocks/blocks/job-list/src/components/inspector.js:899
-#: blocks/blocks/job-list/src/components/inspector.js:929
-#: blocks/blocks/job-list/src/components/inspector.js:1274
-#: blocks/blocks/job-list/src/components/inspector.js:1304
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3981
-#: blocks/dist/index.js:4011
-#: blocks/dist/index.js:4090
-#: blocks/dist/index.js:4120
-#: blocks/dist/index.js:4465
-#: blocks/dist/index.js:4495
+#: blocks/blocks/job-list/src/components/inspector.js:851
+#: blocks/blocks/job-list/src/components/inspector.js:891
+#: blocks/blocks/job-list/src/components/inspector.js:1001
+#: blocks/blocks/job-list/src/components/inspector.js:1041
+#: blocks/blocks/job-list/src/components/inspector.js:1432
+#: blocks/blocks/job-list/src/components/inspector.js:1472
 msgid "Background Color"
 msgstr ""
 
@@ -378,12 +391,12 @@ msgid "Hide Company Logo"
 msgstr ""
 
 #: admin/customizer/customizer.php:534
-#: admin/customizer/customizer.php:1918
+#: admin/customizer/customizer.php:1933
 msgid "Company Name Font Size"
 msgstr ""
 
 #: admin/customizer/customizer.php:558
-#: admin/customizer/customizer.php:1942
+#: admin/customizer/customizer.php:1957
 msgid "Company Location Font Size"
 msgstr ""
 
@@ -428,11 +441,8 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-job-list.php:883
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:390
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1308
-#: blocks/blocks/job-list/src/components/inspector.js:277
-#: blocks/blocks/job-list/src/components/inspector.js:946
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3468
-#: blocks/dist/index.js:4137
+#: blocks/blocks/job-list/src/components/inspector.js:290
+#: blocks/blocks/job-list/src/components/inspector.js:1063
 msgid "Job List"
 msgstr ""
 
@@ -494,27 +504,27 @@ msgid "Job Vacancy Color"
 msgstr ""
 
 #: admin/customizer/customizer.php:1140
-#: admin/customizer/customizer.php:2049
+#: admin/customizer/customizer.php:2064
 msgid "Apply Button Font Size"
 msgstr ""
 
 #: admin/customizer/customizer.php:1163
-#: admin/customizer/customizer.php:2093
+#: admin/customizer/customizer.php:2108
 msgid "Apply Button Text Color"
 msgstr ""
 
 #: admin/customizer/customizer.php:1183
-#: admin/customizer/customizer.php:2072
+#: admin/customizer/customizer.php:2087
 msgid "Apply Button Background Color"
 msgstr ""
 
 #: admin/customizer/customizer.php:1202
-#: admin/customizer/customizer.php:2132
+#: admin/customizer/customizer.php:2147
 msgid "Apply Button Hover Text Color"
 msgstr ""
 
 #: admin/customizer/customizer.php:1221
-#: admin/customizer/customizer.php:2112
+#: admin/customizer/customizer.php:2127
 msgid "Apply Button Hover Background Color"
 msgstr ""
 
@@ -523,11 +533,8 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-job-list.php:688
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:332
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1114
-#: blocks/blocks/job-list/src/components/inspector.js:236
-#: blocks/blocks/job-list/src/components/inspector.js:724
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3427
-#: blocks/dist/index.js:3915
+#: blocks/blocks/job-list/src/components/inspector.js:246
+#: blocks/blocks/job-list/src/components/inspector.js:756
 msgid "Job Filter"
 msgstr ""
 
@@ -590,7 +597,7 @@ msgid "Reset Button Hover Background Color"
 msgstr ""
 
 #: admin/customizer/customizer.php:1516
-#: admin/customizer/customizer.php:2379
+#: admin/customizer/customizer.php:2394
 msgid "Showcase Image"
 msgstr ""
 
@@ -606,1058 +613,1069 @@ msgstr ""
 msgid "Job overview"
 msgstr ""
 
-#: admin/customizer/customizer.php:1966
+#: admin/customizer/customizer.php:1913
+msgid "Show Experience Level"
+msgstr ""
+
+#: admin/customizer/customizer.php:1981
 msgid "Job Info List Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:1989
+#: admin/customizer/customizer.php:2004
 msgid "Job Info List Label Color"
 msgstr ""
 
-#: admin/customizer/customizer.php:2009
+#: admin/customizer/customizer.php:2024
 msgid "Job Info List Value Color"
 msgstr ""
 
-#: admin/customizer/customizer.php:2029
+#: admin/customizer/customizer.php:2044
 msgid "Apply Button"
 msgstr ""
 
-#: admin/customizer/customizer.php:2152
+#: admin/customizer/customizer.php:2167
 msgid "Social Sharing"
 msgstr ""
 
-#: admin/customizer/customizer.php:2165
+#: admin/customizer/customizer.php:2180
 msgid "Disable Social Sharing"
 msgstr ""
 
-#: admin/customizer/customizer.php:2180
+#: admin/customizer/customizer.php:2195
 msgid "Disable Facebook"
 msgstr ""
 
-#: admin/customizer/customizer.php:2195
+#: admin/customizer/customizer.php:2210
 msgid "Disable Twitter"
 msgstr ""
 
-#: admin/customizer/customizer.php:2210
+#: admin/customizer/customizer.php:2225
 msgid "Disable Linkedin"
 msgstr ""
 
-#: admin/customizer/customizer.php:2231
+#: admin/customizer/customizer.php:2246
 msgid "Social Icon Background Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2255
+#: admin/customizer/customizer.php:2270
 msgid "Social Icon Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2277
+#: admin/customizer/customizer.php:2292
 msgid "Job Details"
 msgstr ""
 
-#: admin/customizer/customizer.php:2293
-#: admin/customizer/customizer.php:2327
+#: admin/customizer/customizer.php:2308
+#: admin/customizer/customizer.php:2342
 msgid "Job Description Heading"
 msgstr ""
 
-#: admin/customizer/customizer.php:2311
+#: admin/customizer/customizer.php:2326
 msgid "Job Responsibility"
 msgstr ""
 
-#: admin/customizer/customizer.php:2345
+#: admin/customizer/customizer.php:2360
 msgid "Job Benifits"
 msgstr ""
 
-#: admin/customizer/customizer.php:2361
+#: admin/customizer/customizer.php:2376
 msgid "Job Benefits Heading"
 msgstr ""
 
-#: admin/customizer/customizer.php:2395
+#: admin/customizer/customizer.php:2410
 msgid "Showcase Heading"
 msgstr ""
 
-#: admin/customizer/customizer.php:2415
+#: admin/customizer/customizer.php:2430
 msgid "Page Typography"
 msgstr ""
 
-#: admin/customizer/customizer.php:2435
+#: admin/customizer/customizer.php:2450
 msgid "H1 Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2459
+#: admin/customizer/customizer.php:2474
 msgid "H2 Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2483
+#: admin/customizer/customizer.php:2498
 msgid "H3 Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2507
+#: admin/customizer/customizer.php:2522
 msgid "H4 Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2531
+#: admin/customizer/customizer.php:2546
 msgid "H5 Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2555
+#: admin/customizer/customizer.php:2570
 msgid "H6 Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2577
+#: admin/customizer/customizer.php:2592
 msgid "Section Heading Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2600
+#: admin/customizer/customizer.php:2615
 msgid "Body Content Font Size"
 msgstr ""
 
-#: admin/customizer/customizer.php:2619
+#: admin/customizer/customizer.php:2634
 msgid "Easyjobs"
 msgstr ""
 
-#: admin/customizer/customizer.php:2620
+#: admin/customizer/customizer.php:2635
 msgid "Controls the design settings for Easyjobs pages."
 msgstr ""
 
 #: admin/customizer/defaults.php:60
 #: includes/elementor/class-easyjobs-elementor-job-list.php:196
-#: public/partials-blocks/classic/list.php:27
-#: public/partials-blocks/classic/list.php:53
-#: public/partials-blocks/elegant/list.php:27
-#: public/partials-blocks/elegant/list.php:53
-#: public/partials/classic/list.php:25
-#: public/partials/classic/list.php:51
-#: public/partials/default/list.php:34
-#: public/partials/default/list.php:61
-#: public/partials/elegant/list.php:25
-#: public/partials/elegant/list.php:51
+#: public/partials-blocks/classic/list.php:32
+#: public/partials-blocks/classic/list.php:58
+#: public/partials-blocks/elegant/list.php:32
+#: public/partials-blocks/elegant/list.php:58
+#: public/partials/classic/list.php:30
+#: public/partials/classic/list.php:56
+#: public/partials/default/list.php:59
+#: public/partials/default/list.php:86
+#: public/partials/elegant/list.php:30
+#: public/partials/elegant/list.php:56
 #: blocks/blocks/job-list/src/components/attributes.js:59
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:2646
 msgid "Open Job Positions"
 msgstr ""
 
 #: admin/customizer/defaults.php:83
-#: admin/customizer/defaults.php:144
-#: public/partials-blocks/classic/footer.php:25
-#: public/partials-blocks/default/footer.php:23
-#: public/partials-blocks/elegant/footer.php:25
-#: public/partials/classic/landing.php:181
-#: public/partials/default/details.php:585
-#: public/partials/default/landing.php:161
-#: public/partials/elegant/landing.php:171
+#: admin/customizer/defaults.php:145
+#: public/partials-blocks/classic/footer.php:30
+#: public/partials-blocks/default/footer.php:28
+#: public/partials-blocks/elegant/footer.php:30
+#: public/partials/classic/landing.php:186
+#: public/partials/default/details.php:354
+#: public/partials/default/landing.php:166
+#: public/partials/elegant/landing.php:176
 msgid "Life at "
 msgstr ""
 
-#: admin/customizer/defaults.php:141
+#: admin/customizer/defaults.php:142
 msgid "So If You Are Someone Who Has"
 msgstr ""
 
-#: admin/customizer/defaults.php:142
-#: public/partials/classic/details.php:146
-#: public/partials/default/details.php:418
-#: public/partials/elegant/details.php:235
+#: admin/customizer/defaults.php:143
+#: public/partials/classic/details.php:102
+#: public/partials/default/details.php:319
+#: public/partials/elegant/details.php:184
 msgid "Job Responsibilities"
 msgstr ""
 
-#: admin/customizer/defaults.php:143
-#: public/partials/classic/details.php:224
-#: public/partials/default/details.php:501
-#: public/partials/elegant/details.php:313
+#: admin/customizer/defaults.php:144
+#: public/partials/classic/details.php:114
+#: public/partials/default/details.php:336
+#: public/partials/elegant/details.php:196
 msgid "Benefits"
 msgstr ""
 
-#: admin/includes/class-easyjobs-admin-candidates.php:426
+#: admin/includes/class-easyjobs-admin-candidates.php:346
+msgid "Job id not provided"
+msgstr ""
+
+#: admin/includes/class-easyjobs-admin-candidates.php:362
+msgid "Unable to export candidates. Please try again later."
+msgstr ""
+
+#: admin/includes/class-easyjobs-admin-candidates.php:372
+msgid "Candidate export is not available right now. Please try again later."
+msgstr ""
+
+#: admin/includes/class-easyjobs-admin-candidates.php:919
 msgid "Candidate deleted successfully"
 msgstr ""
 
-#: admin/includes/class-easyjobs-admin-candidates.php:433
+#: admin/includes/class-easyjobs-admin-candidates.php:926
 msgid "Unable to delete candidate"
 msgstr ""
 
-#: admin/includes/class-easyjobs-admin-jobs.php:1133
+#: admin/includes/class-easyjobs-admin-jobs.php:1165
 msgid "Job deleted successfully"
 msgstr ""
 
-#: admin/includes/class-easyjobs-admin-jobs.php:1135
+#: admin/includes/class-easyjobs-admin-jobs.php:1167
 msgid "Failed to delete job, please try again or contact support"
 msgstr ""
 
-#: admin/includes/class-easyjobs-admin-pipeline.php:323
+#: admin/includes/class-easyjobs-admin-pipeline.php:322
 msgid "Deleted successfully"
 msgstr ""
 
-#: admin/includes/class-easyjobs-admin-pipeline.php:325
+#: admin/includes/class-easyjobs-admin-pipeline.php:324
 msgid "Failed to delete, please try again or contact support"
-msgstr ""
-
-#: admin/includes/class-easyjobs-notice.php:454
-msgid "Install Now!"
-msgstr ""
-
-#: admin/includes/class-easyjobs-notice.php:891
-msgid "Installing..."
-msgstr ""
-
-#: admin/includes/class-easyjobs-notice.php:903
-msgid "Installed"
-msgstr ""
-
-#: admin/includes/class-easyjobs-notice.php:982
-msgid "<strong>Black Friday Exclusive:</strong> SAVE up to 70% & access to <strong>easy.jobs Pro</strong>  features"
-msgstr ""
-
-#: admin/includes/class-easyjobs-notice.php:983
-msgid "Grab The Offer"
 msgstr ""
 
 #: admin/includes/class-easyjobs-page-template.php:56
 msgid "Easyjobs template"
 msgstr ""
 
-#: admin/includes/easyjobs-settings-page-helper.php:5
+#: admin/includes/class-easyjobs-plugin-tracker.php:405
+msgid "We can't detect any plugin information. This is most probably because you have not included the code in the plugin main file."
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:679
+msgid "What we collect."
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:680
+msgid "Sure, I'd like to help"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:681
+msgid "No Thanks."
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:786
+msgid "Sorry to see you go"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:787
+msgid "Before you deactivate the plugin, would you quickly give us your reason for doing so?"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:790
+msgid "I no longer need the plugin"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:792
+msgid "I found a better plugin"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:793
+msgid "Please share which plugin"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:795
+msgid "I couldn't get the plugin to work"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:796
+msgid "It's a temporary deactivation"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:798
+msgid "Other"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:799
+msgid "Please share the reason"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:992
+msgid "Submitting form"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:1002
+msgid "Submit and Deactivate"
+msgstr ""
+
+#: admin/includes/class-easyjobs-plugin-tracker.php:1002
+msgid "Just Deactivate"
+msgstr ""
+
+#: admin/includes/easyjobs-settings-page-helper.php:8
 #: includes/elementor/class-easyjobs-elementor-job-list.php:176
 #: includes/elementor/class-easyjobs-elementor-job-list.php:376
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:530
-#: blocks/blocks/job-header/src/components/inspector.js:235
-#: blocks/blocks/job-list/src/components/inspector.js:173
-#: blocks/blocks/job-list/src/components/inspector.js:383
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1230
-#: blocks/dist/index.js:3364
-#: blocks/dist/index.js:3574
+#: blocks/blocks/job-header/src/components/inspector.js:255
+#: blocks/blocks/job-list/src/components/inspector.js:178
+#: blocks/blocks/job-list/src/components/inspector.js:395
 msgid "General"
 msgstr ""
 
-#: admin/includes/easyjobs-settings-page-helper.php:7
+#: admin/includes/easyjobs-settings-page-helper.php:10
 msgid "Save Settings"
 msgstr ""
 
-#: admin/includes/easyjobs-settings-page-helper.php:14
+#: admin/includes/easyjobs-settings-page-helper.php:17
 msgid "General Settings"
 msgstr ""
 
-#: admin/includes/easyjobs-settings-page-helper.php:19
+#: admin/includes/easyjobs-settings-page-helper.php:22
 msgid "Api Key"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:25
+#: admin/partials/easyjobs-admin-display.php:30
 msgid "Version:"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:44
-#: admin/partials/easyjobs-jobs-display.php:66
-#: admin/assets/dist/react/easyjobs.js:14430
-#: admin/react/src/components/Job/AllJobs/index.js:72
+#: admin/partials/easyjobs-admin-display.php:49
+#: admin/partials/easyjobs-jobs-display.php:71
+#: admin/react/src/components/Job/AllJobs/index.js:79
 msgid "Published Jobs"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:56
-#: admin/partials/easyjobs-dashboard-display.php:58
-#: admin/partials/easyjobs-jobs-display.php:347
-#: admin/assets/dist/react/easyjobs.js:10245
-#: admin/react/src/components/Dashboard/Counters.js:57
+#: admin/partials/easyjobs-admin-display.php:61
+#: admin/partials/easyjobs-dashboard-display.php:63
+#: admin/partials/easyjobs-jobs-display.php:352
+#: admin/react/src/components/Dashboard/Counters.js:25
 msgid "Draft Jobs"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:68
-#: admin/partials/easyjobs-jobs-display.php:224
+#: admin/partials/easyjobs-admin-display.php:73
+#: admin/partials/easyjobs-jobs-display.php:229
 msgid "Archived Jobs"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:101
-#: admin/partials/easyjobs-admin-display.php:177
-#: admin/partials/easyjobs-admin-display.php:255
+#: admin/partials/easyjobs-admin-display.php:106
+#: admin/partials/easyjobs-admin-display.php:182
+#: admin/partials/easyjobs-admin-display.php:260
 #: includes/elementor/class-easyjobs-elementor-job-list.php:194
 #: includes/elementor/class-easyjobs-elementor-job-list.php:255
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:405
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:833
 #: blocks/blocks/job-list/src/components/constants.js:5
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3003
 msgid "Title"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:107
-#: admin/partials/easyjobs-admin-display.php:183
-#: admin/partials/easyjobs-admin-display.php:261
+#: admin/partials/easyjobs-admin-display.php:112
+#: admin/partials/easyjobs-admin-display.php:188
+#: admin/partials/easyjobs-admin-display.php:266
 msgid "Department"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:110
-#: admin/partials/easyjobs-admin-display.php:186
-#: admin/partials/easyjobs-admin-display.php:264
+#: admin/partials/easyjobs-admin-display.php:115
+#: admin/partials/easyjobs-admin-display.php:191
+#: admin/partials/easyjobs-admin-display.php:269
 msgid "Expiry Date"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:113
-#: admin/partials/easyjobs-admin-display.php:189
-#: admin/partials/easyjobs-admin-display.php:267
+#: admin/partials/easyjobs-admin-display.php:118
+#: admin/partials/easyjobs-admin-display.php:194
+#: admin/partials/easyjobs-admin-display.php:272
 msgid "Action"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:139
-#: admin/partials/easyjobs-admin-display.php:217
-#: admin/partials/easyjobs-admin-display.php:296
-#: admin/assets/dist/react/easyjobs.js:28565
+#: admin/partials/easyjobs-admin-display.php:144
+#: admin/partials/easyjobs-admin-display.php:222
+#: admin/partials/easyjobs-admin-display.php:301
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:516
 #: admin/react/src/components/Settings/tabs/TemplateTab.js:49
 msgid "Preview"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:141
-#: admin/partials/easyjobs-admin-display.php:219
-#: admin/partials/easyjobs-admin-display.php:298
-#: admin/partials/easyjobs-candidates-display.php:40
-#: admin/partials/easyjobs-jobs-display.php:88
-#: admin/partials/easyjobs-jobs-display.php:246
-#: admin/assets/dist/react/easyjobs.js:13674
-#: admin/assets/dist/react/easyjobs.js:20550
-#: admin/react/src/components/Job/AllJobs/Controls.js:44
-#: admin/react/src/components/JobCandidates/index.js:346
+#: admin/partials/easyjobs-admin-display.php:146
+#: admin/partials/easyjobs-admin-display.php:224
+#: admin/partials/easyjobs-admin-display.php:303
+#: admin/partials/easyjobs-candidates-display.php:45
+#: admin/partials/easyjobs-jobs-display.php:93
+#: admin/partials/easyjobs-jobs-display.php:251
+#: admin/react/src/components/Candidate/Details/HeaderCard.js:156
+#: admin/react/src/components/Job/AllJobs/Controls.js:45
+#: admin/react/src/components/JobCandidates/index.js:343
 msgid "Pipeline"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:157
+#: admin/partials/easyjobs-admin-display.php:162
 msgid "No published jobs found"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-display.php:314
+#: admin/partials/easyjobs-admin-display.php:240
+msgid "No Draft jobs found"
+msgstr ""
+
+#: admin/partials/easyjobs-admin-display.php:319
 msgid "No archived jobs found"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-header.php:28
+#: admin/partials/easyjobs-admin-header.php:33
 msgid "Version: "
 msgstr ""
 
-#: admin/partials/easyjobs-admin-header.php:33
+#: admin/partials/easyjobs-admin-header.php:38
 msgid "Sync data"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-header.php:36
+#: admin/partials/easyjobs-admin-header.php:41
+#: admin/react/src/layouts/header/index.js:312
 msgid "View Company Page"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:35
+#: admin/partials/easyjobs-admin-landing.php:40
 msgid "Give us few more information about your company"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:39
+#: admin/partials/easyjobs-admin-landing.php:44
 #: includes/elementor/class-easyjobs-elementor-job-list.php:1014
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:473
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1439
-#: admin/assets/dist/react/easyjobs.js:25580
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:362
-#: blocks/blocks/job-header/src/components/inspector.js:336
-#: blocks/blocks/job-list/src/components/inspector.js:1050
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1331
-#: blocks/dist/index.js:4241
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:385
+#: blocks/blocks/job-header/src/components/inspector.js:359
+#: blocks/blocks/job-list/src/components/inspector.js:1173
 msgid "Company Name"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:45
+#: admin/partials/easyjobs-admin-landing.php:50
 msgid "Username / Company"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:55
-#: admin/partials/easyjobs-admin-landing.php:85
+#: admin/partials/easyjobs-admin-landing.php:60
+#: admin/partials/easyjobs-admin-landing.php:90
 msgid "tips"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:57
+#: admin/partials/easyjobs-admin-landing.php:62
 msgid "Accepted characters for username are alphabets, numbers, hyphen & underscore."
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:62
+#: admin/partials/easyjobs-admin-landing.php:67
 msgid "Phone No"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:68
-#: admin/assets/dist/react/easyjobs.js:25628
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:421
+#: admin/partials/easyjobs-admin-landing.php:73
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:445
 msgid "Industry"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:80
+#: admin/partials/easyjobs-admin-landing.php:85
 msgid "Website url"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:87
+#: admin/partials/easyjobs-admin-landing.php:92
 msgid "Tips: Website URL should look like http://www.example.com"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:92
-#: admin/assets/dist/react/easyjobs.js:25762
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:577
+#: admin/partials/easyjobs-admin-landing.php:97
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:673
 msgid "Number of Employees*"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:101
+#: admin/partials/easyjobs-admin-landing.php:106
 msgid "Employees"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:111
+#: admin/partials/easyjobs-admin-landing.php:116
 msgid "I Agree to the Terms and Policy*"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:116
+#: admin/partials/easyjobs-admin-landing.php:121
 msgid "Get Started"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:200
+#: admin/partials/easyjobs-admin-landing.php:205
 msgid "Watch Video"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:239
-#: admin/partials/easyjobs-admin-landing.php:261
-#: admin/assets/dist/react/easyjobs.js:21372
-#: admin/assets/dist/react/easyjobs.js:21647
+#: admin/partials/easyjobs-admin-landing.php:244
+#: admin/partials/easyjobs-admin-landing.php:266
 #: admin/react/src/components/Landing/Login.js:64
 #: admin/react/src/components/Landing/SignIn.js:87
 msgid "Sign In"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:242
-#: admin/assets/dist/react/easyjobs.js:21383
+#: admin/partials/easyjobs-admin-landing.php:247
 #: admin/react/src/components/Landing/Login.js:77
 msgid "Sign Up"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:252
-#: admin/partials/easyjobs-admin-landing.php:331
-#: admin/partials/easyjobs-candidate-details.php:102
-#: admin/assets/dist/react/easyjobs.js:7771
-#: admin/assets/dist/react/easyjobs.js:21616
-#: admin/assets/dist/react/easyjobs.js:21806
-#: admin/react/src/components/Candidate/Details/ProfileInfo.js:37
+#: admin/partials/easyjobs-admin-landing.php:257
+#: admin/partials/easyjobs-admin-landing.php:336
+#: admin/partials/easyjobs-candidate-details.php:107
 #: admin/react/src/components/Landing/SignIn.js:53
 #: admin/react/src/components/Landing/SignUp.js:112
 msgid "Email Address"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:257
-#: admin/partials/easyjobs-admin-landing.php:337
-#: admin/assets/dist/react/easyjobs.js:21631
-#: admin/assets/dist/react/easyjobs.js:21818
+#: admin/partials/easyjobs-admin-landing.php:262
+#: admin/partials/easyjobs-admin-landing.php:342
 #: admin/react/src/components/Landing/SignIn.js:70
 #: admin/react/src/components/Landing/SignUp.js:126
 msgid "Password"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:266
-#: admin/assets/dist/react/easyjobs.js:21417
+#: admin/partials/easyjobs-admin-landing.php:271
 #: admin/react/src/components/Landing/Login.js:131
 msgid "Forgot Password?"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:276
+#: admin/partials/easyjobs-admin-landing.php:281
 msgid "Api key"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:278
+#: admin/partials/easyjobs-admin-landing.php:283
 msgid "Enter your api key"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:282
+#: admin/partials/easyjobs-admin-landing.php:287
 msgid "Connect"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:294
-#: admin/partials/easyjobs-admin-landing.php:298
-#: admin/assets/dist/react/easyjobs.js:21494
-#: admin/assets/dist/react/easyjobs.js:21504
+#: admin/partials/easyjobs-admin-landing.php:299
+#: admin/partials/easyjobs-admin-landing.php:303
 #: admin/react/src/components/Landing/SelectCompany.js:22
 #: admin/react/src/components/Landing/SelectCompany.js:29
 msgid "Select Company"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:303
-#: admin/assets/dist/react/easyjobs.js:21512
-#: admin/assets/dist/react/easyjobs.js:25912
+#: admin/partials/easyjobs-admin-landing.php:308
 #: admin/react/src/components/Landing/SelectCompany.js:38
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:749
 msgid "Save"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:315
-#: admin/partials/easyjobs-candidate-details.php:82
-#: admin/assets/dist/react/easyjobs.js:7755
-#: admin/assets/dist/react/easyjobs.js:21780
-#: admin/react/src/components/Candidate/Details/ProfileInfo.js:18
+#: admin/partials/easyjobs-admin-landing.php:320
+#: admin/partials/easyjobs-candidate-details.php:87
 #: admin/react/src/components/Landing/SignUp.js:80
 msgid "First Name"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:323
-#: admin/partials/easyjobs-candidate-details.php:92
-#: admin/assets/dist/react/easyjobs.js:7763
-#: admin/assets/dist/react/easyjobs.js:21794
-#: admin/react/src/components/Candidate/Details/ProfileInfo.js:27
+#: admin/partials/easyjobs-admin-landing.php:328
+#: admin/partials/easyjobs-candidate-details.php:97
 #: admin/react/src/components/Landing/SignUp.js:96
 msgid "Last Name"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:343
-#: admin/assets/dist/react/easyjobs.js:21830
+#: admin/partials/easyjobs-admin-landing.php:348
 #: admin/react/src/components/Landing/SignUp.js:140
 msgid "Confirm Password"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:349
-#: admin/assets/dist/react/easyjobs.js:21845
+#: admin/partials/easyjobs-admin-landing.php:354
 #: admin/react/src/components/Landing/SignUp.js:155
 msgid "Sign UP"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:375
+#: admin/partials/easyjobs-admin-landing.php:380
 msgid "Api Connect Failed !!"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:378
+#: admin/partials/easyjobs-admin-landing.php:383
 msgid "Invalid api key"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:384
+#: admin/partials/easyjobs-admin-landing.php:389
 msgid "Api Connected Successfully !!"
 msgstr ""
 
-#: admin/partials/easyjobs-admin-landing.php:390
-#: public/partials/classic/details.php:413
+#: admin/partials/easyjobs-admin-landing.php:395
+#: public/partials/classic/details.php:227
+#: public/partials/classic/details.php:238
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:213
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:653
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:823
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:561
+#: admin/react/src/components/Messages/FilterPanel.js:132
 msgid "Close"
 msgstr ""
 
-#: admin/partials/easyjobs-all-candidates.php:32
-#: admin/assets/dist/react/easyjobs.js:9092
-#: admin/react/src/components/Candidate/index.js:210
+#: admin/partials/easyjobs-all-candidates.php:37
+#: admin/react/src/components/Messages/FilterPanel.js:140
 msgid "Select Job"
 msgstr ""
 
-#: admin/partials/easyjobs-all-candidates.php:86
+#: admin/partials/easyjobs-all-candidates.php:91
 msgid "View details"
 msgstr ""
 
-#: admin/partials/easyjobs-all-candidates.php:127
+#: admin/partials/easyjobs-all-candidates.php:132
 msgid "No candidates found."
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:112
-#: admin/assets/dist/react/easyjobs.js:7781
-#: admin/react/src/components/Candidate/Details/ProfileInfo.js:50
+#: admin/partials/easyjobs-candidate-details.php:117
 msgid "Phone Number"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:122
-#: admin/assets/dist/react/easyjobs.js:7789
-#: admin/react/src/components/Candidate/Details/ProfileInfo.js:61
+#: admin/partials/easyjobs-candidate-details.php:127
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:73
 msgid "Date of Application"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:131
-#: admin/assets/dist/react/easyjobs.js:7797
-#: admin/react/src/components/Candidate/Details/ProfileInfo.js:71
+#: admin/partials/easyjobs-candidate-details.php:136
+#: admin/react/src/components/Candidate/Details/HeaderCard.js:188
 msgid "Rate"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:143
-#: admin/assets/dist/react/easyjobs.js:7810
-#: admin/react/src/components/Candidate/Details/ProfileInfo.js:86
+#: admin/partials/easyjobs-candidate-details.php:148
 msgid "Social Profile"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:175
+#: admin/partials/easyjobs-candidate-details.php:180
 msgid "Application"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:180
-#: admin/partials/easyjobs-candidate-details.php:326
+#: admin/partials/easyjobs-candidate-details.php:185
+#: admin/partials/easyjobs-candidate-details.php:331
+#: admin/react/src/components/Candidate/CandidateCard.js:168
+#: admin/react/src/components/Candidate/CandidateCard.js:169
 msgid "Resume"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:187
+#: admin/partials/easyjobs-candidate-details.php:192
 msgid "Evaluation"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:195
+#: admin/partials/easyjobs-candidate-details.php:200
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:94
 msgid "Cover Letter"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:268
-#: admin/assets/dist/react/easyjobs.js:7899
-#: admin/react/src/components/Candidate/Details/Tabs/Application.js:24
+#: admin/partials/easyjobs-candidate-details.php:273
 msgid "No cover letter"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:275
-#: admin/assets/dist/react/easyjobs.js:7903
-#: admin/react/src/components/Candidate/Details/Tabs/Application.js:31
+#: admin/partials/easyjobs-candidate-details.php:280
 msgid "EXPERIENCE"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:276
-#: admin/assets/dist/react/easyjobs.js:7903
-#: admin/react/src/components/Candidate/Details/Tabs/Application.js:33
+#: admin/partials/easyjobs-candidate-details.php:281
 msgid "Total Year Of Experience: "
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:276
-#: admin/assets/dist/react/easyjobs.js:22275
-#: admin/assets/dist/react/easyjobs.js:22593
-#: admin/react/src/components/Pipeline/PipelineBox.js:89
+#: admin/partials/easyjobs-candidate-details.php:281
+#: admin/react/src/components/Pipeline/PipelineBox.js:94
 #: admin/react/src/components/Pipeline/Stage.js:46
 msgid " Years"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:292
-#: admin/assets/dist/react/easyjobs.js:7915
-#: admin/react/src/components/Candidate/Details/Tabs/Application.js:57
+#: admin/partials/easyjobs-candidate-details.php:297
 msgid "No job experience"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:300
-#: admin/assets/dist/react/easyjobs.js:7919
-#: admin/react/src/components/Candidate/Details/Tabs/Application.js:65
+#: admin/partials/easyjobs-candidate-details.php:305
 msgid "EDUCATIONAL QUALIFICATION"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:316
-#: admin/assets/dist/react/easyjobs.js:7933
-#: admin/react/src/components/Candidate/Details/Tabs/Application.js:84
+#: admin/partials/easyjobs-candidate-details.php:321
 msgid "No educational qualification"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:345
+#: admin/partials/easyjobs-candidate-details.php:350
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:754
 msgid "AI Score"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:350
-#: admin/assets/dist/react/easyjobs.js:7982
+#: admin/partials/easyjobs-candidate-details.php:355
+#: public/partials/classic/details.php:79
+#: public/partials/default/details.php:276
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:785
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:822
 msgid "Skills"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:431
-#: admin/assets/dist/react/easyjobs.js:8057
+#: admin/partials/easyjobs-candidate-details.php:436
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:864
 msgid "Quiz"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:438
-#: admin/assets/dist/react/easyjobs.js:8065
+#: admin/partials/easyjobs-candidate-details.php:443
 msgid "Screening Question"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:567
-#: public/partials/default/details.php:115
-#: admin/assets/dist/react/easyjobs.js:7844
-#: admin/react/src/components/Candidate/Details/Salary.js:8
-msgid "Salary"
+#. translators: %d: question number.
+#: admin/partials/easyjobs-candidate-details.php:496
+#: admin/partials/easyjobs-candidate-details.php:533
+#, php-format
+msgid "Question-%d: "
 msgstr ""
 
 #: admin/partials/easyjobs-candidate-details.php:572
-#: admin/assets/dist/react/easyjobs.js:7850
-#: admin/react/src/components/Candidate/Details/Salary.js:13
+#: public/partials/default/details.php:121
+#: admin/react/src/components/Candidate/Details/SalaryCard.js:117
+msgid "Salary"
+msgstr ""
+
+#: admin/partials/easyjobs-candidate-details.php:577
 msgid "Current Salary"
 msgstr ""
 
-#: admin/partials/easyjobs-candidate-details.php:576
-#: admin/assets/dist/react/easyjobs.js:7854
-#: admin/react/src/components/Candidate/Details/Salary.js:21
+#: admin/partials/easyjobs-candidate-details.php:581
 msgid "Expected Salary"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:31
-#: admin/partials/easyjobs-pipeline-display.php:18
-#: admin/assets/dist/react/easyjobs.js:20531
-#: admin/assets/dist/react/easyjobs.js:22483
-#: admin/react/src/components/JobCandidates/index.js:317
+#: admin/partials/easyjobs-candidates-display.php:36
+#: admin/partials/easyjobs-pipeline-display.php:24
+#: admin/react/src/components/JobCandidates/index.js:314
 #: admin/react/src/components/Pipeline/PipelineTopOptions.js:19
 msgid "Back To Jobs"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:35
-#: admin/partials/easyjobs-jobs-display.php:114
-#: admin/assets/dist/react/easyjobs.js:13722
-#: admin/assets/dist/react/easyjobs.js:20538
-#: admin/react/src/components/Job/AllJobs/Controls.js:104
-#: admin/react/src/components/JobCandidates/index.js:327
+#: admin/partials/easyjobs-candidates-display.php:40
+#: admin/partials/easyjobs-jobs-display.php:119
+#: admin/react/src/components/Job/AllJobs/Controls.js:105
+#: admin/react/src/components/JobCandidates/index.js:324
 msgid "More"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:38
-#: admin/assets/dist/react/easyjobs.js:20547
-#: admin/react/src/components/JobCandidates/index.js:340
+#: admin/partials/easyjobs-candidates-display.php:43
+#: admin/react/src/components/JobCandidates/index.js:337
 msgid "Invite candidates"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:42
-#: admin/assets/dist/react/easyjobs.js:20556
+#: admin/partials/easyjobs-candidates-display.php:47
 #: admin/react/src/components/JobCandidates/index.js:353
 msgid "Export"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:44
-#: admin/partials/easyjobs-candidates-display.php:263
-#: admin/assets/dist/react/easyjobs.js:20562
-#: admin/assets/dist/react/easyjobs.js:20767
+#: admin/partials/easyjobs-candidates-display.php:49
+#: admin/partials/easyjobs-candidates-display.php:278
 #: admin/react/src/components/JobCandidates/index.js:362
-#: admin/react/src/components/JobCandidates/index.js:616
+#: admin/react/src/components/JobCandidates/index.js:617
 msgid "Pending candidates"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:62
-#: admin/assets/dist/react/easyjobs.js:20581
+#: admin/partials/easyjobs-candidates-display.php:67
 #: admin/react/src/components/JobCandidates/index.js:377
 msgid "Sort candidates"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:81
-#: admin/assets/dist/react/easyjobs.js:20606
+#: admin/partials/easyjobs-candidates-display.php:70
+msgid "Sort by experience"
+msgstr ""
+
+#: admin/partials/easyjobs-candidates-display.php:71
+msgid "Sort by skill match"
+msgstr ""
+
+#: admin/partials/easyjobs-candidates-display.php:72
+msgid "Sort by education match"
+msgstr ""
+
+#: admin/partials/easyjobs-candidates-display.php:73
+msgid "Sort by experience match"
+msgstr ""
+
+#: admin/partials/easyjobs-candidates-display.php:74
+msgid "Sort by AI score"
+msgstr ""
+
+#: admin/partials/easyjobs-candidates-display.php:75
+msgid "Sort by quiz score"
+msgstr ""
+
+#: admin/partials/easyjobs-candidates-display.php:96
+#: admin/react/src/components/Candidate/index.js:1098
 #: admin/react/src/components/JobCandidates/index.js:405
 msgid "Filter"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:89
+#: admin/partials/easyjobs-candidates-display.php:104
+#: admin/react/src/components/Messages/index.js:312
 msgid "New"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:96
-#: admin/assets/dist/react/easyjobs.js:9110
-#: admin/react/src/components/Candidate/index.js:232
+#: admin/partials/easyjobs-candidates-display.php:111
 msgid "Rated"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:103
+#: admin/partials/easyjobs-candidates-display.php:118
 msgid "Not rated"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:113
-#: admin/assets/dist/react/easyjobs.js:20630
+#: admin/partials/easyjobs-candidates-display.php:128
 #: admin/react/src/components/JobCandidates/index.js:434
 msgid "Filter By Stage"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:139
-#: admin/partials/easyjobs-candidates-display.php:239
-#: admin/partials/easyjobs-candidates-display.php:275
-#: admin/assets/dist/react/easyjobs.js:10130
-#: admin/assets/dist/react/easyjobs.js:20071
-#: admin/assets/dist/react/easyjobs.js:20705
-#: admin/assets/dist/react/easyjobs.js:20786
-#: admin/react/src/components/Dashboard/Candidates.js:404
-#: admin/react/src/components/JobCandidates/Candidates.js:27
-#: admin/react/src/components/JobCandidates/index.js:535
-#: admin/react/src/components/JobCandidates/index.js:639
+#: admin/partials/easyjobs-candidates-display.php:154
+#: admin/partials/easyjobs-candidates-display.php:254
+#: admin/partials/easyjobs-candidates-display.php:290
+#: admin/react/src/components/Candidate/CandidateSkeleton.js:29
+#: admin/react/src/components/Candidate/index.js:1274
+#: admin/react/src/components/Dashboard/Candidates.js:451
+#: admin/react/src/components/JobCandidates/Candidates.js:29
+#: admin/react/src/components/JobCandidates/index.js:536
+#: admin/react/src/components/JobCandidates/index.js:640
 msgid "Name"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:141
-#: admin/assets/dist/react/easyjobs.js:20073
-#: admin/react/src/components/JobCandidates/Candidates.js:28
+#: admin/partials/easyjobs-candidates-display.php:156
+#: admin/react/src/components/JobCandidates/Candidates.js:30
 msgid "Score"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:145
-#: admin/assets/dist/react/easyjobs.js:20075
-#: admin/react/src/components/JobCandidates/Candidates.js:30
+#: admin/partials/easyjobs-candidates-display.php:160
+#: admin/react/src/components/JobCandidates/Candidates.js:32
 msgid "Date"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:151
-#: admin/assets/dist/react/easyjobs.js:20077
-#: admin/react/src/components/JobCandidates/Candidates.js:32
+#: admin/partials/easyjobs-candidates-display.php:166
+#: admin/react/src/components/JobCandidates/Candidates.js:34
 msgid "Stage"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:152
-#: admin/assets/dist/react/easyjobs.js:20079
-#: admin/react/src/components/JobCandidates/Candidates.js:33
+#: admin/partials/easyjobs-candidates-display.php:167
+#: admin/react/src/components/Candidate/CandidateSkeleton.js:32
+#: admin/react/src/components/Candidate/index.js:1104
+#: admin/react/src/components/Candidate/index.js:1277
+#: admin/react/src/components/JobCandidates/Candidates.js:35
 msgid "Rating"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:204
-#: admin/assets/dist/react/easyjobs.js:9187
-#: admin/assets/dist/react/easyjobs.js:20136
-#: admin/react/src/components/Candidate/index.js:377
-#: admin/react/src/components/JobCandidates/Candidates.js:112
+#: admin/partials/easyjobs-candidates-display.php:219
+#: admin/react/src/components/Candidate/index.js:1310
+#: admin/react/src/components/JobCandidates/Candidates.js:124
 msgid "No candidates found"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:242
-#: admin/partials/easyjobs-candidates-display.php:278
-#: admin/assets/dist/react/easyjobs.js:10132
-#: admin/assets/dist/react/easyjobs.js:20707
-#: admin/assets/dist/react/easyjobs.js:20788
-#: admin/react/src/components/Dashboard/Candidates.js:407
-#: admin/react/src/components/JobCandidates/index.js:538
-#: admin/react/src/components/JobCandidates/index.js:642
+#: admin/partials/easyjobs-candidates-display.php:257
+#: admin/partials/easyjobs-candidates-display.php:293
+#: admin/react/src/components/Dashboard/Candidates.js:454
+#: admin/react/src/components/JobCandidates/index.js:539
+#: admin/react/src/components/JobCandidates/index.js:643
 msgid "Email"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:246
-#: admin/partials/easyjobs-candidates-display.php:285
-#: admin/assets/dist/react/easyjobs.js:10139
-#: admin/assets/dist/react/easyjobs.js:20714
-#: admin/assets/dist/react/easyjobs.js:20797
-#: admin/react/src/components/Dashboard/Candidates.js:411
-#: admin/react/src/components/JobCandidates/index.js:542
-#: admin/react/src/components/JobCandidates/index.js:649
+#: admin/partials/easyjobs-candidates-display.php:261
+#: admin/partials/easyjobs-candidates-display.php:300
+#: admin/react/src/components/Candidate/CandidateSkeleton.js:35
+#: admin/react/src/components/Candidate/index.js:1280
+#: admin/react/src/components/Dashboard/Candidates.js:458
+#: admin/react/src/components/Dashboard/RecentJobs.js:508
+#: admin/react/src/components/JobCandidates/index.js:543
+#: admin/react/src/components/JobCandidates/index.js:650
 msgid "Actions"
 msgstr ""
 
-#: admin/partials/easyjobs-candidates-display.php:281
-#: admin/assets/dist/react/easyjobs.js:20790
-#: admin/react/src/components/JobCandidates/index.js:645
+#: admin/partials/easyjobs-candidates-display.php:296
+#: admin/react/src/components/JobCandidates/index.js:646
 msgid "Updated on"
 msgstr ""
 
-#: admin/partials/easyjobs-dashboard-display.php:34
-#: admin/assets/dist/react/easyjobs.js:10223
-#: admin/react/src/components/Dashboard/Counters.js:24
+#: admin/partials/easyjobs-dashboard-display.php:39
+#: admin/react/src/components/Dashboard/Counters.js:9
 msgid "Active Candidates"
 msgstr ""
 
-#: admin/partials/easyjobs-dashboard-display.php:46
-#: admin/assets/dist/react/easyjobs.js:10234
-#: admin/react/src/components/Dashboard/Counters.js:39
+#: admin/partials/easyjobs-dashboard-display.php:51
+#: admin/react/src/components/Dashboard/Counters.js:17
+#: admin/react/src/components/Messages/FilterPanel.js:199
 msgid "Active Jobs"
 msgstr ""
 
-#: admin/partials/easyjobs-dashboard-display.php:70
-#: admin/assets/dist/react/easyjobs.js:10257
-#: admin/react/src/components/Dashboard/Counters.js:74
+#: admin/partials/easyjobs-dashboard-display.php:75
 msgid "Team Member"
 msgstr ""
 
-#: admin/partials/easyjobs-dashboard-display.php:81
+#: admin/partials/easyjobs-dashboard-display.php:86
 msgid "Recent Applications"
 msgstr ""
 
-#: admin/partials/easyjobs-dashboard-display.php:118
+#: admin/partials/easyjobs-dashboard-display.php:123
+#: admin/react/src/components/Dashboard/RecentJobs.js:463
 msgid "Recent Jobs"
 msgstr ""
 
-#: admin/partials/easyjobs-dashboard-display.php:162
+#: admin/partials/easyjobs-dashboard-display.php:167
 msgid "0 applied"
 msgstr ""
 
-#: admin/partials/easyjobs-dashboard-display.php:173
-#: includes/class-easyjobs-helper.php:437
-#: includes/class-easyjobs-helper.php:457
-#: admin/assets/dist/react/easyjobs.js:14309
-#: admin/assets/dist/react/easyjobs.js:14665
-#: admin/react/src/components/Job/AllJobs/index.js:261
-#: admin/react/src/components/Job/AllJobs/Status.js:40
+#: admin/partials/easyjobs-dashboard-display.php:178
+#: includes/class-easyjobs-helper.php:759
+#: includes/class-easyjobs-helper.php:779
+#: admin/react/src/components/Dashboard/RecentJobs.js:565
+#: admin/react/src/components/Job/AllJobs/index.js:279
+#: admin/react/src/components/Job/AllJobs/Status.js:48
 msgid "Active"
 msgstr ""
 
-#: admin/partials/easyjobs-dashboard-display.php:176
-#: admin/partials/easyjobs-jobs-display.php:77
-#: admin/partials/easyjobs-jobs-display.php:235
-#: admin/partials/easyjobs-jobs-display.php:358
+#: admin/partials/easyjobs-dashboard-display.php:181
+#: admin/partials/easyjobs-jobs-display.php:82
+#: admin/partials/easyjobs-jobs-display.php:240
+#: admin/partials/easyjobs-jobs-display.php:363
 #: includes/elementor/trait-easyjobs-elementor-template.php:274
-#: public/partials-blocks/classic/list.php:138
-#: public/partials-blocks/default/list.php:105
-#: public/partials/classic/list.php:133
-#: public/partials/default/list.php:144
-#: admin/assets/dist/react/easyjobs.js:14305
-#: admin/assets/dist/react/easyjobs.js:14673
-#: admin/react/src/components/Job/AllJobs/index.js:271
-#: admin/react/src/components/Job/AllJobs/Status.js:34
-#: blocks/blocks/job-list/src/components/themes/classic.js:125
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:5590
+#: public/partials-blocks/classic/list.php:154
+#: public/partials-blocks/default/list.php:121
+#: public/partials/classic/list.php:149
+#: public/partials/default/list.php:193
+#: admin/react/src/components/Dashboard/RecentJobs.js:564
+#: admin/react/src/components/Job/AllJobs/index.js:289
+#: admin/react/src/components/Job/AllJobs/Status.js:42
+#: blocks/blocks/job-list/src/components/themes/classic.js:210
 msgid "Expired"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:16
-msgid "Published jobs"
-msgstr ""
-
-#: admin/partials/easyjobs-jobs-display.php:18
-#: admin/assets/dist/react/easyjobs.js:14433
-#: admin/react/src/components/Job/AllJobs/index.js:76
-msgid "Draft jobs"
+#: admin/partials/easyjobs-dashboard-display.php:263
+msgid "Welcome to Easy.jobs"
 msgstr ""
 
 #: admin/partials/easyjobs-jobs-display.php:21
-#: admin/assets/dist/react/easyjobs.js:14436
-#: admin/react/src/components/Job/AllJobs/index.js:80
+msgid "Published jobs"
+msgstr ""
+
+#: admin/partials/easyjobs-jobs-display.php:23
+#: admin/react/src/components/Job/AllJobs/index.js:83
+msgid "Draft jobs"
+msgstr ""
+
+#: admin/partials/easyjobs-jobs-display.php:26
+#: admin/react/src/components/Job/AllJobs/index.js:87
 msgid "Archived jobs"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:104
-#: admin/partials/easyjobs-jobs-display.php:254
-#: admin/partials/easyjobs-jobs-display.php:369
-#: admin/assets/dist/react/easyjobs.js:13690
-#: admin/react/src/components/Job/AllJobs/Controls.js:66
+#: admin/partials/easyjobs-jobs-display.php:109
+#: admin/partials/easyjobs-jobs-display.php:259
+#: admin/partials/easyjobs-jobs-display.php:374
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:523
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:601
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:286
+#: admin/react/src/components/Dashboard/RecentJobs.js:599
+#: admin/react/src/components/Job/AllJobs/Controls.js:67
+#: admin/react/src/components/Job/AllJobs/Jobs.js:372
 msgid "Edit"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:119
-#: admin/assets/dist/react/easyjobs.js:13732
-#: admin/react/src/components/Job/AllJobs/Controls.js:112
+#: admin/partials/easyjobs-jobs-display.php:124
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:279
+#: admin/react/src/components/Dashboard/RecentJobs.js:592
+#: admin/react/src/components/Job/AllJobs/Controls.js:113
+#: admin/react/src/components/Job/AllJobs/Jobs.js:361
 msgid "View"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:122
-#: admin/partials/easyjobs-jobs-display.php:262
-#: admin/partials/easyjobs-jobs-display.php:377
-#: admin/assets/dist/react/easyjobs.js:13699
-#: admin/assets/dist/react/easyjobs.js:13740
-#: admin/react/src/components/Job/AllJobs/Controls.js:78
-#: admin/react/src/components/Job/AllJobs/Controls.js:123
+#: admin/partials/easyjobs-jobs-display.php:127
+#: admin/partials/easyjobs-jobs-display.php:267
+#: admin/partials/easyjobs-jobs-display.php:382
+#: admin/react/src/components/Job/AllJobs/Controls.js:79
+#: admin/react/src/components/Job/AllJobs/Controls.js:124
+#: admin/react/src/components/Job/AllJobs/Jobs.js:429
 msgid "Duplicate"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:125
-#: admin/partials/easyjobs-jobs-display.php:270
-#: admin/partials/easyjobs-jobs-display.php:385
-#: admin/assets/dist/react/easyjobs.js:13710
-#: admin/assets/dist/react/easyjobs.js:13770
-#: admin/react/src/components/Job/AllJobs/Controls.js:90
-#: admin/react/src/components/Job/AllJobs/Controls.js:157
+#: admin/partials/easyjobs-jobs-display.php:130
+#: admin/partials/easyjobs-jobs-display.php:275
+#: admin/partials/easyjobs-jobs-display.php:390
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:530
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:608
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:293
+#: admin/react/src/components/Job/AllJobs/Controls.js:91
+#: admin/react/src/components/Job/AllJobs/Controls.js:158
+#: admin/react/src/components/Job/AllJobs/Jobs.js:440
+#: admin/react/src/components/Messages/RightPanel.js:40
 msgid "Delete"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:131
-#: admin/assets/dist/react/easyjobs.js:13782
-#: admin/react/src/components/Job/AllJobs/Controls.js:171
+#: admin/partials/easyjobs-jobs-display.php:136
+#: admin/react/src/components/Dashboard/RecentJobs.js:272
+#: admin/react/src/components/Job/AllJobs/Controls.js:172
+#: admin/react/src/components/Job/AllJobs/Jobs.js:391
 msgid "Share"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:135
-#: admin/assets/dist/react/easyjobs.js:13791
-#: admin/react/src/components/Job/AllJobs/Controls.js:179
+#: admin/partials/easyjobs-jobs-display.php:140
+#: admin/react/src/components/Job/AllJobs/Controls.js:180
 msgid "facebook"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:138
-#: admin/assets/dist/react/easyjobs.js:13798
-#: admin/react/src/components/Job/AllJobs/Controls.js:187
+#: admin/partials/easyjobs-jobs-display.php:143
+#: admin/react/src/components/Job/AllJobs/Controls.js:188
 msgid "linkedin"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:141
-#: admin/assets/dist/react/easyjobs.js:13805
-#: admin/react/src/components/Job/AllJobs/Controls.js:195
+#: admin/partials/easyjobs-jobs-display.php:146
+#: admin/react/src/components/Job/AllJobs/Controls.js:196
 msgid "twitter"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:160
-#: admin/partials/easyjobs-jobs-display.php:285
-#: admin/partials/easyjobs-jobs-display.php:400
-#: admin/assets/dist/react/easyjobs.js:14228
-#: admin/react/src/components/Job/AllJobs/Jobs.js:235
+#: admin/partials/easyjobs-jobs-display.php:165
+#: admin/partials/easyjobs-jobs-display.php:290
+#: admin/partials/easyjobs-jobs-display.php:405
 msgid "Post Date: "
-msgstr ""
-
-#: admin/partials/easyjobs-jobs-display.php:163
-#: admin/partials/easyjobs-jobs-display.php:288
-#: admin/partials/easyjobs-jobs-display.php:403
-#: admin/assets/dist/react/easyjobs.js:14230
-#: admin/react/src/components/Job/AllJobs/Jobs.js:238
-msgid "Expiry Date: "
 msgstr ""
 
 #: admin/partials/easyjobs-jobs-display.php:168
 #: admin/partials/easyjobs-jobs-display.php:293
 #: admin/partials/easyjobs-jobs-display.php:408
-#: admin/assets/dist/react/easyjobs.js:14232
-#: admin/react/src/components/Job/AllJobs/Jobs.js:244
+msgid "Expiry Date: "
+msgstr ""
+
+#: admin/partials/easyjobs-jobs-display.php:173
+#: admin/partials/easyjobs-jobs-display.php:298
+#: admin/partials/easyjobs-jobs-display.php:413
+#: admin/react/src/components/Candidate/CandidateCard.js:25
+#: admin/react/src/components/Candidate/CandidateCard.js:149
+#: admin/react/src/components/Candidate/CandidateRow.js:28
+#: admin/react/src/components/Candidate/CandidateSkeleton.js:33
+#: admin/react/src/components/Candidate/index.js:1278
 msgid "Applied"
 msgstr ""
 
-#: admin/partials/easyjobs-jobs-display.php:217
-#: admin/partials/easyjobs-jobs-display.php:340
-#: admin/partials/easyjobs-jobs-display.php:455
-#: admin/partials/easyjobs-jobs-display.php:462
-#: public/partials-blocks/classic/list.php:148
-#: public/partials-blocks/classic/list.php:157
-#: public/partials-blocks/default/list.php:125
-#: public/partials-blocks/default/list.php:133
-#: public/partials-blocks/elegant/list.php:156
-#: public/partials/classic/list.php:142
-#: public/partials/classic/list.php:151
-#: public/partials/default/list.php:163
-#: public/partials/default/list.php:171
-#: public/partials/elegant/list.php:152
-#: admin/assets/dist/react/easyjobs.js:10438
-#: admin/assets/dist/react/easyjobs.js:14246
-#: admin/react/src/components/Dashboard/RecentJobs.js:160
-#: admin/react/src/components/Job/AllJobs/Jobs.js:265
+#: admin/partials/easyjobs-jobs-display.php:222
+#: admin/partials/easyjobs-jobs-display.php:345
+#: admin/partials/easyjobs-jobs-display.php:460
+#: admin/partials/easyjobs-jobs-display.php:467
+#: public/partials-blocks/classic/list.php:164
+#: public/partials-blocks/classic/list.php:173
+#: public/partials-blocks/default/list.php:141
+#: public/partials-blocks/default/list.php:149
+#: public/partials-blocks/elegant/list.php:172
+#: public/partials/classic/list.php:158
+#: public/partials/classic/list.php:167
+#: public/partials/default/list.php:212
+#: public/partials/default/list.php:220
+#: public/partials/elegant/list.php:168
+#: admin/react/src/components/Dashboard/RecentJobs.js:634
+#: admin/react/src/components/Job/AllJobs/Jobs.js:948
 msgid "No jobs found."
 msgstr ""
 
-#: admin/partials/easyjobs-pipeline-display.php:27
-#: admin/assets/dist/react/easyjobs.js:22492
+#: admin/partials/easyjobs-pipeline-display.php:33
 #: admin/react/src/components/Pipeline/PipelineTopOptions.js:32
 msgid "Job Menu"
 msgstr ""
 
-#: admin/partials/easyjobs-pipeline-display.php:30
-#: admin/assets/dist/react/easyjobs.js:22498
+#: admin/partials/easyjobs-pipeline-display.php:36
 #: admin/react/src/components/Pipeline/PipelineTopOptions.js:39
 msgid "All jobs"
 msgstr ""
 
-#: admin/partials/easyjobs-pipeline-display.php:38
-#: admin/assets/dist/react/easyjobs.js:22509
-#: admin/react/src/components/Pipeline/PipelineTopOptions.js:57
+#: admin/partials/easyjobs-pipeline-display.php:44
+#: admin/react/src/components/Pipeline/PipelineTopOptions.js:58
 msgid "Edit Pipeline"
 msgstr ""
 
-#: admin/partials/easyjobs-pipeline-display.php:43
-#: admin/assets/dist/react/easyjobs.js:22519
-#: admin/react/src/components/Pipeline/PipelineTopOptions.js:69
+#: admin/partials/easyjobs-pipeline-display.php:49
+#: admin/react/src/components/Pipeline/PipelineTopOptions.js:70
 msgid "Move To Stage"
 msgstr ""
 
-#: admin/partials/easyjobs-pipeline-display.php:133
-#: admin/partials/easyjobs-pipeline-display.php:198
+#: admin/partials/easyjobs-pipeline-display.php:139
+#: admin/partials/easyjobs-pipeline-display.php:204
 msgid "Years"
 msgstr ""
 
-#: blocks/includes/class-scripts.php:243
+#: blocks/includes/class-scripts.php:245
 #: includes/elementor/class-easyjobs-elementor-job-list.php:1315
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1739
 msgid "No Jobs Found"
 msgstr ""
 
-#: blocks/includes/class-scripts.php:383
-#: blocks/blocks/job-header/src/components/inspector.js:110
-#: blocks/blocks/job-landing/src/components/inspector.js:76
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1105
-#: blocks/dist/index.js:2475
+#: blocks/includes/class-scripts.php:387
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:159
+#: blocks/blocks/job-header/src/components/inspector.js:109
+#: blocks/blocks/job-landing/src/components/inspector.js:71
 msgid "EasyJobs"
 msgstr ""
 
-#: includes/class-easyjobs-helper.php:432
-#: admin/assets/dist/react/easyjobs.js:14284
-#: admin/react/src/components/Job/AllJobs/Status.js:9
+#: includes/class-easyjobs-helper.php:754
+#: admin/react/src/components/Job/AllJobs/Status.js:17
 msgid "Draft"
 msgstr ""
 
-#: includes/class-easyjobs-helper.php:442
-#: admin/assets/dist/react/easyjobs.js:14289
-#: admin/react/src/components/Job/AllJobs/Status.js:15
+#: includes/class-easyjobs-helper.php:764
+#: admin/react/src/components/Job/AllJobs/Status.js:23
 msgid "Archived"
 msgstr ""
 
-#: includes/class-easyjobs-helper.php:447
-#: admin/assets/dist/react/easyjobs.js:14294
-#: admin/react/src/components/Job/AllJobs/Status.js:21
+#: includes/class-easyjobs-helper.php:769
+#: admin/react/src/components/Job/AllJobs/Status.js:29
 msgid "Deleted"
 msgstr ""
 
-#: includes/class-easyjobs-helper.php:452
-#: admin/assets/dist/react/easyjobs.js:14299
-#: admin/react/src/components/Job/AllJobs/Status.js:27
+#: includes/class-easyjobs-helper.php:774
+#: admin/react/src/components/Job/AllJobs/Status.js:35
 msgid "Republished"
 msgstr ""
 
-#: includes/class-easyjobs-helper.php:982
-#: includes/class-easyjobs-helper.php:1028
-#: includes/class-easyjobs-helper.php:1104
-#: public/class-easyjobs-public.php:376
+#: includes/class-easyjobs-helper.php:1339
+#: includes/class-easyjobs-helper.php:1385
+#: includes/class-easyjobs-helper.php:1467
+#: public/class-easyjobs-public.php:450
 msgid "Submit"
 msgstr ""
 
@@ -1709,8 +1727,12 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:364
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:376
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:450
-#: admin/assets/dist/react/easyjobs.js:25031
-#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:479
+#: admin/react/src/components/Candidate/Details/index.js:410
+#: admin/react/src/components/Candidate/Details/index.js:447
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:893
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:933
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1159
+#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:665
 msgid "Yes"
 msgstr ""
 
@@ -1729,8 +1751,12 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:365
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:377
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:451
-#: admin/assets/dist/react/easyjobs.js:25027
-#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:472
+#: admin/react/src/components/Candidate/Details/index.js:403
+#: admin/react/src/components/Candidate/Details/index.js:440
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:886
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:926
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1149
+#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:658
 msgid "No"
 msgstr ""
 
@@ -1755,7 +1781,9 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-job-list.php:232
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:505
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:506
-#: public/partials/default/list.php:150
+#: public/partials/default/list.php:199
+#: admin/react/src/components/Messages/Composer.js:504
+#: admin/react/src/components/Messages/FilterPanel.js:225
 msgid "Apply"
 msgstr ""
 
@@ -1787,16 +1815,12 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-job-list.php:270
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:420
 #: blocks/blocks/job-list/src/components/constants.js:11
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3009
 msgid "ASC"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:271
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:421
 #: blocks/blocks/job-list/src/components/constants.js:12
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3010
 msgid "DESC"
 msgstr ""
 
@@ -1821,15 +1845,10 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:539
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:775
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1317
-#: blocks/blocks/job-header/src/components/inspector.js:240
-#: blocks/blocks/job-list/src/components/inspector.js:389
-#: blocks/blocks/job-list/src/components/inspector.js:651
-#: blocks/blocks/job-list/src/components/inspector.js:952
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1235
-#: blocks/dist/index.js:3580
-#: blocks/dist/index.js:3842
-#: blocks/dist/index.js:4143
+#: blocks/blocks/job-header/src/components/inspector.js:260
+#: blocks/blocks/job-list/src/components/inspector.js:401
+#: blocks/blocks/job-list/src/components/inspector.js:676
+#: blocks/blocks/job-list/src/components/inspector.js:1069
 msgid "Background"
 msgstr ""
 
@@ -1838,15 +1857,10 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:548
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:903
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1595
-#: blocks/blocks/job-header/src/components/inspector.js:256
-#: blocks/blocks/job-header/src/components/inspector.js:480
-#: blocks/blocks/job-list/src/components/inspector.js:405
-#: blocks/blocks/job-list/src/components/inspector.js:1201
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1251
-#: blocks/dist/index.js:1475
-#: blocks/dist/index.js:3596
-#: blocks/dist/index.js:4392
+#: blocks/blocks/job-header/src/components/inspector.js:276
+#: blocks/blocks/job-header/src/components/inspector.js:499
+#: blocks/blocks/job-list/src/components/inspector.js:417
+#: blocks/blocks/job-list/src/components/inspector.js:1328
 msgid "Alignment"
 msgstr ""
 
@@ -1862,15 +1876,10 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-job-list.php:589
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:573
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:731
-#: blocks/blocks/job-header/src/components/inspector.js:289
-#: blocks/blocks/job-list/src/components/inspector.js:438
-#: blocks/blocks/job-list/src/components/inspector.js:557
-#: blocks/blocks/job-list/src/components/inspector.js:590
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1284
-#: blocks/dist/index.js:3629
-#: blocks/dist/index.js:3748
-#: blocks/dist/index.js:3781
+#: blocks/blocks/job-header/src/components/inspector.js:309
+#: blocks/blocks/job-list/src/components/inspector.js:452
+#: blocks/blocks/job-list/src/components/inspector.js:576
+#: blocks/blocks/job-list/src/components/inspector.js:610
 msgid "Width"
 msgstr ""
 
@@ -1880,23 +1889,16 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:603
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:658
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1350
-#: blocks/blocks/job-header/src/components/inspector.js:306
-#: blocks/blocks/job-list/src/components/inspector.js:465
-#: blocks/blocks/job-list/src/components/inspector.js:499
-#: blocks/blocks/job-list/src/components/inspector.js:993
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1301
-#: blocks/dist/index.js:3656
-#: blocks/dist/index.js:3690
-#: blocks/dist/index.js:4184
+#: blocks/blocks/job-header/src/components/inspector.js:326
+#: blocks/blocks/job-list/src/components/inspector.js:479
+#: blocks/blocks/job-list/src/components/inspector.js:515
+#: blocks/blocks/job-list/src/components/inspector.js:1113
 msgid "Margin"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:465
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:619
-#: blocks/blocks/job-list/src/components/inspector.js:475
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3666
+#: blocks/blocks/job-list/src/components/inspector.js:489
 msgid "Form Padding"
 msgstr ""
 
@@ -1911,9 +1913,7 @@ msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:508
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:650
-#: blocks/blocks/job-list/src/components/inspector.js:490
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3681
+#: blocks/blocks/job-list/src/components/inspector.js:504
 msgid "Section"
 msgstr ""
 
@@ -1924,25 +1924,17 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1094
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1337
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1725
-#: blocks/blocks/job-header/src/components/inspector.js:316
-#: blocks/blocks/job-header/src/components/inspector.js:465
-#: blocks/blocks/job-list/src/components/inspector.js:509
-#: blocks/blocks/job-list/src/components/inspector.js:983
-#: blocks/blocks/job-list/src/components/inspector.js:1329
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1311
-#: blocks/dist/index.js:1460
-#: blocks/dist/index.js:3700
-#: blocks/dist/index.js:4174
-#: blocks/dist/index.js:4520
+#: blocks/blocks/job-header/src/components/inspector.js:336
+#: blocks/blocks/job-header/src/components/inspector.js:484
+#: blocks/blocks/job-list/src/components/inspector.js:527
+#: blocks/blocks/job-list/src/components/inspector.js:1103
+#: blocks/blocks/job-list/src/components/inspector.js:1504
 msgid "Padding"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:550
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:692
-#: blocks/blocks/job-list/src/components/inspector.js:517
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3708
+#: blocks/blocks/job-list/src/components/inspector.js:535
 msgid "Section Heading"
 msgstr ""
 
@@ -1962,31 +1954,18 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1480
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1512
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1543
-#: blocks/blocks/job-footer/src/components/inspector.js:128
-#: blocks/blocks/job-header/src/components/inspector.js:343
-#: blocks/blocks/job-header/src/components/inspector.js:376
-#: blocks/blocks/job-header/src/components/inspector.js:409
-#: blocks/blocks/job-header/src/components/inspector.js:512
-#: blocks/blocks/job-list/src/components/inspector.js:524
-#: blocks/blocks/job-list/src/components/inspector.js:663
-#: blocks/blocks/job-list/src/components/inspector.js:1014
-#: blocks/blocks/job-list/src/components/inspector.js:1057
-#: blocks/blocks/job-list/src/components/inspector.js:1090
-#: blocks/blocks/job-list/src/components/inspector.js:1123
-#: blocks/blocks/job-list/src/components/inspector.js:1156
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:359
-#: blocks/dist/index.js:1338
-#: blocks/dist/index.js:1371
-#: blocks/dist/index.js:1404
-#: blocks/dist/index.js:1507
-#: blocks/dist/index.js:3715
-#: blocks/dist/index.js:3854
-#: blocks/dist/index.js:4205
-#: blocks/dist/index.js:4248
-#: blocks/dist/index.js:4281
-#: blocks/dist/index.js:4314
-#: blocks/dist/index.js:4347
+#: blocks/blocks/job-footer/src/components/inspector.js:125
+#: blocks/blocks/job-header/src/components/inspector.js:366
+#: blocks/blocks/job-header/src/components/inspector.js:394
+#: blocks/blocks/job-header/src/components/inspector.js:425
+#: blocks/blocks/job-header/src/components/inspector.js:531
+#: blocks/blocks/job-list/src/components/inspector.js:542
+#: blocks/blocks/job-list/src/components/inspector.js:691
+#: blocks/blocks/job-list/src/components/inspector.js:1134
+#: blocks/blocks/job-list/src/components/inspector.js:1180
+#: blocks/blocks/job-list/src/components/inspector.js:1214
+#: blocks/blocks/job-list/src/components/inspector.js:1248
+#: blocks/blocks/job-list/src/components/inspector.js:1282
 msgid "Color"
 msgstr ""
 
@@ -2012,69 +1991,45 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1525
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1559
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1587
-#: blocks/blocks/job-footer/src/components/inspector.js:140
-#: blocks/blocks/job-header/src/components/inspector.js:355
-#: blocks/blocks/job-header/src/components/inspector.js:388
-#: blocks/blocks/job-header/src/components/inspector.js:433
-#: blocks/blocks/job-header/src/components/inspector.js:524
-#: blocks/blocks/job-list/src/components/inspector.js:536
-#: blocks/blocks/job-list/src/components/inspector.js:737
-#: blocks/blocks/job-list/src/components/inspector.js:846
-#: blocks/blocks/job-list/src/components/inspector.js:1026
-#: blocks/blocks/job-list/src/components/inspector.js:1069
-#: blocks/blocks/job-list/src/components/inspector.js:1102
-#: blocks/blocks/job-list/src/components/inspector.js:1135
-#: blocks/blocks/job-list/src/components/inspector.js:1168
-#: blocks/blocks/job-list/src/components/inspector.js:1189
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:371
-#: blocks/dist/index.js:1350
-#: blocks/dist/index.js:1383
-#: blocks/dist/index.js:1428
-#: blocks/dist/index.js:1519
-#: blocks/dist/index.js:3727
-#: blocks/dist/index.js:3928
-#: blocks/dist/index.js:4037
-#: blocks/dist/index.js:4217
-#: blocks/dist/index.js:4260
-#: blocks/dist/index.js:4293
-#: blocks/dist/index.js:4326
-#: blocks/dist/index.js:4359
-#: blocks/dist/index.js:4380
+#: blocks/blocks/job-footer/src/components/inspector.js:135
+#: blocks/blocks/job-header/src/components/inspector.js:376
+#: blocks/blocks/job-header/src/components/inspector.js:404
+#: blocks/blocks/job-header/src/components/inspector.js:448
+#: blocks/blocks/job-header/src/components/inspector.js:541
+#: blocks/blocks/job-list/src/components/inspector.js:555
+#: blocks/blocks/job-list/src/components/inspector.js:769
+#: blocks/blocks/job-list/src/components/inspector.js:922
+#: blocks/blocks/job-list/src/components/inspector.js:1147
+#: blocks/blocks/job-list/src/components/inspector.js:1193
+#: blocks/blocks/job-list/src/components/inspector.js:1227
+#: blocks/blocks/job-list/src/components/inspector.js:1261
+#: blocks/blocks/job-list/src/components/inspector.js:1295
+#: blocks/blocks/job-list/src/components/inspector.js:1316
 msgid "Typography"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:580
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:722
-#: blocks/blocks/job-list/src/components/inspector.js:550
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3741
+#: blocks/blocks/job-list/src/components/inspector.js:569
 msgid "Section Icon"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:611
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:753
-#: blocks/blocks/job-list/src/components/inspector.js:604
-#: blocks/blocks/job-list/src/components/inspector.js:637
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3795
-#: blocks/dist/index.js:3828
+#: blocks/blocks/job-list/src/components/inspector.js:626
+#: blocks/blocks/job-list/src/components/inspector.js:660
 msgid "Height"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:657
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:797
-#: blocks/blocks/job-list/src/components/inspector.js:675
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3866
+#: blocks/blocks/job-list/src/components/inspector.js:704
 msgid "Icon Size"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:696
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1122
-#: blocks/blocks/job-list/src/components/inspector.js:730
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3921
+#: blocks/blocks/job-list/src/components/inspector.js:762
 msgid "Submit Button"
 msgstr ""
 
@@ -2085,13 +2040,9 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1142
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1233
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1622
-#: blocks/blocks/job-list/src/components/inspector.js:752
-#: blocks/blocks/job-list/src/components/inspector.js:861
-#: blocks/blocks/job-list/src/components/inspector.js:1236
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3943
-#: blocks/dist/index.js:4052
-#: blocks/dist/index.js:4427
+#: blocks/blocks/job-list/src/components/inspector.js:784
+#: blocks/blocks/job-list/src/components/inspector.js:937
+#: blocks/blocks/job-list/src/components/inspector.js:1365
 msgid "Normal"
 msgstr ""
 
@@ -2110,17 +2061,11 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1273
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1629
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1664
-#: blocks/blocks/job-list/src/components/inspector.js:778
-#: blocks/blocks/job-list/src/components/inspector.js:808
-#: blocks/blocks/job-list/src/components/inspector.js:887
-#: blocks/blocks/job-list/src/components/inspector.js:1262
-#: blocks/blocks/job-list/src/components/inspector.js:1292
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3969
-#: blocks/dist/index.js:3999
-#: blocks/dist/index.js:4078
-#: blocks/dist/index.js:4453
-#: blocks/dist/index.js:4483
+#: blocks/blocks/job-list/src/components/inspector.js:834
+#: blocks/blocks/job-list/src/components/inspector.js:874
+#: blocks/blocks/job-list/src/components/inspector.js:984
+#: blocks/blocks/job-list/src/components/inspector.js:1415
+#: blocks/blocks/job-list/src/components/inspector.js:1455
 msgid "Text Color"
 msgstr ""
 
@@ -2131,21 +2076,15 @@ msgstr ""
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1175
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1266
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1657
-#: blocks/blocks/job-list/src/components/inspector.js:756
-#: blocks/blocks/job-list/src/components/inspector.js:865
-#: blocks/blocks/job-list/src/components/inspector.js:1240
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3947
-#: blocks/dist/index.js:4056
-#: blocks/dist/index.js:4431
+#: blocks/blocks/job-list/src/components/inspector.js:791
+#: blocks/blocks/job-list/src/components/inspector.js:944
+#: blocks/blocks/job-list/src/components/inspector.js:1372
 msgid "Hover"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:787
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1213
-#: blocks/blocks/job-list/src/components/inspector.js:839
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4030
+#: blocks/blocks/job-list/src/components/inspector.js:915
 msgid "Reset Button"
 msgstr ""
 
@@ -2156,52 +2095,42 @@ msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:969
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1394
-#: public/partials/default/details.php:85
-#: admin/assets/dist/react/easyjobs.js:17729
-#: admin/react/src/components/Job/tabs/BasicInfoTab.js:778
-#: blocks/blocks/job-list/src/components/inspector.js:1007
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4198
+#: public/partials/default/details.php:90
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:53
+#: admin/react/src/components/Dashboard/RecentJobs.js:371
+#: admin/react/src/components/Dashboard/RecentJobs.js:482
+#: admin/react/src/components/Job/tabs/BasicInfoTab.js:930
+#: blocks/blocks/job-list/src/components/inspector.js:1127
 msgid "Job Title"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:999
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1424
-#: blocks/blocks/job-list/src/components/inspector.js:1042
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4233
+#: blocks/blocks/job-list/src/components/inspector.js:1165
 msgid "Space"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:1046
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1471
-#: blocks/blocks/job-list/src/components/inspector.js:1083
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4274
+#: blocks/blocks/job-list/src/components/inspector.js:1207
 msgid "Job Location"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:1078
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1503
-#: blocks/blocks/job-list/src/components/inspector.js:1116
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4307
+#: blocks/blocks/job-list/src/components/inspector.js:1241
 msgid "Job Deadline"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:1109
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1534
-#: blocks/blocks/job-list/src/components/inspector.js:1149
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4340
+#: blocks/blocks/job-list/src/components/inspector.js:1275
 msgid "Job Vacancies"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-job-list.php:1152
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:1577
-#: blocks/blocks/job-list/src/components/inspector.js:1182
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4373
+#: blocks/blocks/job-list/src/components/inspector.js:1309
 msgid "Job Apply Button"
 msgstr ""
 
@@ -2214,9 +2143,7 @@ msgid "Hide Company Details"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:223
-#: blocks/blocks/job-header/src/components/inspector.js:116
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1111
+#: blocks/blocks/job-header/src/components/inspector.js:112
 msgid "Change Cover Image"
 msgstr ""
 
@@ -2226,16 +2153,12 @@ msgid "Upload Cover Image"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:265
-#: blocks/blocks/job-header/src/components/inspector.js:162
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1157
+#: blocks/blocks/job-header/src/components/inspector.js:166
 msgid "Change Logo"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:306
-#: blocks/blocks/job-landing/src/components/inspector.js:90
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:2489
+#: blocks/blocks/job-landing/src/components/inspector.js:82
 msgid "Hide Job List"
 msgstr ""
 
@@ -2257,15 +2180,13 @@ msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:485
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:486
-#: public/partials-blocks/classic/info.php:142
-#: public/partials-blocks/default/info.php:68
-#: public/partials-blocks/elegant/info.php:62
-#: public/partials/classic/landing.php:139
-#: public/partials/default/landing.php:65
-#: public/partials/elegant/landing.php:60
-#: blocks/blocks/job-header/src/components/attributes.js:61
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:746
+#: public/partials-blocks/classic/info.php:146
+#: public/partials-blocks/default/info.php:72
+#: public/partials-blocks/elegant/info.php:66
+#: public/partials/classic/landing.php:144
+#: public/partials/default/landing.php:70
+#: public/partials/elegant/landing.php:65
+#: blocks/blocks/job-header/src/components/attributes.js:60
 msgid "Explore company website"
 msgstr ""
 
@@ -2284,34 +2205,27 @@ msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:515
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:516
-#: blocks/blocks/job-footer/src/components/attributes.js:29
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:139
+#: blocks/blocks/job-footer/src/components/attributes.js:27
 msgid "Life at"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:826
-#: blocks/blocks/job-header/src/components/inspector.js:331
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1326
+#: blocks/blocks/job-header/src/components/inspector.js:351
 msgid "Company Info"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:862
-#: public/partials/default/details.php:135
-#: blocks/blocks/job-header/src/components/inspector.js:369
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1364
+#: public/partials/default/details.php:142
+#: blocks/blocks/job-header/src/components/inspector.js:390
 msgid "Location"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:894
-#: public/partials/classic/details.php:69
-#: public/partials/default/details.php:339
-#: public/partials/elegant/details.php:158
-#: blocks/blocks/job-header/src/components/inspector.js:473
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1468
+#: public/partials/classic/details.php:91
+#: public/partials/default/details.php:302
+#: public/partials/elegant/details.php:173
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:684
+#: blocks/blocks/job-header/src/components/inspector.js:492
 msgid "Description"
 msgstr ""
 
@@ -2320,9 +2234,7 @@ msgid "Justified"
 msgstr ""
 
 #: includes/elementor/class-easyjobs-elementor-landingpage.php:972
-#: blocks/blocks/job-header/src/components/inspector.js:402
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1397
+#: blocks/blocks/job-header/src/components/inspector.js:418
 msgid "Website Link Button"
 msgstr ""
 
@@ -2332,6 +2244,7 @@ msgid "No open jobs right now"
 msgstr ""
 
 #: includes/elementor/trait-easyjobs-elementor-template.php:246
+#: public/partials/default/details.php:157
 msgid "Anywhere (Remote)"
 msgstr ""
 
@@ -2339,750 +2252,2071 @@ msgstr ""
 msgid "N/A"
 msgstr ""
 
-#: public/includes/class-easyjobs-shortcode.php:79
+#: public/includes/class-easyjobs-shortcode.php:83
 msgid "Api is not connected"
 msgstr ""
 
-#: public/partials-blocks/classic/list.php:100
-#: public/partials-blocks/default/list.php:68
-#: public/partials-blocks/elegant/list.php:102
-#: public/partials/classic/details.php:31
-#: public/partials/classic/list.php:96
-#: public/partials/default/details.php:139
-#: public/partials/default/list.php:111
-#: public/partials/elegant/details.php:41
-#: public/partials/elegant/list.php:100
+#: public/partials-blocks/classic/list.php:116
+#: public/partials-blocks/default/list.php:84
+#: public/partials-blocks/elegant/list.php:118
+#: public/partials/classic/details.php:48
+#: public/partials/classic/list.php:112
+#: public/partials/elegant/details.php:60
+#: public/partials/elegant/list.php:116
 msgid "Anywhere"
 msgstr ""
 
-#: public/partials-blocks/classic/list.php:126
-#: public/partials/classic/list.php:122
-#: blocks/blocks/job-list/src/components/themes/classic.js:98
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:5563
+#: public/partials-blocks/classic/list.php:142
+#: public/partials/classic/list.php:138
+#: blocks/blocks/job-list/src/components/themes/classic.js:153
 msgid "No of vacancies "
 msgstr ""
 
-#: public/partials-blocks/classic/list.php:136
-#: public/partials/classic/list.php:131
+#: public/partials-blocks/classic/list.php:152
+#: public/partials/classic/list.php:147
 msgid "Deadline:"
 msgstr ""
 
-#: public/partials-blocks/default/footer.php:65
-#: public/partials-blocks/default/info.php:153
-#: public/partials/default/landing.php:205
+#: public/partials-blocks/default/footer.php:70
+#: public/partials-blocks/default/info.php:157
+#: public/partials/default/landing.php:210
 msgid "Failed to connect api"
 msgstr ""
 
-#: public/partials-blocks/default/list.php:100
-#: public/partials/default/list.php:139
+#: public/partials-blocks/default/list.php:116
+#: public/partials/default/list.php:188
 msgid "No of vacancies: "
 msgstr ""
 
-#: public/partials-blocks/elegant/list.php:132
-#: public/partials/classic/details.php:336
-#: public/partials/elegant/details.php:73
-#: public/partials/elegant/list.php:130
-#: blocks/blocks/job-list/src/components/themes/elegant.js:113
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:5987
+#: public/partials-blocks/elegant/list.php:148
+#: public/partials/classic/details.php:160
+#: public/partials/elegant/details.php:87
+#: public/partials/elegant/list.php:146
+#: blocks/blocks/job-list/src/components/themes/elegant.js:199
 msgid "No of vacancies"
 msgstr ""
 
-#: public/partials-blocks/elegant/list.php:150
-#: public/partials/elegant/list.php:146
+#: public/partials-blocks/elegant/list.php:166
+#: public/partials/elegant/list.php:162
+#: admin/react/src/components/Candidate/index.js:1079
+#: admin/react/src/components/Messages/FilterPanel.js:154
 msgid "No jobs found"
 msgstr ""
 
-#: public/partials/classic/details.php:304
-#: public/partials/classic/list.php:127
+#: public/partials/classic/details.php:45
+#: public/partials/default/details.php:154
+#: public/partials/elegant/details.php:56
+msgid "Remote"
+msgstr ""
+
+#: public/partials/classic/details.php:69
+#: public/partials/classic/details.php:128
+#: public/partials/classic/list.php:143
 msgid "Apply Now"
 msgstr ""
 
-#: public/partials/classic/details.php:309
-#: public/partials/default/details.php:168
-#: public/partials/elegant/details.php:96
+#: public/partials/classic/details.php:73
+#: public/partials/classic/details.php:133
+#: public/partials/default/details.php:183
+#: public/partials/elegant/details.php:110
+#: admin/react/src/components/Dashboard/RecentJobs.js:374
+#: admin/react/src/components/Dashboard/RecentJobs.js:506
 msgid "Deadline"
 msgstr ""
 
-#: public/partials/classic/details.php:316
-#: public/partials/default/details.php:95
-#: admin/assets/dist/react/easyjobs.js:8004
+#: public/partials/classic/details.php:140
+#: public/partials/default/details.php:101
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:122
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:793
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:837
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:56
 msgid "Experience"
 msgstr ""
 
-#: public/partials/classic/details.php:331
-#: public/partials/default/details.php:151
-#: public/partials/elegant/details.php:86
+#: public/partials/classic/details.php:155
+#: public/partials/default/details.php:166
+#: public/partials/elegant/details.php:100
 msgid "Job Type"
 msgstr ""
 
-#: public/partials/classic/details.php:343
+#: public/partials/classic/details.php:167
 msgid "Office Time"
 msgstr ""
 
-#: public/partials/classic/details.php:361
+#: public/partials/classic/details.php:178
+#: public/partials/default/details.php:254
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:112
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:168
+msgid "Read more"
+msgstr ""
+
+#: public/partials/classic/details.php:186
 msgid "Share on"
 msgstr ""
 
-#: public/partials/classic/details.php:400
+#: public/partials/classic/details.php:191
+#: public/partials/default/details.php:206
+#: public/partials/elegant/details.php:121
+msgid "Share on Facebook"
+msgstr ""
+
+#: public/partials/classic/details.php:198
+#: public/partials/default/details.php:215
+#: public/partials/elegant/details.php:128
+msgid "Share on X"
+msgstr ""
+
+#: public/partials/classic/details.php:207
+#: public/partials/default/details.php:224
+#: public/partials/elegant/details.php:137
+msgid "Share on LinkedIn"
+msgstr ""
+
+#: public/partials/classic/details.php:225
+#: public/partials/default/details.php:245
 msgid "Company Description"
 msgstr ""
 
-#: public/partials/default/details.php:73
+#: public/partials/default/details.php:78
 msgid "No location found"
 msgstr ""
 
-#: public/partials/default/details.php:105
+#: public/partials/default/details.php:111
 msgid "Vacancies"
 msgstr ""
 
-#: public/partials/default/details.php:125
+#: public/partials/default/details.php:131
 msgid "Office time"
 msgstr ""
 
-#: public/partials/default/details.php:178
-#: public/partials/elegant/details.php:92
-#: public/partials/elegant/list.php:124
+#: public/partials/default/details.php:193
+#: public/partials/elegant/details.php:106
+#: public/partials/elegant/list.php:140
 msgid "Apply now"
 msgstr ""
 
-#: public/partials/default/details.php:184
+#: public/partials/default/details.php:200
 msgid "Share On: "
 msgstr ""
 
-#: public/partials/default/details.php:237
-msgid "Company Description "
+#: public/partials/default/details.php:260
+msgid "Show less"
 msgstr ""
 
-#: public/partials/default/details.php:314
-#: public/partials/elegant/details.php:145
+#: public/partials/default/list.php:147
+msgid "Anywhere  (Remote)"
+msgstr ""
+
+#: public/partials/elegant/details.php:116
+msgid "Share on:"
+msgstr ""
+
+#: public/partials/elegant/details.php:160
 msgid "Skills "
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:7890
-#: admin/react/src/components/Candidate/Details/Tabs/Application.js:12
-msgid "COVER LETTER"
+#: admin/react/src/components/Candidate/CandidateCard.js:63
+#: admin/react/src/components/Candidate/CandidateCard.js:64
+#: admin/react/src/components/Messages/FileCard.js:73
+msgid "Attachment"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:7973
-msgid "AI SCORE"
+#: admin/react/src/components/Candidate/CandidateCard.js:75
+#: admin/react/src/components/Candidate/CandidateCard.js:76
+msgid "No attachment"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:8026
-msgid "Total"
+#: admin/react/src/components/Candidate/CandidateCard.js:86
+#: admin/react/src/components/Candidate/CandidateCard.js:87
+#: admin/react/src/components/Messages/RightPanel.js:98
+msgid "Notes"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:8198
-#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:12
-msgid "RESUME"
+#: admin/react/src/components/Candidate/CandidateCard.js:98
+#: admin/react/src/components/Candidate/CandidateCard.js:99
+msgid "No notes"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:9079
-#: admin/react/src/components/Candidate/index.js:197
-msgid "Search Candidates Name . . ."
+#: admin/react/src/components/Candidate/CandidateCard.js:114
+#: admin/react/src/components/Candidate/CandidateRow.js:56
+#: admin/react/src/components/Candidate/CandidateRow.js:152
+#: admin/react/src/components/Candidate/CandidateRow.js:167
+msgid "Candidate limit reached — upgrade your plan to continue."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:9108
-#: admin/react/src/components/Candidate/index.js:230
-msgid "Select Rating"
+#: admin/react/src/components/Candidate/CandidateCard.js:159
+#: admin/react/src/components/Candidate/CandidateCard.js:160
+#: admin/react/src/components/Candidate/CandidateRow.js:163
+#: admin/react/src/components/Candidate/CandidateRow.js:164
+#: admin/react/src/components/Candidate/CandidateRow.js:191
+#: admin/react/src/components/Candidate/CandidateRow.js:192
+msgid "Message"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:9112
-#: admin/react/src/components/Candidate/index.js:233
-msgid "5"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:9114
-#: admin/react/src/components/Candidate/index.js:234
-msgid "4"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:9116
-#: admin/react/src/components/Candidate/index.js:235
-msgid "3"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:9118
-#: admin/react/src/components/Candidate/index.js:236
-msgid "2"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:9120
-#: admin/react/src/components/Candidate/index.js:237
-msgid "1"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:9122
-#: admin/react/src/components/Candidate/index.js:238
-msgid "0"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:9133
-#: admin/react/src/components/Candidate/index.js:251
-msgid "Select Pipeline"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:9180
-#: admin/assets/dist/react/easyjobs.js:10004
-#: admin/react/src/components/Candidate/index.js:322
-#: admin/react/src/components/Dashboard/Candidates.js:175
+#: admin/react/src/components/Candidate/CandidateCard.js:177
+#: admin/react/src/components/Candidate/CandidateCard.js:178
+#: admin/react/src/components/Candidate/CandidateRow.js:148
+#: admin/react/src/components/Candidate/CandidateRow.js:149
+#: admin/react/src/components/Candidate/CandidateRow.js:182
+#: admin/react/src/components/Candidate/CandidateRow.js:183
+#: admin/react/src/components/Dashboard/Candidates.js:80
 msgid "View Details"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:9185
-#: admin/assets/dist/react/easyjobs.js:20132
-#: admin/react/src/components/Candidate/index.js:373
-#: admin/react/src/components/JobCandidates/Candidates.js:107
-msgid "Loading candidates..."
+#: admin/react/src/components/Candidate/CandidateRow.js:122
+#: admin/react/src/components/Candidate/CandidateRow.js:123
+msgid "Has notes"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:9752
-#: admin/react/src/components/Dashboard/Analytics.js:199
-msgid "No Analytics Data."
+#: admin/react/src/components/Candidate/CandidateRow.js:131
+#: admin/react/src/components/Candidate/CandidateRow.js:132
+msgid "Has attachments"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:9977
-#: admin/react/src/components/Dashboard/Candidates.js:133
-msgid "Recent Applicants"
+#: admin/react/src/components/Candidate/CandidateSkeleton.js:30
+#: admin/react/src/components/Candidate/index.js:1275
+msgid "Job Applied"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:10032
-#: admin/react/src/components/Dashboard/Candidates.js:261
-msgid "See All"
+#: admin/react/src/components/Candidate/CandidateSkeleton.js:31
+#: admin/react/src/components/Candidate/index.js:1276
+#: admin/react/src/components/Dashboard/RecentJobs.js:373
+#: admin/react/src/components/Dashboard/RecentJobs.js:498
+msgid "Status"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:10052
-#: admin/react/src/components/Dashboard/Candidates.js:293
-msgid "Invite Candidate"
+#: admin/react/src/components/Candidate/CandidateSkeleton.js:34
+#: admin/react/src/components/Candidate/index.js:1279
+msgid "Activity"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:10055
-#: admin/react/src/components/Dashboard/Candidates.js:301
-msgid "Share Jobs"
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:62
+msgid "mm/dd/yyyy"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:10059
-#: admin/react/src/components/Dashboard/Candidates.js:310
-msgid "Read Blog"
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:99
+msgid "No assessments available."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:10062
-#: admin/react/src/components/Dashboard/Candidates.js:318
-msgid "No applicants found."
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:171
+msgid "Please select an assessment."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:10627
-#: admin/react/src/components/Dashboard/index.js:111
-msgid "Loading data..."
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:172
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:524
+msgid "Expire date is required."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:11870
-#: admin/react/src/components/Evaluation/Assessment/index.js:205
-msgid "Loading Assessments..."
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:185
+msgid "Assessment assigned."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:11875
-#: admin/react/src/components/Evaluation/Assessment/index.js:209
-msgid "No Assessment found."
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:191
+msgid "Could not assign the assessment."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:13534
-#: admin/react/src/components/Evaluation/Questions/index.js:259
-msgid "Loading Questions..."
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:209
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:314
+#: admin/react/src/components/Candidate/Details/HeaderCard.js:221
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:901
+msgid "Assign Assessment"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:13539
-#: admin/react/src/components/Evaluation/Questions/index.js:263
-msgid "No Questions found."
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:221
+msgid "Select platform"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:13750
-#: admin/react/src/components/Job/AllJobs/Controls.js:134
-msgid "Mark as Expire"
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:237
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:263
+msgid "Select assessment"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:13760
-#: admin/react/src/components/Job/AllJobs/Controls.js:146
-msgid "Extend Expiry"
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:247
+msgid "Hide Assigned Assessment"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:14244
-#: admin/react/src/components/Job/AllJobs/Jobs.js:263
-msgid "Loading jobs..."
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:248
+msgid "Show Assigned Assessment"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:14427
-#: admin/react/src/components/Job/AllJobs/index.js:68
-msgid "All Jobs"
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:262
+#: admin/react/src/components/Messages/ConversationList.js:139
+#: admin/react/src/components/Messages/NewConversation.js:197
+msgid "Loading…"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:14676
-#: admin/react/src/components/Job/AllJobs/index.js:282
-msgid "Create A new Job"
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:278
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:399
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:576
+msgid "Expire date"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:15368
-#: admin/react/src/components/Job/CreateJob.js:468
-msgid "Create a New Job"
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:294
+msgid "Candidate will be notified by message once the assessment is assigned."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:16125
-#: admin/react/src/components/Job/EditJob.js:476
-msgid "Edit job"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:17738
-#: admin/react/src/components/Job/tabs/BasicInfoTab.js:790
-msgid "Enter your job title..."
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:17748
-#: admin/react/src/components/Job/tabs/BasicInfoTab.js:799
-msgid "TIPS:"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:17748
-#: admin/react/src/components/Job/tabs/BasicInfoTab.js:800
-msgid "The job title is essential for your job post to attract the best candidates. Please type your job title. (Example: Senior Executive)"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:20906
-#: admin/react/src/components/Landing/ApiKey.js:21
-msgid "API Key"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:20910
-#: admin/react/src/components/Landing/ApiKey.js:26
-msgid "Enter your API key"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24118
-#: admin/react/src/components/Settings/tabs/AITab.js:64
-msgid "Show AI Score"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24137
-#: admin/react/src/components/Settings/tabs/AITab.js:87
-msgid "Run batch process for old candidates"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24148
-#: admin/react/src/components/Settings/tabs/AITab.js:100
-msgid "Run process"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24232
-#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:23
-msgid "Api disconnected successfully."
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24237
-#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:29
-msgid "Api disconnect failed, please try again."
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24246
-#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:39
-msgid "Api key saved successfully."
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24286
-#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:78
-msgid "API Key Setup"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24298
-#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:85
-msgid "API key"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24312
-#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:101
-msgid "Change API key"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24322
-#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:122
-msgid "Disconnect"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24327
-#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:129
-msgid "Update API key"
-msgstr ""
-
-#: admin/assets/dist/react/easyjobs.js:24331
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:305
+#: admin/react/src/components/Candidate/Details/NotesCard.js:211
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:433
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:793
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:846
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:595
+#: admin/react/src/components/Messages/Composer.js:512
+#: admin/react/src/components/Messages/FilterPanel.js:218
+#: admin/react/src/components/Messages/RightPanel.js:135
 #: admin/react/src/components/Settings/tabs/ApiKeyTab.js:136
 msgid "Cancel"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:24547
-#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:107
-msgid "Please select a field type."
+#: admin/react/src/components/Candidate/Details/AssignAssessmentModal.js:313
+msgid "Assigning…"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:24551
-#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:110
-msgid "Please provide field name."
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:42
+msgid "Copied"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:24555
-#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:113
-msgid "Field name should not be more than 50 character."
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:45
+msgid "Could not copy"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:24559
-#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:119
-msgid "Please select at least one file type."
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:59
+msgid "Date of Birth"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25017
-#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:455
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:65
+msgid "Government ID"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:68
+msgid "National ID/Passport/Driver's license"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:81
+msgid "Candidate Details"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:108
+msgid "Copy"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:112
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:552
+msgid "Copied!"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/DetailsCard.js:125
+msgid "Social"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/HeaderCard.js:230
+msgid "Download resume"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/HeaderCard.js:241
+msgid "Remove candidate"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/index.js:243
+msgid "No resume to download."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/index.js:308
+#: admin/react/src/components/Candidate/Details/index.js:312
+#: admin/react/src/components/Messages/NewConversation.js:119
+msgid "Back"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/index.js:390
+#: admin/react/src/components/Candidate/Details/index.js:427
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:873
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:913
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1135
+#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:641
 msgid "Confirmation"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25019
-#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:460
-msgid "Are you sure, you want to delete this field?"
+#: admin/react/src/components/Candidate/Details/index.js:392
+msgid "Are you sure you want to remove this candidate?"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25465
-#: admin/assets/dist/react/easyjobs.js:25474
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:248
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:255
-msgid "Please select country"
+#: admin/react/src/components/Candidate/Details/index.js:429
+msgid "Are you sure you want to remove this note?"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25479
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:259
-msgid "Please select state"
+#: admin/react/src/components/Candidate/Details/MorePositionsCard.js:20
+msgid "More Positions"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25568
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:354
-msgid "Company Setup"
+#: admin/react/src/components/Candidate/Details/MorePositionsCard.js:23
+msgid "This candidate has also applied for these jobs."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25598
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:383
-msgid "User Name / Company"
+#: admin/react/src/components/Candidate/Details/NotesCard.js:91
+msgid "Internal Notes"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25612
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:399
-msgid "Mobile Number"
+#: admin/react/src/components/Candidate/Details/NotesCard.js:110
+msgid "Delete note"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25650
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:449
-msgid "Country"
+#: admin/react/src/components/Candidate/Details/NotesCard.js:124
+msgid "No Notes found."
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25671
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:471
-msgid "Select country"
+#: admin/react/src/components/Candidate/Details/NotesCard.js:138
+#: admin/react/src/components/Messages/RightPanel.js:113
+msgid "Add a note here"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25703
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:509
-msgid "City"
+#: admin/react/src/components/Candidate/Details/NotesCard.js:185
+#: admin/react/src/components/Messages/RightPanel.js:121
+msgid "Emoji"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25730
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:539
-msgid "Postal Code"
+#: admin/react/src/components/Candidate/Details/NotesCard.js:197
+msgid "Tag a manager"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25746
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:555
-msgid "Website URL"
+#: admin/react/src/components/Candidate/Details/NotesCard.js:218
+msgid "Save note"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25750
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:561
-msgid "Enter Website URL"
+#: admin/react/src/components/Candidate/Details/SalaryCard.js:121
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:165
+msgid "Current"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25780
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:600
-msgid "Language"
+#: admin/react/src/components/Candidate/Details/SalaryCard.js:125
+msgid "Expected"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25814
-#: admin/assets/dist/react/easyjobs.js:25820
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:636
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:644
-msgid "Jobs per page"
+#: admin/react/src/components/Candidate/Details/SalaryCard.js:139
+msgid "expected"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25828
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:654
-msgid "Write Description"
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:111
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:168
+msgid "Read less"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25831
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:659
-msgid "Write company description here"
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:125
+msgid "Total Year of Experience"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25838
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:666
-msgid "Company Benefits"
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:127
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:44
+msgid "years"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:25841
-#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:671
-msgid "Write company benefits here"
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:137
+msgid "Collapse all"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:28538
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:138
+msgid "Expand all"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:173
+msgid "Present"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:202
+msgid "No job experience yet"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:211
+msgid "Educational Qualification"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:237
+msgid "Custom Queries"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:253
+msgid "Intro Video"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:272
+msgid "No video available"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:281
+msgid "Or watch from"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Application.js:288
+msgid "source"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:144
+msgid "file"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:144
+msgid "files"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:146
+msgid "total"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:150
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:985
+#: admin/react/src/components/Candidate/index.js:963
+#: admin/react/src/components/Candidate/index.js:1001
+#: admin/react/src/components/Candidate/index.js:1043
+msgid "All"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:153
+msgid "PDFs"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:155
+msgid "Images"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:157
+msgid "Documents"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:159
+msgid "Others"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:195
+msgid "File type not supported!"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:201
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:202
+msgid "File size should be under 2 MB!"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:233
+msgid "Attachment uploaded"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:239
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:276
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:296
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:364
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:383
+msgid "Something went wrong"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:270
+msgid "Attachment updated"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:291
+msgid "Attachment removed"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:340
+msgid "Field name is required"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:357
+msgid "Field updated"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:358
+msgid "Field added"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:379
+msgid "Field removed"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:395
+msgid "Field name"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:416
+msgid "Value"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:425
+msgid "Save field"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:453
+msgid "Files & Attachments"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:456
+msgid "Documents related to this candidate"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:463
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:553
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:649
+msgid "Upload file"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:509
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:562
+msgid "Download"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:544
+msgid "No files uploaded yet"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:546
+msgid "Add reference letters, certificates, portfolio samples, or any documents related to this candidate."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:566
+msgid "Custom Fields"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:568
+msgid "Add any additional info about this candidate"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:574
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:635
+msgid "Add field"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:626
+msgid "No custom fields yet"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:628
+msgid "Track additional info like notice period, alternate contact, current employer, or anything else specific to this candidate."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:661
+msgid "File name"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:664
+msgid "· e.g., Portfolio, Reference Letter, Interview Notes"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:677
+msgid "Add Attachment Name"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:687
+msgid "· Optional"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:697
+msgid "Write brief description of the purpose of this note or document"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:705
+msgid "File"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:724
+msgid "Drop a file here or"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:725
+msgid "browse"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:759
+msgid "Ready"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:771
+msgid "Remove file"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:778
+msgid "PDF, DOC, DOCX, JPG, PNG and more · up to 2 MB"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:803
+msgid "Uploading..."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:804
+msgid "Upload"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:819
+msgid "Update Attachment"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:829
+msgid "Comment"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:838
+msgid "Add comment"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:854
+msgid "Updating..."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:855
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:604
+msgid "Update"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:875
+msgid "Are you sure, you want to remove this attachment?"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Attachment.js:915
+msgid "Are you sure, you want to remove this field?"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Conversation.js:69
+msgid "Conversation unavailable"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Conversation.js:71
+msgid "This candidate’s conversation could not be loaded."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:74
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:444
+msgid "Skip"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:76
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:459
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:991
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1028
+msgid "Correct"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:78
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:474
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:997
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1043
+msgid "Incorrect"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:85
+msgid "Answer copied"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:94
+msgid "Copy answer"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:147
+msgid "Answer"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:150
+msgid "Skipped"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:159
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:489
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1058
+msgid "Correct Answered"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:202
+msgid "Complete"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:204
+msgid "In Progress"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:212
+msgid "Expire"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:214
+msgid "Pending"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:260
+msgid "Expires"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:271
+msgid "out of"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:311
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:942
+msgid "Overall Score"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:356
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:960
+msgid "Total Questions"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:378
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:965
+msgid "Total Marks"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:421
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:970
+msgid "Marks Obtained"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:480
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1049
+msgid "Applicant Answered"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:535
+msgid "Assessment updated."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:541
+msgid "Could not update the assessment."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:557
+msgid "Update Assessment"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:568
+msgid "Assessment"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:603
+msgid "Updating…"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:632
+msgid "Strong match"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:634
+msgid "Moderate match"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:635
+msgid "Weak match"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:665
+msgid "Assessment removed."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:672
+msgid "Could not remove the assessment."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:739
+msgid "Excellent"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:741
+msgid "Average"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:742
+msgid "Poor"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:772
+msgid "How is this calculated?"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:776
+msgid "How the AI score works"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:778
+msgid "We match the candidate's resume and application against the job requirements across three dimensions. The overall score is the average of these dimensions."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:789
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:829
+msgid "Education"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:798
+msgid "Scores are guidance only and should support — not replace — your judgment."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:812
+msgid "Overall"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:873
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1077
+msgid "Screening Questions"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:887
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:890
+msgid "You have assigned"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:889
+msgid "assessments so far!"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:892
+msgid "assessment so far!"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:929
+msgid "You haven't assigned any assessment yet!"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:979
+msgid "Quiz Questions"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1005
+msgid "No questions found."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1081
+msgid "question answered"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1082
+msgid "questions answered"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1137
+msgid "Are you sure, you want to remove this assessment?"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Evaluation.js:1158
+msgid "Removing…"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:44
+msgid "year"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:51
+msgid "role"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:51
+msgid "roles"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:79
+msgid "Highest education"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:88
+msgid "Current role"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:101
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:132
+msgid "Highlights"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:120
+msgid "Collapse highlights"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:346
+msgid "Resume link copied"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:349
+msgid "Could not copy the link"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:420
+msgid "This candidate has not uploaded a resume or provided a resume link yet."
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:442
+msgid "PDF"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:446
+msgid "pages"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:447
+msgid "page"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:461
+msgid "Previous page"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:472
+msgid "Next page"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:482
+msgid "Zoom out"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:490
+msgid "Zoom level"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:497
+msgid "Fit to width"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:501
+msgid "Fit to page"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:520
+msgid "Zoom in"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:528
+msgid "Rotate"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:540
+msgid "Print"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:549
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:553
+msgid "Copy resume link"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:568
+msgid "Open in new tab"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:583
+msgid "Loading resume…"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:594
+msgid "Resume not found"
+msgstr ""
+
+#: admin/react/src/components/Candidate/Details/Tabs/Resume.js:607
+msgid "Tip: use the toolbar to switch pages, zoom, rotate, or download the resume."
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:54
+msgid "Newest applied"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:55
+msgid "Oldest applied"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:56
+msgid "Name A–Z"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:57
+msgid "Name Z–A"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:58
+msgid "Highest rated"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:839
+msgid "coming soon"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:914
+msgid "Search candidates by name…"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:920
+#: admin/react/src/components/Messages/index.js:373
+#: admin/react/src/components/Messages/NewConversation.js:142
+msgid "Clear search"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:941
+#: admin/react/src/components/Candidate/index.js:1210
+msgid "Status:"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1039
+#: admin/react/src/components/Candidate/index.js:1196
+msgid "Job:"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1042
+#: admin/react/src/components/Messages/FilterPanel.js:183
+msgid "Selected"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1056
+msgid "Search jobs…"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1115
+msgid "star"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1120
+msgid "Hide status"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1146
+msgid "Sort:"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1176
+msgid "Grid view"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1183
+msgid "List view"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1201
+#: admin/react/src/components/Candidate/index.js:1215
+#: admin/react/src/components/Candidate/index.js:1229
+#: admin/react/src/components/Candidate/index.js:1243
+msgid "Remove"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1224
+msgid "Rating:"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1238
+msgid "Hidden:"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1250
+msgid "Clear all"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1309
+msgid "No candidates match these filters"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1313
+msgid "Try adjusting your filters or clearing them to see more candidates."
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1320
+msgid "Clear all filters"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1330
+#: admin/react/src/util/Pager.js:103
+msgid "Showing"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1331
+#: admin/react/src/util/Pager.js:103
+msgid "of"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1332
+msgid "candidates"
+msgstr ""
+
+#: admin/react/src/components/Candidate/index.js:1351
+#: admin/react/src/components/Candidate/index.js:1367
+msgid "per page"
+msgstr ""
+
+#: admin/react/src/components/Candidate/PlanUsage.js:50
+msgid "Candidate quota usage"
+msgstr ""
+
+#: admin/react/src/components/Candidate/PlanUsage.js:68
+msgid "Candidates · "
+msgstr ""
+
+#: admin/react/src/components/Candidate/PlanUsage.js:73
+msgid "Upgrade"
+msgstr ""
+
+#: admin/react/src/components/Candidate/PlanUsage.js:79
+msgid "Candidate quota"
+msgstr ""
+
+#: admin/react/src/components/Candidate/PlanUsage.js:82
+msgid "Used"
+msgstr ""
+
+#: admin/react/src/components/Candidate/PlanUsage.js:88
+msgid "Remaining"
+msgstr ""
+
+#: admin/react/src/components/Candidate/PlanUsage.js:94
+msgid "Resets on"
+msgstr ""
+
+#: admin/react/src/components/Candidate/PlanUsage.js:105
+msgid "Upgrade plan"
+msgstr ""
+
+#: admin/react/src/components/Common/CandidateLimitNotice.js:125
+#: admin/react/src/components/Messages/Composer.js:431
+msgid "Upgrade Now"
+msgstr ""
+
+#: admin/react/src/components/Common/CandidateLimitNotice.js:145
+msgid "Dismiss"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:20
+msgid "Visitors"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:26
+msgid "Unique Visitors"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:32
+msgid "Performed Actions"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:38
+msgid "Candidates Applied"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:44
+msgid "Candidates Pending"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:155
+msgid "Unlock Analytics"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:158
+msgid "Track visitors, applications and hiring trends in real time."
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:170
+msgid "Get PRO to unlock"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:350
+msgid "Analytics"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:424
+msgid "Click a metric above to toggle it on the chart"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Analytics.js:435
+msgid "No Analytics Data."
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Candidates.js:273
+msgid "Recent Applicants"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Candidates.js:275
+msgid "Last 5 applicants"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Candidates.js:280
+msgid "See all applicants"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Candidates.js:338
+msgid "Invite Candidate"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Candidates.js:343
+msgid "Share Jobs"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Candidates.js:353
+msgid "Read Blog"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Counters.js:13
+msgid "Total in your pipeline"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Counters.js:21
+msgid "Accepting applications"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Counters.js:29
+msgid "Not yet published"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Counters.js:33
+msgid "Team Members"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/Counters.js:37
+msgid "In your workspace"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/index.js:134
+msgid "Loading data..."
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:372
+#: admin/react/src/components/Dashboard/RecentJobs.js:490
+msgid "Applicants"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:403
+msgid "A–Z"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:403
+msgid "Z–A"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:407
+msgid "Low to High"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:408
+msgid "High to Low"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:412
+msgid "Active First"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:413
+msgid "Expired First"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:417
+msgid "Earliest First"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:418
+msgid "Latest First"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:420
+msgid "Sorted by:"
+msgstr ""
+
+#: admin/react/src/components/Dashboard/RecentJobs.js:466
+msgid "View all jobs"
+msgstr ""
+
+#: admin/react/src/components/Evaluation/Assessment/index.js:208
+msgid "Loading Assessments..."
+msgstr ""
+
+#: admin/react/src/components/Evaluation/Assessment/index.js:212
+msgid "No Assessment found."
+msgstr ""
+
+#: admin/react/src/components/Evaluation/Questions/index.js:264
+msgid "Loading Questions..."
+msgstr ""
+
+#: admin/react/src/components/Evaluation/Questions/index.js:268
+msgid "No Questions found."
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/Controls.js:135
+msgid "Mark as Expire"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/Controls.js:147
+#: admin/react/src/components/Job/AllJobs/Jobs.js:413
+msgid "Extend Expiry"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/Controls.js:209
+msgid "Copy link"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/index.js:71
+msgid "All Jobs"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/index.js:75
+msgid "Internal Jobs"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/index.js:300
+msgid "Create A new Job"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/Jobs.js:402
+msgid "Mark as Expired"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/Jobs.js:511
+msgid "Share job"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/Jobs.js:876
+msgid "No applicants yet"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/Jobs.js:946
+msgid "Loading jobs..."
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/ShareModal.js:77
+msgid "Your job is published."
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/ShareModal.js:503
+msgid "Share your job"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/ShareModal.js:515
+msgid "Facebook"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/ShareModal.js:528
+msgid "LinkedIn"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/ShareModal.js:552
+msgid "Twitter"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/ShareModal.js:564
+msgid "Copy Link"
+msgstr ""
+
+#: admin/react/src/components/Job/AllJobs/Status.js:8
+msgid "Internal"
+msgstr ""
+
+#: admin/react/src/components/Job/CreateJob.js:470
+msgid "Create a New Job"
+msgstr ""
+
+#: admin/react/src/components/Job/EditJob.js:474
+msgid "Edit job"
+msgstr ""
+
+#: admin/react/src/components/Job/tabs/BasicInfoTab.js:943
+msgid "Enter your job title..."
+msgstr ""
+
+#: admin/react/src/components/Job/tabs/BasicInfoTab.js:952
+msgid "TIPS:"
+msgstr ""
+
+#: admin/react/src/components/Job/tabs/BasicInfoTab.js:953
+msgid "The job title is essential for your job post to attract the best candidates. Please type your job title. (Example: Senior Executive)"
+msgstr ""
+
+#: admin/react/src/components/JobCandidates/Candidates.js:119
+msgid "Loading candidates..."
+msgstr ""
+
+#: admin/react/src/components/JobCandidates/index.js:260
+msgid "Unable to export candidates"
+msgstr ""
+
+#: admin/react/src/components/JobCandidates/index.js:352
+msgid "Exporting..."
+msgstr ""
+
+#: admin/react/src/components/Landing/ApiKey.js:21
+msgid "API Key"
+msgstr ""
+
+#: admin/react/src/components/Landing/ApiKey.js:27
+msgid "Enter your API key"
+msgstr ""
+
+#: admin/react/src/components/Messages/ChatThread.js:98
+#, js-format
+msgid "%s added a note"
+msgstr ""
+
+#: admin/react/src/components/Messages/ChatThread.js:257
+msgid "Select a conversation to start messaging."
+msgstr ""
+
+#: admin/react/src/components/Messages/ChatThread.js:271
+#, js-format
+msgid "Conversation with %s"
+msgstr ""
+
+#: admin/react/src/components/Messages/ChatThread.js:284
+msgid "Back to conversations"
+msgstr ""
+
+#: admin/react/src/components/Messages/ChatThread.js:360
+#, js-format
+msgid "Applied on %s"
+msgstr ""
+
+#: admin/react/src/components/Messages/ChatThread.js:366
+#, js-format
+msgid "Conversation started on %s"
+msgstr ""
+
+#: admin/react/src/components/Messages/ChatThread.js:378
+msgid "No messages yet"
+msgstr ""
+
+#: admin/react/src/components/Messages/ChatThread.js:381
+msgid "Start the conversation by sending a message below."
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:12
+msgid "Bold"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:13
+msgid "Italic"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:14
+msgid "Underline"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:18
+msgid "Strikethrough"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:24
+msgid "Bullet list"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:29
+msgid "Numbered list"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:32
+msgid "Insert link"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:33
+msgid "Attach file"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:34
+msgid "Attach image"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:412
+msgid "Remove attachment"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:424
+msgid "Candidate limit reached! Upgrade your plan to continue."
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:445
+#, js-format
+msgid "Type a message to %s…"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:480
+#: admin/react/src/components/Messages/Composer.js:483
+msgid "Link URL"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:534
+#: admin/react/src/components/Messages/Composer.js:535
+msgid "Edit link"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:544
+#: admin/react/src/components/Messages/Composer.js:545
+msgid "Unlink"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:589
+msgid "Sending…"
+msgstr ""
+
+#: admin/react/src/components/Messages/Composer.js:589
+msgid "Send"
+msgstr ""
+
+#: admin/react/src/components/Messages/ConversationList.js:80
+msgid "Couldn’t load conversations."
+msgstr ""
+
+#: admin/react/src/components/Messages/ConversationList.js:91
+#: admin/react/src/components/Messages/NewConversation.js:176
+msgid "No candidates or jobs found."
+msgstr ""
+
+#: admin/react/src/components/Messages/FilterPanel.js:122
+#: admin/react/src/components/Messages/FilterPanel.js:127
+#: admin/react/src/components/Messages/index.js:323
+msgid "Filters"
+msgstr ""
+
+#: admin/react/src/components/Messages/FilterPanel.js:147
+msgid "Select option"
+msgstr ""
+
+#: admin/react/src/components/Messages/FilterPanel.js:162
+msgid "Message Status"
+msgstr ""
+
+#: admin/react/src/components/Messages/FilterPanel.js:165
+msgid "Read"
+msgstr ""
+
+#: admin/react/src/components/Messages/FilterPanel.js:171
+msgid "Unread"
+msgstr ""
+
+#: admin/react/src/components/Messages/FilterPanel.js:180
+msgid "Hide Pipeline"
+msgstr ""
+
+#: admin/react/src/components/Messages/FilterPanel.js:188
+msgid "Rejected"
+msgstr ""
+
+#: admin/react/src/components/Messages/FilterPanel.js:196
+msgid "Active Job Applicants"
+msgstr ""
+
+#: admin/react/src/components/Messages/index.js:267
+#: admin/react/src/components/Messages/RightPanel.js:70
+msgid "Files"
+msgstr ""
+
+#: admin/react/src/components/Messages/index.js:341
+#: admin/react/src/components/Messages/index.js:342
+msgid "Reset filters"
+msgstr ""
+
+#: admin/react/src/components/Messages/index.js:364
+msgid "Search…"
+msgstr ""
+
+#: admin/react/src/components/Messages/index.js:394
+msgid "Mark As Read"
+msgstr ""
+
+#: admin/react/src/components/Messages/index.js:395
+msgid "Mark As Unread"
+msgstr ""
+
+#: admin/react/src/components/Messages/NewConversation.js:124
+msgid "New Conversation"
+msgstr ""
+
+#: admin/react/src/components/Messages/NewConversation.js:133
+msgid "Search new applicant"
+msgstr ""
+
+#: admin/react/src/components/Messages/NewConversation.js:184
+msgid "Couldn’t load more applicants."
+msgstr ""
+
+#: admin/react/src/components/Messages/NewConversation.js:185
+msgid "Couldn’t load applicants. The request failed or timed out."
+msgstr ""
+
+#: admin/react/src/components/Messages/NewConversation.js:191
+msgid "Try again"
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:22
+msgid "Reply"
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:27
+msgid "Like"
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:72
+msgid "Showing newest first"
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:88
+msgid "No attachments found."
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:101
+msgid "Notes for team members only."
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:128
+msgid "Mention"
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:140
+msgid "Send note"
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:155
 #: admin/react/src/components/Settings/tabs/TemplateTab.js:26
 msgid "Templates"
 msgstr ""
 
-#: admin/assets/dist/react/easyjobs.js:28580
+#: admin/react/src/components/Messages/RightPanel.js:158
+msgid "Add"
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:162
+msgid "Only team members can see templates."
+msgstr ""
+
+#: admin/react/src/components/Messages/RightPanel.js:164
+msgid "No templates found."
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/AITab.js:64
+msgid "Show AI Score"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/AITab.js:87
+msgid "Run batch process for old candidates"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/AITab.js:100
+msgid "Run process"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:23
+#: admin/react/src/layouts/header/index.js:128
+msgid "Api disconnected successfully."
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:29
+msgid "Api disconnect failed, please try again."
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:39
+msgid "Api key saved successfully."
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:78
+msgid "API Key Setup"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:85
+msgid "API key"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:101
+msgid "Change API key"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:122
+#: admin/react/src/layouts/header/index.js:459
+msgid "Disconnect"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApiKeyTab.js:129
+msgid "Update API key"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:115
+msgid "Please select a field type."
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:118
+msgid "Please provide field name."
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:121
+msgid "Field name should not be more than 50 character."
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:127
+msgid "Please select at least one file type."
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/ApplySettingsTab.js:646
+msgid "Are you sure, you want to delete this field?"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:271
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:278
+msgid "Please select country"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:282
+msgid "Please select state"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:377
+msgid "Company Setup"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:407
+msgid "User Name / Company"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:423
+msgid "Mobile Number"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:473
+msgid "Country"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:495
+msgid "Select country"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:533
+msgid "City"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:563
+msgid "Postal Code"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:579
+msgid "Website URL"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:585
+msgid "Enter Website URL"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:605
+msgid "Show explore button"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:612
+msgid "Language"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:641
+msgid "Update Company Page"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:647
+msgid "Time Zone"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:697
+msgid "Show Jobs Per Page"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:729
+msgid "Write Description"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:733
+msgid "Write company description here"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:739
+msgid "Company Benefits"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:743
+msgid "Write company benefits here"
+msgstr ""
+
+#: admin/react/src/components/Settings/tabs/BasicInfoTab.js:828
+msgid "Save Changes"
+msgstr ""
+
 #: admin/react/src/components/Settings/tabs/TemplateTab.js:74
 msgid "No templates found"
 msgstr ""
 
-#: blocks/blocks/job-footer/src/components/attributes.js:13
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:123
+#: admin/react/src/layouts/header/index.js:156
+msgid "Syncing…"
+msgstr ""
+
+#: admin/react/src/layouts/header/index.js:157
+msgid "Sync now"
+msgstr ""
+
+#: admin/react/src/layouts/header/index.js:159
+msgid "Synced just now"
+msgstr ""
+
+#: admin/react/src/layouts/header/index.js:160
+msgid "Synced"
+msgstr ""
+
+#: admin/react/src/layouts/header/index.js:271
+msgid "Click to sync now"
+msgstr ""
+
+#: admin/react/src/layouts/header/index.js:357
+msgid "Workspace"
+msgstr ""
+
+#: admin/react/src/layouts/header/index.js:377
+msgid "Account"
+msgstr ""
+
+#: admin/react/src/layouts/header/index.js:431
+msgid "Subscriptions"
+msgstr ""
+
+#: admin/react/src/redux/reducers/messagesReducer.js:189
+msgid "Marked as unread."
+msgstr ""
+
+#: admin/react/src/redux/reducers/messagesReducer.js:190
+msgid "Marked as read."
+msgstr ""
+
+#: admin/react/src/util/streamFile.js:65
+msgid "Could not open the file."
+msgstr ""
+
+#: blocks/blocks/job-footer/src/components/attributes.js:11
 msgid "Desktop"
 msgstr ""
 
-#: blocks/blocks/job-footer/src/components/inspector.js:54
-#: blocks/blocks/job-header/src/components/inspector.js:90
-#: blocks/blocks/job-landing/src/components/inspector.js:56
-#: blocks/blocks/job-list/src/components/inspector.js:153
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:285
-#: blocks/dist/index.js:1085
-#: blocks/dist/index.js:2455
-#: blocks/dist/index.js:3344
+#: blocks/blocks/job-footer/src/components/inspector.js:45
+#: blocks/blocks/job-header/src/components/inspector.js:89
+#: blocks/blocks/job-landing/src/components/inspector.js:51
+#: blocks/blocks/job-list/src/components/inspector.js:158
 msgid "Content"
 msgstr ""
 
-#: blocks/blocks/job-footer/src/components/inspector.js:59
-#: blocks/blocks/job-header/src/components/inspector.js:95
-#: blocks/blocks/job-landing/src/components/inspector.js:61
-#: blocks/blocks/job-list/src/components/inspector.js:158
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:290
-#: blocks/dist/index.js:1090
-#: blocks/dist/index.js:2460
-#: blocks/dist/index.js:3349
+#: blocks/blocks/job-footer/src/components/inspector.js:50
+#: blocks/blocks/job-header/src/components/inspector.js:94
+#: blocks/blocks/job-landing/src/components/inspector.js:56
+#: blocks/blocks/job-list/src/components/inspector.js:163
 msgid "Style"
 msgstr ""
 
-#: blocks/blocks/job-footer/src/components/inspector.js:64
-#: blocks/blocks/job-header/src/components/inspector.js:100
-#: blocks/blocks/job-landing/src/components/inspector.js:66
-#: blocks/blocks/job-list/src/components/inspector.js:163
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:295
-#: blocks/dist/index.js:1095
-#: blocks/dist/index.js:2465
-#: blocks/dist/index.js:3354
+#: blocks/blocks/job-footer/src/components/inspector.js:55
+#: blocks/blocks/job-header/src/components/inspector.js:99
+#: blocks/blocks/job-landing/src/components/inspector.js:61
+#: blocks/blocks/job-list/src/components/inspector.js:168
 msgid "Advanced"
 msgstr ""
 
-#: blocks/blocks/job-footer/src/components/inspector.js:75
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:306
+#: blocks/blocks/job-footer/src/components/inspector.js:66
 msgid "Company Gallery"
 msgstr ""
 
-#: blocks/blocks/job-footer/src/components/inspector.js:96
-#: blocks/blocks/job-header/src/components/inspector.js:209
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:327
-#: blocks/dist/index.js:1204
+#: blocks/blocks/job-footer/src/components/inspector.js:89
+#: blocks/blocks/job-header/src/components/inspector.js:221
 msgid "Text change"
 msgstr ""
 
-#: blocks/blocks/job-footer/src/components/inspector.js:116
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:347
+#: blocks/blocks/job-footer/src/components/inspector.js:113
 msgid "Gallery"
 msgstr ""
 
-#: blocks/blocks/job-footer/src/components/inspector.js:121
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:352
+#: blocks/blocks/job-footer/src/components/inspector.js:118
 msgid "Gallery Title"
 msgstr ""
 
-#: blocks/blocks/job-header/src/components/constants.js:23
-#: blocks/blocks/job-list/src/components/constants.js:44
-#: blocks/blocks/job-list/src/components/constants.js:48
-#: blocks/blocks/job-list/src/components/constants.js:52
-#: blocks/blocks/job-list/src/components/constants.js:56
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:894
-#: blocks/dist/index.js:3042
-#: blocks/dist/index.js:3046
-#: blocks/dist/index.js:3050
-#: blocks/dist/index.js:3054
+#: blocks/blocks/job-header/src/components/constants.js:29
+#: blocks/blocks/job-list/src/components/constants.js:50
+#: blocks/blocks/job-list/src/components/constants.js:54
+#: blocks/blocks/job-list/src/components/constants.js:58
+#: blocks/blocks/job-list/src/components/constants.js:62
 msgid "Fixed"
 msgstr ""
 
-#: blocks/blocks/job-header/src/components/inspector.js:143
-#: blocks/blocks/job-header/src/components/inspector.js:189
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1138
-#: blocks/dist/index.js:1184
+#: blocks/blocks/job-header/src/components/inspector.js:144
+#: blocks/blocks/job-header/src/components/inspector.js:198
 msgid "Upload Image"
 msgstr ""
 
-#: blocks/blocks/job-header/src/components/inspector.js:421
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:1416
+#: blocks/blocks/job-header/src/components/inspector.js:435
 msgid "Hover Color"
 msgstr ""
 
-#: blocks/blocks/job-landing/src/components/inspector.js:82
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:2481
+#: blocks/blocks/job-landing/src/components/inspector.js:74
 msgid "Hide Job Header"
 msgstr ""
 
-#: blocks/blocks/job-landing/src/components/inspector.js:98
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:2497
+#: blocks/blocks/job-landing/src/components/inspector.js:90
 msgid "Hide Job Footer"
 msgstr ""
 
-#: blocks/blocks/job-landing/src/components/inspector.js:111
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:2510
+#: blocks/blocks/job-landing/src/components/inspector.js:103
 msgid "Cobined Block"
 msgstr ""
 
 #: blocks/blocks/job-list/src/components/constants.js:6
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3004
 msgid "Published date"
 msgstr ""
 
 #: blocks/blocks/job-list/src/components/constants.js:7
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3005
 msgid "Expired date"
 msgstr ""
 
 #: blocks/blocks/job-list/src/components/constants.js:8
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3006
 msgid "Created date"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:180
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3371
+#: blocks/blocks/job-list/src/components/inspector.js:182
 msgid "Hide title"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:203
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3394
+#: blocks/blocks/job-list/src/components/inspector.js:209
 msgid "Hide icon"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:240
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3431
+#: blocks/blocks/job-list/src/components/inspector.js:250
 msgid "Show search by title"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:252
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3443
+#: blocks/blocks/job-list/src/components/inspector.js:263
 msgid "Show search by category"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:264
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3455
+#: blocks/blocks/job-list/src/components/inspector.js:276
 msgid "Show search by location"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:281
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3472
+#: blocks/blocks/job-list/src/components/inspector.js:294
 msgid "Order by"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:292
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3483
+#: blocks/blocks/job-list/src/components/inspector.js:305
 msgid "Sort by"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:303
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3494
+#: blocks/blocks/job-list/src/components/inspector.js:316
 msgid "Show jobs"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:318
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3509
+#: blocks/blocks/job-list/src/components/inspector.js:329
 msgid "Show open jobs only"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:330
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3521
+#: blocks/blocks/job-list/src/components/inspector.js:339
 msgid "Show company name"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:342
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3533
+#: blocks/blocks/job-list/src/components/inspector.js:352
 msgid "Show company address"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:354
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3545
+#: blocks/blocks/job-list/src/components/inspector.js:365
 msgid "Show Deadline"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:366
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3557
+#: blocks/blocks/job-list/src/components/inspector.js:378
 msgid "Show No of Vacancies"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:708
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:3899
+#: blocks/blocks/job-list/src/components/inspector.js:738
 msgid "Size"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:917
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4108
+#: blocks/blocks/job-list/src/components/inspector.js:1024
 msgid "Text Color h"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/inspector.js:967
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:4158
+#: blocks/blocks/job-list/src/components/inspector.js:1086
 msgid "Separator Color"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/themes/classic.js:121
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:5586
+#: blocks/blocks/job-list/src/components/themes/classic.js:199
 msgid " Deadline:"
 msgstr ""
 
-#: blocks/blocks/job-list/src/components/themes/elegant.js:82
-#: blocks/dist/index.js:1
-#: blocks/dist/index.js:5956
+#: blocks/blocks/job-list/src/components/themes/elegant.js:115
 msgid " Anywhere"
 msgstr ""
 

@@ -1,0 +1,230 @@
+.easyjobs-landing-body{
+	background-color: #597DFC;
+	background: url("../../img/easyjobs-Header-BG.svg") no-repeat center;
+	background-size: cover;
+	margin-left: -2px;
+}
+.easyjobs-wrapper.admin-area.landing{
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	.page-header{
+		justify-content: center;
+		border-bottom: 1px solid #8da1e8;
+		padding: 20px;
+		.logo{
+			color:#fff;
+			margin: 0;
+			img{
+				margin-bottom: 10px;
+			}
+			p{
+				text-align: center;
+			}
+		}
+		
+	}
+	.page-content{
+		padding: 20px 20px 0;
+		input[type="text"]{
+			border: 1px solid #eee;
+		}
+	}
+}
+.easyjobs-wrapper .intro-panel {
+	background-color: #fff;
+	margin: 20px;
+	padding: 10px;
+	border-radius: 3px;
+	box-shadow: 0px 5px 18px 0px rgba(16, 16, 16, 0.1);
+}
+.landing-inner-content{
+	padding: 0 30px 50px;
+}
+.easyjobs-landing-header{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 20px;
+	h1{
+		font-size: 42px;
+		margin-bottom: 20px;
+		color: #fff;
+		padding: 40px 20px;
+	}
+}
+.connect-panel{
+	margin: 20px;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0px 5px 18px 0px rgba(16, 16, 16, 0.1);
+	max-width: 500px;
+	.title{
+		padding: 20px;
+		border-bottom: 1px solid #eee;
+		h3{
+			font-size: 18px;
+			color: #597dfc;
+			text-align: center;
+		}
+	}
+	.form{
+		padding: 30px;
+	}
+	.ej-api-key-link{
+		font-size: 14px;
+		font-weight: 500;
+		font-style: italic;
+		display: inline-block;
+		margin-top: 10px;
+		border-bottom: 1px solid #597dfc;
+		color: #597dfc !important;
+	}
+}
+
+.api-confirmation-modal{
+	background: rgba(0,0,0,0.6);
+	text-align: center;
+	.modal-footer{
+		button{
+			cursor: pointer;
+		}
+	}
+	i{
+		font-size: 60px;
+		width: 60px;
+		height: 60px;
+	}
+	.msg{
+		font-size: 28px;
+	}
+	.ej-error-msg{
+		display: none;
+		i{
+			color: #de1e1e;
+		}
+		.ej-msg{
+			color: #de1e1e;
+		}
+	}
+	.ej-success-msg{
+		display: none;
+		i{
+			color: #279427;
+		}
+		.ej-msg{
+			color: #279427;
+		}
+	}
+}
+
+.easy-page-body{
+	.connect-option{
+		opacity: 0;
+		animation: ej-fade-in 0.4s ease-in-out;
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+	}
+	.login-box{
+		.social-signin__button{
+			display: none;
+			width: auto;
+			&.active{
+				display: flex;
+			}
+		}
+		.ej-company-create-form .select2-container--default .select2-selection--single{
+			background: #f5f7fd;
+			border-radius: 3px;
+			border: 1px solid #eee;
+			padding: 0 20px 0 10px;
+			color: #1c2238;
+			font-weight: 500;
+			font-size: 0.875em;
+			height: 46px;
+			.select2-selection__rendered{
+				line-height: 44px;
+			}
+			.select2-selection__arrow{
+				height: 44px;
+			}
+		}
+		.company-size{
+			flex: 0 0 25%;
+			max-width: 25%;
+			padding: 2.5px;
+		}
+	}
+	@keyframes ej-fade-in {
+		from {opacity: 0}
+		to {opacity:1}
+	}
+	@-webkit-keyframes ej-fade-in {
+		from {opacity: 0}
+		to {opacity:1}
+	}
+}
+.toplevel_page_easyjobs-admin .select2-dropdown{
+	border-color: #eee;
+}
+
+.easy-page-body{
+	.company-select{
+		padding: 50px;
+		select{
+			max-width: 100%;
+			background: #f5f7fd;
+			border: none;
+			font-size: 12px;
+			height: 46px;
+			padding: 5px 25px;
+		}
+	}
+	.ej-select{
+		display: block;
+		width: 100%;
+		max-width: 100%;
+	}
+	.ej-greeting-modal{
+		button{
+			position: absolute;
+			right: 20px;
+			top: 10px;
+			padding: 5px 10px;
+			background: #eee;
+			z-index: 1;
+			font-size: 16px;
+			line-height: 1.2;
+		}
+	}
+	.ej-company-create-form .select2-container--default .select2-selection--single{
+		background: #f5f7fd;
+		border-radius: 3px;
+		border: 1px solid #c6d3fd;
+		padding: 0 20px 0 10px;
+		color: #1c2238;
+		font-weight: 500;
+		font-size: 0.875em;
+		height: 46px;
+		.select2-selection__rendered{
+			line-height: 44px;
+		}
+		.select2-selection__arrow{
+			height: 44px;
+		}
+	}
+	.ej-intro-video .video{
+		display: none;
+	}
+}
+.create__company .form-group .react-select__control{
+	border: 1px solid #c6d3fd;
+	background-color: #f5f7fd;
+	color: #7d8091;
+	font-size: 0.875em;
+	height: 46px;
+	.react-select__value-container{
+		padding: 0 26px;
+	}
+}

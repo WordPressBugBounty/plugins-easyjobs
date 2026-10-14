@@ -4,6 +4,11 @@
  *
  * @since 1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
 if ( ! isset( $jobs ) && empty( $jobs ) ) {
     $jobs = [];
 }
@@ -17,7 +22,27 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
 						<?php if ( empty( $company->ejel_hide_job_list_heading_icon ) ) : ?>
                             <span class="ej-section-title-icon">
                                 <?php if( ! empty( $company->ejel_joblist_heading_icon ) ) : ?>
-                                <?php printf( '%s', $company->ejel_joblist_heading_icon ); // XSS : ok ?>
+                                <?php
+                                echo wp_kses(
+                                    $company->ejel_joblist_heading_icon,
+                                    array(
+                                        'i'    => array( 'class' => true, 'aria-hidden' => true, 'style' => true ),
+                                        'span' => array( 'class' => true, 'aria-hidden' => true, 'style' => true ),
+                                        'svg'  => array( 'class' => true, 'aria-hidden' => true, 'role' => true, 'focusable' => true, 'xmlns' => true, 'xmlns:xlink' => true, 'viewbox' => true, 'width' => true, 'height' => true, 'fill' => true, 'stroke' => true, 'style' => true, 'id' => true, 'version' => true, 'x' => true, 'y' => true ),
+                                        'g'    => array( 'class' => true, 'fill' => true, 'stroke' => true, 'transform' => true, 'id' => true, 'clip-path' => true ),
+                                        'path' => array( 'class' => true, 'd' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true, 'stroke-linecap' => true, 'stroke-linejoin' => true, 'fill-rule' => true, 'clip-rule' => true, 'transform' => true ),
+                                        'circle'   => array( 'class' => true, 'cx' => true, 'cy' => true, 'r' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true ),
+                                        'rect'     => array( 'class' => true, 'x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true, 'fill' => true, 'stroke' => true, 'transform' => true ),
+                                        'line'     => array( 'class' => true, 'x1' => true, 'y1' => true, 'x2' => true, 'y2' => true, 'stroke' => true, 'stroke-width' => true ),
+                                        'polyline' => array( 'class' => true, 'points' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true ),
+                                        'polygon'  => array( 'class' => true, 'points' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true ),
+                                        'defs'     => array(),
+                                        'clippath' => array( 'id' => true ),
+                                        'use'      => array( 'href' => true, 'xlink:href' => true ),
+                                        'title'    => array(),
+                                    )
+                                );
+                                ?>
                                 <?php else : ?>
                                 <i class="easyjobs-icon easyjobs-briefcase"></i>                            
                                 <?php endif; ?>
@@ -35,7 +60,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
 							)
 						);
 					} else {
-						esc_html_e( $company->ejel_joblist_heading, 'easyjobs' );
+						echo esc_html( $company->ejel_joblist_heading );
 					}
 					?>
 				</span>
@@ -62,7 +87,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                         )
                                     );
                                 } else {
-                                    esc_html_e( $company->ejel_joblist_heading, 'easyjobs' );
+                                    echo esc_html( $company->ejel_joblist_heading );
                                 }
                                 ?>
                             </span>
@@ -111,9 +136,9 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                                                 <span>
                                                                 <?php
                                                                     $country_names = array_map( function( $country ) {
-                                                                        return esc_html( $country->name );
+                                                                        return $country->name;
                                                                     }, $job->remote_countries );
-                                                                    echo implode( ', ', $country_names );
+                                                                    echo esc_html( implode( ', ', $country_names ) );
                                                                 ?>
                                                                 </span>
                                                             <?php endif; ?>
@@ -171,7 +196,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                     </div>
                                     <div class="ej-job-list-item-col ej-job-apply-btn">
                                         <a href="<?php echo ! empty( $job->apply_url ) ? esc_url( $job->apply_url ) : '#'; ?>" class="ej-btn ej-info-btn-light" target="_blank">
-                                            <?php empty( $company->ejel_apply_button_text ) ? esc_html_e( 'Apply', 'easyjobs' ) : esc_html_e( $company->ejel_apply_button_text ); ?>
+                                            <?php echo empty( $company->ejel_apply_button_text ) ? esc_html__( 'Apply', 'easyjobs' ) : esc_html( $company->ejel_apply_button_text ); ?>
                                         </a>
                                     </div>
                                 </div>

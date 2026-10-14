@@ -11,6 +11,11 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+
 ?>
 <div class="wrap">
     <hr class="wp-header-end">
@@ -235,7 +240,7 @@
 										$dot_class = 'dot_li_dashboard';
 									}
 									?>
-                                    <li class="pagination-list__item <?php echo $dot_class; ?> <?php echo $current_page == $pages_to_show[$i] ? 'pagination-list__item--active' : ''; ?>">
+                                    <li class="pagination-list__item <?php echo esc_attr( $dot_class ); ?> <?php echo $current_page == $pages_to_show[$i] ? 'pagination-list__item--active' : ''; ?>">
                                         <a href="<?php echo esc_url(admin_url('admin.php?page=easyjobs-admin&recent-jobs-page=' . $pages_to_show[$i] . '#easyjobs-recent-jobs' ) ); ?> " class="pagination-list__link">
                                             <?php echo esc_html( $pages_to_show[$i] ); ?>
                                         </a>
@@ -255,7 +260,7 @@
                         <div class="container">
                             <div class="row justify-content-center p-0">
                                 <div class="col-md-10 text-center">
-                                    <h1 class="mb-4"><?php esc_html_e( 'Welcome to Easy.jobs' ); ?></h1>
+                                    <h1 class="mb-4"><?php esc_html_e( 'Welcome to Easy.jobs', 'easyjobs' ); ?></h1>
                                     <div class="video p-3 bg-white">
                                         <div class="embed-responsive embed-responsive-16by9">
                                             <iframe class="embed-responsive-item"
@@ -275,7 +280,7 @@
                     </section>
 				<?php endif; ?>
             </div>
-			<?php if ( isset( $_GET['welcome'] ) && trim( esc_attr( $_GET['welcome'] ) ) === 'yes' ) : ?>
+			<?php if ( isset( $_GET['welcome'] ) && 'yes' === trim( sanitize_text_field( wp_unslash( $_GET['welcome'] ) ) ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>
                 <div class="modal fade show ej-modal ej-greeting-modal" id="ej-greeting-modal">
                     <div role="document" class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content">

@@ -4,6 +4,11 @@
  *
  * @since 1.0.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
 if ( ! isset( $jobs ) && empty( $jobs ) ) {
     $jobs = [];
 }
@@ -26,7 +31,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                     )
                                 );
                             } else {
-                                esc_html_e( $company->ejel_joblist_heading, 'easyjobs' );
+                                echo esc_html( $company->ejel_joblist_heading );
                             }
                             ?>
                             </span>
@@ -52,7 +57,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                         )
                                     );
                                 } else {
-                                    esc_html_e( $company->ejel_joblist_heading, 'easyjobs' );
+                                    echo esc_html( $company->ejel_joblist_heading );
                                 }
                                 ?>
                             </span>
@@ -101,9 +106,9 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                                                 <span>
                                                 <?php
                                                     $country_names = array_map( function( $country ) {
-                                                        return esc_html( $country->name );
+                                                        return $country->name;
                                                     }, $job->remote_countries );
-                                                    echo implode( ', ', $country_names );
+                                                    echo esc_html( implode( ', ', $country_names ) );
                                                 ?>
                                                 </span>
                                             <?php endif; ?>
@@ -132,7 +137,7 @@ if ( ! isset( $jobs ) && empty( $jobs ) ) {
                             <div class="job__bottom">
                                 <div class="job__apply">
                                     <a href="<?php echo ! empty( $job->apply_url ) ? esc_url( $job->apply_url ) : '#'; ?>" class="button button__primary radius-15" target="_blank">
-                                        <?php empty( $company->ejel_apply_button_text ) ? esc_html_e( 'Apply now', 'easyjobs' ) : esc_html_e( $company->ejel_apply_button_text ); ?>
+                                        <?php echo empty( $company->ejel_apply_button_text ) ? esc_html__( 'Apply now', 'easyjobs' ) : esc_html( $company->ejel_apply_button_text ); ?>
                                     </a>
                                 </div>
                                 <?php if ( ! empty( $job->vacancies ) ) { ?>

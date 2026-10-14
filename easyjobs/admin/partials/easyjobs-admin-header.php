@@ -9,6 +9,11 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+
 $company = Easyjobs_Helper::get_company_info(true);
 ?>
 <header class="content-area__header d-flex justify-content-between">

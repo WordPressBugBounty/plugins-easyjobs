@@ -472,7 +472,7 @@ class Easyjobs_Elementor_Landingpage extends Widget_Base {
 			array(
 				'label'       => __( 'Company Name', 'easyjobs' ),
 				'type'        => Controls_Manager::TEXT,
-				'default'     => __( '', 'easyjobs' ),
+				'default'     => '',
 				'placeholder' => __( 'Enter Company Name', 'easyjobs' ),
 			)
 		);
@@ -1750,7 +1750,7 @@ class Easyjobs_Elementor_Landingpage extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 		$company  = $this->get_company_info();
 		if ( empty( $company ) ) {
-			printf( "<h2 class='elej-error-msg'>%s</h2>", $error_msg );
+			printf( "<h2 class='elej-error-msg'>%s</h2>", esc_html( $error_msg ) );
 
 			return;
 		}
@@ -1789,12 +1789,17 @@ class Easyjobs_Elementor_Landingpage extends Widget_Base {
 		$company->ejel_apply_button_text = ! empty( $apply_button_text = trim( $settings['easyjobs_joblist_apply_button_text'] ) ) ? esc_html( $apply_button_text ) : '';
 		$company->ejel_galelry_section_title = ! empty( $galelry_section_title = trim( $settings['easyjobs_gallery_section_text'] ) ) ? esc_html( $galelry_section_title ) : '';
 		
-		$content = "<div {$this->get_render_attribute_string('easyjobs-elementor')}>";
-		ob_start();
+		echo '<div ';
+		if ( method_exists( $this, 'print_render_attribute_string' ) ) {
+			$this->print_render_attribute_string( 'easyjobs-elementor' );
+		} else {
+			// Elementor < 3.1: get_render_attribute_string() returns escaped attributes.
+			echo $this->get_render_attribute_string( 'easyjobs-elementor' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		echo '>';
+		// The landing template escapes its own output; include it directly.
 		include Easyjobs_Helper::get_path_by_template( esc_html( $company->selected_template ) , 'landing');
-		$content .= ob_get_clean();
-		$content .= '</div>';
-		echo $content;
+		echo '</div>';
 
 		if( $this->is_editor && 'classic' === $company->selected_template ){
 			?>

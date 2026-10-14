@@ -1,0 +1,59 @@
+// opacity
+$button-opacity: 0.5;
+$button-icon-opacity: 0.1;
+$dropdown-control-opacity: 0.1;
+$shadow-opacity: 0.3;
+$sub-button-opacity: 0.15;
+$label-opacity: 0.15;
+$small-opacity: 0.7;
+
+// border-radius
+$b-radius-1: 3px;
+$b-radius-2: 5px;
+$b-radius-3: 10px;
+$b-radius-50: 50px;
+$b-radius-100: 50%;
+
+// color
+$primary: #597dfc !default;
+$secondary: #7d8091 !default;
+$success: #60ce83 !default;
+$danger: #ff5f74 !default;
+$info: #2fc1e1 !default;
+$warning: #ff9635 !default;
+$love: #ff61d3 !default;
+$dark: #1c2238 !default;
+$light: #f5f7fd !default;
+$white: #fff !default;
+$black: #000 !default;
+$disable-color: #e1e9f5;
+$border-color: #c6d3fd;
+// theme-color
+$theme-colors: () !default;
+$theme-colors: map-merge(
+	(
+		'primary': $primary,
+		'secondary': $secondary,
+		'success': $success,
+		'danger': $danger,
+		'info': $info,
+		'warning': $warning,
+		'love': $love,
+		'dark': $dark,
+		'light': $light,
+		'white': $white,
+		'black': $black
+	),
+	$theme-colors
+);
+
+// A map of breakpoints.
+$breakpoints: (
+	xs: 500px,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1200px,
+	xxl: 1400px,
+	hl: 1601px
+);

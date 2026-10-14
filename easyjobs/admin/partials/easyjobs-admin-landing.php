@@ -9,6 +9,11 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; this file is included inside a function scope.
+
 ?>
 <div class="wrap">
 	<hr class="wp-header-end">
@@ -30,7 +35,7 @@
 										</div>
 										<div class="account__wrap">
 											<div class="account__form">
-												<form class="ej-company-create-form" data-user-key="<?php echo ! empty( $_GET['user'] ) ? esc_attr( $_GET['user'] ) : ''; ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'easyjobs_create_company_nonce' ) ); ?>">
+												<form class="ej-company-create-form" data-user-key="<?php echo ! empty( $_GET['user'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['user'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change. ?>" data-nonce="<?php echo esc_attr( wp_create_nonce( 'easyjobs_create_company_nonce' ) ); ?>">
 													<div class="form-note mb-4">
 														<?php esc_html_e( 'Give us few more information about your company', 'easyjobs' ); ?>
 													</div>
@@ -144,7 +149,7 @@
 								<div class="row align-items-center">
 									<div class="col-lg-6">
 										<div class="basic__content__block">
-											<h1>The Best Hiring Solution For <?php echo date('Y'); ?></h1>
+											<h1>The Best Hiring Solution For <?php echo esc_html( gmdate( 'Y' ) ); ?></h1>
 											<div class="feature__list">
 												<div class="feature__item feature__item--one">
 													<div class="icon">

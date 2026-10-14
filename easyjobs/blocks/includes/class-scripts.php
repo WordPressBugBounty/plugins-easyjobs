@@ -19,7 +19,7 @@ class EasyjobsBlocksScripts {
 	}
 
 	public function easyjobs_enqueue_fontawesome() {
-		wp_enqueue_style( 'fontawesome', EASYJOBS_PUBLIC_URL . 'assets/vendor/all.min.css' );
+		wp_enqueue_style( 'fontawesome', EASYJOBS_PUBLIC_URL . 'assets/vendor/all.min.css', array(), EASYJOBS_VERSION );
 	}
 
 	public function block_editor_assets() {
@@ -37,7 +37,8 @@ class EasyjobsBlocksScripts {
 			'ej-blocks-modules', 
 			EASYJOBS_URL . 'blocks/dist/modules.js', 
 			$dependencies, 
-			( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION
+			( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION,
+			false
 		);
 		wp_register_style(
 			'ej-blocks-style-modules-css', 
@@ -64,7 +65,7 @@ class EasyjobsBlocksScripts {
         $editor_type = false;
         if ( $pagenow == 'post-new.php' || $pagenow == 'post.php' ) {
             $editor_type = 'edit-post';
-        } elseif ( $pagenow == 'site-editor.php' || ( $pagenow == 'themes.php' && isset( $_GET[ 'page' ] ) && $_GET[ 'page' ] == 'gutenberg-edit-site' ) ) {
+        } elseif ( $pagenow == 'site-editor.php' || ( $pagenow == 'themes.php' && isset( $_GET[ 'page' ] ) && $_GET[ 'page' ] == 'gutenberg-edit-site' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query arg, no state change.
             $editor_type = 'edit-site';
         } elseif ( $pagenow == 'widgets.php' ) {
             $editor_type = 'edit-widgets';
@@ -101,7 +102,8 @@ class EasyjobsBlocksScripts {
 				'ej-blocks-modules',
 				'easyjobs-js'
 			]), 
-			( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION
+			( defined( 'EASYJOBS_DEV' ) && ( EASYJOBS_DEV == true ) )  ? time() : EASYJOBS_VERSION,
+			false
 		);
 		wp_localize_script(
 			'ej-blocks-editor', 
@@ -249,7 +251,7 @@ class EasyjobsBlocksScripts {
 		// $atts['filterByCategory']			= $company->show_location_filter ? $company->show_location_filter : false;
 		// $atts['filterByLocation']			= $company->show_location_filter ? $company->show_location_filter : false;
 		if ( empty( $company ) ) {
-			printf( "<h2 class='elej-error-msg'>%s</h2>", $error_msg );
+			printf( "<h2 class='elej-error-msg'>%s</h2>", esc_html( $error_msg ) );
 			return;
 		}
 		$ej_is_search				= false;
@@ -343,15 +345,17 @@ class EasyjobsBlocksScripts {
 		];
 		$sanitized = [];
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only query args (public job list filters/pagination), no state change.
 		foreach($requred as $field){
 			if(isset($_GET[$field])) {
 				if($field == 'job_page') {
 					$sanitized[$field] = absint($_GET[$field]);
 				}else {
-					$sanitized[$field] = sanitize_text_field($_GET[$field]);
+					$sanitized[$field] = sanitize_text_field( wp_unslash( $_GET[$field] ) );
 				}
 			}
 		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		return $sanitized;
 	}

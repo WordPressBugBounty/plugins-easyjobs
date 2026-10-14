@@ -46,8 +46,8 @@ class Dismiss extends Base {
 		?>
 		<script>
 			window.addEventListener('load', function () {
-				var dismissBtn = document.querySelector('<?php echo $_id ?> .notice-dismiss');
-				var extraDismissBtn = document.querySelectorAll('<?php echo $_id ?> .dismiss-btn');
+				var dismissBtn = document.querySelector('<?php echo esc_attr( $_id ); ?> .notice-dismiss');
+				var extraDismissBtn = document.querySelectorAll('<?php echo esc_attr( $_id ); ?> .dismiss-btn');
 
 				function wpNoticeDismissFunc(event) {
 					event.preventDefault();
@@ -135,6 +135,7 @@ class Dismiss extends Base {
 	 */
 	public function dismiss_notice() {
 		if ( ! defined( 'WPNOTICE_EXPIRED_TIME' ) ) {
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- constant shared by the bundled WPDeveloper notice library across WPDeveloper plugins; guarded by defined().
 			define( 'WPNOTICE_EXPIRED_TIME', HOUR_IN_SECONDS * 10 );
 		}
 

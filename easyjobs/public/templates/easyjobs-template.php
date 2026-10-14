@@ -9,14 +9,18 @@
  * @package    EasyJobs
  * @subpackage EasyJobs/public
  */
-$ej_header = '';
-$ej_footer = '';
-if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {
-	$theme_name = wp_get_theme()->get('TextDomain');
-	$ej_header = do_blocks('<!-- wp:template-part {"slug":"header","theme":"' . $theme_name . '"} /-->');
-	$ej_footer = do_blocks('<!-- wp:template-part {"slug":"footer","theme":"' . $theme_name . '"} /-->');
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
 }
-Easyjobs_Helper::easyjobs_header($ej_header);
+$easyjobs_header = '';
+$easyjobs_footer = '';
+if ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() ) {
+	$easyjobs_theme_name = wp_get_theme()->get('TextDomain');
+	$easyjobs_header = do_blocks('<!-- wp:template-part {"slug":"header","theme":"' . $easyjobs_theme_name . '"} /-->');
+	$easyjobs_footer = do_blocks('<!-- wp:template-part {"slug":"footer","theme":"' . $easyjobs_theme_name . '"} /-->');
+}
+Easyjobs_Helper::easyjobs_header($easyjobs_header);
 global $post;
 
 ?>
@@ -51,4 +55,4 @@ global $post;
 	</div>
 </div>
 
-<?php Easyjobs_Helper::easyjobs_footer($ej_footer); ?>
+<?php Easyjobs_Helper::easyjobs_footer($easyjobs_footer); ?>

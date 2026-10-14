@@ -1,0 +1,302 @@
+@font-face {
+    font-family: 'eicon';
+    src:  url('../../../../admin/assets/vendor/css/eicon/fonts/eicon.eot?85vupd');
+    src:  url('../../../../admin/assets/vendor/css/eicon/fonts/eicon.eot?85vupd#iefix') format('embedded-opentype'),
+      url('../../../../admin/assets/vendor/css/eicon/fonts/eicon.ttf?85vupd') format('truetype'),
+      url('../../../../admin/assets/vendor/css/eicon/fonts/eicon.woff?85vupd') format('woff'),
+      url('../../../../admin/assets/vendor/css/eicon/fonts/eicon.svg?85vupd#eicon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  .easyjobs-icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'eicon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .easyjobs-thumbnail:before {
+    content: "\e904";
+  }
+  .easyjobs-trello:before {
+    content: "\e906";
+  }
+  .easyjobs-close:before {
+    content: "\e916";
+  }
+  .easyjobs-arrow-up:before {
+    content: "\e905";
+  }
+  .easyjobs-graphic:before {
+    content: "\e801";
+  }
+  .easyjobs-men:before {
+    content: "\e802";
+  }
+  .easyjobs-office:before {
+    content: "\e803";
+  }
+  .easyjobs-sort-down:before {
+    content: "\e804";
+  }
+  .easyjobs-sort-up:before {
+    content: "\e805";
+  }
+  .easyjobs-double-angle-right:before {
+    content: "\e806";
+  }
+  .easyjobs-google-cf .path1:before {
+    content: "\e900";
+    color: rgb(255, 121, 118);
+  }
+  .easyjobs-google-cf .path2:before {
+    content: "\e901";
+    margin-left: -1em;
+    color: rgb(244, 215, 44);
+  }
+  .easyjobs-google-cf .path3:before {
+    content: "\e902";
+    margin-left: -1em;
+    color: rgb(89, 201, 110);
+  }
+  .easyjobs-google-cf .path4:before {
+    content: "\e903";
+    margin-left: -1em;
+    color: rgb(15, 174, 244);
+  }
+  .easyjobs-linkedin-cf:before {
+    content: "\e909";
+    color: #0077b5;
+  }
+  .easyjobs-tick-alt:before {
+    content: "\e90a";
+  }
+  .easyjobs-tick:before {
+    content: "\e90b";
+  }
+  .easyjobs-tick-o:before {
+    content: "\e90c";
+  }
+  .easyjobs-check:before {
+    content: "\e90d";
+  }
+  .easyjobs-check-alt:before {
+    content: "\e90e";
+  }
+  .easyjobs-check-o:before {
+    content: "\e90f";
+  }
+  .easyjobs-back:before {
+    content: "\e910";
+  }
+  .easyjobs-logout:before {
+    content: "\e911";
+  }
+  .easyjobs-arrow-left:before {
+    content: "\e912";
+  }
+  .easyjobs-arrow-down:before {
+    content: "\e913";
+  }
+  .easyjobs-arrow-right:before {
+    content: "\e914";
+  }
+  .easyjobs-plus:before {
+    content: "\e915";
+  }
+  .easyjobs-close2:before {
+    content: "\e807";
+  }
+  .easyjobs-delete:before {
+    content: "\e917";
+  }
+  .easyjobs-rotate-right:before {
+    content: "\e918";
+  }
+  .easyjobs-search:before {
+    content: "\e919";
+  }
+  .easyjobs-download:before {
+    content: "\e91a";
+  }
+  .easyjobs-pencil:before {
+    content: "\e91b";
+  }
+  .easyjobs-edit:before {
+    content: "\e91c";
+  }
+  .easyjobs-bold:before {
+    content: "\e91d";
+  }
+  .easyjobs-italic:before {
+    content: "\e91e";
+  }
+  .easyjobs-underline:before {
+    content: "\e91f";
+  }
+  .easyjobs-user:before {
+    content: "\e920";
+  }
+  .easyjobs-users:before {
+    content: "\e921";
+  }
+  .easyjobs-users-team:before {
+    content: "\e922";
+  }
+  .easyjobs-eye-1:before {
+    content: "\e923";
+  }
+  .easyjobs-eye-alt:before {
+    content: "\e924";
+  }
+  .easyjobs-briefcase:before {
+    content: "\e925";
+  }
+  .easyjobs-briefcase-2:before {
+    content: "\e926";
+  }
+  .easyjobs-mail:before {
+    content: "\e927";
+  }
+  .easyjobs-browser:before {
+    content: "\e928";
+  }
+  .easyjobs-map-maker:before {
+    content: "\e929";
+  }
+  .easyjobs-share:before {
+    content: "\e92a";
+  }
+  .easyjobs-phone:before {
+    content: "\e92b";
+  }
+  .easyjobs-notification:before {
+    content: "\e92c";
+  }
+  .easyjobs-notification-o:before {
+    content: "\e958";
+  }
+  .easyjobs-chat:before {
+    content: "\e92d";
+  }
+  .easyjobs-chat-alt:before {
+    content: "\e957";
+  }
+  .easyjobs-graduation:before {
+    content: "\e92e";
+  }
+  .easyjobs-credit-card:before {
+    content: "\e956";
+  }
+  .easyjobs-portfolio:before {
+    content: "\e92f";
+  }
+  .easyjobs-list:before {
+    content: "\e930";
+  }
+  .easyjobs-contract:before {
+    content: "\e931";
+  }
+  .easyjobs-duplicate:before {
+    content: "\e932";
+  }
+  .easyjobs-cv:before {
+    content: "\e933";
+  }
+  .easyjobs-document:before {
+    content: "\e934";
+  }
+  .easyjobs-paper:before {
+    content: "\e935";
+  }
+  .easyjobs-file:before {
+    content: "\e955";
+  }
+  .easyjobs-pdf:before {
+    content: "\e936";
+  }
+  .easyjobs-pass:before {
+    content: "\e954";
+  }
+  .easyjobs-diagram:before {
+    content: "\e937";
+  }
+  .easyjobs-print:before {
+    content: "\e938";
+  }
+  .easyjobs-dob:before {
+    content: "\e953";
+  }
+  .easyjobs-calender:before {
+    content: "\e939";
+  }
+  .easyjobs-flags:before {
+    content: "\e952";
+  }
+  .easyjobs-gender:before {
+    content: "\e951";
+  }
+  .easyjobs-clock:before {
+    content: "\e93a";
+  }
+  .easyjobs-pipe:before {
+    content: "\e93b";
+  }
+  .easyjobs-more:before {
+    content: "\e93c";
+  }
+  .easyjobs-more-horiz:before {
+    content: "\e950";
+  }
+  .easyjobs-home:before {
+    content: "\e93d";
+  }
+  .easyjobs-star:before {
+    content: "\e93e";
+  }
+  .easyjobs-setting:before {
+    content: "\e93f";
+  }
+  .easyjobs-key:before {
+    content: "\e940";
+  }
+  .easyjobs-facebook:before {
+    content: "\e941";
+  }
+  .easyjobs-twitter:before {
+    content: "\e942";
+  }
+  .easyjobs-linkedin:before {
+    content: "\e943";
+  }
+  .easyjobs-parachute:before {
+    content: "\e944";
+  }
+  .easyjobs-plane:before {
+    content: "\e945";
+  }
+  .easyjobs-helicopter:before {
+    content: "\e946";
+  }
+  .easyjobs-send:before {
+    content: "\e947";
+  }
+  .easyjobs-spaceship:before {
+    content: "\e948";
+  }
+  .easyjobs-boost:before {
+    content: "\e949";
+  }
+  .easyjobs-checkmark:before {
+    content: "\ea10";
+  }

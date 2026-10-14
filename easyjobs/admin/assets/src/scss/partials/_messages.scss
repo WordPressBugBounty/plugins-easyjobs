@@ -1,0 +1,2295 @@
+// ─────────────────────────────────────────────────────────────────────────────
+//  Messages (Conversations) screen
+//  Mirrors the easy.jobs SaaS conversation UI (Vue reference: conversations.css /
+//  conversation-chat.css). Namespaced under .ej-messages so it never leaks into
+//  other admin pages.
+// ─────────────────────────────────────────────────────────────────────────────
+
+.ej-messages {
+	// Reference palette
+	--ejc-accent: #597dfc;
+	--ejc-accent-d: #4a6bf0;
+	--ejc-accent-10: rgba(89, 125, 252, 0.1);
+	--ejc-accent-30: rgba(89, 125, 252, 0.3);
+	--ejc-tint: rgba(47, 193, 225, 0.07);
+	--ejc-divider: rgba(47, 193, 225, 0.15);
+	--ejc-text: #1c2238;
+	--ejc-muted: #7d8091;
+	--ejc-line: #f5f7fd;
+	--ejc-line-2: #eaecf0;
+	--ejc-danger: #ff5f74;
+	--ejc-radius: 10px;
+	--ejc-pane-h: calc(100vh - 235px);
+	--ejc-pane-min: 520px;
+
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 16px 0 0;
+	background: var(--ej-bg);
+	font-family: $base_font;
+	font-size: 14px;
+	color: var(--ejc-text);
+	box-sizing: border-box;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	.ej-msg-icon {
+		flex-shrink: 0;
+	}
+
+	// Reference scrollbars
+	*::-webkit-scrollbar {
+		width: 7px;
+		height: 7px;
+	}
+	*::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 6px rgba(125, 128, 145, 0.3);
+		background-image: linear-gradient(
+			to right bottom,
+			var(--ejc-accent-10),
+			var(--ejc-accent-10)
+		);
+	}
+	*::-webkit-scrollbar-thumb {
+		border-radius: 3px;
+		background: var(--ejc-accent);
+	}
+
+	// Shared avatar
+	.ej-msg-avatar {
+		border-radius: 50%;
+		object-fit: cover;
+		flex-shrink: 0;
+		&--empty {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			background: var(--ejc-accent-10);
+			color: var(--ejc-accent);
+		}
+	}
+
+	// ── Top bar ──────────────────────────────────────────────────────────────────
+	.ej-msg-topbar {
+		display: flex;
+		gap: 10px;
+		margin-bottom: 8px;
+	}
+
+	.ej-msg-topbar__left {
+		flex: 0 0 350px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		padding: 10px 20px;
+		background: #fff;
+		border-radius: var(--ejc-radius);
+	}
+
+	.ej-msg-topbar__options {
+		flex: 1 1 auto;
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		padding: 10px 20px;
+		background: #fff;
+		border-radius: var(--ejc-radius);
+	}
+
+	.ej-msg-pagetitle {
+		margin: 0;
+		margin-right: auto;
+		font-size: 21px;
+		font-weight: 600;
+		color: var(--ejc-text);
+	}
+
+	// New button
+	.ej-msg-newbtn {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		padding: 3px 14px 3px 3px;
+		border: none;
+		border-radius: 999px;
+		background: var(--ejc-accent-10);
+		color: var(--ejc-accent);
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.15s ease;
+
+		&__icon {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 28px;
+			height: 28px;
+			border-radius: 50%;
+			background: var(--ejc-accent);
+			color: #fff;
+			transition: all 0.15s ease;
+		}
+		&:hover {
+			background: var(--ejc-accent-30);
+		}
+		&.is-active {
+			background: var(--ejc-accent);
+			color: #fff;
+			.ej-msg-newbtn__icon {
+				background: rgba(255, 255, 255, 0.22);
+			}
+		}
+	}
+
+	// Filter
+	.ej-msg-filterwrap {
+		position: relative;
+		flex-shrink: 0;
+	}
+
+	.ej-msg-filterbtn {
+		position: relative;
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border: none;
+		border-radius: 50%;
+		background: var(--ejc-accent-10);
+		color: var(--ejc-accent);
+		cursor: pointer;
+		transition: background 0.15s ease;
+		&:hover,
+		&.is-active {
+			background: var(--ejc-accent-30);
+		}
+
+		&__badge {
+			position: absolute;
+			right: -4px;
+			top: -3px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 20px;
+			height: 20px;
+			border-radius: 20px;
+			background: var(--ejc-accent);
+			color: #fff;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 1;
+			cursor: pointer;
+		}
+		&__reset {
+			display: none;
+		}
+		// The count and reset icon share the badge; hovering the filter button
+		// swaps the number for a reset glyph (click it to clear filters).
+		&:hover {
+			.ej-msg-filterbtn__count {
+				display: none;
+			}
+			.ej-msg-filterbtn__reset {
+				display: inline-flex;
+				align-items: center;
+				color: #fff;
+			}
+		}
+	}
+
+	// Search
+	.ej-msg-search {
+		position: relative;
+		flex: 0 1 250px;
+		&__icon {
+			position: absolute;
+			left: 15px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: var(--ejc-muted);
+		}
+		input {
+			width: 100%;
+			height: 40px;
+			padding: 0 40px 0 42px;
+			border: none;
+			border-radius: 20px;
+			background: var(--ejc-accent-10);
+			font-size: 14px;
+			color: var(--ejc-text);
+			outline: none;
+			&::placeholder {
+				color: var(--ejc-muted);
+			}
+			&:focus {
+				box-shadow: 0 0 0 2px var(--ejc-accent-30);
+			}
+		}
+		&__clear {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			display: grid;
+			place-items: center;
+			width: 24px;
+			height: 24px;
+			border: none;
+			border-radius: 50%;
+			background: #ff5f74;
+			color: #fff;
+			cursor: pointer;
+			transition: background 0.15s ease;
+			&:hover {
+				background: #f23b54;
+			}
+		}
+	}
+
+	// Files / Notes / Templates toggle pills
+	.ej-msg-panelbtns {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-left: auto;
+	}
+
+	.ej-msg-panelbtn {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		height: 34px;
+		padding: 3px 14px 3px 3px;
+		border: none;
+		border-radius: 999px;
+		background: var(--ejc-accent-10);
+		color: var(--ejc-accent);
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.15s ease;
+
+		&__icon {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 28px;
+			height: 28px;
+			border-radius: 50%;
+			background: var(--ejc-accent);
+			color: #fff;
+			transition: all 0.15s ease;
+		}
+		&:hover {
+			background: var(--ejc-accent-30);
+		}
+		&.is-active {
+			background: var(--ejc-accent);
+			color: #fff;
+			.ej-msg-panelbtn__icon {
+				background: rgba(255, 255, 255, 0.22);
+			}
+		}
+		&.has-dot::before {
+			content: "";
+			position: absolute;
+			top: 2px;
+			right: 4px;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background: var(--ejc-danger);
+		}
+	}
+
+	// Read/unread toggle (sits with the panel buttons) — matches the app's teal
+	// (#2fc1e1). "Mark As Read" is the light pill; once read it becomes the solid
+	// teal "Mark As Unread" (app's .unread_active state).
+	.ej-msg-readbtn {
+		background: rgba(47, 193, 225, 0.12);
+		color: #15a6c4;
+		.ej-msg-panelbtn__icon {
+			background: #2fc1e1;
+		}
+		&:hover {
+			background: rgba(47, 193, 225, 0.2);
+		}
+		&.is-read {
+			background: #2fc1e1;
+			color: #fff;
+			.ej-msg-panelbtn__icon {
+				background: rgba(255, 255, 255, 0.25);
+			}
+			&:hover {
+				background: #28b1d2;
+			}
+		}
+	}
+
+	// ── Body grid ────────────────────────────────────────────────────────────────
+	.ej-msg-body {
+		display: flex;
+		align-items: stretch;
+		overflow: hidden; // contain the side panel as it collapses
+	}
+
+	// When a side panel is open: keep the list aligned with the 350px header card
+	// (full gap after the list), and join the thread + side panel into one
+	// continuous card by pulling the side left to close only that gap.
+	// When a side panel is open, the thread squares its right corners so it joins
+	// the side panel into one continuous card (the side adds the divider + left
+	// squared corners itself).
+	&.has-side {
+		.ej-msg-thread {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+	}
+
+	@media all and (max-width: 1399px) {
+		.ej-msg-topbar__left {
+			flex: 0 0 300px;
+		}
+		.ej-msg-list,
+		.ej-msg-new {
+			flex-basis: 300px;
+		}
+		.ej-msg-side.is-open {
+			flex-basis: 280px;
+		}
+	}
+
+	// ── Conversation list (sidebar) ────────────────────────────────────────────────
+	.ej-msg-list {
+		flex: 0 0 350px;
+		margin-right: 10px; // gap between the list and the thread
+		display: flex;
+		flex-direction: column;
+		height: var(--ejc-pane-h);
+		min-height: var(--ejc-pane-min);
+		background: var(--ejc-tint);
+		border-radius: var(--ejc-radius);
+		overflow: hidden;
+
+		&__scroll {
+			flex: 1;
+			overflow-y: auto;
+			padding: 10px;
+		}
+	}
+
+	.ej-msg-convo {
+		position: relative;
+		width: 100%;
+		display: flex;
+		align-items: flex-start;
+		gap: 12px;
+		padding: 10px;
+		margin-bottom: 6px;
+		border: 1px solid transparent;
+		border-radius: var(--ejc-radius);
+		background: transparent;
+		text-align: left;
+		cursor: pointer;
+		transition: background 0.15s ease;
+
+		&:not(:last-child)::after {
+			content: "";
+			position: absolute;
+			left: 10px;
+			right: 10px;
+			bottom: -4px;
+			height: 1px;
+			background: var(--ejc-divider);
+		}
+
+		&:hover,
+		&.is-active {
+			background: #fff;
+		}
+		&.is-active {
+			box-shadow: 0 6px 16px -10px rgba(89, 125, 252, 0.35);
+		}
+
+		&__main {
+			flex: 1;
+			min-width: 0;
+			display: flex;
+			flex-direction: column;
+		}
+		&__titlerow {
+			display: flex;
+			align-items: flex-start;
+			gap: 6px;
+		}
+		&__name {
+			flex: 1 1 auto;
+			font-size: 14px;
+			font-weight: 500;
+			color: var(--ejc-accent);
+			line-height: 1.2;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		&__time {
+			flex: 0 0 auto;
+			padding-left: 5px;
+			font-size: 10px;
+			color: var(--ejc-muted);
+			white-space: nowrap;
+		}
+		&__role {
+			margin-top: 3px;
+			font-size: 12px;
+			color: var(--ejc-text);
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		&__preview {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			margin-top: 2px;
+			font-size: 12px;
+			color: var(--ejc-muted);
+			line-height: 1.2;
+			min-width: 0;
+		}
+		&__preview-text {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	.ej-msg-receipt {
+		color: var(--ejc-accent);
+		flex-shrink: 0;
+	}
+
+	// ── New Conversation panel ──────────────────────────────────────────────────────
+	.ej-msg-new {
+		// Match the conversation list width so switching to "New Conversation"
+		// doesn't shrink the left panel.
+		flex: 0 0 350px;
+		margin-right: 10px; // gap between the panel and the thread
+		display: flex;
+		flex-direction: column;
+		height: var(--ejc-pane-h);
+		min-height: var(--ejc-pane-min);
+		background: #fff;
+		border-radius: var(--ejc-radius);
+		overflow: hidden;
+
+		&__head {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 20px 20px 10px;
+		}
+		&__title {
+			margin: 0;
+			font-size: 16px;
+			font-weight: 500;
+			color: var(--ejc-text);
+		}
+		&__search {
+			padding: 0 20px 14px;
+			input {
+				width: 100%;
+				height: 40px;
+				padding: 0 15px;
+				border: none;
+				border-radius: 20px;
+				background: var(--ejc-accent-10);
+				font-size: 14px;
+				color: var(--ejc-text);
+				outline: none;
+				&::placeholder {
+					color: var(--ejc-muted);
+				}
+				&:focus {
+					box-shadow: 0 0 0 2px var(--ejc-accent-30);
+				}
+			}
+		}
+		&__scroll {
+			flex: 1;
+			overflow-y: auto;
+			padding: 0 20px 10px;
+		}
+	}
+
+	.ej-msg-newrow {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 10px;
+		border: none;
+		border-radius: var(--ejc-radius);
+		background: transparent;
+		border-bottom: 1px solid var(--ejc-divider);
+		text-align: left;
+		cursor: pointer;
+		transition: background 0.15s ease;
+
+		&:last-child {
+			border-bottom: none;
+		}
+		&:hover,
+		&.is-active {
+			background: var(--ejc-tint);
+		}
+
+		&__main {
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+		}
+		&__name {
+			font-size: 14px;
+			font-weight: 500;
+			color: var(--ejc-accent);
+			margin-bottom: 3px;
+		}
+		&__role {
+			font-size: 12px;
+			color: var(--ejc-text);
+		}
+	}
+
+	// New-conversation search clear button + states
+	.ej-msg-new__searchwrap {
+		position: relative;
+	}
+	.ej-msg-new__clear {
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		transform: translateY(-50%);
+		display: grid;
+		place-items: center;
+		width: 24px;
+		height: 24px;
+		border: none;
+		border-radius: 50%;
+		background: #ff5f74;
+		color: #fff;
+		cursor: pointer;
+		transition: background 0.15s ease;
+		&:hover {
+			background: #f23b54;
+		}
+	}
+	.ej-msg-new__empty,
+	.ej-msg-new__loading {
+		padding: 18px 10px;
+		text-align: center;
+		color: var(--ejc-muted);
+		font-size: 13px;
+	}
+	.ej-msg-new__error {
+		padding: 18px 10px 4px;
+		text-align: center;
+		font-size: 13px;
+		p {
+			margin: 0 0 8px;
+			color: #f23b54;
+		}
+	}
+	.ej-msg-new__more {
+		display: block;
+		width: 100%;
+		margin: 8px 0;
+		padding: 9px;
+		border: 1px solid var(--ejc-line-2);
+		border-radius: 8px;
+		background: #fff;
+		color: var(--ejc-accent);
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+		&:hover {
+			background: var(--ejc-tint);
+		}
+	}
+
+	// ── Chat thread ──────────────────────────────────────────────────────────────────
+	.ej-msg-thread {
+		flex: 1 1 auto;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		height: var(--ejc-pane-h);
+		min-height: var(--ejc-pane-min);
+		background: #fff;
+		border-radius: var(--ejc-radius);
+		overflow: hidden;
+
+		&__head {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 11px 18px;
+			border-bottom: 1px solid var(--ejc-line-2);
+		}
+		// Back arrow — hidden on desktop, shown on mobile (single-pane navigation).
+		&__back {
+			display: none;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			width: 36px;
+			height: 36px;
+			margin: 0 -4px 0 -6px;
+			padding: 0;
+			border: none;
+			background: transparent;
+			color: var(--ejc-text);
+			border-radius: 8px;
+			cursor: pointer;
+			transition: background 0.12s;
+			&:hover {
+				background: var(--ejc-line);
+			}
+			&:active {
+				background: var(--ejc-line-2);
+			}
+		}
+		&__avatar {
+			width: 36px;
+			height: 36px;
+		}
+		&__meta {
+			flex: 1;
+			min-width: 0;
+		}
+		&__title-row {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+		&__title {
+			margin: 0;
+			font-size: 14px;
+			font-weight: 600;
+			color: #1d2339;
+			line-height: 1.4;
+		}
+		&__title-link {
+			text-decoration: none;
+			&:hover .ej-msg-thread__title {
+				color: var(--ejc-accent);
+			}
+		}
+		&__avatarlink {
+			display: inline-flex;
+			flex-shrink: 0;
+		}
+		&__role {
+			// Block (not inline) so text-overflow:ellipsis can truncate against the
+			// meta width — otherwise a long job title overflows the header on mobile.
+			display: block;
+			max-width: 100%;
+			font-size: 12px;
+			color: #667085;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		&__actions {
+			display: flex;
+			align-items: center;
+			gap: 2px;
+			flex-shrink: 0;
+		}
+
+		&__body {
+			flex: 1;
+			overflow-y: auto;
+			overflow-x: hidden;
+			padding: 16px 22px;
+
+			&::-webkit-scrollbar {
+				width: 6px;
+			}
+			&::-webkit-scrollbar-track {
+				background: transparent;
+				box-shadow: none;
+				background-image: none;
+			}
+			&::-webkit-scrollbar-thumb {
+				background: var(--ejc-accent-30);
+				border-radius: 10px;
+			}
+			&::-webkit-scrollbar-thumb:hover {
+				background: var(--ejc-accent);
+			}
+		}
+	}
+
+	.ej-msg-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 2px 8px;
+		border-radius: 6px;
+		background: #eef2ff;
+		color: var(--ejc-accent);
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 1.4;
+		flex-shrink: 0;
+		text-transform: capitalize;
+		&.is-selected {
+			color: #15803d;
+			background: #e7f6ec;
+		}
+		&.is-rejected {
+			color: #b42318;
+			background: #fbe7e7;
+		}
+	}
+
+	// header icon buttons (act-btn)
+	.ej-msg-iconbtn {
+		display: grid;
+		place-items: center;
+		width: 32px;
+		height: 32px;
+		border: 1px solid transparent;
+		border-radius: 8px;
+		background: transparent;
+		color: #667085;
+		cursor: pointer;
+		transition: all 0.12s ease;
+		&:hover {
+			background: #f3f4f7;
+			color: #1d2339;
+			border-color: var(--ejc-line-2);
+		}
+		&.is-active {
+			background: #eef2ff;
+			color: var(--ejc-accent);
+			border-color: #e0e4ff;
+		}
+		&--sm {
+			width: 28px;
+			height: 28px;
+		}
+	}
+
+	.ej-msg-time-divider {
+		text-align: right;
+		font-size: 10px;
+		color: var(--ejc-muted);
+		margin-bottom: 14px;
+	}
+
+	.ej-msg-daysep {
+		display: flex;
+		align-items: center;
+		text-align: center;
+		margin: 20px 0 16px;
+		color: var(--ejc-muted);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		&::before,
+		&::after {
+			content: "";
+			flex: 1;
+			height: 1px;
+			background: var(--ejc-line);
+		}
+		span {
+			padding: 0 14px;
+		}
+	}
+
+	.ej-msg-note {
+		display: flex;
+		align-items: center;
+		margin: 8px 0;
+		// Divider lines on each side of the pill (like the day separator).
+		&::before,
+		&::after {
+			content: "";
+			flex: 1;
+			height: 1px;
+			background: var(--ejc-line);
+		}
+		&__pill {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			margin: 0 14px;
+			padding: 5px 16px;
+			border-radius: 999px;
+			background: var(--ejc-line);
+			color: var(--ejc-muted);
+		}
+		&__text {
+			font-size: 13px;
+			font-weight: 500;
+			color: var(--ejc-text);
+		}
+		&__time {
+			font-size: 11px;
+			color: var(--ejc-muted);
+		}
+	}
+
+	// ── Thread placeholder (empty / loading) ───────────────────────────────────────────
+	.ej-msg-thread--empty {
+		align-items: center;
+		justify-content: center;
+	}
+	// Empty conversation state — matches the app: a soft icon tile with a bold
+	// heading and a muted helper line, centered in the thread area.
+	.ej-msg-thread__empty {
+		min-height: 100%;
+		padding: 40px 24px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+
+		&-icon {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 72px;
+			height: 72px;
+			border-radius: 18px;
+			background: #f4f5f7;
+			color: #98a2b3;
+			margin-bottom: 18px;
+		}
+		&-title {
+			margin: 0 0 8px;
+			font-size: 14px;
+			font-weight: 600;
+			color: var(--ejc-text);
+		}
+		&-sub {
+			margin: 0;
+			max-width: 280px;
+			font-size: 12.5px;
+			line-height: 1.5;
+			color: var(--ejc-muted);
+		}
+	}
+
+	// ── "Loading older messages" spinner (top of thread, reverse infinite scroll) ───────
+	.ej-msg-loadmore {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px 0 6px;
+		&__dots {
+			display: inline-flex;
+			gap: 5px;
+			i {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: var(--ejc-accent, #5252dc);
+				opacity: 0.35;
+				animation: ej-msg-bounce 1.2s infinite ease-in-out both;
+			}
+			i:nth-child(1) {
+				animation-delay: -0.24s;
+			}
+			i:nth-child(2) {
+				animation-delay: -0.12s;
+			}
+		}
+	}
+	@keyframes ej-msg-bounce {
+		0%,
+		80%,
+		100% {
+			transform: scale(0.6);
+			opacity: 0.25;
+		}
+		40% {
+			transform: scale(1);
+			opacity: 0.9;
+		}
+	}
+
+	// ── System info rows (applied / conversation started) ───────────────────────────────
+	.ej-msg-sysinfo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		margin: 6px 0;
+		color: var(--ejc-muted);
+		font-size: 13px;
+		font-weight: 500;
+		svg {
+			color: var(--ejc-muted);
+			flex-shrink: 0;
+		}
+	}
+
+	// ── System pill (pipeline change) ───────────────────────────────────────────────────
+	.ej-msg-syspill {
+		display: flex;
+		align-items: center;
+		margin: 10px 0;
+		// Divider lines on each side of the pill (like the day separator).
+		&::before,
+		&::after {
+			content: "";
+			flex: 1;
+			height: 1px;
+			background: var(--ejc-line);
+		}
+		&__inner {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			margin: 0 14px;
+			padding: 5px 16px;
+			border-radius: 999px;
+			border: 1px solid transparent;
+			background: var(--ejc-line);
+			color: var(--ejc-text);
+		}
+		// Text and icon inherit the pill colour; time is a softened shade of it.
+		&__text {
+			font-size: 12px;
+			font-weight: 600;
+			color: inherit;
+		}
+		&__time {
+			font-size: 11px;
+			color: currentColor;
+			opacity: 0.55;
+		}
+		svg {
+			color: inherit;
+			flex-shrink: 0;
+		}
+
+		// Status colours (mirrors .ej-msg-badge): selected = green, rejected = red,
+		// applied / other = neutral grey.
+		&.is-rejected .ej-msg-syspill__inner {
+			background: #fbe7e7;
+			color: #b42318;
+		}
+		&.is-selected .ej-msg-syspill__inner {
+			background: #e7f6ec;
+			color: #15803d;
+		}
+		&.is-applied .ej-msg-syspill__inner {
+			background: var(--ejc-line);
+			color: var(--ejc-text);
+		}
+	}
+
+	// ── Message runs (grouped bubbles by sender) ────────────────────────────────────────
+	.ej-msg-run {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 18px;
+		&.is-in {
+			align-items: flex-start;
+		}
+		&.is-out {
+			align-items: flex-end;
+		}
+
+		&__name {
+			font-size: 13px;
+			font-weight: 600;
+			color: #1d2339;
+			margin-bottom: 8px;
+		}
+
+		// Name and time line up with the bubbles, not the avatar beside them.
+		&.is-in .ej-msg-run__name,
+		&.is-in .ej-msg-run__meta {
+			margin-left: 42px;
+		}
+		&.is-out .ej-msg-run__name,
+		&.is-out .ej-msg-run__meta {
+			margin-right: 42px;
+		}
+
+		// Bubbles + sender photo; the photo sits at the bottom of the last bubble.
+		&__body {
+			display: flex;
+			align-items: flex-end;
+			gap: 10px;
+			max-width: 74%;
+		}
+		&.is-out .ej-msg-run__body {
+			flex-direction: row-reverse;
+		}
+
+		&__bubbles {
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			min-width: 0;
+		}
+		&.is-out .ej-msg-run__bubbles {
+			align-items: flex-end;
+		}
+
+		&__meta {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			margin-top: 8px;
+		}
+		&__avatar {
+			width: 32px;
+			height: 32px;
+		}
+		&__time {
+			font-size: 11px;
+			color: var(--ejc-muted);
+		}
+	}
+
+	.ej-msg-bubble {
+		padding: 12px 16px;
+		border-radius: 14px;
+		font-size: 14px;
+		line-height: 1.55;
+		color: var(--ejc-text);
+
+		&__text {
+			white-space: pre-line;
+			word-break: break-word;
+			a {
+				color: var(--ejc-accent);
+				text-decoration: underline;
+			}
+			ul,
+			ol {
+				margin: 4px 0;
+				padding-left: 22px;
+				white-space: normal;
+			}
+			ul {
+				list-style: disc outside;
+			}
+			ol {
+				list-style: decimal outside;
+			}
+			ul > li {
+				list-style-type: disc;
+			}
+			ol > li {
+				list-style-type: decimal;
+			}
+		}
+		&__attachment {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			margin-top: 8px;
+			font-size: 12px;
+			font-weight: 500;
+			color: var(--ejc-accent);
+			text-decoration: none;
+			em {
+				font-style: normal;
+				color: var(--ejc-muted);
+			}
+		}
+	}
+	.ej-msg-run.is-in .ej-msg-bubble {
+		background: #f2f4f7;
+		border-top-left-radius: 4px;
+	}
+	.ej-msg-run.is-out .ej-msg-bubble {
+		background: #eef2ff;
+		border-top-right-radius: 4px;
+	}
+
+	// muted "(You)" indicator embedded in sender names (backend HTML)
+	.user-indicator {
+		color: var(--ejc-muted);
+		font-weight: 500;
+	}
+
+	// ── Assessment result card (inside assessment messages) ─────────────────────────────
+	.ej-msg-assess {
+		margin-top: 12px;
+		padding: 14px 16px;
+		background: #fff;
+		border: 1px solid var(--ejc-line-2);
+		border-radius: 12px;
+
+		&__head {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 10px;
+		}
+		&__status {
+			font-size: 14px;
+			font-weight: 600;
+			color: var(--ejc-text);
+		}
+		&__marks {
+			font-size: 13px;
+			font-weight: 600;
+			color: var(--ejc-text);
+		}
+		&__info {
+			margin: 6px 0 0;
+			font-size: 13px;
+			color: #475467;
+		}
+
+		&.is-expired .ej-msg-assess__status {
+			color: #d92d20;
+		}
+		&.is-completed .ej-msg-assess__status {
+			color: #15803d;
+		}
+		&.is-pending .ej-msg-assess__status,
+		&.is-in .ej-msg-assess__status {
+			color: #b54708;
+		}
+		&.is-unassigned .ej-msg-assess__status {
+			color: var(--ejc-muted);
+		}
+	}
+
+	// ── Conversation list empty / error states ─────────────────────────────────────────
+	.ej-msg-list__empty {
+		padding: 28px 18px;
+		text-align: center;
+		color: var(--ejc-muted);
+		p {
+			margin: 0 0 10px;
+			font-size: 14px;
+			font-weight: 500;
+		}
+		small {
+			font-size: 11px;
+			word-break: break-word;
+		}
+		&--error small {
+			color: #b42318;
+		}
+	}
+	.ej-msg-list__loading {
+		padding: 12px;
+		text-align: center;
+		color: var(--ejc-muted);
+		font-size: 12px;
+	}
+	.ej-msg-list__reset {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin: 0 auto;
+		padding: 0;
+		border: none;
+		background: none;
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--ejc-text);
+		cursor: pointer;
+		transition: opacity 0.15s ease;
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+
+	// ── Composer ──────────────────────────────────────────────────────────────────────
+	.ej-msg-composer {
+		position: relative;
+		padding: 12px 16px 14px;
+		border-top: 1px solid var(--ejc-line);
+
+		&__input {
+			position: relative;
+			width: 100%;
+			min-height: 72px;
+			max-height: 200px;
+			overflow-y: auto;
+			padding: 13px;
+			border: 1px solid var(--ejc-line);
+			border-radius: 8px;
+			background: var(--ejc-line);
+			font-size: 14px;
+			font-family: $base_font;
+			line-height: 1.5;
+			color: var(--ejc-text);
+			outline: none;
+			&:focus {
+				border-color: var(--ejc-accent-30);
+				background: #fff;
+			}
+
+			// Placeholder for the empty contenteditable. Absolutely positioned so it
+			// never shifts the caret out of place.
+			&.is-empty:before {
+				content: attr(data-placeholder);
+				position: absolute;
+				top: 13px;
+				left: 13px;
+				color: var(--ejc-muted);
+				pointer-events: none;
+			}
+
+			// Rich-text content styling. (Override the admin's `ul>li` marker reset.)
+			ul,
+			ol {
+				margin: 4px 0;
+				padding-left: 22px;
+			}
+			ul {
+				list-style: disc outside;
+			}
+			ol {
+				list-style: decimal outside;
+			}
+			ul > li {
+				list-style-type: disc;
+			}
+			ol > li {
+				list-style-type: decimal;
+			}
+			a {
+				color: var(--ejc-accent);
+				text-decoration: underline;
+			}
+			p {
+				margin: 0 0 4px;
+			}
+		}
+
+		&__file {
+			display: inline-flex;
+			align-items: center;
+			gap: 7px;
+			max-width: 100%;
+			margin-bottom: 8px;
+			padding: 5px 8px 5px 10px;
+			border-radius: 8px;
+			background: var(--ejc-accent-10);
+			color: var(--ejc-accent);
+			font-size: 12px;
+			&-name {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 240px;
+			}
+			&-remove {
+				display: grid;
+				place-items: center;
+				width: 18px;
+				height: 18px;
+				border: none;
+				border-radius: 50%;
+				background: rgba(89, 125, 252, 0.18);
+				color: var(--ejc-accent);
+				cursor: pointer;
+				&:hover {
+					background: var(--ejc-accent);
+					color: #fff;
+				}
+			}
+		}
+
+		&__bar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			margin-top: 10px;
+		}
+		&__actions {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		// Disabled state — candidate limit reached.
+		&__locked {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 14px;
+			min-height: 52px;
+			padding: 10px 18px;
+			border-radius: 8px;
+			background: #fdecef;
+		}
+		&__locked-info {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			font-size: 12px;
+			font-weight: 500;
+			color: var(--ejc-text);
+			svg {
+				flex-shrink: 0;
+			}
+		}
+		&__upgrade {
+			display: inline-flex;
+			align-items: center;
+			gap: 2px;
+			flex-shrink: 0;
+			font-size: 14px;
+			color: var(--ejc-text);
+			font-weight: 600;
+			text-decoration: underline;
+			white-space: nowrap;
+			&:hover {
+				color: var(--ejc-accent);
+			}
+		}
+	}
+
+	// Link popups (insert/edit + preview) — anchored under the link/selection.
+	.ej-msg-linkbox,
+	.ej-msg-linkprev {
+		position: absolute;
+		z-index: 20;
+		background: #fff;
+		border-radius: 8px;
+		box-shadow: 0 8px 24px rgba(125, 128, 145, 0.35);
+		// Pointer up to the link.
+		&::before {
+			content: "";
+			position: absolute;
+			bottom: 100%;
+			left: 18px;
+			border: 7px solid transparent;
+			border-bottom-color: #fff;
+			filter: drop-shadow(0 -1px 0 rgba(125, 128, 145, 0.12));
+		}
+	}
+
+	// Link URL popup (matches the app's inline link editor).
+	.ej-msg-linkbox {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 14px;
+
+		&__field {
+			position: relative;
+			label {
+				position: absolute;
+				top: -8px;
+				left: 10px;
+				padding: 0 5px;
+				background: #fff;
+				font-size: 11px;
+				color: var(--ejc-muted);
+			}
+			input {
+				width: 280px;
+				max-width: 50vw;
+				height: 40px;
+				padding: 0 12px;
+				border: 1px solid var(--ejc-accent);
+				border-radius: 6px;
+				font-size: 14px;
+				outline: none;
+				box-shadow: 0 0 0 3px var(--ejc-accent-10);
+			}
+		}
+		&__ok,
+		&__cancel {
+			display: grid;
+			place-items: center;
+			width: 32px;
+			height: 32px;
+			border: none;
+			background: transparent;
+			border-radius: 6px;
+			cursor: pointer;
+			&:hover {
+				background: #f3f4f7;
+			}
+		}
+	}
+
+	// Existing-link preview balloon (URL + edit + unlink).
+	.ej-msg-linkprev {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 8px 10px;
+
+		&__url {
+			max-width: 220px;
+			margin-right: 6px;
+			padding-left: 4px;
+			color: var(--ejc-accent);
+			font-size: 14px;
+			text-decoration: none;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+		&__btn {
+			display: grid;
+			place-items: center;
+			width: 32px;
+			height: 32px;
+			border: none;
+			background: transparent;
+			border-radius: 6px;
+			color: var(--ejc-text);
+			cursor: pointer;
+			&:hover {
+				background: #f3f4f7;
+			}
+		}
+	}
+
+	.ej-msg-tools {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		&__divider {
+			width: 1px;
+			height: 20px;
+			margin: 0 6px;
+			background: var(--ejc-line);
+		}
+	}
+	.ej-msg-tool {
+		display: grid;
+		place-items: center;
+		width: 32px;
+		height: 32px;
+		border: none;
+		background: transparent;
+		border-radius: 8px;
+		color: var(--ejc-muted);
+		cursor: pointer;
+		&:hover {
+			background: #f3f4f7;
+			color: var(--ejc-text);
+		}
+		&.is-active {
+			background: var(--ejc-accent-10);
+			color: var(--ejc-accent);
+		}
+		&:disabled {
+			opacity: 0.45;
+			cursor: not-allowed;
+			&:hover {
+				background: transparent;
+				color: var(--ejc-muted);
+			}
+		}
+	}
+
+	.ej-msg-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		height: 38px;
+		padding: 0 16px;
+		border: 1px solid transparent;
+		border-radius: 8px;
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.15s ease;
+		white-space: nowrap;
+		&--primary {
+			background: var(--ejc-accent);
+			color: #fff;
+			&:hover {
+				background: var(--ejc-accent-d);
+			}
+			&:disabled {
+				background: #c2c7d0;
+				color: #fff;
+				cursor: not-allowed;
+				&:hover {
+					background: #c2c7d0;
+				}
+			}
+		}
+		&--ghost {
+			background: #fff;
+			border-color: var(--ejc-line-2);
+			color: var(--ejc-text);
+			&:hover {
+				background: var(--ejc-line);
+			}
+		}
+	}
+	.ej-msg-templates-menu .ej-msg-icon:last-child {
+		color: var(--ejc-muted);
+	}
+
+	// ── Right side panel (Files / Notes / Templates) ─────────────────────────────────
+	.ej-msg-side {
+		// Collapsed by default; expands its width when open so the thread resizes
+		// smoothly and no background gap is ever revealed (no two-colour flash).
+		flex: 0 0 0px;
+		width: 0;
+		opacity: 0;
+		display: flex;
+		flex-direction: column;
+		height: var(--ejc-pane-h);
+		min-height: var(--ejc-pane-min);
+		background: #fff;
+		border-radius: var(--ejc-radius);
+		overflow: hidden;
+		transition:
+			flex-basis 0.28s ease,
+			opacity 0.2s ease;
+		will-change: flex-basis;
+
+		&.is-open {
+			flex: 0 0 300px;
+			width: auto;
+			opacity: 1;
+			// Join the thread into one continuous card with a divider on the left.
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-left: 1px solid var(--ejc-line);
+		}
+
+		&__head {
+			padding: 16px 18px 10px;
+			&--row {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding-bottom: 4px;
+			}
+		}
+		&__title {
+			margin: 0;
+			font-size: 16px;
+			font-weight: 600;
+			color: var(--ejc-text);
+		}
+		&__sub {
+			margin: 3px 0 0;
+			font-size: 12px;
+			color: var(--ejc-muted);
+			&--lock,
+			&--help {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+			&--help {
+				padding: 0 18px 12px;
+			}
+		}
+	}
+
+	.ej-msg-addbtn {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		height: 32px;
+		padding: 0 12px;
+		border: none;
+		border-radius: 999px;
+		background: var(--ejc-accent-10);
+		color: var(--ejc-accent);
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+		&:hover {
+			background: var(--ejc-accent-30);
+		}
+	}
+
+	.ej-msg-empty {
+		margin: 16px 20px;
+		padding: 16px;
+		border: 1px solid var(--ejc-line);
+		border-radius: 8px;
+		text-align: center;
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--ejc-danger);
+	}
+
+	// Notes panel
+	.ej-msg-notes-list {
+		flex: 1;
+		overflow-y: auto;
+		overflow-x: hidden;
+		padding: 4px 18px 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+
+		&::-webkit-scrollbar {
+			width: 6px;
+		}
+		&::-webkit-scrollbar-track {
+			background: transparent;
+			box-shadow: none;
+			background-image: none;
+		}
+		&::-webkit-scrollbar-thumb {
+			background: var(--ejc-accent-30);
+			border-radius: 10px;
+		}
+		&::-webkit-scrollbar-thumb:hover {
+			background: var(--ejc-accent);
+		}
+	}
+
+	.ej-msg-note-item {
+		display: flex;
+		gap: 9px;
+		min-width: 0;
+		&__avatar {
+			width: 30px;
+			height: 30px;
+		}
+		&__main {
+			flex: 1;
+			min-width: 0;
+		}
+		&__head {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			flex-wrap: wrap;
+		}
+		&__author {
+			font-size: 13px;
+			font-weight: 600;
+			color: var(--ejc-text);
+		}
+		&__when {
+			font-size: 11px;
+			color: var(--ejc-muted);
+		}
+		&__body {
+			margin: 1px 0 5px;
+			font-size: 13px;
+			color: var(--ejc-text);
+			overflow-wrap: anywhere;
+		}
+		&__controls {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex-wrap: wrap;
+		}
+		&__del {
+			margin-left: auto;
+			color: var(--ejc-muted);
+			&:hover {
+				color: var(--ejc-danger);
+			}
+		}
+		&__time {
+			display: block;
+			margin-top: 4px;
+			font-size: 11px;
+			color: var(--ejc-muted);
+		}
+		&__replies {
+			margin-top: 12px;
+			padding-left: 6px;
+			border-left: 2px solid var(--ejc-line);
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			min-width: 0;
+		}
+	}
+
+	.ej-msg-link {
+		border: none;
+		background: none;
+		padding: 0;
+		font-size: 12px;
+		font-weight: 500;
+		color: var(--ejc-muted);
+		cursor: pointer;
+		&:hover {
+			color: var(--ejc-accent);
+		}
+	}
+
+	.ej-msg-reaction {
+		display: inline-flex;
+		align-items: center;
+		gap: 3px;
+		padding: 1px 7px;
+		border-radius: 999px;
+		background: var(--ejc-line);
+		border: 1px solid var(--ejc-divider);
+		font-size: 11px;
+	}
+
+	.ej-msg-note-composer {
+		margin: 0 20px 20px;
+		border: 1px solid var(--ejc-line);
+		border-radius: 10px;
+		padding: 12px 14px;
+		&__input {
+			width: 100%;
+			min-height: 60px;
+			border: none;
+			background: transparent;
+			resize: none;
+			font-size: 14px;
+			font-family: $base_font;
+			color: var(--ejc-text);
+			outline: none;
+			&::placeholder {
+				color: var(--ejc-muted);
+			}
+		}
+		&__bar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: 6px;
+		}
+		&__tools {
+			display: flex;
+			gap: 4px;
+			color: var(--ejc-muted);
+		}
+		&__actions {
+			display: flex;
+			align-items: center;
+			gap: 14px;
+		}
+		&__send {
+			display: grid;
+			place-items: center;
+			width: 34px;
+			height: 34px;
+			border: none;
+			border-radius: 50%;
+			background: var(--ejc-accent-10);
+			color: var(--ejc-accent);
+			cursor: pointer;
+			&:hover {
+				background: var(--ejc-accent-30);
+			}
+		}
+	}
+
+	// ── Filters popover ────────────────────────────────────────────────────────────────
+	.ej-msg-filters {
+		position: absolute;
+		top: calc(100% + 12px);
+		left: 0;
+		z-index: 50;
+		width: 420px;
+		max-width: 90vw;
+		background: #fff;
+		border-radius: 5px;
+		box-shadow: 0 10px 30px rgba(125, 128, 145, 0.5);
+
+		&__arrow {
+			position: absolute;
+			bottom: 100%;
+			left: 16px;
+			border-bottom: 6px solid #fff;
+			border-left: 6px solid transparent;
+			border-right: 6px solid transparent;
+		}
+		&__head {
+			display: flex;
+			align-items: center;
+			padding: 15px;
+			border-bottom: 1px solid #f2f2f6;
+			h3 {
+				margin: 0;
+				font-size: 16px;
+				font-weight: 500;
+				color: var(--ejc-text);
+			}
+			.ej-msg-iconbtn {
+				margin-left: auto;
+			}
+		}
+		&__body {
+			padding: 18px 20px;
+			display: flex;
+			flex-direction: column;
+			gap: 22px;
+			max-height: 60vh;
+			overflow-y: auto;
+		}
+		&__foot {
+			display: flex;
+			align-items: center;
+			padding: 10px 15px;
+			border-top: 1px solid #f2f2f6;
+		}
+		&__foot-right {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-left: auto;
+		}
+	}
+
+	.ej-msg-field {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		// Section labels are muted/gray like the app (option labels stay dark).
+		> label {
+			font-size: 14px;
+			font-weight: 500;
+			color: var(--ejc-muted);
+		}
+	}
+
+	.ej-msg-select {
+		position: relative;
+		select {
+			width: 100%;
+			height: 44px;
+			padding: 0 38px 0 15px;
+			border: 1px solid #e6e9f3;
+			border-radius: 8px;
+			background: #fff;
+			font-size: 14px;
+			color: var(--ejc-text);
+			appearance: none;
+			-webkit-appearance: none;
+			outline: none;
+			cursor: pointer;
+			&:focus {
+				border-color: var(--ejc-accent);
+			}
+		}
+		&__chev {
+			position: absolute;
+			right: 14px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: var(--ejc-muted);
+			pointer-events: none;
+		}
+	}
+
+	.ej-msg-checkrow {
+		display: flex;
+		align-items: center;
+		gap: 28px;
+	}
+
+	.ej-msg-check {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		cursor: pointer;
+		user-select: none;
+		input {
+			position: absolute;
+			opacity: 0;
+			width: 0;
+			height: 0;
+		}
+		&__box {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 20px;
+			height: 20px;
+			border: 1.5px solid #c6d3fd;
+			border-radius: 5px;
+			background: #fff;
+			color: transparent;
+			transition: all 0.15s ease;
+		}
+		&__label {
+			font-size: 14px;
+			color: var(--ejc-text);
+		}
+		&.is-checked .ej-msg-check__box {
+			background: #4db46e;
+			border-color: #4db46e;
+			color: #fff;
+		}
+		&.is-disabled {
+			opacity: 0.55;
+			cursor: not-allowed;
+		}
+	}
+
+	// react-select (Select Job) — match the plugin's bordered inputs
+	.ej-rs__control {
+		min-height: 46px;
+		border-color: var(--ejc-line-2) !important;
+		border-radius: 8px !important;
+		box-shadow: none !important;
+		&:hover {
+			border-color: var(--ejc-line-2);
+		}
+	}
+	.ej-rs__control--is-focused {
+		border-color: var(--ejc-accent) !important;
+	}
+	.ej-rs__placeholder {
+		color: var(--ejc-muted);
+	}
+	// Kill the inner input's inherited focus border/box-shadow (the "blue bar"),
+	// the same way the job-create form does for `.react-select__input`. The text
+	// caret is kept so it's clear the field is type-to-search.
+	.ej-rs__input input {
+		border: 0 !important;
+		box-shadow: none !important;
+	}
+
+	.ej-msg-reset {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		border: none;
+		background: none;
+		padding: 0;
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--ejc-danger);
+		cursor: pointer;
+		&:hover {
+			opacity: 0.85;
+		}
+	}
+
+	// ── Files panel (attachments) ──────────────────────────────────────────────────────
+	.ej-msg-files-list {
+		flex: 1;
+		overflow-y: auto;
+		padding: 6px 16px 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+	.ej-file {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		text-decoration: none;
+
+		&__glyph {
+			position: relative;
+			flex-shrink: 0;
+			width: 34px;
+			height: 34px;
+			display: grid;
+			place-items: center;
+		}
+		&__ext {
+			position: absolute;
+			bottom: 5px;
+			left: 0;
+			right: 0;
+			text-align: center;
+			font-size: 7px;
+			font-weight: 700;
+			letter-spacing: 0.02em;
+			line-height: 1;
+			color: var(--ejc-accent);
+		}
+		&__main {
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+			flex: 1;
+			gap: 2px;
+		}
+		&__name {
+			font-size: 14px;
+			font-weight: 600;
+			color: var(--ejc-text);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		&__size {
+			font-size: 12px;
+			color: var(--ejc-muted);
+		}
+		&__dl {
+			flex-shrink: 0;
+			display: grid;
+			place-items: center;
+			color: var(--ejc-muted);
+		}
+
+		// Side-panel card: bordered, with a boxed download button.
+		&--panel {
+			padding: 12px 14px;
+			border: 1px solid var(--ejc-line-2);
+			border-radius: 12px;
+			transition:
+				border-color 0.15s ease,
+				background 0.15s ease;
+			&:hover {
+				border-color: var(--ejc-accent-30);
+				background: var(--ejc-tint);
+			}
+			.ej-file__size::before {
+				content: "•";
+				margin-right: 5px;
+			}
+			.ej-file__dl {
+				width: 38px;
+				height: 38px;
+				border: 1px solid var(--ejc-line-2);
+				border-radius: 8px;
+				color: var(--ejc-accent);
+			}
+		}
+
+		// In-bubble card: white card inside a chat bubble.
+		&--bubble {
+			margin-top: 2px;
+			padding: 8px 10px;
+			background: #fff;
+			border-radius: 10px;
+			min-width: 230px;
+		}
+	}
+
+	// ── Loading skeleton ──────────────────────────────────────────────────────────────
+	.ej-sk {
+		display: block;
+		flex-shrink: 0;
+		background: linear-gradient(
+			90deg,
+			#e9edf4 25%,
+			#f4f6fb 37%,
+			#e9edf4 63%
+		);
+		background-size: 400% 100%;
+		animation: ej-sk-shimmer 1.4s ease infinite;
+	}
+
+	.ej-sk-list {
+		padding: 14px 12px;
+		gap: 0;
+		overflow: hidden;
+	}
+	.ej-sk-row {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 11px 10px;
+		margin-bottom: 6px;
+		&__lines {
+			flex: 1;
+			min-width: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 7px;
+		}
+		&__top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 6px;
+		}
+	}
+
+	.ej-sk-thread {
+		overflow: hidden;
+	}
+	.ej-sk-thead {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 13px 18px;
+		border-bottom: 1px solid var(--ejc-line-2);
+		&__lines {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
+	.ej-sk-tbody {
+		flex: 1;
+		overflow: hidden;
+		padding: 22px 24px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 18px;
+	}
+	.ej-sk-composer {
+		padding: 12px 16px 14px;
+		border-top: 1px solid var(--ejc-line);
+		&__bar {
+			display: flex;
+			align-items: center;
+			margin-top: 10px;
+		}
+	}
+
+	// ── Responsive ──────────────────────────────────────────────────────────────────────
+	// Native-app single-pane: the list fills the screen; tapping a conversation
+	// slides the thread in over it, full-screen, with a Back arrow in its header.
+	@media all and (max-width: 1100px) {
+		.ej-msg-topbar {
+			flex-wrap: wrap;
+		}
+		.ej-msg-topbar__left {
+			flex: 1 1 100%;
+		}
+
+		// Stack the panes on top of each other rather than side by side.
+		.ej-msg-body {
+			position: relative;
+			display: block;
+			overflow: hidden;
+		}
+
+		.ej-msg-list {
+			flex-basis: auto;
+			width: 100%;
+			margin: 0;
+			min-height: 0;
+			height: var(--ejc-pane-h);
+		}
+
+		// Thread overlays the list and slides in from the right.
+		.ej-msg-thread {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			min-height: 0;
+			height: auto;
+			border-radius: 0;
+			transform: translateX(100%);
+			transition: transform 0.26s ease;
+			z-index: 6;
+			box-shadow: -10px 0 26px rgba(17, 22, 40, 0.08);
+		}
+
+		// Back arrow becomes visible in the thread header.
+		.ej-msg-thread__back {
+			display: inline-flex;
+		}
+
+		// Side panel (Files) — full-screen overlay above the thread when opened.
+		.ej-msg-side {
+			position: absolute;
+			inset: 0;
+			width: 100% !important;
+			flex-basis: auto !important;
+			z-index: 8;
+			border-radius: 0;
+		}
+
+		// When a conversation is open: reveal the thread, full-screen (hide the
+		// topbar so the thread header + Back arrow act as the native app bar).
+		&.ej-messages--thread-open {
+			.ej-msg-thread {
+				transform: translateX(0);
+			}
+			.ej-msg-topbar {
+				display: none;
+			}
+		}
+	}
+
+	// ── Phones (too-small) ───────────────────────────────────────────────────────────────
+	@media all and (max-width: 700px) {
+		// Mark As Read/Unread + Files → icon-only (drop the text labels to save space).
+		.ej-msg-panelbtn {
+			padding: 3px;
+			gap: 0;
+			> span:not(.ej-msg-panelbtn__icon) {
+				display: none;
+			}
+		}
+
+		// Composer: the formatting toolbar can be wider than the screen, which pushed
+		// the Send button off-screen. Let the bar wrap so Send drops to its own
+		// full-width row and is always visible; the tools scroll horizontally if needed.
+		.ej-msg-composer__bar {
+			flex-wrap: wrap;
+		}
+		.ej-msg-tools {
+			flex: 1 1 100%;
+			overflow-x: auto;
+			scrollbar-width: none;
+			&::-webkit-scrollbar {
+				display: none;
+			}
+		}
+		.ej-msg-composer__actions {
+			flex: 1 1 100%;
+		}
+		.ej-msg-send {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+
+	// ── Very small phones ───────────────────────────────────────────────────────────────
+	// The filter popover (420px / 90vw anchored to the button) can't fit and spills
+	// off-screen. Detach it from the button and show it as a centered, viewport-
+	// bounded sheet that always fits and scrolls internally.
+	@media all and (max-width: 480px) {
+		.ej-msg-filters {
+			position: fixed;
+			top: 50%;
+			left: 10px;
+			right: 10px;
+			transform: translateY(-50%);
+			width: auto;
+			max-width: none;
+			max-height: 85vh;
+			overflow-y: auto;
+		}
+		.ej-msg-filters__arrow {
+			display: none;
+		}
+		// Let the whole sheet scroll instead of just the body (keeps head/foot inline).
+		.ej-msg-filters__body {
+			max-height: none;
+		}
+	}
+}
+
+@keyframes ej-sk-shimmer {
+	0% {
+		background-position: 100% 0;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}

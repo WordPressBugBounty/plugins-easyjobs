@@ -1,0 +1,40 @@
+.easy-page-body {
+	// import files
+	@import '../mixins/background&color';
+
+	// each function for content color
+	@each $parent, $color in $theme-colors {
+		@include color-emphasis-variant('.color-#{$parent}', $color);
+	}
+
+	// each function for background color
+	@each $parent, $color in $theme-colors {
+		@include background-emphasis-variant('.background-#{$parent}', $color);
+	}
+
+	// each function for background color
+	@each $parent, $color in $theme-colors {
+		@include gradient-emphasis-variant('.gradient-#{$parent}', $color);
+	}
+	// each function for background color
+	@each $parent, $color in $theme-colors {
+		@include conversation-emphasis-variant('.conversation-#{$parent}', $color);
+	}
+
+	// notices background
+	.notices .toast-success {
+		background-color: $success !important;
+	}
+	.notices .toast-info {
+		background-color: $info !important;
+	}
+	.notices .toast-warning {
+		background-color: $warning !important;
+	}
+	.notices .toast-error {
+		background-color: $danger !important;
+	}
+	.notices .toast-default {
+		background-color: $dark !important;
+	}
+}

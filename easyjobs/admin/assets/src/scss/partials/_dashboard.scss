@@ -1,0 +1,1791 @@
+// ─── Full-bleed app shell ──────────────────────────────────────────────────────
+// CSS only loads on EasyJobs pages, and these resets are further scoped to
+// body.ej-app-active (added by React on mount) so they never affect other admin UI.
+// We neutralize WP's wrapper spacing instead of fighting it with negative margins.
+body.ej-app-active {
+  #wpcontent {
+    padding-left: 0; // WP default: 20px — remove so our shell is flush-left (keeps menu margin-left)
+    background: var(--ej-bg); // dashboard page background, so the footer & content match
+  }
+  #wpbody-content {
+    // Reserve space for WP's absolute-positioned footer (now restyled below)
+    // so page content never sits behind it.
+    padding-bottom: 56px;
+  }
+  .wrap {
+    // WP core default: margin: 10px 20px 0 2px — remove entirely for a flush, full-width shell
+    margin: 0;
+  }
+  // Some WP builds add an update-nag / notices band above .wrap; collapse residual gaps
+  #wpbody-content > .wrap > .easy-page-body { margin-top: 0; }
+
+  // Restyle WP's admin footer to match the reference. Content is injected via PHP
+  // hooks (admin_footer_text + update_footer). WP keeps its own positioning
+  // (absolute, bottom); we only override appearance and the inner <p> float/margins.
+  #wpfooter {
+    border-top: 1px solid var(--ej-border);
+    background: var(--ej-bg); // match the dashboard page background
+    padding: 14px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    // WP appends an empty <div class="clear"> as the last child — it becomes a
+    // flex item and steals the right slot, pushing the links off the edge. Hide it.
+    .clear { display: none; }
+
+    p {
+      float: none;
+      margin: 0;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--ej-muted);
+    }
+
+    #footer-left { float: none; }
+    // Pin the links group hard-right regardless of how many flex items WP renders
+    #footer-upgrade { float: none; margin-left: auto; text-align: right; }
+
+    .ej-foot-meta { font-variant-numeric: tabular-nums; }
+    .ej-foot-dot  { color: var(--ej-accent); }
+
+    .ej-foot-links {
+      display: inline-flex;
+      gap: 18px;
+
+      a {
+        color: var(--ej-muted) !important; // override WP/Bootstrap link blue
+        text-decoration: none !important;
+        &:hover { color: var(--ej-accent) !important; }
+      }
+    }
+  }
+
+  // The vendor stylesheet (admin/assets/vendor/css/style.min.css) shrinks
+  // .content-area for a now-removed sidebar layout:
+  //   ≤1199.98px → min-width: calc(100% - 260px)
+  //   ≤991.98px  → width:     calc(100% - 75px)
+  //   ≤767.98px  → width:     calc(100% - 50px)
+  // Because .easy-page-body is a flex row with no sibling, that leaves dead gray
+  // space on the RIGHT of the full-bleed shell. Force the area flush-full-width.
+  // Specificity here (0,3,1) beats the vendor `.easy-page-body .content-area`
+  // (0,2,0) on every viewport, so no media query is needed.
+  .easy-page-body .content-area {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+.easy-page-body {
+  margin: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  // Fill the viewport below the WP admin bar (minus the footer reserve) so the
+  // gray body bg never shows through and the footer pins to the bottom.
+  min-height: calc(100vh - 32px - 56px);
+
+  .fs14 {
+    font-size: 14px;
+  }
+  .gap4 {
+    gap: 16px;
+  }
+  .ej-sync-btn{
+    i{
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      margin-right: 7px;
+    }
+    &.ej-loading{
+      i{
+        animation: ej-spin 1s ease-in-out infinite;
+        -webkit-animation: ej-spin 1s ease-in-out infinite;
+      }
+    }
+  }
+  @keyframes ej-spin {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+  }
+  @-webkit-keyframes ej-spin {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+  }
+}
+
+// On screens ≤782px WP turns the admin bar into `position: absolute` (it scrolls
+// away with the page) and HIDES its footer (#wpfooter { display:none }). So the
+// sticky header must pin to the very top (top:0, not 46px — otherwise it floats
+// with a dead gap once the bar scrolls off), and the footer reserve is dropped.
+@media screen and (max-width: 782px) {
+  // NOTE: the sticky header's `top` is handled separately — the base rule keeps
+  // it under the fixed admin bar (46px) here, and a `.p-head { top: 0 }` override
+  // in the header responsive section below kicks in only at ≤600px, where WP makes
+  // the bar `position: absolute`. (It lives below so it wins the cascade against
+  // `top: var(--wp-admin--admin-bar--height)`.)
+  body.ej-app-active #wpbody-content { padding-bottom: 0; }
+  .easy-page-body { min-height: calc(100vh - 46px); }
+
+  // WP core hides its footer here (#wpfooter { display:none }), but our restyle
+  // `body.ej-app-active #wpfooter { display:flex }` (specificity 1,2,1) outranks
+  // core's rule (1,0,0) regardless of the media query, so it would stay visible.
+  // Re-assert the hide at the same breakpoint to honour core's behaviour.
+  body.ej-app-active #wpfooter { display: none; }
+}
+
+
+// ─── Pagination (rc-pagination redesign) ─────────────────────────────────────
+.rc-pagination {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0;
+
+    a,
+    button {
+      width: 32px;
+      height: 32px;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ej-text) !important;
+      background: transparent !important;
+      border: 1px solid transparent !important;
+      box-shadow: none !important;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .12s, color .12s, border-color .12s;
+      line-height: 1;
+
+      &:hover {
+        background: var(--ej-hover) !important;
+        border-color: var(--ej-border) !important;
+        color: var(--ej-text) !important;
+      }
+    }
+
+    &.rc-pagination-item-active a {
+      background: var(--ej-accent) !important;
+      border-color: var(--ej-accent) !important;
+      color: #fff !important;
+      border-radius: 8px;
+
+      &:hover {
+        background: var(--ej-accent-600) !important;
+        border-color: var(--ej-accent-600) !important;
+      }
+    }
+
+    // Prev / Next arrow buttons — SVG icons passed via prevIcon/nextIcon props
+    &.rc-pagination-prev button,
+    &.rc-pagination-next button {
+      color: var(--ej-text-2) !important;
+      svg { display: block; flex-shrink: 0; }
+    }
+
+    &.rc-pagination-disabled {
+      pointer-events: none;
+      a,
+      button {
+        color: var(--ej-muted-2) !important;
+        cursor: default;
+        &:hover {
+          background: transparent !important;
+          border-color: transparent !important;
+        }
+      }
+    }
+
+    // Jump-prev / jump-next ellipsis. rc-pagination renders these as an empty
+    // <button class="rc-pagination-item-link"> and relies on its own default
+    // stylesheet (not bundled here) for the "•••" content — so we supply it.
+    &.rc-pagination-jump-prev,
+    &.rc-pagination-jump-next {
+      button {
+        color: var(--ej-muted) !important;
+
+        &::after {
+          content: "•••";
+          letter-spacing: 1px;
+          font-size: 12px;
+          line-height: 1;
+        }
+
+        &:hover {
+          color: var(--ej-text) !important;
+        }
+      }
+    }
+  }
+}
+
+// Events in recent applicants
+
+.user-list .user-card.candidate-invitation {
+  background: rgba(254, 245, 246, 1);
+}
+
+.user-list .user-card.share-jobs {
+  background: rgba(255, 236, 249, 1);
+}
+
+.user-list .user-card.blog-post {
+  background: rgba(252, 243, 234, 1);
+}
+
+.user-list .user-card.candidate-invitation .user-picture {
+  background: linear-gradient(134.69deg, #FF5E5E 6.2%, #FF8888 100%);
+}
+
+.user-list .user-card.share-jobs .user-picture {
+  background: rgba(255, 97, 211, 1);
+}
+
+.user-list .user-card.blog-post .user-picture {
+  background: linear-gradient(134.69deg, #FF9635 6.2%, #FBBA7F 100%);
+}
+
+// Fill the height under the sticky header on every page. Padding is intentionally
+// left to the vendor stylesheet (admin/assets/vendor/css/style.min.css, NOT part of
+// the gulp build), which ships `.easy-page-body .content-area .content-area__body
+// { padding:0 30px 50px }` — so non-dashboard pages keep that flush-top default.
+.easy-page-body .content-area .content-area__body {
+  flex: 1;
+}
+
+// Dashboard page only — top gap separates the stats counters from the sticky header.
+// The `is-dashboard` modifier is toggled on `.content-area__body` by the Dashboard
+// React view (admin/react/src/components/Dashboard/index.js) on mount/unmount, so this
+// spacing never leaks to other pages sharing the same wrapper. Specificity (0,4,0)
+// beats the vendor rule (0,3,0) above, so it wins the padding cascade.
+.easy-page-body .content-area .content-area__body.is-dashboard {
+  padding: 28px 30px 40px;
+}
+
+.easy-page-body .content-area__body .user-card.candidate-invitation .user-picture img,
+.easy-page-body .content-area__body .user-card.share-jobs .user-picture img,
+.easy-page-body .content-area__body .user-card.blog-post .user-picture img {
+  width: 42px;
+}
+
+.user-list .user-card .user-picture {
+  height: 70px !important;
+  width: 70px !important;
+  border-radius: 50% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.easy-page-body .dashboard input.form-control {
+  padding-left: 36px;
+}
+
+.user-card {
+  .authors {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+}
+
+.easy-page-body .talk__to__support {
+  position: fixed;
+  top: 40%;
+  transform: translateY(-50%);
+  right: 0;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  z-index: 99;
+  a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: rotate(180deg);
+    background: #597dfc;
+    color: #fff;
+    white-space: nowrap;
+    padding: 15px 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+}
+
+// Header dropdown & all jobs not found
+.content-area__header .button {
+  margin-bottom: 0;
+}
+
+.ej-header-profile {
+    position: relative;
+    margin-left: 12px;
+
+    .ej-brand {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        cursor: pointer;
+
+        .ej-dropdown-icon {
+            display: inline-flex;
+
+            svg {
+                rect {
+                    fill: #EEF2FF;
+                    transition: ease-in-out .25s;
+                }
+                path {
+                    fill: #597DFC;
+                    transition: ease-in-out .25s;
+                }
+            }
+        }
+        &:hover {
+            svg {
+                rect {
+                    fill: #617CF4;
+                }
+                path {
+                    fill: #FFFFFF;
+                }
+            }
+        }
+    }
+
+    .ej-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ej-logo img {
+        width: unset !important;
+        max-width: 100%;
+        border-radius: 3px;
+    }
+
+    .ej-title {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+
+    .ej-company {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: 13px;
+        margin-bottom: 2px;
+    }
+
+    .ej-company h4 {
+        font-size: 20px;
+        line-height: 24px; 
+        font-weight: 500;
+        color: #7D8091;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .ej-company img {
+        max-width: 16px;
+        width: unset;
+    }
+
+    .ej-name {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: -9px;
+        z-index: 99;
+
+        img {
+            width: unset !important;
+            max-width: 18px;
+            border-radius: 50%;
+            background: #fff;
+        }
+    }
+
+    .ej-name h5 {
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 500;
+        color: #7D8091;
+        max-width: 170px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .ej-dropdown-btn {
+        margin-left: auto;
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        border: none;
+        background: #5b6cff;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.15s ease;
+    }
+    .ej-dropdown-btn:active { 
+        transform: scale(0.98);
+    }
+
+    .ej-chevron {
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 8px solid #fff;
+        display: inline-block;
+    }
+
+    .ej-menu {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 34px);
+        width: 240px;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 4px 7px 0 rgba(43, 62, 102, .1215686275);
+        padding: 4px;
+        overflow: hidden;
+        z-index: 99;
+    }
+    .ej-menu-item {
+        font-size: 12px;
+        line-height: 100%;
+        font-weight: 500;
+        color: #7D8091;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 4px 8px;
+        border-radius: 2px;
+        margin-bottom: 4px;
+        transition: ease-in-out .25s;
+        cursor: pointer;
+    }
+
+    .ej-menu-item a {
+        font-size: 12px;
+        line-height: 100%;
+        font-weight: 500;
+        color: #7D8091;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: ease-in-out .25s;
+        cursor: pointer;
+    }
+
+    .ej-menu-item:hover { 
+        background: #F8F9FA; 
+        color: #000000;
+    }
+
+    .ej-menu-item:hover a {
+        color: #000000;
+    }
+
+    .ej-menu-item:last-child { 
+        margin-bottom: 0;
+    }
+
+    .ej-menu-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 2px;
+        background: #EEF2FF;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ej-menu-item img {
+        max-width: 16px;
+        max-height: 16px;
+        width: unset !important;
+    }
+
+    .bp-menu-hide {
+        display: none;
+    }
+
+    .bp-menu-show {
+        display: block;
+    }
+}
+
+.ej-job-section {
+    // padding: 30px 0 0;
+
+    .ej-section-header {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        margin-bottom: 12px;
+    }
+
+    .ej-section-title {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 21px;
+        color: #212529;
+    }
+
+    .ej-info {
+        display: inline-flex;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .ej-info:hover .ej-tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .ej-tooltip {
+        position: absolute;
+        top: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 306px;
+        background: #D3D3D3;
+        padding: 10px 14px;
+        border-radius: 8px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, .08);
+        font-size: 13px;
+        line-height: 120%;
+        color: #4D4D4D;
+        display: flex;
+        justify-content: center;
+        transition: ease-in-out .25s;
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid;
+            border-color: transparent transparent #D3D3D3 transparent;
+        }
+    }
+
+    .ej-empty-card {
+        padding: 50px 0;
+        background: #fff;
+        border-radius: 8px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-direction: column;
+    }
+
+    .ej-empty-icon {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: var(--ej-accent-50);
+        color: var(--ej-accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ej-empty-text {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 140%;
+        color: #98A2B3;
+    }
+}
+
+// Header dropdown & all jobs not found responsive
+@media (max-width: 1024px) {
+  .easy-page-body {
+    .content-area__header {
+      img {
+        width: 130px;
+      }
+      .ej-sync-btn i {
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+      }
+      .button {
+        height: 40px;
+        min-height: 40px;
+        margin-right: 12px;
+      }
+      .ej-header-profile {
+        margin-left: 4px;
+        .ej-brand {
+          gap: 10px;
+          .ej-logo {
+            width: 34px;
+            height: 34px;
+          }
+        }
+        .ej-company {
+          margin-left: 9px;
+        }
+        .ej-company h4 {
+          font-size: 16px;
+          line-height: 18px;
+          max-width: 90px;
+        }
+        .ej-name img {
+          max-width: 14px;
+        }
+        .ej-name h5 {
+          font-size: 12px;
+          max-width: 110px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 767.98px) {
+  .ej-header-profile .ej-menu {
+    top: calc(100% + 22px);
+    width: 176px;
+  }
+  .ej-header-profile .ej-menu-icon {
+    width: 18px;
+    height: 18px;
+    img {
+      max-width: 12px;
+      max-height: 12px;
+    }
+  }
+  .ej-header-profile .ej-menu-item,
+  .ej-header-profile .ej-menu-item a {
+    font-size: 10px;
+    gap: 8px;
+    padding: 2px 4px;
+  }
+}
+@media (max-width: 650px) {
+  .easy-page-body {
+    .content-area__header {
+      small {
+        font-size: 70%;
+        padding-left: 0;
+      }
+      .ej-logo .ej-free-label {
+        font-size: 7px;
+        padding: 2px 4px;
+      }
+      img {
+        width: 120px;
+      }
+      .ej-sync-btn i {
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+      }
+      .button {
+        height: 32px;
+        min-height: 32px;
+        margin-right: 8px;
+        padding: 0 8px;
+      }
+      .ej-header-profile {
+        .ej-brand {
+          gap: 8px;
+          .ej-logo {
+            width: 24px;
+            height: 24px;
+          }
+        }
+        .ej-company {
+          display: none;
+        }
+        .ej-name {
+          margin-left: -6px;
+          margin-top: 8px;
+          h5 {
+            display: none;
+          }
+        }
+        .ej-dropdown-icon svg {
+          width: 12px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 420px) {
+  .easy-page-body .content-area__header img {
+    width: 90px;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// Dashboard Redesign — new component styles
+// ══════════════════════════════════════════════════════════════════════════════
+
+.tnum { font-variant-numeric: tabular-nums; }
+
+// ─── Shared section utilities ─────────────────────────────────────────────────
+.ej-section {
+  margin-bottom: 32px;
+}
+
+.ej-sec-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+
+  h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: var(--ej-text);
+  }
+  .sub {
+    font-size: 12.5px;
+    color: var(--ej-muted);
+    margin-top: 3px;
+  }
+}
+
+.ej-see-link {
+  font-size: 13px;
+  font-weight: 500;
+  // Bootstrap .easy-page-body a has specificity (0,1,1) > our (0,1,0) — force accent
+  color: var(--ej-accent) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none !important;
+  &:hover { color: var(--ej-accent-600) !important; }
+}
+
+// ─── Card surface ─────────────────────────────────────────────────────────────
+.ej-surface {
+  background: var(--ej-surface);
+  border: 1px solid var(--ej-border);
+  border-radius: var(--ej-radius);
+}
+
+// ─── Header (.p-head) ─────────────────────────────────────────────────────────
+// display:flex !important overrides vendor Bootstrap reset:
+//   .easy-page-body header { display: block } (specificity 0,1,1 > our 0,1,0)
+.p-head {
+  background: var(--ej-surface);
+  border-bottom: 1px solid var(--ej-border);
+  padding: 0 30px;
+  height: 70px;
+  display: flex !important;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: nowrap;        // controls must never wrap onto a second line
+  position: sticky;
+  // Pin flush beneath WP's fixed admin bar. Bar height by viewport:
+  //   >782px  → 32px (fixed)         → top: 32px (here)
+  //   601–782 → 46px (fixed)         → top: 46px (override below)
+  //   ≤600px  → 46px but position:absolute (scrolls away) → top: 0 (override below)
+  // Explicit per-breakpoint values are used rather than the WP
+  // --wp-admin--admin-bar--height variable, whose value can't be relied on at
+  // every width. The overrides live AFTER this block so they win the cascade.
+  top: 32px;
+  z-index: 9999;
+
+  // Reset WP admin + Bootstrap global styles within the header.
+  // Exclusions:
+  //   .ej-avatar-initials — keep its gradient background
+  //   .p-head-btn-outline / .p-head-sync-btn / .p-head-msg-btn — styled buttons
+  //     manage their own base + hover backgrounds/colors (matching the reference design)
+  // NOTE: no `color: inherit` here — it would beat each button's own color.
+  a:not(.ej-avatar-initials):not(.p-head-btn-outline),
+  [role="button"]:not(.ej-avatar-initials):not(.p-head-sync-btn):not(.p-head-msg-btn) {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    font-family: inherit !important;
+    text-transform: none;
+    vertical-align: baseline;
+    outline: none;
+    background: transparent !important;
+    border-color: inherit;
+  }
+
+
+  &-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;       // allow the text column to shrink/ellipsis…
+    flex-shrink: 1;     // …so the brand yields space to the controls, not vice versa
+  }
+
+  &-brand-icon {
+    width: 34px;  // matches reference .brand-mark
+    height: 34px;
+    flex-shrink: 0;
+    display: block;
+    object-fit: contain;
+  }
+
+  &-brand-txt {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  &-brand-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-brand-name {
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -.015em;
+    color: var(--ej-text);
+    white-space: nowrap;
+  }
+
+  &-brand-dot { color: var(--ej-accent); }
+
+  &-pro-badge {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: var(--ej-accent);
+    background: var(--ej-accent-50);
+    border: 1px solid var(--ej-accent-100);
+    border-radius: 5px;
+    padding: 1px 6px;
+    line-height: 1.5;
+
+    &--expired {
+      color: #B91C1C;
+      background: #FBE7E7;
+      border-color: #FECACA;
+    }
+  }
+
+  &-free-badge {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: var(--ej-muted);
+    background: var(--ej-surface-2);
+    border: 1px solid var(--ej-border);
+    border-radius: 5px;
+    padding: 1px 6px;
+    line-height: 1.5;
+  }
+
+  &-brand-sub {
+    font-size: 12.5px;
+    color: var(--ej-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;     // controls keep their size; the brand yields space instead
+  }
+
+  // Icon-only control sitting after .p-head-btn-outline. Neutral #EAEAEC border to
+  // match the header chrome; the app's e-chat bubble icon stays accent-coloured.
+  &-msg-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid #EAEAEC;
+    background: var(--ej-surface);
+    // Slightly lighter than --ej-accent (#4F46E5) so the chat icon reads softer.
+    color: #6366F1;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background .12s, border-color .12s;
+
+    &:hover { background: var(--ej-hover); border-color: #d9d9dd; }
+
+    svg { display: block; }
+  }
+
+  &-msg-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: var(--ej-danger, #ef4444);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    border: 2px solid var(--ej-surface);
+    box-sizing: border-box;
+  }
+
+  &-sync-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ej-muted);
+    background: transparent;
+    border: 1px solid var(--ej-border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: relative;
+    transition: background .12s, border-color .12s, color .12s;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      background: var(--ej-hover);
+      border-color: var(--ej-border-2);
+      color: var(--ej-text);
+      .p-head-sync-hint { opacity: 1; }
+    }
+
+    svg { transition: transform .2s; }
+
+    &.syncing svg { animation: ej-spin .8s linear infinite; }
+  }
+
+  &-sync-hint {
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: #fff;
+    font-size: 12.5px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    white-space: nowrap;
+    box-shadow: var(--ej-shadow-pop);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .12s;
+    z-index: 8;
+  }
+
+  &-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ej-accent) !important; // override WP a { color: #2271b1 }
+    background: var(--ej-surface);
+    border: 1px solid var(--ej-accent-100);
+    border-radius: 8px;
+    padding: 7px 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background .12s, border-color .12s;
+    text-decoration: none !important;
+
+    &:hover {
+      background: var(--ej-accent-50);
+      border-color: var(--ej-accent);
+      color: var(--ej-accent) !important;
+    }
+    &:focus {
+      box-shadow: none !important;
+      color: var(--ej-accent) !important;
+    }
+  }
+
+  &-ws-wrap { position: relative; flex-shrink: 0; }
+
+  &-ws-btn {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 9px 5px 6px;
+    border-radius: 10px;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover { background: var(--ej-hover) !important; }
+
+    // Avatar: enforce exact size so .easy-page-body header img{width:170px} can't override
+    .ej-avatar-img {
+      border-radius: 8px !important;
+      width: 28px !important;
+      height: 28px !important;
+      flex-shrink: 0 !important;
+      display: block !important;
+      border: 1px solid var(--ej-border);
+    }
+    .ej-avatar-initials {
+      border-radius: 8px !important;
+      flex-shrink: 0 !important;
+      // Do NOT reset background — the gradient must show through
+    }
+
+    b {
+      font-size: 12.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--ej-text) !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+      white-space: nowrap;
+    }
+
+    .p-head-ws-name {
+      max-width: 160px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &-ws-who {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    text-align: left;
+    background: transparent !important;
+
+    span {
+      font-size: 12.5px;
+      color: var(--ej-muted) !important;
+      background: transparent !important;
+    }
+  }
+
+  &-ws-chev { color: var(--ej-muted-2); }
+
+  &-ws-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 200px;
+    background: var(--ej-surface);
+    border: 1px solid var(--ej-border);
+    border-radius: 11px;
+    box-shadow: var(--ej-shadow-pop);
+    padding: 6px;
+    z-index: 50;
+
+    .p-head-ws-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: 100%;
+      padding: 8px 9px;
+      border-radius: 7px;
+      background: transparent;
+      box-shadow: inset 0 0 0 1px transparent;
+      font-size: 12.5px;
+      line-height: 1;
+      color: var(--ej-text-2);
+      text-align: left;
+      cursor: pointer;
+      transition: background .14s ease, color .14s ease, box-shadow .14s ease;
+
+      // Clearly visible hover fill — the global --ej-hover (#F3F3F4) is only ~2%
+      // off white and disappears against this white menu, so use a stronger
+      // neutral here and darken the icon to match.
+      &:hover {
+        background: #E9EAF0;
+        color: var(--ej-text);
+        svg { color: var(--ej-text-2); }
+      }
+
+      // Give every icon an identical centered box so the three differently-shaped
+      // glyphs (gear / briefcase / arrow) reserve the same optical width and the
+      // labels line up perfectly across all rows.
+      svg {
+        flex: 0 0 16px;
+        width: 16px;
+        height: 16px;
+        display: block;        // drop inline baseline gap so the icon centers cleanly
+        color: var(--ej-muted);
+        transition: color .14s ease;
+      }
+
+      // Label as an explicit flex item with a tight line box — keeps the text
+      // optically centered against the icon instead of relying on an anonymous
+      // text node, which centers inconsistently across browsers.
+      .p-head-ws-menu-item-txt {
+        display: block;
+        line-height: 1;
+      }
+
+      // Disconnect — destructive action. Red label with a matching red icon so the
+      // intent reads at a glance, and a richer hover (clearly reddish fill, deeper
+      // red text, subtle inset ring) that signals the consequence on the way in.
+      &--danger {
+        color: var(--ej-red);
+        font-weight: 500;
+        svg { color: var(--ej-red); }
+
+        &:hover {
+          background: #FCE0E0;
+          color: var(--ej-red-700);
+          box-shadow: inset 0 0 0 1px var(--ej-red-ring);
+          svg { color: var(--ej-red-700); }
+        }
+      }
+    }
+  }
+
+  &-ws-lbl {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ej-muted-2);
+    padding: 6px 9px 4px;
+  }
+
+  &-ws-sep {
+    height: 1px;
+    background: var(--ej-border);
+    margin: 5px 6px;
+  }
+}
+
+// ─── New header (.p-head) responsiveness ──────────────────────────────────────
+// The legacy responsive rules far above only target `.content-area__header`
+// (the old header). The redesigned `.p-head` had none, so on narrower admin
+// viewports its controls used to wrap/cram inside the fixed 70px bar. Shed the
+// non-essential pieces progressively, smallest impact first, so the bar always
+// stays a single tidy row.
+
+// Sticky-header `top`, tracking WP's admin bar across breakpoints. These MUST
+// sit after the `.p-head` base rule to win the cascade (same specificity →
+// later wins), and the ≤600px rule must follow the ≤782px one for the same
+// reason. See the matching note in the ≤782px block far above.
+@media screen and (max-width: 782px) {
+  // 601–782px: bar is still position:fixed but 46px tall — seat header beneath it.
+  .p-head { top: 46px; }
+}
+@media screen and (max-width: 600px) {
+  // ≤600px: WP makes the bar position:absolute (it scrolls away) — pin to top.
+  .p-head { top: 0; }
+}
+
+@media (max-width: 1024px) {
+  .p-head {
+    padding: 0 20px;
+    gap: 12px;
+    &-right { gap: 8px; }
+  }
+}
+
+@media (max-width: 900px) {
+  .p-head {
+    // Collapse the sync control to its icon and drop the secondary brand line.
+    &-brand-sub { display: none; }
+    &-sync-txt  { display: none; }
+    &-sync-btn  { padding: 8px; gap: 0; }
+    // Drop the "Workspace" sub-label under the company name.
+    &-ws-who span { display: none; }
+    &-ws-name { max-width: 120px; }
+  }
+}
+
+@media (max-width: 720px) {
+  .p-head {
+    padding: 0 14px;
+    gap: 10px;
+    // "View Company Page" is the least essential action here (the same link
+    // lives in the company page itself) — hide it to keep the row uncluttered.
+    &-btn-outline { display: none; }
+    &-ws-name { max-width: 90px; }
+  }
+}
+
+@media (max-width: 480px) {
+  .p-head {
+    height: 60px;
+    &-brand-name { font-size: 15px; }
+    &-brand-icon { width: 28px; height: 28px; }
+    // On phones the workspace name itself is redundant beside its avatar.
+    &-ws-name { display: none; }
+  }
+}
+
+// ─── Dashboard body padding scales down with the viewport ─────────────────────
+// Keeps content (and the WP footer, which mirrors this inset) from hugging the
+// screen edge on smaller widths.
+@media (max-width: 782px) {
+  // Keep an even gutter on all sides of the dashboard, including a clear gap
+  // between the sticky header and the first counter row.
+  //
+  // Two ≤768px rules fight this: the vendor `.content-area__body{padding:0 …}`
+  // (0,3,0) and — the real offender — a GLOBAL, !important rule meant for the
+  // All Jobs page in _allJobs.scss:
+  //   @media (max-width: 767.98px) { .content-area__body { padding:0 20px 15px 30px !important } }
+  // which forces top:0 and asymmetric sides (left 30 / right 20) on every page.
+  // We out-rank it with higher specificity (0,4,0) AND !important so the
+  // dashboard keeps a balanced inset; other pages are untouched.
+  .easy-page-body .content-area .content-area__body.is-dashboard {
+    padding: 24px 20px 32px !important;
+  }
+}
+
+// ─── Stat cards ───────────────────────────────────────────────────────────────
+.ej-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  > a { text-decoration: none; }
+
+  @media (max-width: 1200px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 600px)  { grid-template-columns: 1fr; }
+}
+
+.ej-stat {
+  background: var(--ej-surface);
+  border: 1px solid var(--ej-border);
+  border-radius: var(--ej-radius);
+  padding: 18px 20px;
+  transition: box-shadow .15s;
+
+  &:hover { box-shadow: var(--ej-shadow-pop); }
+
+  &-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-ic {
+    color: var(--ej-muted-2);
+    svg { stroke-width: 1.7; }
+  }
+
+  &-num {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -.025em;
+    font-variant-numeric: tabular-nums;
+    margin-top: 14px;
+    line-height: 1;
+    color: var(--ej-text);
+  }
+
+  &-lbl {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ej-muted);
+    margin-top: 7px;
+  }
+
+  &-trend {
+    font-size: 11.5px;
+    color: var(--ej-muted);
+    margin-top: 9px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+// Stat link wrappers must fill their grid column fully
+.ej-stats > a,
+.ej-stats > .link-tag,
+.ej-stats > [class*="link"] {
+  display: block;
+  height: 100%;
+}
+
+// ─── Applicants grid ──────────────────────────────────────────────────────────
+.ej-applicants {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 16px;
+
+  @media (max-width: 1200px) {
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    grid-auto-columns: minmax(200px, 220px);
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+}
+
+.ej-appc {
+  background: var(--ej-surface);
+  border: 1px solid var(--ej-border);
+  border-radius: var(--ej-radius);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  // Equal size — fill full grid column and row
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  box-sizing: border-box;
+
+  &-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &-tag {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ej-accent);
+    background: var(--ej-accent-50);
+    border-radius: 999px;
+    padding: 2px 9px;
+  }
+
+  &-fav {
+    background: transparent;
+    border: none;
+    color: #D8D8DB;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;          // match the star size
+    line-height: 1;           // center the digit against the icon
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    padding: 0;
+    cursor: default; // display-only rating, not interactive
+
+    svg {
+      width: 12px;
+      height: 12px;
+      display: block;
+      stroke-width: 1.6;
+      fill: none;
+    }
+
+    .ej-appc-fav-n {
+      display: inline-block;
+      line-height: 1;
+      font-size: 12px;
+    }
+
+    &.on {
+      color: #E0A100;
+      svg { fill: #FFC532; stroke: #E0A100; }
+    }
+  }
+
+  &-av { margin-top: 2px; }
+
+  // Promo/event cards: centered white line-icon on a colored gradient disc.
+  // The gradient itself is set inline per card (red / pink / orange).
+  &-event-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 8px 16px -8px rgba(20, 20, 50, .35);
+
+    svg { display: block; }
+  }
+
+  &-nm {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -.005em;
+    margin-top: 2px;
+    color: var(--ej-text);
+  }
+
+  &-role {
+    font-size: 12px;
+    color: var(--ej-muted);
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-time {
+    font-size: 11.5px;
+    color: var(--ej-muted-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    svg { stroke-width: 1.7; }
+  }
+
+  &-cta {
+    margin-top: auto; // pushes button to bottom regardless of content length
+    // Override WP admin button/link global styles
+    font: inherit !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    background: transparent !important;
+    border: 1px solid var(--ej-border) !important;
+    color: var(--ej-text-2) !important;
+    padding: 7px 16px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    transition: background .12s, border-color .12s, color .12s;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--ej-surface-2) !important;
+      border-color: var(--ej-border-2) !important;
+      color: var(--ej-text) !important;
+    }
+
+    &--dark {
+      background: var(--ej-text) !important;
+      border-color: var(--ej-text) !important;
+      color: #fff !important;
+      margin-top: 10px !important;
+      &:hover {
+        background: var(--ej-text-2) !important;
+        border-color: var(--ej-text-2) !important;
+        color: #fff !important;
+      }
+    }
+  }
+
+  &-more { justify-content: center; }
+
+  &-stack {
+    display: flex;
+    margin: 4px 0;
+  }
+
+  &-stack-sm {
+    border: 2px solid var(--ej-surface) !important;
+    margin-left: -10px !important;
+    &:first-child { margin-left: 0 !important; }
+  }
+}
+
+// ─── Jobs table ───────────────────────────────────────────────────────────────
+.ej-jobs-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  gap: 12px;
+
+  h2 { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -.01em; color: var(--ej-text); }
+}
+
+.ej-tbl-scroll { width: 100%; overflow-x: auto; }
+
+.ej-tbl {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13.5px;
+  min-width: 720px;
+
+  thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--ej-muted);
+    padding: 10px 22px;
+    border-top: 1px solid var(--ej-border);
+    border-bottom: 1px solid var(--ej-border);
+    background: var(--ej-surface);
+
+    &.right { text-align: right; }
+  }
+
+  &-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    user-select: none;
+    &:hover { color: var(--ej-text-2); svg { opacity: .75; } }
+    svg { opacity: .4; }
+
+    &.is-active {
+      color: var(--ej-text);
+      svg { opacity: 1; color: var(--ej-accent); }
+    }
+  }
+
+  tbody td {
+    padding: 15px 22px;
+    border-bottom: 1px solid var(--ej-border);
+    vertical-align: middle;
+    color: var(--ej-text);
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--ej-surface-2); }
+}
+
+.ej-job-title {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ej-text) !important;
+  text-decoration: none !important;
+  &:hover { color: var(--ej-accent) !important; }
+}
+
+.ej-appl {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ej-appl-stack {
+  display: flex;
+  text-decoration: none;
+}
+
+.ej-appl-sm {
+  border: 2px solid var(--ej-surface) !important;
+  margin-left: -9px !important;
+  &:first-child { margin-left: 0 !important; }
+}
+
+.ej-appl-cnt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ej-muted);
+  background: var(--ej-surface-2);
+  border: 1px solid var(--ej-border);
+  border-radius: 999px;
+  padding: 1px 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ej-st-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 7px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &.active { background: var(--ej-green-bg); color: var(--ej-green); .dot { background: var(--ej-green); } }
+  &.expired { background: var(--ej-red-bg); color: var(--ej-red); .dot { background: var(--ej-red); } }
+}
+
+.ej-dl {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &-date { font-size: 13px; color: var(--ej-text); }
+  &-rel  {
+    font-size: 11.5px;
+    color: var(--ej-muted);
+    &.accent { color: var(--ej-accent); }
+    &.amber  { color: var(--ej-amber); }
+    &.red    { color: var(--ej-red); }
+  }
+}
+
+.ej-row-acts {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.ej-act-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--ej-muted);
+  display: grid;
+  place-items: center;
+  transition: background .12s, color .12s, border-color .12s;
+  cursor: pointer;
+  text-decoration: none;
+
+  // `.is-active` mirrors :hover so the share button stays highlighted while its
+  // (portaled) menu is open, even after the cursor leaves the button itself.
+  &:hover,
+  &.is-active { background: var(--ej-hover); color: var(--ej-text); border-color: var(--ej-border); }
+  svg { stroke-width: 1.7; }
+}
+
+// The vendor reset `.easy-page-body button { border-radius: 0 }` (specificity
+// 0,1,1) beats the plain `.ej-act-btn` (0,1,0), squaring off the share button —
+// the only action that is a <button> (view/edit are <a>). Re-assert the radius
+// with matching reach so its hover/focus highlight matches the others.
+.easy-page-body .ej-act-btn { border-radius: 7px; }
+
+.ej-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 22px;
+  border-top: 1px solid var(--ej-border);
+}
+
+.ej-pager-info { font-size: 12.5px; color: var(--ej-muted); }
+
+// Recent-jobs share menu. Rendered through a portal to <body> (see ShareDropdown
+// in RecentJobs.js) with position:fixed, so the table's horizontal-scroll wrapper
+// — .ej-tbl-scroll uses overflow-x:auto, which forces overflow-y to clip too —
+// can never cut it off, regardless of how many rows the table has. The icon-font
+// glyph classes (.easyjobs-icon etc.) are global, so they render at body level.
+.ej-share-pop {
+  z-index: 99999;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 22px rgba(89, 125, 252, .28);
+  overflow: hidden;
+  padding: 4px 0;
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    height: 38px;
+    padding: 0 15px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    color: #597dfc;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: background .15s ease;
+
+    &:hover { background: rgba(89, 125, 252, .08); }
+
+    .dropdown-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      font-size: 14px;
+      line-height: 1;
+    }
+  }
+}
+
+// ─── Skeleton shimmer ─────────────────────────────────────────────────────────
+@keyframes ej-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.ej-skel {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    var(--ej-surface-2) 25%,
+    var(--ej-hover) 50%,
+    var(--ej-surface-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: ej-shimmer 1.4s ease-in-out infinite;
+  border-radius: 4px;
+  flex-shrink: 0;
+
+  &-circle { border-radius: 50%; }
+}
+
+// Skeleton rows: no hover tint, no border, just a ghost row
+.ej-tbl-sk-row {
+  td {
+    border-bottom: 1px solid var(--ej-border);
+    padding: 14px 22px;
+    vertical-align: middle;
+  }
+  &:last-child td { border-bottom: none; }
+  &:hover { background: transparent !important; }
+}

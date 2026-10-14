@@ -4,12 +4,12 @@ Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 7.1
-Stable tag: 2.8.2
+Stable tag: 2.8.3
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
 
-Easy solution for job recruitment to attract, manage & hire the right talent faster. Create and manage job listings, career pages, and recruitment seamlessly with Elementor and the Block Editor.
+Attract, manage & hire the right talent faster. Create job listings, career pages, and manage recruitment with Elementor and the Block Editor.
 
 
 == Description ==
@@ -106,6 +106,55 @@ This Recruitment solution is brought to you by the team behind [WPDeveloper](htt
 
 
 
+== External services ==
+
+easy.jobs is a SaaS (Software as a Service). This plugin is a client for it, so it connects to the services below. Nothing is sent before you connect an easy.jobs account, except where noted.
+
+= easy.jobs API (app.easy.jobs) =
+Required. The plugin stores your jobs, candidates, pipelines and company settings on easy.jobs.
+* What is sent: your easy.jobs API key and the data you create or change in the plugin (jobs, candidate actions, messages, company profile, settings). On the career pages, the plugin requests your published jobs and company profile from the server side (visitors' data is not sent).
+* When: when you connect your account and each time you use the EasyJobs admin screens; when a career page needs fresh job data.
+* Visitors' browsers load the company logo, cover photo and gallery images you uploaded to easy.jobs from easy.jobs servers, and the "Apply" button links to app.easy.jobs.
+* Terms of Service: https://easy.jobs/terms/ — Privacy Policy: https://easy.jobs/privacy/
+
+= easy.jobs visitor analytics (analytics.easy.jobs, Matomo) =
+Optional and OFF by default. Turn it on under EasyJobs → Settings → Privacy.
+* What is sent: when it is on, the career pages built with the [easyjobs_list] and [easyjobs_details] shortcodes load a Matomo script from analytics.easy.jobs. It sends page views, link clicks, the visitor's IP address, browser and device details. When you turn it on (and when you sync), your site URL is registered with easy.jobs analytics.
+* Why: to show job-page statistics in your easy.jobs dashboard.
+* If you turn it on, add it to your site's privacy policy and ask visitors for consent where the law requires it.
+* Terms of Service: https://easy.jobs/terms/ — Privacy Policy: https://easy.jobs/privacy/ — Matomo: https://matomo.org/privacy-policy/
+
+= Google Translate (translate.google.com) =
+Optional and OFF by default. It runs only when you enable "Translate input fields" for your company on easy.jobs.
+* What is sent: on the career pages, the visitor's browser loads the Google Translate script and Google receives the page content, the visitor's IP address and browser details. A `googtrans` cookie stores the target language.
+* Google Terms of Service: https://policies.google.com/terms — Privacy Policy: https://policies.google.com/privacy
+
+= Google Fonts (fonts.googleapis.com) — block editor only =
+The plugin ships its own fonts (Poppins, Inter) and does not load Google Fonts on your site. Only in the block editor, when you choose a Google font in an EasyJobs block's typography control, the editor loads that font from Google so you can preview it. Google receives the editor user's IP address and browser details.
+* Google Terms of Service: https://policies.google.com/terms — Privacy Policy: https://policies.google.com/privacy
+
+= WPInsights usage tracking (send.wpinsight.com) =
+Optional and OFF by default. The plugin asks once (admin notice) whether you want to share usage data. Nothing is sent unless you click "Allow".
+* What is sent: site URL, admin email address, WordPress, PHP and server versions, active and inactive plugins, active theme, and text direction. When you deactivate the plugin, the optional deactivation reason you choose.
+* Why: to keep the plugin compatible with popular themes and plugins.
+* Run by WPDeveloper. Terms: https://wpdeveloper.com/terms-and-conditions — Privacy Policy: https://wpdeveloper.com/privacy-policy
+
+= Video embeds in the admin (YouTube, Vimeo, Google Drive) =
+Admin screens only. The welcome screen and the dashboard embed an easy.jobs introduction video from YouTube. When a candidate answers a question with a video link, the candidate's Application tab embeds it from YouTube, Vimeo or Google Drive. The provider receives the admin user's IP address and browser details when the video loads.
+* YouTube / Google Drive: Terms https://policies.google.com/terms — Privacy https://policies.google.com/privacy
+* Vimeo: Terms https://vimeo.com/terms — Privacy https://vimeo.com/privacy
+
+== Source code and build ==
+
+Every compiled file ships with its human-readable source in this plugin:
+
+* Admin dashboard (React): `admin/react/src/` → `admin/assets/dist/react/`. Build: `cd admin/react && npm install && npm run build`.
+* Gutenberg blocks: `blocks/blocks/*/src/`, `blocks/store/`, `blocks/index.js` → `blocks/dist/index.js`, and `blocks/controls/src/` → `blocks/dist/modules.js`. Build: `npm install && npm run build` (root), and `cd blocks/controls && npm install && npm run build`.
+* Admin and public CSS/JS: `admin/assets/src/`, `admin/assets/vendor/scss/`, `public/assets/src/` → `admin/assets/dist/`, `public/assets/dist/`. Build: `npx gulp build`.
+* `admin/assets/dist/js/easyjobs-admin-vendor-bundle.min.js` is built from `admin/assets/src/lib/js/` (Bootstrap 4.3.1 bundle and jquery-dateFormat 1.0.4).
+
+Bundled third-party libraries (unchanged, with their licences): PDF.js 3.11.174 (Apache-2.0, `admin/assets/vendor/pdfjs/`, source https://github.com/mozilla/pdf.js), SweetAlert 2.1.0 (MIT, https://github.com/t4t5/sweetalert), Select2 4.0.6 (MIT, https://github.com/select2/select2), Bootstrap 4.3.1 (MIT, https://github.com/twbs/bootstrap), Owl Carousel 2.3.4 (MIT, https://github.com/OwlCarousel2/OwlCarousel2), Poppins and Inter fonts (SIL OFL 1.1, `public/assets/vendor/fonts/`).
+
 == Installation ==
 
 1. Upload `easyjobs` to the `/wp-content/plugins/` directory
@@ -138,10 +187,17 @@ No, credit card is not required to sign up.
 
 == Changelog ==
 
+= 2.8.3 - 14/10/2026 =
+* Added: Privacy settings with visitor analytics disabled by default.
+* Improved: Readme documentation, local asset bundling, WordPress script handling, and security compliance.
+* Fixed: Analytics fallback URL, uninstall data cleanup, nonce protection, search error handling, and minor UI/error message issues.
+* Removed: Unused upgrade popups, promotional notices, and the Go Pro customizer label.
+* Few minor bug fixes & improvements.
+
 = 2.8.2 - 29/09/2026 =
-- Fixed: Issues in job details formatting, and stale job data.
-- Improved: Job location, deadline, sharing, branding, messages and conversation UI.
-- Few minor bug fixes & improvements.
+* Fixed: Issues in job details formatting, and stale job data.
+* Improved: Job location, deadline, sharing, branding, messages and conversation UI.
+* Few minor bug fixes & improvements.
 
 = 2.8.1 - 07/07/2026 =
 * Revamped: Admin Candidates Page.

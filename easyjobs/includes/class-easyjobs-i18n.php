@@ -32,13 +32,9 @@ class Easyjobs_i18n {
 	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
-
-		load_plugin_textdomain(
-			'easyjobs',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-		);
-
+		// Intentionally a no-op: since WordPress 4.6 translations for WordPress.org-hosted
+		// plugins are loaded automatically for the "easyjobs" text domain (the plugin requires 5.0+).
+		// The method and its hook are kept so existing references keep working.
 	}
 
 }

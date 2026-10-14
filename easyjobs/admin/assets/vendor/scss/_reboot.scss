@@ -1,0 +1,72 @@
+// Poppins is self-hosted (see public/assets/src/scss/partials/_local-fonts.scss),
+// never loaded from Google. Path is relative to admin/assets/vendor/css/.
+$ej-font-path: '../../../../public/assets/vendor/fonts';
+@import '../../../../public/assets/src/scss/partials/local-fonts';
+
+
+// wrapper
+.easy-page-body {
+	min-height: 100vh;
+	font-family: 'Poppins', sans-serif;
+	line-height: 1.5;
+	font-weight: 500;
+	letter-spacing: 0;
+	background: $light;
+	font-size: 16px;
+	@include respond-below(hl) {
+		font-size: 14px;
+	}
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	* {
+		margin: 0;
+		padding: 0;
+		outline: none;
+		border: none;
+		box-sizing: border-box;
+	}
+	ul,
+	li {
+		list-style: none;
+	}
+	a {
+		color: initial;
+		transition: all 0.3s linear;
+		&:hover,
+		&:focus {
+			text-decoration: none;
+		}
+	}
+
+	label {
+		margin-bottom: 0;
+	}
+	button {
+		vertical-align: middle;
+		background: unset;
+		&:hover,
+		&:focus {
+			outline: none;
+		}
+	}
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		margin-bottom: 0;
+	}
+	h1 {
+		font-size: 2.25em;
+		font-weight: 600;
+		line-height: 1.5;
+		margin-bottom: 10px;
+	}
+	ul,
+	ol {
+		margin-bottom: 0;
+	}
+}

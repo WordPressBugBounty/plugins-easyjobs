@@ -1,0 +1,344 @@
+.analytic-section {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 10px;
+    .dropdown {
+        .white-button {
+            background: #f5f7fd !important;
+        }
+    }
+}
+
+.graph__control {
+    display: grid;
+    grid-template-columns: repeat( 5, 1fr );
+    grid-gap: 10px;
+    @media all and (max-width: 1199px) {
+        grid-template-columns: repeat( 3, 1fr );
+    }
+    @media all and (max-width: 575px) {
+        grid-template-columns: repeat( 2, 1fr );
+    }
+    .graph__control__button {
+        height: auto !important;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 15px;
+        border: 1px solid transparent;
+        background: #f5f7fd;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.03);
+        .count__for {
+            color: #7d8091;
+        }
+    }
+}
+// Free-user teaser: the real Pro UI (metric tabs + Recharts chart) rendered from
+// demo data, blurred, with an upgrade card overlaid. Pure HTML/CSS/SVG — no image.
+.analytics__demo {
+    position: relative;
+    overflow: hidden;
+
+    // Blurred, non-interactive preview underneath the overlay.
+    &-preview {
+        filter: blur(3px);
+        opacity: .55;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    // Centered upgrade overlay, sitting on a soft scrim that lifts it off the
+    // blurred chart for legibility.
+    &-lock {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-align: center;
+        padding: 20px;
+        background: radial-gradient(ellipse at center, rgba(255, 255, 255, .72) 0%, rgba(255, 255, 255, .35) 55%, rgba(255, 255, 255, .12) 100%);
+    }
+
+    &-lock-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        margin-bottom: 4px;
+        border-radius: 50%;
+        color: #fff;
+        background: linear-gradient(135deg, var(--ej-accent) 0%, #6D5DF6 100%);
+        box-shadow: 0 10px 22px -8px rgba(79, 70, 229, .6);
+    }
+
+    &-lock-title {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: -.01em;
+        color: var(--ej-text);
+    }
+
+    &-lock-sub {
+        font-size: 12.5px;
+        color: var(--ej-muted);
+        max-width: 300px;
+        line-height: 1.45;
+    }
+}
+
+// Primary "Get PRO" call-to-action — on-brand indigo, reused anywhere a pro
+// upsell button is needed. Scoped under .easy-page-body so the white text (and
+// the crown, which is fill:currentColor) beats the vendor `.easy-page-body a`
+// color rule that would otherwise darken an <a> button.
+.easy-page-body .ej-pro-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 6px;
+    padding: 11px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, var(--ej-accent) 0%, #6D5DF6 100%);
+    box-shadow: 0 12px 26px -8px rgba(79, 70, 229, .55);
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+
+    svg { width: 18px; height: 18px; }
+
+    &:hover,
+    &:focus {
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 16px 30px -8px rgba(79, 70, 229, .65);
+    }
+}
+
+// Decorative range selector shown in the free-user header — looks like the Pro
+// control but is inert.
+.ej-seg.is-decorative {
+    opacity: .6;
+    pointer-events: none;
+}
+
+// ── Analytics redesign ────────────────────────────────────────────────────────
+
+.ej-an-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 22px 16px;
+  border-bottom: 1px solid var(--ej-border);
+
+  h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: var(--ej-text);
+  }
+}
+
+.ej-seg {
+  display: flex;
+  background: var(--ej-surface-2);
+  border: 1px solid var(--ej-border);
+  border-radius: 9px;
+  padding: 3px;
+  gap: 2px;
+
+  button {
+    background: transparent;
+    border: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ej-muted);
+    padding: 5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .12s, color .12s, box-shadow .12s;
+
+    &:hover { color: var(--ej-text); }
+
+    &.active {
+      background: var(--ej-surface);
+      color: var(--ej-text);
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+  }
+}
+
+// ─── Metric tabs ──────────────────────────────────────────────────────────────
+.ej-metric-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--ej-border);
+  overflow-x: auto;
+}
+
+.ej-mtab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 22px 14px;
+  background: transparent;
+  border: none;
+  // Indicator at TOP, matching reference design
+  border-top: 2px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s, background .12s;
+  white-space: nowrap;
+  position: relative;
+
+  // Vertical separator between tabs
+  & + .ej-mtab::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    bottom: 14px;
+    width: 1px;
+    background: var(--ej-border);
+  }
+
+  &:hover { background: var(--ej-surface-2); }
+
+  &-lbl {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ej-muted);
+    font-weight: 500;
+
+    i {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--c, var(--ej-accent));
+      opacity: .35;
+      flex-shrink: 0;
+      transition: opacity .15s;
+    }
+  }
+
+  &-v {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ej-text);
+    letter-spacing: -.03em;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  // Percentage change row: "▲9% vs prev", "▼2% vs prev", "no change"
+  &-chg {
+    font-size: 11.5px;
+    font-weight: 500;
+    &.up   { color: #16A34A; }
+    &.down { color: var(--ej-red); }
+    &.flat { color: var(--ej-muted); }
+  }
+
+  &.on {
+    border-top-color: var(--c, var(--ej-accent));
+    .ej-mtab-lbl i { opacity: 1; }
+    .ej-mtab-lbl { color: var(--ej-text-2); }
+  }
+}
+
+// ─── Chart ────────────────────────────────────────────────────────────────────
+.ej-chart-wrap {
+  padding: 10px 6px 6px;
+}
+
+.ej-an-foot {
+  padding: 10px 22px 16px;
+  font-size: 12px;
+  color: var(--ej-muted-2);
+  border-top: 1px solid var(--ej-border);
+}
+
+.ej-chart-tooltip {
+  background: #111;
+  border-radius: 9px;
+  padding: 10px 13px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  min-width: 140px;
+}
+
+.ej-chart-tt-date {
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  margin-bottom: 7px;
+  font-weight: 500;
+}
+
+.ej-chart-tt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 0;
+  font-size: 12.5px;
+  color: #fff;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255,255,255,.75);
+
+    i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+  }
+
+  b { font-weight: 600; font-variant-numeric: tabular-nums; }
+}
+
+// ─── Analytics skeleton ───────────────────────────────────────────────────────
+.ej-chart-sk {
+  position: relative;
+  height: 300px;
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ej-chart-sk-grid {
+  position: absolute;
+  inset: 24px 14px 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.ej-chart-sk-line {
+  height: 1px;
+  background: var(--ej-border);
+  width: 100%;
+}
+
+.ej-chart-sk-areas {
+  position: absolute;
+  inset: 50px 14px 44px 50px;
+  border-radius: 8px;
+  overflow: hidden;
+}

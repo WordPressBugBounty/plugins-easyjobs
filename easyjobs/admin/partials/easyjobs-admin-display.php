@@ -11,6 +11,11 @@
  * @subpackage Easyjobs/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- template variables; legacy view not included anywhere in the plugin, any include must happen inside a function scope.
+
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
@@ -232,7 +237,7 @@
 													if ( ! empty( $no_result_messages ) && ! empty( $no_result_messages['draft'] ) ) {
 														echo esc_html( $no_result_messages['draft'] );
 													} else {
-														esc_html_e( 'No Draft jobs found' );
+														esc_html_e( 'No Draft jobs found', 'easyjobs' );
 													}
 													?>
 												</div>

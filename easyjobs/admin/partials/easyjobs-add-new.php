@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+?>
 <div id="new-pipeline-template" class="modal fade custom-fields show" style="display: block;">
     <div role="document" class="modal-dialog modal-lg modal-dialog-centered">
         <form action="">

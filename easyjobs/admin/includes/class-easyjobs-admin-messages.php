@@ -42,7 +42,7 @@ class Easyjobs_Admin_Messages {
 			);
 			wp_die();
 		}
-		if ( ! Easyjobs_Helper::verified_request( $_POST ) ) {
+		if ( ! ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'easyjobs_react_nonce' ) ) ) {
 			echo wp_json_encode(
 				array(
 					'status'     => 'error',
@@ -65,6 +65,7 @@ class Easyjobs_Admin_Messages {
 	 * @return string
 	 */
 	private function applicant_id() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- private helper only called after $this->guard() verified the nonce in the calling AJAX handler.
 		$id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
 		if ( '' === $id || ! preg_match( '/^[A-Za-z0-9_-]+$/', $id ) ) {
 			return '';
@@ -101,8 +102,8 @@ class Easyjobs_Admin_Messages {
 		$params = array();
 
 		// has-conversation (hyphenated API key). Default handled server-side when omitted.
-		if ( isset( $_POST['has_conversation'] ) ) {
-			$params['has-conversation'] = (int) (bool) absint( $_POST['has_conversation'] );
+		if ( isset( $_POST['has_conversation'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by $this->guard() in get_conversations().
+			$params['has-conversation'] = (int) (bool) absint( $_POST['has_conversation'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by $this->guard() in get_conversations().
 		}
 
 		$pass_through = array(
@@ -114,8 +115,8 @@ class Easyjobs_Admin_Messages {
 			'active_jobs_applicants',
 		);
 		foreach ( $pass_through as $key ) {
-			if ( isset( $_POST[ $key ] ) && '' !== $_POST[ $key ] ) {
-				$params[ $key ] = sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
+			if ( isset( $_POST[ $key ] ) && '' !== $_POST[ $key ] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by $this->guard() in get_conversations().
+				$params[ $key ] = sanitize_text_field( wp_unslash( $_POST[ $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by $this->guard() in get_conversations().
 			}
 		}
 
@@ -123,8 +124,8 @@ class Easyjobs_Admin_Messages {
 		// (e.g. message_status[]=read&message_status[]=unread). The React client sends
 		// them JSON-encoded; decode then sanitize each value before passing through.
 		foreach ( array( 'message_status', 'hide_pipeline' ) as $array_key ) {
-			if ( isset( $_POST[ $array_key ] ) && '' !== $_POST[ $array_key ] ) {
-				$value = wp_unslash( $_POST[ $array_key ] );
+			if ( isset( $_POST[ $array_key ] ) && '' !== $_POST[ $array_key ] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by $this->guard() in get_conversations().
+				$value = wp_unslash( $_POST[ $array_key ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- nonce verified by $this->guard(); JSON-encoded array, decoded below and every value sanitized with sanitize_text_field() via array_map.
 				if ( is_string( $value ) ) {
 					$decoded = json_decode( $value, true );
 					$value   = ( null !== $decoded ) ? $decoded : $value;
@@ -156,7 +157,7 @@ class Easyjobs_Admin_Messages {
 
 		// Messages are paginated (10/page, latest first). Pass through `page` so the
 		// UI can lazy-load older history via reverse infinite scroll.
-		$page   = isset( $_POST['page'] ) ? absint( wp_unslash( $_POST['page'] ) ) : 0;
+		$page   = isset( $_POST['page'] ) ? absint( wp_unslash( $_POST['page'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by $this->guard() in get_conversation_thread().
 		$params = $page > 1 ? array( 'page' => $page ) : array();
 
 		$response = Easyjobs_Api::get_by_id( 'conversation_applicant', $generated_id, '', $params );
@@ -185,9 +186,9 @@ class Easyjobs_Admin_Messages {
 
 		$data = array();
 		// Allow safe rich-text formatting tags (bold/italic/lists/links) from the editor.
-		$message = isset( $_POST['message'] ) ? wp_kses_post( wp_unslash( $_POST['message'] ) ) : '';
+		$message = isset( $_POST['message'] ) ? wp_kses_post( wp_unslash( $_POST['message'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by $this->guard() in send_message().
 		// `file` is a base64 data-URL attachment string; pass through without sanitizing the payload.
-		$file = isset( $_POST['file'] ) ? wp_unslash( $_POST['file'] ) : '';
+		$file = isset( $_POST['file'] ) ? wp_unslash( $_POST['file'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- nonce verified by $this->guard(); base64 data-URL attachment, validated against the data:<mime>;base64, pattern below and streamed to the easy.jobs API, never stored or echoed locally.
 		// Guard against a serialized empty value arriving as a literal string.
 		if ( 'null' === $file || 'undefined' === $file ) {
 			$file = '';
@@ -230,7 +231,7 @@ class Easyjobs_Admin_Messages {
 			wp_die();
 		}
 
-		$status = isset( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '';
+		$status = isset( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified by $this->guard() in change_message_status().
 		if ( ! in_array( $status, array( 'read', 'unread' ), true ) ) {
 			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid status' ) );
 			wp_die();

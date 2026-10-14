@@ -247,7 +247,7 @@ trait Easyjobs_Elementor_Template {
                                             <?php else : ?>
                                                 <span>
                                                     <?php if(empty($job->job_address->city->name) && empty($job->job_address->country->name)): ?>
-                                                        <?php _e( 'N/A', 'easyjobs' ); ?>
+                                                        <?php esc_html_e( 'N/A', 'easyjobs' ); ?>
                                                     <?php else: ?>
                                                         <?php if(!empty($job->job_address->city->name)): ?>
 							                                <?php echo esc_html( $job->job_address->city->name ); ?>,
@@ -293,7 +293,7 @@ trait Easyjobs_Elementor_Template {
 		<?php
 	}
     
-    public function job_list_shortcode_template( $company ) {
+    public function job_list_shortcode_template( $company, $print = false ) {
 
 		$jobs_obj = new Easyjobs_Admin_Jobs();
 		$settings = $this->get_settings();
@@ -333,6 +333,10 @@ trait Easyjobs_Elementor_Template {
 		/*$new_job_with_page_id = Easyjobs_Helper::create_pages_if_required( $jobs, $job_with_page_id );
 		$job_with_page_id    += $new_job_with_page_id;*/
 		
+		if ( $print ) {
+			include Easyjobs_Helper::get_path_by_template( $company->selected_template, 'list' );
+			return '';
+		}
         ob_start();
 		include Easyjobs_Helper::get_path_by_template( $company->selected_template, 'list' );
 		return ob_get_clean();
@@ -372,15 +376,17 @@ trait Easyjobs_Elementor_Template {
 		];
 		$sanitized = [];
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only query args (public job list filters/pagination), no state change.
 		foreach($requred as $field){
 			if(isset($_GET[$field])) {
 				if($field == 'job_page') {
 					$sanitized[$field] = absint($_GET[$field]);
 				}else {
-					$sanitized[$field] = sanitize_text_field($_GET[$field]);
+					$sanitized[$field] = sanitize_text_field( wp_unslash( $_GET[$field] ) );
 				}
 			}
 		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		return $sanitized;
 	}

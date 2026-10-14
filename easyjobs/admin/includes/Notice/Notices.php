@@ -148,7 +148,7 @@ final class Notices extends Base {
 	}
 
 	public function notices() {
-		wp_enqueue_style( $this->system_id, $this->scripts );
+		wp_enqueue_style( $this->system_id, $this->scripts, array(), $this->version );
 
 		if ( ! $this->dev_mode ) {
 			/**
