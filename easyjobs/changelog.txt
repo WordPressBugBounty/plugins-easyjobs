@@ -1,3 +1,7 @@
+= 2.8.4 - 19/10/2026 =
+* Improved: Resolved WordPress.org compliance issues related to source files.
+* Few minor bug fixes & improvements.
+
 = 2.8.3 - 13/10/2026 =
 * Added: Privacy settings with visitor analytics disabled by default.
 * Improved: Readme documentation, local asset bundling, WordPress script handling, and security compliance.

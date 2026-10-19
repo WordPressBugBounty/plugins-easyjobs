@@ -1,0 +1,77 @@
+import { dispatch } from "@wordpress/data";
+
+import {
+  handleDesktopBtnClick,
+  handleMobileBtnClick,
+  handleTabBtnClick,
+} from "../../helpers";
+
+export default function WithResButtons({
+  className,
+  children,
+  resRequiredProps,
+  label, // this prop is passed only from background control
+}) {
+  const { setAttributes, resOption } = resRequiredProps;
+
+  const getMethodForSettingPreviewDeviceType = () => {
+    const { editor_type } = eb_conditional_localize || {};
+
+    if (editor_type === "edit-site") {
+      return dispatch("core/edit-site").__experimentalSetPreviewDeviceType;
+    } else if (editor_type === "edit-post") {
+      return dispatch("core/edit-post").__experimentalSetPreviewDeviceType;
+    }
+
+    // fallback in case the above condition
+    console.log("---fallen back, please check style handler");
+    return dispatch("core/edit-post").__experimentalSetPreviewDeviceType;
+  };
+
+  return (
+    <div className={`wrap_res ${className || " "}`}>
+      <div className={`${label ? `resBtns` : `resIcons`}`}>
+        {/* 'label' prop is used in background-control */}
+        {label && (
+          <span style={{ paddingRight: "5px" }} className="resLabel">
+            {label}
+          </span>
+        )}
+        <span
+          onClick={() =>
+            handleDesktopBtnClick({
+              setAttributes,
+              setPreviewDeviceType: getMethodForSettingPreviewDeviceType(),
+            })
+          }
+          className={`typoResButton dashicons dashicons-desktop ${
+            resOption === "Desktop" ? "active" : " "
+          }`}
+        ></span>
+        <span
+          onClick={() =>
+            handleTabBtnClick({
+              setAttributes,
+              setPreviewDeviceType: getMethodForSettingPreviewDeviceType(),
+            })
+          }
+          className={`typoResButton dashicons dashicons-tablet ${
+            resOption === "Tablet" ? "active" : " "
+          }`}
+        ></span>
+        <span
+          onClick={() =>
+            handleMobileBtnClick({
+              setAttributes,
+              setPreviewDeviceType: getMethodForSettingPreviewDeviceType(),
+            })
+          }
+          className={`typoResButton dashicons dashicons-smartphone ${
+            resOption === "Mobile" ? "active" : " "
+          }`}
+        ></span>
+      </div>
+      {children}
+    </div>
+  );
+}
