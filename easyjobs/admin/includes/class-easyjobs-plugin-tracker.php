@@ -358,7 +358,7 @@ if ( ! class_exists( 'WPInsights_Easyjobs' ) ) :
                 'wpins_version' => self::WPINS_VERSION,
                 'php_version'   => phpversion(),
                 'multisite'     => is_multisite(),
-                'file_location' => __FILE__,
+                // No server file path (`file_location`) is sent.
             );
 
             // Collect the email if the correct option has been set

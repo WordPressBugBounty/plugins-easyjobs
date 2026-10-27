@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { toast } from 'react-toastify';
 import { Icon } from '../icons';
 import { RESUME_SVG } from '../emptyIllustrations';
-import { loadPdfJs } from '../../../../util/pdfLoader';
+import { loadPdfJs, getPdfDocumentOptions } from '../../../../util/pdfLoader';
 import { streamFile } from '../../../../util/streamFile';
 import { safeUrl } from '../../../Messages/sanitize';
 
@@ -200,8 +200,8 @@ const Resume = ({ candidateDetails }) => {
     loadPdfJs()
       .then(
         (pdfjsLib) =>
-          pdfjsLib.getDocument({ url: streamUrl, withCredentials: true })
-            .promise,
+          // Candidate-uploaded PDF: always open with the hardened options.
+          pdfjsLib.getDocument(getPdfDocumentOptions(streamUrl)).promise,
       )
       .then(async (doc) => {
         if (cancelled) return;
@@ -269,9 +269,8 @@ const Resume = ({ candidateDetails }) => {
       canvas.style.width = `${Math.floor(viewport.width)}px`;
       canvas.style.height = `${Math.floor(viewport.height)}px`;
 
-      const ctx = canvas.getContext('2d');
       const task = pdfPage.render({
-        canvasContext: ctx,
+        canvas,
         viewport,
         transform:
           outputScale !== 1

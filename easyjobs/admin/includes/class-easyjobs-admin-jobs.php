@@ -1197,7 +1197,7 @@ class Easyjobs_Admin_Jobs {
             if ( trim( $industry ) == 'all' ) {
                 $industry = '';
             } else {
-                $industry = abs( $industry );
+                $industry = absint( $industry );
             }
         } else {
             $company = Easyjobs_Helper::get_company_info(true);
@@ -1257,7 +1257,7 @@ class Easyjobs_Admin_Jobs {
 			Easyjobs_Helper::get_generic_response(
 				Easyjobs_Api::post(
 					'job_duplicate',
-					sanitize_text_field( wp_unslash( $_POST['job_id'] ) )
+					absint( wp_unslash( $_POST['job_id'] ) )
 				)
 			)
 		);

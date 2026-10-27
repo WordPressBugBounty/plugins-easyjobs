@@ -51,6 +51,22 @@ class Easyjobs_Public {
 	private $elementor_widgets = [ 'easyjobs-landingpage', 'easyjobs-job-list' ];
 
 	/**
+	 * Shortcodes that render EasyJobs content.
+	 *
+	 * @since 2.8.5
+	 * @var string[]
+	 */
+	const SHORTCODES = array( 'easyjobs', 'easyjobs_list', 'easyjobs_details' );
+
+	/**
+	 * Gutenberg blocks that render EasyJobs content.
+	 *
+	 * @since 2.8.5
+	 * @var string[]
+	 */
+	const BLOCKS = array( 'easyjobs/job-landing', 'easyjobs/job-list', 'easyjobs/job-header', 'easyjobs/job-footer' );
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -62,8 +78,6 @@ class Easyjobs_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 		add_action( 'wp_head', [ $this, 'easyjobs_generated_frontend_script' ] );
-		add_action( 'elementor/editor/after_save', [$this, 'easyjobs_saved_elementor_data'], 10, 2 );
-		add_action( 'save_post', [$this, 'easyjobs_saved_editor_data'], 10, 3 );
 	}
 
 	/**
@@ -99,59 +113,109 @@ class Easyjobs_Public {
 	}
 
 	/**
-	 * Save user activity when the user saves default editor data.
+	 * Whether the current front-end request renders EasyJobs content, so the
+	 * brand-colour CSS and (when enabled on easy.jobs) Google Translate load.
 	 *
-	 * @since 2.4.13
-	 * @param int   $post_id     The ID of the post.
-	 * @param array $editor_data The editor data.
+	 * Decided per request from the page itself: the EasyJobs page template, or a
+	 * singular post whose content has an EasyJobs shortcode or block, or whose
+	 * Elementor data has an EasyJobs widget. This replaces the old site-wide
+	 * `easyjobs_widgets_or_shortcode` option, which any Contributor's save_post
+	 * flipped for the whole site.
+	 *
+	 * @since 2.8.5
+	 * @return bool
 	 */
-	public function easyjobs_saved_editor_data( $post_id, $post, $update ) {
-		if ( ! empty( $post ) && false !== strpos( $post->post_content, 'easyjobs' ) ) {
-			update_option( 'easyjobs_widgets_or_shortcode', true, null );
-		} else {
-			update_option( 'easyjobs_widgets_or_shortcode', false, null );
+	public function page_uses_easyjobs() {
+		$uses = false;
+		if ( is_page_template( 'easyjobs-template.php' ) ) {
+			$uses = true;
+		} elseif ( is_singular() ) {
+			$post = get_queried_object();
+			if ( $post instanceof WP_Post ) {
+				$uses = $this->post_uses_easyjobs( $post );
+			}
 		}
+		/**
+		 * Whether to load the EasyJobs front-end assets on this request.
+		 *
+		 * Use it for EasyJobs content the detection cannot see, for example a
+		 * shortcode in a widget area or a theme template.
+		 *
+		 * @since 2.8.5
+		 * @param bool $uses Detected value.
+		 */
+		return (bool) apply_filters( 'easyjobs_load_frontend_assets', $uses );
 	}
-
 
 	/**
-	 * Save user activity when the user saves Elementor data.
+	 * Whether a post contains an EasyJobs shortcode, block or Elementor widget.
 	 *
-	 * @since 2.4.13
-	 * @param int   $post_id     The ID of the post.
-	 * @param array $editor_data The editor data.
+	 * @since 2.8.5
+	 * @param WP_Post $post Post to inspect.
+	 * @return bool
 	 */
-	public function easyjobs_saved_elementor_data( $post_id, $editor_data ) {
-		if ( ! empty( $editor_data ) && $this->has_widget_or_shortcode( $editor_data ) ) {
-			update_option( 'easyjobs_widgets_or_shortcode', true, null );
-		} else {
-			update_option( 'easyjobs_widgets_or_shortcode', false, null );
+	public function post_uses_easyjobs( $post ) {
+		$content = (string) $post->post_content;
+		if ( $this->has_easyjobs_shortcode( $content ) ) {
+			return true;
 		}
-	}
-
-	private function has_widget_or_shortcode( $editor_data ) {
-		foreach ( $editor_data as $data ) {
-			if ( isset( $data[ 'widgetType' ] ) ) {
-				if ( in_array( $data[ 'widgetType' ], $this->elementor_widgets ) ) {
-					return true;
-				}
-				if ( $data[ 'widgetType' ] === 'shortcode' && false !== strpos( $data['settings' ]['shortcode'], 'easyjobs' ) ) {
-					return true;
-				}
-			} else {
-				if ( ! empty( $data['elements'] ) && $this->has_widget_or_shortcode( $data['elements'] ) ) {
+		if ( function_exists( 'has_block' ) ) {
+			foreach ( self::BLOCKS as $block ) {
+				if ( has_block( $block, $content ) ) {
 					return true;
 				}
 			}
 		}
+		$elementor = get_post_meta( $post->ID, '_elementor_data', true );
+		if ( is_string( $elementor ) && '' !== $elementor ) {
+			$elementor = json_decode( $elementor, true );
+		}
+		return is_array( $elementor ) && $this->has_widget_or_shortcode( $elementor );
+	}
+
+	/**
+	 * Whether text contains an EasyJobs shortcode.
+	 *
+	 * Uses get_shortcode_regex() with our tag names instead of has_shortcode(),
+	 * which only matches registered shortcodes (they register on `init`, after
+	 * some callers run).
+	 *
+	 * @since 2.8.5
+	 * @param string $content Text to search.
+	 * @return bool
+	 */
+	private function has_easyjobs_shortcode( $content ) {
+		return false !== strpos( $content, '[' ) && 1 === preg_match( '/' . get_shortcode_regex( self::SHORTCODES ) . '/', $content );
+	}
+
+	/**
+	 * Walk an Elementor element tree looking for an EasyJobs widget or a
+	 * shortcode widget holding an EasyJobs shortcode.
+	 *
+	 * @param array $editor_data Elementor elements.
+	 * @return bool
+	 */
+	private function has_widget_or_shortcode( $editor_data ) {
+		foreach ( $editor_data as $data ) {
+			if ( ! is_array( $data ) ) {
+				continue;
+			}
+			if ( isset( $data['widgetType'] ) ) {
+				if ( in_array( $data['widgetType'], $this->elementor_widgets, true ) ) {
+					return true;
+				}
+				if ( 'shortcode' === $data['widgetType'] && isset( $data['settings']['shortcode'] ) && is_string( $data['settings']['shortcode'] ) && $this->has_easyjobs_shortcode( $data['settings']['shortcode'] ) ) {
+					return true;
+				}
+			} elseif ( ! empty( $data['elements'] ) && is_array( $data['elements'] ) && $this->has_widget_or_shortcode( $data['elements'] ) ) {
+				return true;
+			}
+		}
 		return false;
-	
 	}
 
 	public function easyjobs_generated_frontend_script() {
-		$easyjobs_widgets_or_shortcode = get_option('easyjobs_widgets_or_shortcode', 0);
-		
-		if( is_page_template( 'easyjobs-template.php' ) || $easyjobs_widgets_or_shortcode ):
+		if ( $this->page_uses_easyjobs() ) :
 			$company_info = Easyjobs_Helper::get_company_details( true );
 			if ( ! empty( $company_info ) && ! empty( $company_info->translate_input_fields ) ) {
 				$this->enqueue_google_translate( isset( $company_info->lang ) ? $company_info->lang : '' );
@@ -371,12 +435,39 @@ class Easyjobs_Public {
      * @return void
      */
     public function init() {
+		// Register the shortcodes even without an API key, so a disconnected site
+		// shows the "unavailable" message instead of the raw shortcode text.
+		new Easyjobs_Shortcode();
 		if ( ! $this->is_api_key_set() ) {
             return;
 		}
 		add_action('easyjobs_job_filter', [$this, 'job_filter'], 10, 1);
-        new Easyjobs_Shortcode();
     }
+
+	/**
+	 * Ask search engines not to index EasyJobs pages while the API is
+	 * disconnected: they only show the "unavailable" message then.
+	 *
+	 * Hooked to core `wp_robots` and to the Yoast SEO / Rank Math robots
+	 * filters, which replace the core robots tag when those plugins are active.
+	 * All three pass an array keyed by directive.
+	 *
+	 * @since 2.8.6
+	 * @param array $robots Robots directives.
+	 * @return array
+	 */
+	public function noindex_when_disconnected( $robots ) {
+		if ( ! is_array( $robots ) || $this->is_api_key_set() || ! $this->page_uses_easyjobs() ) {
+			return $robots;
+		}
+		if ( 'wp_robots' === current_filter() ) {
+			$robots['noindex'] = true;
+			unset( $robots['index'] );
+		} else {
+			$robots['index'] = 'noindex';
+		}
+		return $robots;
+	}
 
     /**
      * Check if api key is set in database

@@ -42,6 +42,10 @@ class Easyjobs_Maintenance {
 		// Clear cache if plugin was updated (check both flag AND version mismatch)
 		if ( $update_flag || ( $stored_version && $stored_version !== EASYJOBS_VERSION ) ) {
 			Easyjobs_Helper::clear_job_details_caches();
+			// Plaintext sign-in credentials stored by <= 2.8.4.
+			Easyjobs_Helper::purge_legacy_signin_transients();
+			// Replaced by Easyjobs_Public::page_uses_easyjobs() in 2.8.5.
+			delete_option( 'easyjobs_widgets_or_shortcode' );
 			delete_transient( 'easyjobs_plugin_updated' );
 		}
 

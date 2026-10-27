@@ -14,9 +14,18 @@ import { sanitizeHtml, safeUrl } from '../../../Messages/sanitize';
  * watch / youtu.be / shorts URL can't be iframed (X-Frame-Options) — it must be
  * the /embed/ form. Drive needs /preview, Vimeo the player URL, and direct media
  * files (.mp4 …) play in a <video> tag.
+ *
+ * `video_link` is candidate-controlled, so only URLs we build ourselves on a
+ * fixed provider host (YouTube, Vimeo, Google Drive) are ever iframed. Any
+ * other link returns `{ type: 'external' }`: no iframe (it would let a
+ * candidate put their own page — e.g. a fake login form — inside wp-admin),
+ * only the "watch from source" link, which goes through safeUrl().
+ *
+ * @param {string} url Candidate-supplied video link.
+ * @return {{type: string, src?: string}} `media` | `iframe` | `external` | `none`.
  */
-const toEmbed = (url) => {
-  const u = String(url || '').trim();
+export const toEmbed = (url) => {
+  const u = safeUrl(url);
   if (!u) return { type: 'none' };
 
   if (/\.(mp4|webm|ogg|ogv|mov|m4v)(\?.*)?$/i.test(u))
@@ -32,25 +41,20 @@ const toEmbed = (url) => {
   if (m)
     return { type: 'iframe', src: `https://player.vimeo.com/video/${m[1]}` };
 
-  m = u.match(/drive\.google\.com\/file\/d\/([^/]+)/i);
+  m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/i);
   if (m)
     return {
       type: 'iframe',
       src: `https://drive.google.com/file/d/${m[1]}/preview`,
     };
 
-  // Last resort: best-effort rewrite, else embed the raw URL — but only after a
-  // scheme check, since this src goes straight into a same-origin <iframe> and a
-  // `javascript:` value would execute (candidate-controlled video_link → XSS).
-  if (/youtube\.com|youtu\.be/i.test(u)) {
-    const safe = safeUrl(
-      u.replace('/watch?v=', '/embed/').replace('/shorts/', '/embed/'),
-    );
-    return safe ? { type: 'iframe', src: safe } : { type: 'none' };
-  }
-  const safe = safeUrl(u);
-  return safe ? { type: 'iframe', src: safe } : { type: 'none' };
+  return { type: 'external' };
 };
+
+// Defence in depth for the provider iframes: allow the player to run, but not
+// to navigate wp-admin (no allow-top-navigation), submit forms or open modals.
+const PLAYER_SANDBOX =
+  'allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox';
 
 /**
  * Application panel — matches the live app: Cover Letter & Education are hidden
@@ -261,11 +265,17 @@ const Application = ({ candidateDetails }) => {
             <iframe
               src={video.src}
               title="intro-video"
+              sandbox={PLAYER_SANDBOX}
               allowFullScreen
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               referrerPolicy="strict-origin-when-cross-origin"
             ></iframe>
           </div>
+        ) : video.type === 'external' ? (
+          <EmptyIllustration
+            svg={VIDEO_SVG}
+            text={__('This video can’t be previewed here', 'easyjobs')}
+          />
         ) : (
           <EmptyIllustration
             svg={VIDEO_SVG}

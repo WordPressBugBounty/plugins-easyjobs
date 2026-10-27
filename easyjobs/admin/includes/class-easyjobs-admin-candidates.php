@@ -83,13 +83,9 @@ class Easyjobs_Admin_Candidates {
             exit;
         }
 
-        $response = wp_remote_get(
-            esc_url_raw( $url ),
-            array(
-                'timeout'   => 25,
-                'sslverify' => false,
-            )
-        );
+        // The URL comes from the API: fetch it without credentials, over verified
+        // HTTPS, and never from a private/loopback address (SSRF guard).
+        $response = Easyjobs_Api::fetch_public_file( esc_url_raw( $url ), 25 );
         if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
             status_header( 502 );
             exit;
@@ -163,7 +159,11 @@ class Easyjobs_Admin_Candidates {
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Invalid request'));
 			wp_die();
 		}
-        $job_id = isset( $_POST['job_id'] ) ? sanitize_text_field( wp_unslash( $_POST['job_id'] ) ) : 4;
+        $job_id = isset( $_POST['job_id'] ) ? Easyjobs_Helper::sanitize_id( wp_unslash( $_POST['job_id'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated by sanitize_id().
+        if ( '' === $job_id ) {
+            echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Job id not provided' ) );
+            wp_die();
+        }
         $candidates = $this->get_job_candidates_data($job_id);
 
         if($candidates){
@@ -208,9 +208,13 @@ class Easyjobs_Admin_Candidates {
 		};
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload: decoded here and every key/value is sanitized with sanitize_text_field() in build_search_keyword().
         $post = $this->build_search_keyword( json_decode( wp_unslash( $_POST['parameters'] ) ) );
+        $job_id = Easyjobs_Helper::sanitize_id( wp_unslash( $_POST['job_id'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated by sanitize_id().
+        if ( '' === $job_id ) {
+            return;
+        }
         echo wp_json_encode(
             $this->get_results(
-                sanitize_text_field( wp_unslash( $_POST['job_id'] ) ),
+                $job_id,
                 $post
             )
         );
@@ -241,7 +245,11 @@ class Easyjobs_Admin_Candidates {
 			echo wp_json_encode(Easyjobs_Helper::get_error_response('Candidate id not provided'));
 			wp_die();
 		}
-        $candidate_id = sanitize_text_field( wp_unslash( $_POST['id'] ) );
+        $candidate_id = Easyjobs_Helper::sanitize_id( wp_unslash( $_POST['id'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated by sanitize_id().
+        if ( '' === $candidate_id ) {
+            echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Candidate id not provided' ) );
+            wp_die();
+        }
         $data         = $this->get_details( $candidate_id );
 		if(!empty($data)){
 			$data->global_ai_enabled = Easyjobs_Helper::is_ai_enabled();
@@ -357,8 +365,8 @@ class Easyjobs_Admin_Candidates {
         );
         $url  = ( $link && isset( $link->status ) && 'success' === $link->status && ! empty( $link->data->url ) ) ? (string) $link->data->url : '';
 
-        // Only follow links back to the easy.jobs app: get_file_raw() sends the API key.
-        if ( '' === $url || wp_parse_url( $url, PHP_URL_HOST ) !== wp_parse_url( EASYJOBS_APP_URL, PHP_URL_HOST ) ) {
+        // Only follow HTTPS links back to the easy.jobs app: get_file_raw() sends the API key.
+        if ( '' === $url || ! Easyjobs_Api::is_app_url( $url ) ) {
             $this->send_export_error( __( 'Unable to export candidates. Please try again later.', 'easyjobs' ), 502 );
         }
 
@@ -437,7 +445,7 @@ class Easyjobs_Admin_Candidates {
 		}
 		$response = Easyjobs_Api::get_by_id(
 			'job',
-			abs( sanitize_text_field( wp_unslash( $_POST['job_id'] ) ) ),
+			absint( wp_unslash( $_POST['job_id'] ) ),
 			'invitations'
 		);
 		Easyjobs_Helper::check_reload_required( $response );
@@ -491,7 +499,7 @@ class Easyjobs_Admin_Candidates {
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(
                 Easyjobs_Api::post(
                     'save_candidate_note',
-                    abs( sanitize_text_field( wp_unslash( $_POST['candidate_id'] ) ) ),
+                    absint( wp_unslash( $_POST['candidate_id'] ) ),
                     $data
                 )
             )
@@ -847,13 +855,8 @@ class Easyjobs_Admin_Candidates {
 			exit;
 		}
 
-		$response = wp_remote_get(
-			esc_url_raw( $url ),
-			array(
-				'timeout'   => 30,
-				'sslverify' => false,
-			)
-		);
+		// Same guard as stream_resume(): no credentials, verified HTTPS, public hosts only.
+		$response = Easyjobs_Api::fetch_public_file( esc_url_raw( $url ), 30 );
 		if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
 			status_header( 502 );
 			exit;
@@ -907,7 +910,7 @@ class Easyjobs_Admin_Candidates {
 		}
 		$response = Easyjobs_Api::post(
             'delete_candidate',
-            abs( sanitize_text_field( wp_unslash( $_POST['job'] ) ) ),
+            absint( wp_unslash( $_POST['job'] ) ),
             array(
 				'candidates' => $candidates,
 			)
@@ -963,7 +966,7 @@ class Easyjobs_Admin_Candidates {
 		}
 		$response = Easyjobs_Api::get_by_id(
 			'job',
-			abs( sanitize_text_field( wp_unslash( $_POST['job_id'] ) ) ),
+			absint( wp_unslash( $_POST['job_id'] ) ),
 			'candidate/pending'
 		);
 		Easyjobs_Helper::check_reload_required( $response );
@@ -1000,7 +1003,7 @@ class Easyjobs_Admin_Candidates {
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(
 			Easyjobs_Api::post(
 				'delete_pending_candidate',
-				abs( sanitize_text_field( wp_unslash( $_POST['job_id'] ) ) ),
+				absint( wp_unslash( $_POST['job_id'] ) ),
 				array( 'candidates' => array( sanitize_text_field( wp_unslash( $_POST['candidate'] ) ) ) )
 			)
 		)
@@ -1291,7 +1294,7 @@ class Easyjobs_Admin_Candidates {
 		// id, and omit the param entirely when we don't have it so the backend
 		// never dereferences a null applicant.
 		$applicant_gid = ( isset( $_POST['applicant_gid'] ) && ! is_array( $_POST['applicant_gid'] ) )
-			? sanitize_text_field( wp_unslash( $_POST['applicant_gid'] ) )
+			? Easyjobs_Helper::sanitize_id( wp_unslash( $_POST['applicant_gid'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated by sanitize_id().
 			: '';
 		$base = EASYJOBS_API_URL . 'company/assessments';
 		$url  = $applicant_gid

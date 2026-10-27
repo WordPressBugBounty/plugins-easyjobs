@@ -16,6 +16,7 @@ import {
 import LinkTag from '../../../util/Link';
 
 import { streamFile } from '../../../util/streamFile';
+import { safeUrl } from '../../Messages/sanitize';
 import { Icon, IconSprite } from './icons';
 import HeaderCard from './HeaderCard';
 import CandidateSkeleton from './CandidateSkeleton';
@@ -255,8 +256,12 @@ const Details = ({
       );
       return;
     }
+    // No id → no proxy: the raw, candidate-supplied URL becomes a link, so it
+    // must pass the scheme guard (a javascript: URL would run on click()).
+    const href = safeUrl(url);
+    if (!href) return;
     const a = document.createElement('a');
-    a.href = url;
+    a.href = href;
     a.download = fileName;
     a.rel = 'noopener';
     document.body.appendChild(a);

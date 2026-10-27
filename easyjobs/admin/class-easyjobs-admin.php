@@ -793,7 +793,7 @@ class Easyjobs_Admin {
         // phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only query args used to pick which admin view to render, no state change.
         // Render page navigation for sub pages
         if ( isset( $_GET['job-id'] ) && isset( $_GET['view'] ) ) {
-            $job_id = sanitize_text_field( wp_unslash( $_GET['job-id'] ) );
+            $job_id = Easyjobs_Helper::sanitize_id( wp_unslash( $_GET['job-id'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated by sanitize_id().
             switch ( sanitize_text_field( wp_unslash( $_GET['view'] ) ) ) {
                 case 'pipeline':
                     $this->pipeline->show( $job_id );
@@ -1127,13 +1127,11 @@ class Easyjobs_Admin {
 						$response_array['action'] = 'reload';
 					}
 				} else {
-					$user_key = 'ej-' . sha1( time() );
-					// Hold the sign-in credentials only for the duration of the
-					// company-creation step. The TTL was missing, so these were
-					// stored indefinitely; cap it at 30 minutes.
-					set_transient( $user_key, serialize( $credentials ), 30 * MINUTE_IN_SECONDS );
-					$response_array['user_key'] = $user_key;
-					$response_array['action']   = 'create_company';
+					// No company yet: the React app keeps the credentials it already
+					// holds and sends them again with create_company. Never store the
+					// password server-side (it used to go into an `ej-*` transient
+					// that nothing read; see Easyjobs_Helper::purge_legacy_signin_transients()).
+					$response_array['action'] = 'create_company';
 				}
 			}
 			echo wp_json_encode( Easyjobs_Helper::get_success_response('', $response_array) );
@@ -1541,14 +1539,13 @@ class Easyjobs_Admin {
 			);
 			wp_die();
 		}
-        $response = Easyjobs_Api::get( 'settings_basic_info' );
-		if ( Easyjobs_Helper::is_success_response( $response->status ) ) {
-			set_transient( 'easyjobs_company_verification_status', $response->data->is_verified ? 'yes' : 'no', 3600 );
+        $is_verified = Easyjobs_Helper::fetch_verification_status();
+		if ( null !== $is_verified ) {
 			echo wp_json_encode(
                 array(
 					'status' => 'success',
 					'data'   => array(
-						'is_verified' => $response->data->is_verified,
+						'is_verified' => $is_verified,
 					),
                 )
             );
@@ -1565,10 +1562,7 @@ class Easyjobs_Admin {
 		if ( ! get_transient( 'easyjobs_company_verification_status' ) ) {
             $settings = EasyJobs_DB::get_settings();
             if ( ! empty( $settings['easyjobs_api_key'] ) ) {
-                $response = Easyjobs_Api::get( 'settings_basic_info' );
-                if ( isset( $response->status ) && Easyjobs_Helper::is_success_response( $response->status ) ) {
-                    set_transient( 'easyjobs_company_verification_status', $response->data->is_verified ? 'yes' : 'no', 3600 );
-                }
+                Easyjobs_Helper::fetch_verification_status();
             }
 		}
     }
@@ -1607,7 +1601,7 @@ class Easyjobs_Admin {
         $id = null;
 
 		if ( isset( $_POST['id'] ) ) {
-			$id = abs( sanitize_text_field( wp_unslash( $_POST['id'] ) ) );
+			$id = absint( wp_unslash( $_POST['id'] ) );
 		}
         $data = array();
 		if ( isset( $_POST['data'] ) && ! is_array( $_POST['data'] ) ) {
@@ -1784,7 +1778,7 @@ class Easyjobs_Admin {
 		}
         $company_info = get_option( 'easyjobs_company_info' );
 		if ( ! empty( $company_info ) ) {
-			$company_info = unserialize( $company_info );
+			$company_info = Easyjobs_Helper::unserialize_cached_data( $company_info );
 			if ( isset( $company_info->subscription_expired ) ) {
 				return;
 			}

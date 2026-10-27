@@ -1,6 +1,7 @@
 import { __, sprintf } from '@wordpress/i18n';
 import React, { useEffect, useRef, useState } from 'react';
 import Icon from './icons';
+import { safeUrl } from './sanitize';
 
 // Matches the app's allowUploadFileExtension list.
 const FILE_ACCEPT =
@@ -137,18 +138,6 @@ const escapeHtml = (s) =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
-
-// Block dangerous URL protocols (javascript:/data:/vbscript:) on user links.
-const safeUrl = (url) => {
-  const u = String(url || '').trim();
-  if (
-    /^[a-z0-9.+-]*\s*:/i.test(u) &&
-    /^\s*(javascript|data|vbscript):/i.test(u)
-  ) {
-    return '';
-  }
-  return u;
-};
 
 const Composer = ({ recipient, sending, onSend, disabled, upgradeUrl }) => {
   const editorRef = useRef(null);

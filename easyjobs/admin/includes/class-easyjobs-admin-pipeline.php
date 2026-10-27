@@ -117,12 +117,18 @@ class Easyjobs_Admin_Pipeline {
 			$applicants[] = sanitize_text_field( $applicant );
 		}
         
+		$job_id      = Easyjobs_Helper::sanitize_id( wp_unslash( $_POST['job_id'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated by sanitize_id().
+		$pipeline_id = Easyjobs_Helper::sanitize_id( wp_unslash( $_POST['pipeline_id'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated by sanitize_id().
+		if ( '' === $job_id || '' === $pipeline_id ) {
+			echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid data' ) );
+			wp_die();
+		}
 		echo wp_json_encode( Easyjobs_Helper::get_generic_response(Easyjobs_Api::post(
 			'change_pipeline',
-			sanitize_text_field( wp_unslash( $_POST['job_id'] ) ),
+			$job_id,
 			array(
 				'applicants'  => $applicants,
-				'pipeline_id' => sanitize_text_field( wp_unslash( $_POST['pipeline_id'] ) ),
+				'pipeline_id' => $pipeline_id,
 			)))
 		);
         wp_die();
@@ -151,8 +157,8 @@ class Easyjobs_Admin_Pipeline {
             wp_die();
 		}
 		if ( isset( $_POST['job_id'] ) ) {
-            $job_id    = sanitize_text_field( wp_unslash( $_POST['job_id'] ) );
-            $pipelines = $this->get_pipelines( $job_id );
+            $job_id    = Easyjobs_Helper::sanitize_id( wp_unslash( $_POST['job_id'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated by sanitize_id().
+            $pipelines = '' === $job_id ? false : $this->get_pipelines( $job_id );
             $job       = Easyjobs_Helper::get_job( $job_id );
             if ( empty( $pipelines ) ) {
                 echo wp_json_encode(
@@ -252,10 +258,12 @@ class Easyjobs_Admin_Pipeline {
 			'sort_by',
 		];
 		$args = [];
-        if (isset($_POST['type'])) {
-            $eval_type = sanitize_text_field( wp_unslash( $_POST['type'] ) );
-        } else {
-            $eval_type = 'evaluation_question';
+        // `type` picks an Easyjobs_Api endpoint key: only allow the list endpoints
+        // this screen needs, never an arbitrary endpoint.
+        $eval_type = isset( $_POST['type'] ) ? sanitize_key( wp_unslash( $_POST['type'] ) ) : 'evaluation_question';
+        if ( ! in_array( $eval_type, array( 'evaluation_question', 'assessments' ), true ) ) {
+            echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid type' ) );
+            wp_die();
         }
 		foreach ($params as $param){
 			if(isset($_POST[$param])){
@@ -312,10 +320,11 @@ class Easyjobs_Admin_Pipeline {
 			wp_die();
 		}
         $id = absint( sanitize_text_field( wp_unslash( $_POST['id'] ) ) );
-        if (isset($_POST['type'])) {
-            $eval_type = sanitize_text_field( wp_unslash( $_POST['type'] ) );
-        } else {
-            $eval_type = 'delete_question';
+        // Only the two delete endpoints may be chosen through `type`.
+        $eval_type = isset( $_POST['type'] ) ? sanitize_key( wp_unslash( $_POST['type'] ) ) : 'delete_question';
+        if ( ! in_array( $eval_type, array( 'delete_question', 'delete_assessment' ), true ) ) {
+            echo wp_json_encode( Easyjobs_Helper::get_error_response( 'Invalid type' ) );
+            wp_die();
         }
         $response = Easyjobs_Api::post( $eval_type, $id, array() );
 		if ( Easyjobs_Helper::is_success_response( $response->status ) ) {

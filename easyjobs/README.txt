@@ -1,10 +1,10 @@
 === easy.jobs - AI powered Job Listing, Job Board, Career Page, Recruitment & Hiring Solution ===
 Contributors: wpdevteam, re_enter_rupok, asif2bd, rahat89, priyomukul, fuadragib
 Tags: Job Listing, Job Board, Job Portal, Job Manager, Career Page,
-Requires at least: 5.0
-Requires PHP: 5.6
+Requires at least: 6.3
+Requires PHP: 7.4
 Tested up to: 7.1
-Stable tag: 2.8.4
+Stable tag: 2.8.5
 License: GPLv3 or later
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -153,7 +153,7 @@ Every compiled file ships with its human-readable source in this plugin:
 * Admin and public CSS/JS: `admin/assets/src/`, `admin/assets/vendor/scss/`, `public/assets/src/` → `admin/assets/dist/`, `public/assets/dist/`. Build: `npx gulp build`.
 * `admin/assets/dist/js/easyjobs-admin-vendor-bundle.min.js` is built from `admin/assets/src/lib/js/` (Bootstrap 4.3.1 bundle and jquery-dateFormat 1.0.4).
 
-Bundled third-party libraries (unchanged, with their licences): PDF.js 3.11.174 (Apache-2.0, `admin/assets/vendor/pdfjs/`, source https://github.com/mozilla/pdf.js), SweetAlert 2.1.0 (MIT, https://github.com/t4t5/sweetalert), Select2 4.0.6 (MIT, https://github.com/select2/select2), Bootstrap 4.3.1 (MIT, https://github.com/twbs/bootstrap), Owl Carousel 2.3.4 (MIT, https://github.com/OwlCarousel2/OwlCarousel2), Poppins and Inter fonts (SIL OFL 1.1, `public/assets/vendor/fonts/`).
+Bundled third-party libraries (contents unchanged, with their licences): PDF.js 5.7.284 (Apache-2.0, `admin/assets/vendor/pdfjs/`, source https://github.com/mozilla/pdf.js; build files renamed from .mjs to .js), SweetAlert 2.1.0 (MIT, https://github.com/t4t5/sweetalert), Select2 4.0.6 (MIT, https://github.com/select2/select2), Bootstrap 4.3.1 (MIT, https://github.com/twbs/bootstrap), Owl Carousel 2.3.4 (MIT, https://github.com/OwlCarousel2/OwlCarousel2), Poppins and Inter fonts (SIL OFL 1.1, `public/assets/vendor/fonts/`).
 
 == Installation ==
 
@@ -186,6 +186,13 @@ No, credit card is not required to sign up.
 
 
 == Changelog ==
+
+= 2.8.5 - 27/10/2026 =
+* Improved: PHP 7.4+ support and stricter input validation.
+* Fixed: Stored XSS, insecure file downloads.
+* Updated: PDF.js and restricted video embeds to trusted platforms.
+* Fixed: Draft job visibility, legacy credential cleanup.
+* Few minor bug fixes & improvements.
 
 = 2.8.4 - 19/10/2026 =
 * Improved: Resolved WordPress.org compliance issues related to source files.

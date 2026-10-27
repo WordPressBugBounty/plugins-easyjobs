@@ -141,16 +141,9 @@ class EasyjobsBlocksScripts {
 		] );
 	}
 
-	private $api_notice_shown = false;
-
 	public function render_footer_frontend($atts, $con) {
 		if ( ! $this->get_token() ) {
-			ob_start();
-			if(!$this->api_notice_shown){
-				$this->api_notice_shown = true;
-				return Easyjobs_Helper::err_view();
-			}
-			return ob_get_clean();
+			return Easyjobs_Helper::render_unavailable();
 		}
 
 		$default_atts = [
@@ -160,6 +153,9 @@ class EasyjobsBlocksScripts {
 		$atts = wp_parse_args( $atts, $default_atts );
 		$company  			= Easyjobs_Helper::get_company_info(true);
 		$company_details  	= Easyjobs_Helper::get_company_details(true);
+		if ( empty( $company ) || empty( $company_details ) ) {
+			return Easyjobs_Helper::render_unavailable( 'unavailable' );
+		}
 
 		$company_details->cover_photo[0] = isset( $atts['coverImgUrl'] ) ? $atts['coverImgUrl'] : $company_details->cover_photo[0];
 		$company_details->logo = isset( $atts['logoImgUrl'] ) ? $atts['logoImgUrl'] : $company_details->logo;
@@ -179,12 +175,7 @@ class EasyjobsBlocksScripts {
 
 	public function render_info_frontend($atts, $con) {
 		if ( ! $this->get_token() ) {
-			ob_start();
-			if(!$this->api_notice_shown){
-				$this->api_notice_shown = true;
-				return Easyjobs_Helper::err_view();
-			}
-			return ob_get_clean();
+			return Easyjobs_Helper::render_unavailable();
 		}
 		
 		$default_atts = [
@@ -194,6 +185,9 @@ class EasyjobsBlocksScripts {
 		$atts = wp_parse_args($atts, $default_atts);
 		$company  			= Easyjobs_Helper::get_company_info(true);
 		$company_details  	= Easyjobs_Helper::get_company_details(true);
+		if ( empty( $company ) || empty( $company_details ) ) {
+			return Easyjobs_Helper::render_unavailable( 'unavailable' );
+		}
 
 		$company_details->cover_photo[0] = isset( $atts['coverImgUrl'] ) ? $atts['coverImgUrl'] : $company_details->cover_photo[0];
 		$company_details->logo = isset( $atts['logoImgUrl'] ) ? $atts['logoImgUrl'] : $company_details->logo;
@@ -214,12 +208,7 @@ class EasyjobsBlocksScripts {
 
 	public function render_list_frontend($atts, $con) {
 		if ( ! $this->get_token() ) {
-			ob_start();
-			if(!$this->api_notice_shown){
-				$this->api_notice_shown = true;
-				return Easyjobs_Helper::err_view();
-			}
-			return ob_get_clean();
+			return Easyjobs_Helper::render_unavailable();
 		}
 		$default_atts = [
 			'hideIcon' 			=> false,
@@ -242,18 +231,16 @@ class EasyjobsBlocksScripts {
 
 		$atts = wp_parse_args($atts, $default_atts);
 
-		$error_msg 							= __( 'No Jobs Found', 'easyjobs' );
 		$company  							= Easyjobs_Helper::get_company_info(true);
+		if ( empty( $company ) ) {
+			return Easyjobs_Helper::render_unavailable( 'unavailable' );
+		}
 		$company->joblist_heading_icon 		= ( ! $atts['hideIcon'] && ! $atts['hideTitle'] ) ? $atts['icon'] : '';
 		$company->joblist_heading 			= ! $atts['hideTitle'] ? $atts['titleText'] : '';
 		$company->apply_button_text 		= $atts['applyBtnText'];
 		// $atts['filterByTitle']			= $company->show_location_filter ? $company->show_location_filter : false;
 		// $atts['filterByCategory']			= $company->show_location_filter ? $company->show_location_filter : false;
 		// $atts['filterByLocation']			= $company->show_location_filter ? $company->show_location_filter : false;
-		if ( empty( $company ) ) {
-			printf( "<h2 class='elej-error-msg'>%s</h2>", esc_html( $error_msg ) );
-			return;
-		}
 		$ej_is_search				= false;
 		$sanitized_get_data 		= $this->sanitize_get_data();
 		$job_page 					= isset($sanitized_get_data['job_page']) ? $sanitized_get_data['job_page'] : 1;

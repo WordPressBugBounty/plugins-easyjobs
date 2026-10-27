@@ -5,6 +5,20 @@
  */
 class Easyjobs_Helper {
 	/**
+	 * easy.jobs job status for a published (active) job.
+	 *
+	 * @since 2.8.5
+	 */
+	const JOB_STATUS_PUBLISHED = 2;
+
+	/**
+	 * Career-page templates shipped in public/partials/ and public/partials-blocks/.
+	 *
+	 * @since 2.8.5
+	 */
+	const TEMPLATES = array( 'default', 'classic', 'elegant' );
+
+	/**
 	 * @param $rating
 	 * @return void
 	 */
@@ -229,6 +243,20 @@ class Easyjobs_Helper {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Whether an easy.jobs job may be shown to site visitors.
+	 *
+	 * Only status 2 (published/active) is public. Drafts (1), archived jobs (3)
+	 * and payloads without a status fail closed.
+	 *
+	 * @since 2.8.5
+	 * @param mixed $job Job object from the API (or false).
+	 * @return bool
+	 */
+	public static function is_published_job( $job ) {
+		return is_object( $job ) && isset( $job->status ) && self::JOB_STATUS_PUBLISHED === (int) $job->status;
 	}
 
 	/**
@@ -575,7 +603,7 @@ class Easyjobs_Helper {
 			return null;
 		}
 		foreach ( $jobs as $key => $job ) {
-			if( is_object($job) && $job->status == 2 ) {
+			if ( self::is_published_job( $job ) ) {
 				array_push( $published_jobs_ids, $job->id );
 			}
 		}
@@ -599,13 +627,64 @@ class Easyjobs_Helper {
 	}
 
 	/**
+	 * Unserialize cached API data (the easyjobs_company_info /
+	 * easyjobs_company_details options) without instantiating arbitrary classes.
+	 *
+	 * The plugin stores json_decode()d API responses, so the only class in the
+	 * data is stdClass, which has no magic methods. Any other class in a tampered
+	 * value (SQL injection elsewhere, a restored backup, another plugin) becomes
+	 * __PHP_Incomplete_Class instead of an object whose __wakeup()/__destruct()
+	 * runs (PHP object injection). Do not pass `allowed_classes => false`: that
+	 * would also turn the stdClass data into __PHP_Incomplete_Class.
+	 *
+	 * @since 2.8.5
+	 * @param mixed $value Serialized string from get_option().
+	 * @return mixed Unserialized data, or false when $value is not a string.
+	 */
+	public static function unserialize_cached_data( $value ) {
+		if ( ! is_string( $value ) || '' === $value ) {
+			return false;
+		}
+		return @unserialize( $value, array( 'allowed_classes' => array( 'stdClass' ) ) ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize -- plugin-written cache; only stdClass may be instantiated.
+	}
+
+	/**
+	 * Delete sign-in credential transients left by plugin versions <= 2.8.4.
+	 *
+	 * Those versions stored the email and password typed into the sign-in form
+	 * in an `ej-<sha1>` transient (before 2.8.3 with no expiry) and never read it
+	 * back. Runs once after an update (Easyjobs_Maintenance::check_for_update()).
+	 * The pattern matches only that exact key shape, so other plugins' `ej-`
+	 * transients are left alone.
+	 *
+	 * @since 2.8.5
+	 * @return int Number of option rows deleted.
+	 */
+	public static function purge_legacy_signin_transients() {
+		global $wpdb;
+		/** @var \wpdb $wpdb */
+		if ( ! is_object( $wpdb ) ) {
+			return 0;
+		}
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- one-time cleanup of our own leftover transients; core has no API to delete transients by pattern.
+		$names = $wpdb->get_col( "SELECT option_name FROM {$wpdb->options} WHERE option_name REGEXP '^_transient_(timeout_)?ej-[0-9a-f]{40}$'" );
+		$deleted = 0;
+		foreach ( (array) $names as $name ) {
+			if ( delete_option( $name ) ) {
+				++$deleted;
+			}
+		}
+		return $deleted;
+	}
+
+	/**
 	 * Get company info
 	 * @return object|false
 	 */
 	public static function get_company_info( $cached = false ) {
 		$company_info = get_option( 'easyjobs_company_info' );
 		if ( $cached && ! empty( $company_info ) ) {
-			return unserialize( $company_info );
+			return self::unserialize_cached_data( $company_info );
 		}
 		$settings = EasyJobs_DB::get_settings();
 		if ( ! empty( $settings['easyjobs_api_key'] ) ) {
@@ -622,7 +701,7 @@ class Easyjobs_Helper {
 		$state_version = get_transient( 'easyjobs_state_version' );
 
 		if( !$state_version ) {
-			$company_info = unserialize( get_option( 'easyjobs_company_info' ) );
+			$company_info = self::unserialize_cached_data( get_option( 'easyjobs_company_info' ) );
 			$state_version = ( !empty( $company_info ) && isset( $company_info->state_version ) ) ? $company_info->state_version : 0;
 
 			set_transient( 'easyjobs_state_version', $state_version );
@@ -1019,12 +1098,29 @@ class Easyjobs_Helper {
 		if ( $status = get_transient( 'easyjobs_company_verification_status' ) ) {
 			return trim( $status ) == 'yes';
 		}
+		return self::fetch_verification_status();
+	}
+
+	/**
+	 * Fetch the company verification flag from easy.jobs and cache it for an hour.
+	 *
+	 * A stale local state version makes easy.jobs answer 412. remote_get() has then
+	 * already refreshed the state version via update_cache(), so retry once. A second
+	 * reload means the refresh itself failed: give up instead of looping.
+	 *
+	 * @return bool|null Verified flag, or null when easy.jobs gave no usable answer.
+	 */
+	public static function fetch_verification_status() {
 		$response = Easyjobs_Api::get( 'settings_basic_info' );
-		if ( self::is_success_response( $response->status ) ) {
-			set_transient( 'easyjobs_company_verification_status', $response->data->is_verified ? 'yes' : 'no', 3600 );
-			return $response->data->is_verified;
+		if ( ! empty( $response->reload_required ) ) {
+			$response = Easyjobs_Api::get( 'settings_basic_info' );
 		}
-		return null;
+		if ( ! isset( $response->status, $response->data->is_verified ) || ! self::is_success_response( $response->status ) ) {
+			return null;
+		}
+		$is_verified = (bool) $response->data->is_verified;
+		set_transient( 'easyjobs_company_verification_status', $is_verified ? 'yes' : 'no', HOUR_IN_SECONDS );
+		return $is_verified;
 	}
 
 	/**
@@ -1225,9 +1321,41 @@ class Easyjobs_Helper {
 		wp_die();
 	}
 
+	/**
+	 * Validate an easy.jobs id from a request before it goes into an API path.
+	 *
+	 * Accepts numeric ids and generated ids (hashids): letters, digits, `_` and
+	 * `-`, up to 64 characters. Anything else (`/`, `..`, `?`, spaces) returns ''
+	 * so the caller can reject the request. Same rule as
+	 * Easyjobs_Admin_Messages::applicant_id().
+	 *
+	 * @since 2.8.5
+	 * @param mixed $value Raw value (already wp_unslash()ed).
+	 * @return string The id, or '' when invalid.
+	 */
+	public static function sanitize_id( $value ) {
+		$value = is_scalar( $value ) ? trim( (string) $value ) : '';
+		return preg_match( '/^[A-Za-z0-9_-]{1,64}$/', $value ) ? $value : '';
+	}
+
+	/**
+	 * Map a template name to one the plugin ships, falling back to `default`.
+	 *
+	 * The name comes from the easy.jobs company settings, so it is never used to
+	 * build a file path unless it is on this list (no `../` traversal).
+	 *
+	 * @since 2.8.5
+	 * @param mixed $template Template name.
+	 * @return string
+	 */
+	public static function sanitize_template( $template ) {
+		$template = is_string( $template ) ? strtolower( trim( $template ) ) : '';
+		return in_array( $template, self::TEMPLATES, true ) ? $template : 'default';
+	}
+
 	public static function get_path_by_template($template, $file)
 	{
-		$template = !empty($template) ? $template : 'default';
+		$template = self::sanitize_template( $template );
 		$path = EASYJOBS_PUBLIC_PATH . 'partials/' . $template . '/' . $file . '.php';
 		if(file_exists($path)){
 			return $path;
@@ -1393,13 +1521,71 @@ class Easyjobs_Helper {
 		return ob_get_flush();
 	}
 
+	/**
+	 * Sanitize the generated block CSS (`blockMeta`) printed in a <style> element.
+	 *
+	 * `blockMeta` is a block attribute, so anyone who can edit a post (Contributor
+	 * and up) can put any string in it, and core's kses filtering does not touch
+	 * CSS. The editor only ever generates plain declarations, so this removes
+	 * what it never generates:
+	 * - tags and any `<` (no `</style>` breakout);
+	 * - comments and CSS escapes (decoded first, so `@\69mport` is caught);
+	 * - `@import` / `@charset` / `@namespace` (loading remote CSS sends every
+	 *   visitor's IP to a third party);
+	 * - `url()` other than relative, http(s) or data:image (fetches from other
+	 *   schemes and script URLs);
+	 * - legacy script vectors: `expression(`, `behavior:`, `-moz-binding`,
+	 *   `javascript:` / `vbscript:`.
+	 *
+	 * Layout CSS (sizes, colours, positions) is kept: the block's author already
+	 * controls the post they are editing.
+	 *
+	 * @since 2.8.5
+	 * @param mixed $css Raw CSS from the block attribute.
+	 * @return string
+	 */
+	public static function sanitize_block_css( $css ) {
+		if ( ! is_string( $css ) || '' === $css ) {
+			return '';
+		}
+		$css = wp_strip_all_tags( $css );
+		$css = preg_replace( '#/\*.*?(\*/|$)#s', '', $css );
+		// Decode CSS escapes (\69 or \i) so keywords cannot be hidden behind them.
+		$css = preg_replace_callback(
+			'/\\\\([0-9a-fA-F]{1,6})\s?|\\\\(.)/su',
+			static function ( $m ) {
+				if ( '' !== $m[1] ) {
+					$code = hexdec( $m[1] );
+					return ( $code > 0 && $code <= 0x10FFFF && ( $code < 0xD800 || $code > 0xDFFF ) ) ? html_entity_decode( '&#' . $code . ';', ENT_QUOTES, 'UTF-8' ) : '';
+				}
+				return $m[2];
+			},
+			$css
+		);
+		$css = str_replace( array( '<', '\\' ), '', (string) $css );
+		$css = preg_replace( '/@(?:import|charset|namespace)\b[^;{}]*;?/i', '', $css );
+		$css = preg_replace_callback(
+			'/url\s*\(\s*([\'"]?)(.*?)\1\s*\)/is',
+			static function ( $m ) {
+				$url = trim( $m[2] );
+				if ( '' === $url || preg_match( '#^(?:https?:)?//#i', $url ) || preg_match( '#^data:image/(?:png|gif|jpe?g|webp|avif|svg\+xml)[;,]#i', $url ) || ! preg_match( '#^[a-z][a-z0-9+.-]*:#i', $url ) ) {
+					return $m[0];
+				}
+				return 'none';
+			},
+			$css
+		);
+		$css = preg_replace( '/expression\s*\(|behavior\s*:|-moz-binding|(?:java|vb)script\s*:/i', '', $css );
+		return trim( (string) $css );
+	}
+
 	public static function generate_block_style($atts) {
 		// Block CSS goes inside <style>, where HTML entities are not decoded, so
-		// esc_html()/esc_attr() would corrupt quoted values. Strip tags instead so
-		// nothing (e.g. "</style>") can break out of the style element.
-		$desktop_css = isset( $atts['blockMeta']['desktop'] ) ? wp_strip_all_tags( $atts['blockMeta']['desktop'] ) : '';
-		$tab_css     = isset( $atts['blockMeta']['tab'] ) ? wp_strip_all_tags( $atts['blockMeta']['tab'] ) : '';
-		$mobile_css  = isset( $atts['blockMeta']['mobile'] ) ? wp_strip_all_tags( $atts['blockMeta']['mobile'] ) : '';
+		// esc_html()/esc_attr() would corrupt quoted values. sanitize_block_css()
+		// strips tags (no "</style>" breakout) and dangerous CSS instead.
+		$desktop_css = isset( $atts['blockMeta']['desktop'] ) ? self::sanitize_block_css( $atts['blockMeta']['desktop'] ) : '';
+		$tab_css     = isset( $atts['blockMeta']['tab'] ) ? self::sanitize_block_css( $atts['blockMeta']['tab'] ) : '';
+		$mobile_css  = isset( $atts['blockMeta']['mobile'] ) ? self::sanitize_block_css( $atts['blockMeta']['mobile'] ) : '';
 		?>
 		<style>
 			<?php echo $desktop_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS for a <style> element; tags stripped above, entity escaping would break CSS. ?>
@@ -1539,7 +1725,7 @@ class Easyjobs_Helper {
 	public static function get_company_details( $cached = false ) {
 		$company_details = get_option( 'easyjobs_company_details' );
 		if ( $cached && ! empty( $company_details ) ) {
-			return unserialize( $company_details );
+			return self::unserialize_cached_data( $company_details );
 		}
 		$settings = EasyJobs_DB::get_settings();
 		if ( ! empty( $settings['easyjobs_api_key'] ) ) {
@@ -1655,7 +1841,7 @@ class Easyjobs_Helper {
 	public static function view( $name, $template = 'default', $args = array() ) {
         extract( $args );
 		// dd($atts);
-		$template = ! empty( $template ) ? $template : 'default';
+		$template = self::sanitize_template( $template );
 		$path = EASYJOBS_PUBLIC_PATH . 'partials-blocks/' . $template . '/' . $name . '.php';
 		if( ! file_exists( $path ) ) {
 			$path = EASYJOBS_PUBLIC_PATH . 'partials-blocks/default/' . $name . '.php';
@@ -1676,17 +1862,76 @@ class Easyjobs_Helper {
 		return ob_get_clean();
     }
 
+	/**
+	 * Kept for back-compat: renders the "content unavailable" message.
+	 *
+	 * @return string
+	 */
 	public static function err_view() {
-		$path = EASYJOBS_PUBLIC_PATH . 'partials-blocks/error-view.php';
-		ob_start();
-		include $path;
-		return ob_get_clean();
-    }
+		return self::render_unavailable();
+	}
+
+	/**
+	 * Whether the unavailable message was already printed on this request.
+	 *
+	 * @var bool
+	 */
+	private static $unavailable_rendered = false;
+
+	/**
+	 * Markup shown in place of EasyJobs content (shortcode, block or Elementor
+	 * widget) when it cannot render: no API key, or no company data from
+	 * easy.jobs. Printed once per request so a career page made of several
+	 * blocks shows a single message.
+	 *
+	 * Admins (manage_options) get a notice with a link to connect; visitors get
+	 * a neutral message that leaks no setup details.
+	 *
+	 * @since 2.8.6
+	 * @param string $reason 'disconnected' (no API key) or 'unavailable' (no company data).
+	 * @return string
+	 */
+	public static function render_unavailable( $reason = 'disconnected' ) {
+		if ( self::$unavailable_rendered ) {
+			return '';
+		}
+		self::$unavailable_rendered = true;
+
+		$is_admin = current_user_can( 'manage_options' );
+		if ( $is_admin ) {
+			$message = 'unavailable' === $reason
+				? __( 'EasyJobs could not load your company data from easy.jobs, so this content is hidden from visitors.', 'easyjobs' )
+				: __( 'EasyJobs is not connected, so this content is hidden from visitors.', 'easyjobs' );
+			$html    = sprintf(
+				'<div class="easyjobs-shortcode-wrapper ej-unavailable"><div class="elej-error-msg">%s <a href="%s">%s</a></div></div>',
+				esc_html( $message ),
+				esc_url( admin_url( 'admin.php?page=easyjobs-admin' ) ),
+				esc_html__( 'Open EasyJobs settings', 'easyjobs' )
+			);
+		} else {
+			$html = sprintf(
+				'<div class="easyjobs-shortcode-wrapper ej-unavailable"><p class="ej-unavailable-msg">%s</p></div>',
+				esc_html__( 'Our careers page is temporarily unavailable. Please check back soon.', 'easyjobs' )
+			);
+		}
+
+		/**
+		 * Filters the markup shown when EasyJobs content cannot render.
+		 *
+		 * Return an empty string to show nothing.
+		 *
+		 * @since 2.8.6
+		 * @param string $html     Markup.
+		 * @param string $reason   'disconnected' or 'unavailable'.
+		 * @param bool   $is_admin Whether the viewer can manage options.
+		 */
+		return (string) apply_filters( 'easyjobs_unavailable_output', $html, $reason, $is_admin );
+	}
 
 	public static function add_view_url( $jobs ) {
 		$job_with_page_id     = Easyjobs_Helper::get_job_with_page( $jobs );
 		foreach ( $jobs as $r ) {
-			if( $r->status != 2 ){
+			if ( ! self::is_published_job( $r ) ) {
 				continue;
 			}
 			$r->view_url = get_permalink( $job_with_page_id[ $r->id ] );

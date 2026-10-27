@@ -2,6 +2,13 @@
 
 class Easyjobs_Api {
 
+	/**
+	 * Redirects get_file_raw() follows on the easy.jobs app.
+	 *
+	 * @since 2.8.5
+	 */
+	const MAX_FILE_REDIRECTS = 3;
+
     /**
      * Api token
      *
@@ -573,22 +580,128 @@ class Easyjobs_Api {
 	}
 
 	/**
+	 * Whether a URL points at the easy.jobs app over HTTPS.
+	 *
+	 * Only such URLs may receive the company API key (get_file_raw()).
+	 *
+	 * @since 2.8.5
+	 * @param string $url URL to check.
+	 * @return bool
+	 */
+	public static function is_app_url( $url ) {
+		$url = (string) $url;
+		return 'https' === strtolower( (string) wp_parse_url( $url, PHP_URL_SCHEME ) )
+			&& strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) ) === strtolower( (string) wp_parse_url( EASYJOBS_APP_URL, PHP_URL_HOST ) );
+	}
+
+	/**
 	 * Authenticated GET returning the raw wp_remote response (for binary files).
 	 * Unlike remote_get()/get_custom() it does NOT json_decode the body, so it
 	 * can be used to proxy/stream a file download.
+	 *
+	 * The request carries the company API key, so:
+	 * - the URL must be the easy.jobs app over HTTPS (is_app_url());
+	 * - TLS certificates are verified (WordPress default);
+	 * - redirects are followed here, not by WordPress, because WordPress re-sends
+	 *   the same headers to every redirect target. A redirect that stays on the
+	 *   app keeps the key; a redirect anywhere else (a storage bucket or CDN) is
+	 *   fetched without it, through fetch_public_file().
 	 *
 	 * @param string $url Full request URL.
 	 * @return array|WP_Error
 	 */
 	public static function get_file_raw( $url ) {
-		return wp_remote_get( $url, array(
-			'timeout'   => 30,
-			'sslverify' => false,
-			'headers'   => array(
-				'Authorization'    => 'Bearer ' . self::get_token(),
-				'x-plugin-version' => EASYJOBS_VERSION,
-			),
-		) );
+		for ( $hop = 0; $hop <= self::MAX_FILE_REDIRECTS; $hop++ ) {
+			if ( ! self::is_app_url( $url ) ) {
+				return new WP_Error( 'easyjobs_untrusted_url', 'Refusing to send the API key to a host other than the easy.jobs app.' );
+			}
+			$response = wp_remote_get( $url, array(
+				'timeout'     => 30,
+				'redirection' => 0,
+				'headers'     => array(
+					'Authorization'    => 'Bearer ' . self::get_token(),
+					'x-plugin-version' => EASYJOBS_VERSION,
+				),
+			) );
+			$location = self::get_redirect_location( $response, $url );
+			if ( '' === $location ) {
+				return $response;
+			}
+			if ( ! self::is_app_url( $location ) ) {
+				return self::fetch_public_file( $location, 30 );
+			}
+			$url = $location;
+		}
+		return new WP_Error( 'easyjobs_too_many_redirects', 'Too many redirects.' );
+	}
+
+	/**
+	 * Fetch a file by URL without credentials (resume / attachment / export
+	 * storage URLs returned by the API).
+	 *
+	 * - HTTPS only, certificates verified.
+	 * - wp_safe_remote_get(): loopback, private and link-local addresses (for
+	 *   example 127.0.0.1, 10.0.0.0/8, 169.254.169.254) and unusual ports are
+	 *   rejected, including on every redirect.
+	 * - Optional host allowlist through the `easyjobs_allowed_file_hosts` filter
+	 *   (empty, the default, means any public host).
+	 *
+	 * @since 2.8.5
+	 * @param string $url     File URL from the API.
+	 * @param int    $timeout Request timeout in seconds.
+	 * @return array|WP_Error
+	 */
+	public static function fetch_public_file( $url, $timeout = 30 ) {
+		$url = (string) $url;
+		if ( 'https' !== strtolower( (string) wp_parse_url( $url, PHP_URL_SCHEME ) ) ) {
+			return new WP_Error( 'easyjobs_insecure_url', 'Only HTTPS file URLs are fetched.' );
+		}
+		$host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
+		/**
+		 * Hosts the plugin may download candidate files from.
+		 *
+		 * @since 2.8.5
+		 * @param string[] $hosts Lower-case host names. Empty allows any public host.
+		 * @param string   $url   The URL about to be fetched.
+		 */
+		$allowed = array_map( 'strtolower', (array) apply_filters( 'easyjobs_allowed_file_hosts', array(), $url ) );
+		if ( '' === $host || ( ! empty( $allowed ) && ! in_array( $host, $allowed, true ) ) ) {
+			return new WP_Error( 'easyjobs_untrusted_url', 'File host is not allowed.' );
+		}
+		return wp_safe_remote_get( $url, array( 'timeout' => (int) $timeout ) );
+	}
+
+	/**
+	 * Absolute Location of a 3xx response, or '' when it is not a redirect.
+	 *
+	 * @param array|WP_Error $response wp_remote_get() result.
+	 * @param string         $url      URL that was requested (for relative Locations).
+	 * @return string
+	 */
+	private static function get_redirect_location( $response, $url ) {
+		if ( is_wp_error( $response ) ) {
+			return '';
+		}
+		$code = (int) wp_remote_retrieve_response_code( $response );
+		if ( ! in_array( $code, array( 301, 302, 303, 307, 308 ), true ) ) {
+			return '';
+		}
+		$location = wp_remote_retrieve_header( $response, 'location' );
+		if ( is_array( $location ) ) {
+			$location = end( $location );
+		}
+		$location = trim( (string) $location );
+		if ( '' === $location ) {
+			return '';
+		}
+		if ( class_exists( 'WP_Http' ) ) {
+			return WP_Http::make_absolute_url( $location, $url );
+		}
+		// Outside WordPress (unit tests): resolve root-relative Locations only.
+		if ( '/' === $location[0] && ( ! isset( $location[1] ) || '/' !== $location[1] ) ) {
+			return wp_parse_url( $url, PHP_URL_SCHEME ) . '://' . wp_parse_url( $url, PHP_URL_HOST ) . $location;
+		}
+		return $location;
 	}
 
     /**

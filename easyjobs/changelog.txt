@@ -1,3 +1,10 @@
+= 2.8.5 - 27/10/2026 =
+* Improved: PHP 7.4+ support and stricter input validation.
+* Fixed: Stored XSS, insecure file downloads.
+* Updated: PDF.js and restricted video embeds to trusted platforms.
+* Fixed: Draft job visibility, legacy credential cleanup.
+* Few minor bug fixes & improvements.
+
 = 2.8.4 - 19/10/2026 =
 * Improved: Resolved WordPress.org compliance issues related to source files.
 * Few minor bug fixes & improvements.

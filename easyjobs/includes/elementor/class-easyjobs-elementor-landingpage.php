@@ -1738,8 +1738,8 @@ class Easyjobs_Elementor_Landingpage extends Widget_Base {
 	protected function render() {
 		$error_msg = __( 'No Jobs Found', 'easyjobs' );
 		if ( ! $this->get_token() && ! $this->is_editor ) {
-			printf( "<div class='elej-error-msg'>%s</div>", "Whoops! It seems you didn't connect the EasyJobs Account. You can easily connect your account from <b>WordPress Dashboard > EasyJobs > Get Started > Sign In / Connect via API</b>" );
-			
+			echo Easyjobs_Helper::render_unavailable(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside render_unavailable().
+
 			return;
 		}
 		if ( ! $this->get_token() && $this->is_editor ) {

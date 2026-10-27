@@ -37,7 +37,7 @@ class Easyjobs_Uninstaller {
 	const TRANSIENT_PREFIXES = array(
 		'easyjobs_', // Job caches, state version, verification status, locks.
 		'elej_',     // Elementor widget caches.
-		'ej-',       // Short-lived sign-in credentials.
+		'ej-',       // Sign-in credentials stored by <= 2.8.4 (no longer written).
 	);
 
 	/**

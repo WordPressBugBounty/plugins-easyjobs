@@ -961,7 +961,7 @@ class EasyJobs_Settings {
             Easyjobs_Helper::get_generic_response(
                 Easyjobs_Api::post(
                     'update_pipeline',
-                    abs( sanitize_text_field( wp_unslash( $_POST['id'] ) ) ),
+                    absint( wp_unslash( $_POST['id'] ) ),
                     array(
 						'name'  => isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '',
 						'steps' => $steps,
@@ -990,7 +990,7 @@ class EasyJobs_Settings {
             Easyjobs_Helper::get_generic_response(
                 Easyjobs_Api::post(
                     'delete_pipeline',
-                    isset( $_POST['index'] ) ? abs( sanitize_text_field( wp_unslash( $_POST['index'] ) ) ) : 0,
+                    isset( $_POST['index'] ) ? absint( wp_unslash( $_POST['index'] ) ) : 0,
                     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON payload sent to the easy.jobs API; decoded without unslash to preserve existing behaviour (see report).
                     json_decode(  $_POST['pipeline'] )
                 )
@@ -1020,7 +1020,7 @@ class EasyJobs_Settings {
         $custom_fields = array();
         foreach ( $custom_fields_data as $custom_field ) {
             $custom_fields[] = (object) array(
-                'id'            => ! is_null( $custom_field->id ) ? abs( sanitize_key( $custom_field->id ) ) : null,
+                'id'            => ! is_null( $custom_field->id ) ? absint( $custom_field->id ) : null,
                 'type'          => sanitize_text_field( $custom_field->type ),
                 'field_name'    => sanitize_text_field( $custom_field->field_name ),
                 'allowed_types' => empty($custom_field->allowed_types) ? [] : $custom_field->allowed_types,
@@ -1089,8 +1089,8 @@ class EasyJobs_Settings {
             if(!empty($transient)){
                 delete_transient('elej_company_' . md5( $settings['easyjobs_api_key'] ));
             }
-            if($saved_data = unserialize(get_option('easyjobs_company_info'))){
-                $saved_data->selected_template = sanitize_text_field( wp_unslash( $_POST['template'] ) );
+            if ( ( $saved_data = Easyjobs_Helper::unserialize_cached_data( get_option( 'easyjobs_company_info' ) ) ) && is_object( $saved_data ) ) { // phpcs:ignore Generic.CodeAnalysis.AssignmentInCondition.Found
+                $saved_data->selected_template = Easyjobs_Helper::sanitize_template( sanitize_text_field( wp_unslash( $_POST['template'] ) ) );
                 update_option('easyjobs_company_info', serialize($saved_data));
             }
         }

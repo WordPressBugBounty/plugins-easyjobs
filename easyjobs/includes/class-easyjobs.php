@@ -242,6 +242,9 @@ class Easyjobs {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_assets' );
 		$this->loader->add_action( 'init', $plugin_public, 'init' );
+		$this->loader->add_filter( 'wp_robots', $plugin_public, 'noindex_when_disconnected' );
+		$this->loader->add_filter( 'wpseo_robots_array', $plugin_public, 'noindex_when_disconnected' );
+		$this->loader->add_filter( 'rank_math/frontend/robots', $plugin_public, 'noindex_when_disconnected' );
 		$this->loader->add_action( 'elementor/elements/categories_registered', $plugin_public, 'register_widget_categories' );
 		$this->loader->add_action( 'elementor/widgets/widgets_registered', $plugin_public, 'register_widget' );
 	}

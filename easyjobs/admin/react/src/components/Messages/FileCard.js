@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import React from 'react';
+import { safeUrl } from './sanitize';
 
 const DownloadIcon = ({ size = 16 }) => (
   <svg
@@ -58,10 +59,11 @@ const FileGlyph = ({ ext }) => (
  * Attachment card used both in the Files side panel (variant="panel") and inside
  * chat bubbles (variant="bubble"). Links to the file (opens / downloads).
  */
+// `url` is an API attachment field (candidate-supplied file) → scheme-guard it.
 const FileCard = ({ url, name, size, variant = 'panel' }) => (
   <a
     className={`ej-file ej-file--${variant}`}
-    href={url}
+    href={safeUrl(url) || undefined}
     target="_blank"
     rel="noreferrer"
     download

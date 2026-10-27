@@ -37,7 +37,13 @@ class Easyjobs_Shortcode {
             return;
         }
         self::$printed['landing'] = true;
+		if ( ! Easyjobs_Helper::is_api_connected() ) {
+			return Easyjobs_Helper::render_unavailable();
+		}
 		$company = $this->get_company_info();
+		if ( empty( $company ) ) {
+			return Easyjobs_Helper::render_unavailable( 'unavailable' );
+		}
 
 		ob_start();
 		include Easyjobs_Helper::get_path_by_template($company->selected_template, 'landing');
@@ -59,10 +65,22 @@ class Easyjobs_Shortcode {
 			return '';
 		}
 
+		if ( ! Easyjobs_Helper::is_api_connected() ) {
+			return Easyjobs_Helper::render_unavailable();
+		}
 		$company = $this->get_company_info();
+		if ( empty( $company ) ) {
+			return Easyjobs_Helper::render_unavailable( 'unavailable' );
+		}
 		$this->maybe_insert_analytics_script( $company );
         $landing_page_link = get_the_permalink(get_option('easyjobs_parent_page'));
 		$job = Easyjobs_Helper::get_job( $job_id, true );
+		// The details endpoint returns jobs in any status. Only published jobs may
+		// reach visitors: a draft or archived job (or a page left behind after a
+		// job was archived) renders the template's empty wrapper instead.
+		if ( ! Easyjobs_Helper::is_published_job( $job ) ) {
+			$job = false;
+		}
 		ob_start();
         include Easyjobs_Helper::get_path_by_template($company->selected_template, 'details');
 		return ob_get_clean();
@@ -80,9 +98,12 @@ class Easyjobs_Shortcode {
 		}
 		self::$printed['list'] = true;
 		if ( ! Easyjobs_Helper::is_api_connected() ) {
-			return esc_html__( 'Api is not connected', 'easyjobs' );
+			return Easyjobs_Helper::render_unavailable();
 		}
 		$company = Easyjobs_Helper::get_company_info(true);
+		if ( empty( $company ) ) {
+			return Easyjobs_Helper::render_unavailable( 'unavailable' );
+		}
 		$this->maybe_insert_analytics_script( $company );
 		$ej_is_search						= false;
 		$sanitized_get_data 		= $this->sanitize_get_data();
@@ -183,7 +204,7 @@ class Easyjobs_Shortcode {
 	 * Get company info from api
 	 *
 	 * @since 1.0.0
-	 * @return object|bool
+	 * @return object|false
 	 */
 	private function get_company_info() {
 		$company_info = Easyjobs_Helper::get_company_details( true );
